@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Docs · AIWA</title>
+<meta name="description" content="How AIWA works: the five agents, Project Brain™, the managed backend, credits, deployment, mobile export and the API. Start here, then open the full reference in the app." />
+<link rel="canonical" href="https://aiwa.codes/docs" />
+<link rel="icon" href="/aiwa-favicon.svg" type="image/svg+xml" />
+
+<!-- Same two faces the home page preloads, for the same reason (§2.9): the
+     heading is set in Bricolage and a low-priority font fetch is visible. -->
+<link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/page.css" />
+
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body class="page">
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/#top" aria-label="AIWA home">
+      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+    </a>
+    <button class="nav__burger" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <i></i><i></i>
+    </button>
+    <div class="nav__links" id="nav-links">
+      <a href="/#why">Features</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Community</a>
+    </div>
+    <div class="nav__cta-wrap">
+      <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
+        <span class="btn__label">Login</span>
+      </a>
+      <a class="btn btn--primary nav__cta nav__cta--build" href="/#pricing" tabindex="-1" aria-hidden="true">
+        <span class="btn__label">Start Building</span>
+        <span class="btn__arrow"><span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="shell shell--wide">
+<section class="page-hero">
+  <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="page-hero__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Documentation</p>
+    <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>How AIWA works,<br />in the order you will need it</h1>
+    <p class="t-body page-hero__lead" data-blur-child>Everything below is written to be read once, in this order, and then used as a reference. The deep reference for each area lives in the app, where it is versioned alongside the product it documents.</p>
+    <div class="page-hero__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Open the app</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="https://app.aiwa.codes/docs">
+          <span class="btn__label">Full reference</span>
+        </a>
+    </div>
+  </div>
+</section>
+
+<section class="page-section page-section--tight" id="quickstart">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Quickstart</p>
+    <h2 class="t-h2" data-blur-child data-grad>Four steps, about ten minutes</h2>
+  </div>
+  <div class="quickstart" data-blur-in>
+    <div class="quickstart__rows">
+      <div class="quickstart__row"><b>01</b><span>Open app.aiwa.codes and describe what you want to build<i>One paragraph. Who signs in, what it stores, what it does.</i></span></div>
+      <div class="quickstart__row"><b>02</b><span>Review the plan the Product Manager agent returns<i>Screens, data model, roles and build order, before any code exists.</i></span></div>
+      <div class="quickstart__row"><b>03</b><span>Approve, and watch the full stack build in the live preview<i>Roughly 50 credits for a full application. Your 45 welcome credits cover it.</i></span></div>
+      <div class="quickstart__row"><b>04</b><span>Deploy to a URL, then export the source or a signed APK<i>AIWA handles the pipeline, SSL and CDN. GitHub sync any time.</i></span></div>
+    </div>
+    <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Start the first one</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+  </div>
+</section>
+
+<section class="page-section" id="reference">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Reference</p>
+    <h2 class="t-h2" data-blur-child data-grad>The reference, by area</h2>
+    <p class="t-body section__lead" data-blur-child>Each card is one area of the product. The links go to the versioned reference in the app.</p>
+  </div>
+  <div class="cards" data-blur-parent data-stagger="70">
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Concepts</p>
+        <h3>The five agents</h3>
+        <p>Who plans, who architects, who builds, who tests and who keeps working after launch, and which one to talk to when something is wrong.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Agent roles and handoffs</span><em>8 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Approving and rejecting changes</span><em>4 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>The weekly report</span><em>3 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Concepts</p>
+        <h3>Project Brain™</h3>
+        <p>The persistent context that makes change twelve behave like change one: what it stores, when it is consulted, and how to correct it when it has the wrong idea.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>What gets remembered</span><em>6 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Correcting a decision</span><em>5 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Version history and restore</span><em>4 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Platform</p>
+        <h3>The managed backend</h3>
+        <p>Every project gets a Postgres database, auth, row-level security and real-time subscriptions, provisioned without configuration. This is what is actually running.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Database and schema</span><em>9 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Auth and row-level security</span><em>7 min</em></a>
+        <a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer"><span>Connectors and your own keys</span><em>5 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Platform</p>
+        <h3>Models and credits</h3>
+        <p>Claude Opus · Sonnet · GPT-4o · Gemini 2.5 Pro. What each is good at, what a build costs, and how the allowance on each plan is spent.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Choosing a model per task</span><em>5 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>How credits are counted</span><em>4 min</em></a>
+        <a href="/#pricing"><span>Plans and allowances</span><em>pricing</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Shipping</p>
+        <h3>Deploy and domains</h3>
+        <p>From live preview to a URL someone else can open: the build pipeline, custom domains, SSL, the CDN, and what a rollback actually does.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>One-click deploy</span><em>4 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Connecting a custom domain</span><em>6 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Rolling back a deploy</span><em>3 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Shipping</p>
+        <h3>Mobile export</h3>
+        <p>Turning the same project into a native app: the signed APK for Android, the IPA for iOS, and what each store wants before it will take one.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Exporting a signed APK</span><em>7 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>iOS export and submission</span><em>8 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Store review checklist</span><em>5 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Own it</p>
+        <h3>Code export and GitHub</h3>
+        <p>Nothing AIWA builds is locked to us. Full source, full schema, in your repository, on your terms.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Exporting the full source</span><em>4 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>GitHub sync</span><em>5 min</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>Running it yourself</span><em>9 min</em></a>
+      </div>
+    </article>
+    <article class="card" data-blur-child>
+      <div class="card__head">
+        <p class="card__kind">Build on it</p>
+        <h3>API and templates</h3>
+        <p>Starting from something that already works, and driving AIWA from your own tooling.</p>
+      </div>
+      <div class="card__links">
+        <a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer"><span>Template gallery</span><em>browse</em></a>
+        <a href="https://app.aiwa.codes/docs" target="_blank" rel="noopener noreferrer"><span>API reference</span><em>reference</em></a>
+        <a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer"><span>Enterprise and SSO</span><em>talk to us</em></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="page-section faq" id="faq">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>FAQ</p>
+    <h2 class="t-h2" data-blur-child data-grad>About the documentation itself</h2>
+  </div>
+  <div class="faq__grid faq__grid--single">
+  <div class="accordion" data-accordion data-accordion-close-siblings="true" data-blur-in>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Where is the full API reference?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">In the app, at app.aiwa.codes/docs. It is versioned with the product, which is the only place a reference can live without going stale the week after a release.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Do I need to read any of this to start?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">No. The four steps at the top of this page are the whole happy path. Everything else is here for the moment you want to know why something behaved the way it did.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Is there a changelog?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes, on the resources page, alongside the guides and the community. Every deploy that changes behaviour is listed there.</p></div></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="page-section" id="related">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Explore more</p>
+    <h2 class="t-h2" data-blur-child data-grad>Other places to look</h2>
+  </div>
+  <div class="related" data-blur-parent data-stagger="70">
+    <a href="/resources" data-blur-child>
+      <h3>Resources <span aria-hidden="true">-&gt;</span></h3>
+      <p>Guides, walkthroughs, templates, the changelog and the community.</p>
+    </a>
+    <a href="/legal" data-blur-child>
+      <h3>Legal <span aria-hidden="true">-&gt;</span></h3>
+      <p>Terms, privacy, acceptable use, refunds and cookies.</p>
+    </a>
+  </div>
+</section>
+
+<section class="section cta">
+  <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="cta__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Start reading by building</p>
+    <h2 class="t-display cta__h2" data-blur-child data-grad>The fastest way<br />to read the docs</h2>
+    <p class="t-body" data-blur-child>Describe something small and watch the five agents do it. Ten minutes teaches more than the reference does.</p>
+    <div class="cta__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Start Building</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="/#pricing">
+          <span class="btn__label">See pricing</span>
+        </a>
+    </div>
+    <p class="footer__legal t-small" data-blur-child style="border:0;padding:0">No credit card required</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-footer>
+  <div class="shell shell--wide">
+    <div class="footer__top">
+      <a class="footer__logo" href="/#top" aria-label="AIWA home">
+        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+      </a>
+      <form class="footer__news" onsubmit="return false">
+        <label class="sr-only" for="news">Email address</label>
+        <input id="news" type="email" placeholder="Join our newsletter" />
+        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+      </form>
+    </div>
+    <div class="footer__cols">
+      <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
+      <div><span class="footer__col-name">Pages</span><a href="/#why">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
+      <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
+      <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
+      <div><span class="footer__col-name">Contact</span><a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+    </div>
+    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/vendor/lenis.min.js"></script>
+<script type="module" src="/js/page.js"></script>
+</body>
+</html>

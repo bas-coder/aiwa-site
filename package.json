@@ -1,0 +1,13 @@
+{
+  "name": "@aiwa-codes/lander",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Reference build of the AIWA lander against Motion Spec v1. Zero-build static site + dependency-free server.",
+  "scripts": {
+    "dev": "node server/index.mjs",
+    "start": "node server/index.mjs",
+    "pages:build": "node scripts/build-pages.mjs",
+    "lint": "node scripts/build-pages.mjs --check"
+  }
+}

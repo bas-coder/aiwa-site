@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AI SaaS Builder, Build a Production-Ready SaaS App Without Code | AIWA</title>
+<meta name="description" content="AIWA builds complete SaaS applications from a prompt: frontend, backend, database, auth and payments. Then a team of AI agents monitors your product, improves conversions, and evolves your codebase as you grow." />
+<link rel="canonical" href="https://aiwa.codes/ai-saas-builder" />
+<link rel="icon" href="/aiwa-favicon.svg" type="image/svg+xml" />
+
+<!-- Same two faces the home page preloads, for the same reason (§2.9): the
+     heading is set in Bricolage and a low-priority font fetch is visible. -->
+<link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/page.css" />
+
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body class="page">
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/#top" aria-label="AIWA home">
+      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+    </a>
+    <button class="nav__burger" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <i></i><i></i>
+    </button>
+    <div class="nav__links" id="nav-links">
+      <a href="/#why">Features</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Community</a>
+    </div>
+    <div class="nav__cta-wrap">
+      <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
+        <span class="btn__label">Login</span>
+      </a>
+      <a class="btn btn--primary nav__cta nav__cta--build" href="/#pricing" tabindex="-1" aria-hidden="true">
+        <span class="btn__label">Start Building</span>
+        <span class="btn__arrow"><span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="shell shell--wide">
+<section class="page-hero">
+  <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="page-hero__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>AIWA SaaS Builder</p>
+    <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>Build a production-ready SaaS with AI,<br />then let your AI team run it</h1>
+    <p class="t-body page-hero__lead" data-blur-child>AIWA generates your full SaaS application, frontend, backend, database, auth and Stripe payments, from a plain English description. Then dedicated AI agents monitor your MRR, improve onboarding, and evolve your product based on what users actually do.</p>
+    <div class="page-hero__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Build My SaaS Free</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="#how">
+          <span class="btn__label">See how it works</span>
+        </a>
+    </div>
+    <p class="page-hero__note" data-blur-child>Free to start · no credit card required</p>
+  </div>
+</section>
+
+<section class="page-section page-section--tight">
+  <dl class="page-meta" data-blur-in>
+    <div><dt>Generated together</dt><dd>Full stack<em>front, back, auth, billing</em></dd></div>
+    <div><dt>Database</dt><dd>Postgres<em>provisioned, zero config</em></dd></div>
+    <div><dt>Payments</dt><dd>Stripe<em>tiers, trials, webhooks</em></dd></div>
+    <div><dt>Founders building</dt><dd>14,000+<em>and shipping</em></dd></div>
+  </dl>
+</section>
+
+<section class="page-section">
+  <div class="page-section__head" data-blur-parent>
+    <h2 class="t-h3" data-blur-child>Building a SaaS has never been faster. Running one is still just as hard.</h2>
+    <p class="t-body section__lead" data-blur-child>AI builders made the first version easy. But that is only 10% of the job.</p>
+    <p class="t-body section__lead" data-blur-child>After launch, your SaaS needs to onboard users without friction. Retain them past month one. Convert trials to paid. Reduce churn. Add features without breaking existing ones.</p>
+    <p class="t-body section__lead" data-blur-child>Every AI tool today stops at &quot;generate.&quot; Nobody is helping you run and grow what you built.</p>
+    <p class="t-body section__lead" data-blur-child><strong style="color:var(--cream-050)">AIWA is the only AI SaaS builder that ships your product and keeps it running.</strong></p>
+  </div>
+</section>
+
+<section class="page-section" id="agents">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>The AIWA difference</p>
+    <h2 class="t-h2" data-blur-child data-grad>Your AI product team, from idea to growing SaaS</h2>
+    <p class="t-body section__lead" data-blur-child>Every AIWA SaaS is planned, built, tested and grown by a team of specialised AI agents.</p>
+  </div>
+  <div class="why__grid" data-blur-parent data-stagger="100">
+    <article class="feature feature--wide" data-blur-child data-spring>
+      <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Product Manager</h3>
+        <p class="t-body">Plans your SaaS architecture, user flows, data model and feature roadmap before building begins, and keeps context across every update.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Builder</h3>
+        <p class="t-body">Generates production-ready frontend, backend and database code. Full file trees, not snippets. Backend provisioned invisibly, Stripe integrated on request.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Testing Agent</h3>
+        <p class="t-body">Runs automated tests on every change before it ships. Catches regressions, broken auth flows and UI issues before your users do.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">AI CRO Agent</h3>
+        <p class="t-body">Monitors your onboarding flow, trial conversion and user behaviour. Surfaces friction points with fixes and implements approved changes.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Revenue Agent</h3>
+        <p class="t-body">Watches your MRR signals: churn risk, upgrade opportunities, revenue drops, and sends a weekly brief with context and suggested actions.</p>
+      </div>
+    </article>
+  </div>
+  <p class="t-body pricing__foot" data-blur-in>This is the difference between a tool that generates a SaaS and a team that grows one.</p>
+</section>
+
+<section class="page-section" id="how">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>How it works</p>
+    <h2 class="t-h2" data-blur-child data-grad>From idea to live SaaS, without a dev team</h2>
+  </div>
+  <div class="steps" data-blur-parent data-stagger="80">
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Describe your SaaS idea</h3>
+        <p class="t-body">Tell AIWA what your product does, who it is for and how it makes money. No wireframes, no technical specs.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>AIWA plans the product</h3>
+        <p class="t-body">Your AI Product Manager defines the data model, user roles, core features and subscription tiers before a line of code is written.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Full stack generated and deployed</h3>
+        <p class="t-body">Frontend, backend, database, auth and Stripe billing, all generated together, connected, and deployed to your custom domain.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>AI agents take over operations</h3>
+        <p class="t-body">CRO watches onboarding, Revenue monitors MRR, Testing validates every feature. You approve changes, not manage code.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section" id="features">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Features</p>
+    <h2 class="t-h2" data-blur-child data-grad>Everything a SaaS needs, built in, not bolted on</h2>
+  </div>
+  <div class="why__grid" data-blur-parent data-stagger="100">
+    <article class="feature feature--hero" data-blur-child data-spring>
+      <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="feature__body">
+        <h3 class="t-h4">Multi-model code generation</h3>
+        <p class="t-body">Claude Opus for complex logic, Sonnet for fast iterations, GPT-4o as an alternative. Pick the model, pay in credits, switch any time.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Invisible managed backend</h3>
+        <p class="t-body">Every SaaS gets a dedicated Postgres database, row-level security, auth and real-time subscriptions. Provisioned automatically. Zero configuration.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Stripe payments built in</h3>
+        <p class="t-body">Tell AIWA your pricing model and it generates subscription tiers, trial logic, upgrade flows and webhook handling, production-ready.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Persistent app context</h3>
+        <p class="t-body">AIWA remembers every architectural decision, data model change and feature. Come back six months later to add a feature, and nothing breaks.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">One-click deploy + custom domain</h3>
+        <p class="t-body">Ship your SaaS to a live URL from the editor. Connect your own domain. AIWA handles the build pipeline, SSL and CDN.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Mobile app export</h3>
+        <p class="t-body">Turn your SaaS into a native mobile app. Export a signed APK for Android or IPA for iOS with one click, ready for app store submission.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="page-section" id="compare">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Comparison</p>
+    <h2 class="t-h2" data-blur-child data-grad>AIWA vs other AI SaaS builders</h2>
+  </div>
+  <div class="compare" data-blur-in>
+    <table>
+      <thead>
+        <tr><th scope="col">Feature</th><th scope="col" class="is-ours">AIWA</th><th scope="col">Lovable</th><th scope="col">Bolt.new</th><th scope="col">Base44</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Full stack generation</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+        <tr><th scope="row">Persistent context (no breakage on edits)</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td>Partial</td><td>Manual</td><td>Partial</td></tr>
+        <tr><th scope="row">Revenue monitoring agent</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td></tr>
+        <tr><th scope="row">CRO + onboarding agent</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td></tr>
+        <tr><th scope="row">Mobile export (APK + iOS)</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="page-section" id="use-cases">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Use cases</p>
+    <h2 class="t-h2" data-blur-child data-grad>What founders are building with AIWA</h2>
+  </div>
+  <div class="cases" data-blur-parent data-stagger="70">
+    <article data-blur-child>
+      <h3>Micro-SaaS products</h3>
+      <p>Solo founders shipping niche tools in days, not months. From idea to paying customers without touching a terminal.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Internal SaaS tools</h3>
+      <p>Teams replacing expensive software subscriptions with custom tools built specifically for how they work.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Agency client portals</h3>
+      <p>Agencies delivering branded client dashboards and reporting tools in hours.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Vertical SaaS</h3>
+      <p>Industry-specific software for real estate, legal, healthcare and finance teams, built without a technical co-founder.</p>
+    </article>
+    <article data-blur-child>
+      <h3>MVP validation</h3>
+      <p>Founders testing ideas with working software before raising a round or quitting their job.</p>
+    </article>
+  </div>
+</section>
+
+<section class="page-section faq" id="faq">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>FAQ</p>
+    <h2 class="t-h2" data-blur-child data-grad>Questions people ask before they start</h2>
+  </div>
+  <div class="faq__grid faq__grid--single">
+  <div class="accordion" data-accordion data-accordion-close-siblings="true" data-blur-in>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Can AIWA build a multi-tenant SaaS?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes. Tell it your tenancy model and the AI Product Manager designs the data model and row-level security around it before the build starts, rather than bolting isolation on afterwards.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Does AIWA handle Stripe subscriptions?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes. Describe your pricing and AIWA generates the tiers, trial logic, upgrade and downgrade flows, and the webhook handlers, wired to your own Stripe account and keys.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>What happens when I need to add a new feature?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Project Brain™ still holds the architecture, the data model and every prior decision, so the new feature is fitted to the product that exists. That is the difference between month one and month twelve feeling the same.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Can I own the code?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes. Sync to GitHub or export the full source and database schema at any time. AIWA connects to the AI providers, database, payment and email services you already pay for, using your keys.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Is this really production-ready?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">The testing agent exercises every change in a real browser before it ships, and each build is versioned and restorable in one click. You deploy when the tests pass, not when the generator finishes.</p></div></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="page-section" id="related">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Explore more</p>
+    <h2 class="t-h2" data-blur-child data-grad>Related solutions</h2>
+  </div>
+  <div class="related" data-blur-parent data-stagger="70">
+    <a href="/ai-app-builder" data-blur-child>
+      <h3>AI App Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build, deploy and evolve full-stack web and mobile apps with a team of AI agents.</p>
+    </a>
+    <a href="/ai-crm-builder" data-blur-child>
+      <h3>AI CRM Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build a custom CRM around exactly how your team sells: fields, pipelines, automations, reports.</p>
+    </a>
+  </div>
+</section>
+
+<section class="section cta">
+  <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="cta__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>One conversation away</p>
+    <h2 class="t-display cta__h2" data-blur-child data-grad>Your SaaS is<br />one conversation away</h2>
+    <p class="t-body" data-blur-child>Describe your idea. AIWA builds the product. Your AI team grows it.</p>
+    <div class="cta__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Build My SaaS Free</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="/#pricing">
+          <span class="btn__label">See pricing</span>
+        </a>
+    </div>
+    <p class="footer__legal t-small" data-blur-child style="border:0;padding:0">No credit card required</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-footer>
+  <div class="shell shell--wide">
+    <div class="footer__top">
+      <a class="footer__logo" href="/#top" aria-label="AIWA home">
+        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+      </a>
+      <form class="footer__news" onsubmit="return false">
+        <label class="sr-only" for="news">Email address</label>
+        <input id="news" type="email" placeholder="Join our newsletter" />
+        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+      </form>
+    </div>
+    <div class="footer__cols">
+      <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder" aria-current="page">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
+      <div><span class="footer__col-name">Pages</span><a href="/#why">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
+      <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
+      <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
+      <div><span class="footer__col-name">Contact</span><a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+    </div>
+    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/vendor/lenis.min.js"></script>
+<script type="module" src="/js/page.js"></script>
+</body>
+</html>

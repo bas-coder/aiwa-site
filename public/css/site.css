@@ -1,0 +1,2354 @@
+/* ============================================================================
+   AIWA · Section styles
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   LOADER
+   ------------------------------------------------------------------------ */
+.loader {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  background: var(--ink-900);
+}
+.loader__inner { display: grid; gap: 1.6rem; justify-items: center; }
+/* The app's logo lockup, not letterforms - same mark apps/web boots with, so
+   the two surfaces open on the same image. Sized to sit where the old
+   clamp(3.5rem, 11vw, 9rem) wordmark sat. */
+.loader__mark {
+  width: clamp(12rem, 38vw, 24rem);
+}
+.loader__mark img {
+  display: block; width: 100%; height: auto;
+  opacity: 0; /* JS brings it in; see js/motion/loader.js */
+}
+.loader__stages {
+  display: flex; gap: 1.4rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream-500);
+}
+.loader__stages span { opacity: 0.25; transition: opacity var(--dur-micro) var(--ease-brand), color var(--dur-micro) var(--ease-brand); }
+.loader__stages span.is-on { opacity: 1; color: var(--accent); }
+.loader__rail {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--ink-700);
+}
+.loader__rail i { display: block; height: 100%; width: 0; background: var(--accent); }
+
+/* ---------------------------------------------------------------------------
+   NAV
+   ------------------------------------------------------------------------ */
+/* Geometry is apps/marquee's nav, measured off the shipping page: a 1200px
+   bar, 52px tall, sitting 16px down. It is also the marquee's ANIMATION - i.e.
+   none. That nav has no appear animation and no scroll state; it is simply
+   there from first paint, so the entrance tween that used to bring this one in
+   last is gone from hero.js too.
+
+   The one thing we do NOT copy is the marquee's permanently-transparent bar:
+   over this page's darker, busier sections the links stop being readable, so
+   the glass pill fades in on .is-stuck instead of being there from the start. */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1rem var(--gutter) 0;
+}
+.nav__inner {
+  max-width: 75rem; margin-inline: auto; /* 1200px at the desktop root size */
+  min-height: 3.25rem;                   /* 52px - the CTA (2.25rem) + 2x padding */
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 999px;
+  /* Rest state: no fill - chrome is transparent over the hero. */
+  background-color: transparent;
+  box-shadow: none;
+  transition: max-width var(--dur-base) var(--ease-brand),
+              padding var(--dur-base) var(--ease-brand),
+              background-color var(--dur-base) var(--ease-brand),
+              box-shadow var(--dur-base) var(--ease-brand),
+              backdrop-filter var(--dur-base) var(--ease-brand);
+}
+
+/* ---- scrolled: the bar CONTRACTS and turns to glass ----------------------
+   Measured off apps/marquee's scrolled nav variant (framer-v-periiu):
+   the 1200px bar becomes 780px, the left padding goes 8px -> 14px, the link
+   gap tightens, and a translucent film + rim appears over whatever is passing
+   underneath. It stays centred, so it closes in from both sides.
+
+   The marquee's film is Framer's Liquid Glass: `backdrop-filter: url(#...)`,
+   an SVG displacement map. That is a Framer runtime component and a
+   Chrome-only filter, so the refraction is approximated here with the
+   blur+saturate this nav already had - same read, no dependency. */
+.nav.is-stuck .nav__inner {
+  max-width: 48.75rem;                            /* 780px */
+  padding: 0.5rem 0.5rem 0.5rem 0.875rem;         /* 8px 8px 8px 14px */
+  background-color: color-mix(in srgb, var(--ink-950) 96%, transparent);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cream-050) 10%, transparent);
+}
+/* The rim: 1px, lit at the two ends of a 315deg axis and gone through the
+   middle - the shape of the marquee's border gradient. Its stops sample as
+   zero-alpha there (they animate, and a background tab freezes the frame
+   clock mid-tween), so the alpha below is ours: on this page's near-black the
+   rim has to be visible or the pill has no edge at all. */
+.nav__inner::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  padding: 1px; pointer-events: none; opacity: 0;
+  background: linear-gradient(315deg,
+    rgba(251, 249, 246, 0.22) 0%,
+    rgba(251, 249, 246, 0) 30%,
+    rgba(251, 249, 246, 0) 70%,
+    rgba(251, 249, 246, 0.22) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: opacity var(--dur-base) var(--ease-brand);
+}
+.nav.is-stuck .nav__inner::after { opacity: 0.1; }
+/* 24px -> 16px, as the marquee's does, which is also what buys the room the
+   narrower bar needs. */
+.nav.is-stuck .nav__links { gap: 1rem; }
+/* h-9 px-4 - the app's own button size, which is also the marquee nav's 36px
+   and what holds the bar to 52px. The hero CTAs keep the marketing scale. */
+.nav__cta-wrap {
+  position: relative;
+  display: grid;
+  justify-items: stretch;
+  align-items: stretch;
+  flex: 0 0 auto;
+}
+.nav__cta-wrap > .nav__cta {
+  grid-area: 1 / 1;
+  justify-self: stretch;
+  transition:
+    opacity var(--dur-base) var(--ease-brand),
+    transform var(--dur-base) var(--ease-brand),
+    filter var(--dur-base) var(--ease-brand),
+    color var(--app-dur-colors) var(--ease-out),
+    background-color var(--app-dur-colors) var(--ease-out),
+    border-color var(--app-dur-colors) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-brand);
+}
+.nav__cta { height: 2.25rem; min-height: 0; padding: 0 1rem; }
+/* Rest: Login (ghost). Stuck: Start Building (primary) — crossfade + soft scale. */
+.nav__cta--build {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92);
+  filter: blur(2px);
+}
+.nav.is-stuck .nav__cta--login {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92);
+  filter: blur(2px);
+}
+.nav.is-stuck .nav__cta--build {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav__cta-wrap > .nav__cta {
+    transition: opacity var(--app-dur-colors) var(--ease-out);
+    transform: none;
+    filter: none;
+  }
+}
+/* The lockup carries its own name, so there is no <span>AIWA</span> beside it -
+   same call the app makes in its header (apps/web DashboardSidebar). Height,
+   not width: the orb is ~98% of the artwork's height, so 1.65rem here keeps it
+   the 1.6rem circle the favicon mark used to be. */
+.nav__logo { display: flex; align-items: center; }
+.nav__logo img { height: 1.75rem; width: auto; }
+.nav__links {
+  display: flex; gap: 1.7rem; font-size: 0.85rem; color: var(--cream-300);
+  transition: gap var(--dur-base) var(--ease-brand); /* tightens with the bar - see .is-stuck above */
+}
+.nav__links a { position: relative; transition: color var(--dur-micro) var(--ease-brand); }
+.nav__links a::after {
+  content: ''; position: absolute; left: 0; right: 100%; bottom: -0.35rem; height: 1px;
+  background: var(--accent); transition: right var(--dur-base) var(--ease-brand);
+}
+.nav__links a:hover { color: var(--cream-050); }
+.nav__links a:hover::after { right: 0; }
+@media (max-width: 900px) { .nav__links { display: none; } }
+
+/* ---------------------------------------------------------------------------
+   HERO · §2.1 structural model
+   The hero is 400vh tall; #hero-media is pinned inside it for the whole run.
+   ------------------------------------------------------------------------ */
+.hero { position: relative; }
+.hero__panel {
+  position: relative; z-index: 1;
+  min-height: 100svh;
+  display: grid; align-items: center;
+  padding-block: calc(var(--nav-h) + 2rem) 4rem;
+  pointer-events: none;
+}
+.hero__panel > * { pointer-events: auto; }
+/* Exactly one viewport tall, and empty. Its `center center` has to resolve to
+   the same scroll position as the hero's `bottom bottom` - that is what makes
+   the handoff start on the frame the canvas stops being full-bleed. Give it
+   content, or a height its siblings do not share, and the two drift apart.
+   (svh, matching the other panels, not vh: on a phone the two differ by the
+   toolbar's height, and mixing them puts this panel out of step with the three
+   above it. A small residual drift is survivable here only because the canvas
+   is permanently fixed rather than pinned - there is no hand-back frame for a
+   mismatch to land on.) */
+.hero__panel.is-spacer { pointer-events: none; height: 100svh; min-height: 100svh; padding: 0; }
+
+/* One column for copy, one for the canvas, held for the whole hero.
+   Consistency reads as design; a layout that reshuffles every panel reads as
+   fidgeting. The canvas only moves once - at the very end, when it slides to
+   centre because it is about to become the card. */
+/* NOTE: this is a child of .shell, never combined with it. Putting a second
+   max-width on .shell itself would inherit its `margin-inline: auto` and
+   centre the column instead of anchoring it to the page gutter. */
+.hero__panel-inner { display: grid; justify-items: start; gap: 1.8rem; max-width: 34rem; }
+.hero__panel-inner--dense { gap: 1.4rem; }
+
+.hero__h1 {
+  visibility: hidden;               /* §2.2 - flipped to visible by JS */
+  font-size: clamp(2.6rem, 5.4vw, 5.2rem);
+  text-wrap: balance;
+}
+.hero__h1 .word { display: inline-block; }
+.hero__h1 .char {
+  display: inline-block;
+  opacity: 0;
+  color: rgba(255, 255, 255, 0);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0);
+  /* NOTE: no will-change here. §5.3 wants it set immediately before the
+     animation and cleared on complete; a permanent hint on 20-odd characters
+     is exactly the mobile memory pressure that rule is about. heroEntrance()
+     adds and removes it. */
+}
+/* Non-JS / reduced-motion: the headline is simply there. */
+.no-js .hero__h1, .hero__h1.is-static { visibility: visible; color: var(--cream-050); }
+
+.hero__sub, .hero__cta, .hero__trust, .hero__scroll-hint, .hero__proof { opacity: 0; transform: translateY(1.5rem); }
+.no-js .hero__sub, .no-js .hero__cta, .no-js .hero__trust, .no-js .hero__scroll-hint, .no-js .hero__proof { opacity: 1; transform: none; }
+
+/* Sits between the display headline and the CTA. Deliberately NOT --measure
+   wide: the panel is a 34rem column and the subheadline is the one element
+   that would happily run past it, which breaks the left-column rhythm the
+   whole hero is built on. */
+.hero__sub { max-width: 32rem; font-size: clamp(1.02rem, 1.25vw, 1.2rem); color: var(--cream-300); }
+
+.hero__cta { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+/* Hero primary is the page's largest marketing control - type steps up from
+   the global .btn (0.875rem) so the label matches the button's visual weight. */
+.hero__cta .btn { font-size: 1.05rem; padding: 0.95rem 1.7rem; }
+.hero__micro { font-size: 0.85rem; color: var(--cream-500); }
+
+/* Social-proof pill: top of the left column (grid order), last to enter. */
+.hero__proof {
+  order: -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 100%;
+  padding: 0.42rem 0.95rem 0.42rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cream-050) 14%, transparent);
+  background: color-mix(in srgb, var(--cream-050) 5%, transparent);
+  color: var(--cream-100);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.hero__proof-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--accent-hot);
+  box-shadow: 0 0 0 0.2rem var(--accent-glow);
+}
+.hero__proof-text { text-wrap: pretty; }
+
+.hero__trust { width: min(100%, 42rem); display: grid; gap: 0.9rem; }
+.trust__item { display: inline-flex; align-items: center; gap: 0.4rem; padding-inline: 0.9rem; font-size: 0.8rem; color: var(--cream-300); white-space: nowrap; }
+.trust__item b { font-family: var(--font-display); font-size: 1rem; color: var(--cream-050); }
+/* plan it / build it / test it / ship it - lowercase with accent checks. */
+.trust__item--step {
+  font-family: var(--font-mono); font-size: 0.78rem;
+  letter-spacing: 0.06em; text-transform: none; color: var(--cream-100);
+  gap: 0.45rem; padding-inline: 0.75rem;
+}
+.trust__check {
+  width: 0.85rem; height: 0.85rem; flex: 0 0 auto;
+  color: var(--accent); stroke: currentColor;
+}
+.trust__dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-500); align-self: center; flex: 0 0 auto; }
+
+/* Animated scroll mouse - adapted from the supplied SCSS, token-mapped, no CDN fonts. */
+.hero__scroll-hint {
+  --mouse-w: 1.625rem;          /* 26px */
+  --mouse-h: 2.75rem;           /* 44px */
+  --mouse-border: 0.1875rem;    /* 3px */
+  --mouse-track: 0.3125rem;     /* 5px */
+  --mouse-track-pos: 0.55rem;
+  --mouse-nudge: 0.35rem;
+  --mouse-anim: 5s;
+  --mouse-outline: var(--cream-050);
+  --mouse-outline-fade: var(--ink-500);
+  --mouse-fill: var(--ink-900);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--mouse-outline);
+}
+.mouse {
+  position: relative;
+  width: var(--mouse-w);
+  height: var(--mouse-h);
+  border-radius: 100px;
+  background:
+    var(--mouse-outline-fade)
+    linear-gradient(
+      transparent 0%,
+      transparent 50%,
+      var(--mouse-outline) 50%,
+      var(--mouse-outline) 100%
+    );
+  background-size: 100% 200%;
+  animation:
+    scroll-color-slide var(--mouse-anim) linear infinite,
+    scroll-nudge-mouse var(--mouse-anim) ease-out infinite;
+}
+.mouse::before,
+.mouse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+.mouse::before {
+  width: calc(var(--mouse-w) - var(--mouse-border));
+  height: calc(var(--mouse-h) - var(--mouse-border));
+  background-color: var(--mouse-fill);
+  border-radius: 100px;
+}
+.mouse::after {
+  background-color: var(--mouse-outline);
+  width: var(--mouse-track);
+  height: var(--mouse-track);
+  border-radius: 50%;
+  animation: scroll-trackball var(--mouse-anim) linear infinite;
+}
+
+@keyframes scroll-color-slide {
+  0% { background-position: 0% 100%; }
+  20% { background-position: 0% 0%; }
+  21% { background-color: var(--mouse-outline-fade); }
+  29.99% {
+    background-color: var(--mouse-outline);
+    background-position: 0% 0%;
+  }
+  30% {
+    background-color: var(--mouse-outline-fade);
+    background-position: 0% 100%;
+  }
+  50% { background-position: 0% 0%; }
+  51% { background-color: var(--mouse-outline-fade); }
+  59% {
+    background-color: var(--mouse-outline);
+    background-position: 0% 0%;
+  }
+  60% {
+    background-color: var(--mouse-outline-fade);
+    background-position: 0% 100%;
+  }
+  80% { background-position: 0% 0%; }
+  81% { background-color: var(--mouse-outline-fade); }
+  90%, 100% { background-color: var(--mouse-outline); }
+}
+
+@keyframes scroll-trackball {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  6% {
+    opacity: 1;
+    transform: scale(0.9) translateY(calc(var(--mouse-track-pos) / 4));
+  }
+  14% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * 2));
+  }
+  15%, 19% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  28%, 29.99% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  36% {
+    opacity: 1;
+    transform: scale(0.9) translateY(calc(var(--mouse-track-pos) / 4));
+  }
+  44% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * 2));
+  }
+  45%, 49% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  58%, 59.99% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  66% {
+    opacity: 1;
+    transform: scale(0.9) translateY(calc(var(--mouse-track-pos) / 4));
+  }
+  74% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * 2));
+  }
+  75%, 79% {
+    opacity: 0;
+    transform: scale(0.4) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+  88%, 100% {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+}
+
+@keyframes scroll-nudge-mouse {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(var(--mouse-nudge)); }
+  30% { transform: translateY(0); }
+  50% { transform: translateY(var(--mouse-nudge)); }
+  60% { transform: translateY(0); }
+  80% { transform: translateY(var(--mouse-nudge)); }
+  90% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mouse,
+  .mouse::after {
+    animation: none;
+  }
+  .mouse::after {
+    opacity: 1;
+    transform: scale(1) translateY(calc(var(--mouse-track-pos) * -1));
+  }
+}
+
+.hero__statement { max-width: 36rem; font-size: clamp(1.5rem, 2.9vw, 2.6rem); text-wrap: balance; line-height: 1.45; }
+/* Inline concept tiles - chip-in-copy pattern (reference), remapped to AIWA amber. */
+.tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin-inline: 0.22em 0.08em;
+  vertical-align: -0.14em;
+  border-radius: 0.26em;
+  background: linear-gradient(180deg, var(--app-sunset-1), var(--app-sunset-2));
+  color: var(--ink-950);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.32),
+    0 0 0 1px color-mix(in srgb, var(--accent-deep) 35%, transparent),
+    0 0.35em 0.9em -0.2em var(--accent-glow);
+  transform: translateY(0.02em);
+  transform-origin: center center;
+}
+/* Light play: alternate lean + tiny size shifts (4–9°, ~±6% scale). */
+.hero__statement .tile:nth-child(2) { transform: translateY(0.02em) rotate(-6deg) scale(0.95); }
+.hero__statement .tile:nth-child(3) { transform: translateY(0.02em) rotate(5deg)  scale(1.05); }
+.hero__statement .tile:nth-child(4) { transform: translateY(0.02em) rotate(-4deg) scale(0.98); }
+.hero__statement .tile:nth-child(5) { transform: translateY(0.02em) rotate(8deg)  scale(0.93); }
+.hero__statement .tile:nth-child(6) { transform: translateY(0.02em) rotate(-7deg) scale(1.06); }
+.tile svg {
+  display: block;
+  width: 0.55em;
+  height: 0.55em;
+  stroke: currentColor;
+  flex: 0 0 auto;
+}
+.hero__para { max-width: 34rem; }
+.hero__chips { display: grid; gap: 0.55rem; }
+.hero__chips li {
+  display: inline-flex; align-items: baseline; gap: 0.45rem; white-space: nowrap;
+  padding: 0.55rem 1rem; border: 1px solid var(--ink-600); border-radius: 999px;
+  background: rgba(18, 18, 17, 0.6); backdrop-filter: blur(8px);
+  font-size: 0.9rem; width: fit-content;
+}
+
+.hero__closing { max-width: 38rem; }
+
+/* ---- the pinned canvas -------------------------------------------------- */
+/* position:fixed IS the pin - see the long note at the top of ACT 2 in
+   js/motion/hero.js. left/top/width/height are written by JS every frame; the
+   values here are the pre-JS state, so the first paint is already correct. */
+.hero-media {
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  /* Below the hero panels AND below <main>. The handoff carries the media into
+     a section it must not paint over: .workspace__zone goes transparent to let
+     it show through the well, while the heading, pills and panes above it stay
+     legible on top. Getting this backwards hides the whole section behind the
+     card for the length of the handoff. */
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--ink-900);
+  border-radius: 0;                /* JS interpolates this to --radius-card */
+  contain: layout paint;
+}
+/* CSS fallback if WebGL fails — soft charcoal folds. */
+.hero-media.has-hero-gradient-fallback {
+  background:
+    radial-gradient(70% 55% at 72% 38%, rgba(74, 70, 65, 0.32), transparent 62%),
+    radial-gradient(55% 45% at 28% 78%, rgba(53, 50, 46, 0.38), transparent 70%),
+    var(--ink-900);
+}
+.hero-media__scrim {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  backdrop-filter: blur(var(--blur-atmosphere));
+  -webkit-backdrop-filter: blur(var(--blur-atmosphere));
+}
+.hero-media__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Balsa Gradient Studio ribbon (vanilla WebGL) — full-bleed behind the frame. */
+.hero-media__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+/* Ambient soft amber orbs — hidden (replaced by studio ribbon for now). */
+.hero-media__frame::before {
+  content: ''; position: absolute; inset: -20%;
+  background:
+    radial-gradient(40% 30% at 22% 18%, rgba(254,160,2,0.10), transparent 70%),
+    radial-gradient(45% 34% at 78% 74%, rgba(191,78,11,0.12), transparent 70%);
+  pointer-events: none;
+  display: none;
+}
+/* Legibility scrim under the left column, where the hero copy sits. Without
+   it the headline fights the scene for the same pixels; with it the scene
+   reads as ground and the copy as figure, which is the relationship §2.5
+   wants ("the restraint is what makes the media read as the subject"). */
+/* Once the copy has scrolled past, the scrim lifts and the scene owns the
+   frame. JS drives --copy-scrim off the same progress the scenes read. */
+.hero-media__frame::after {
+  content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(96deg, rgba(6,5,4,0.94) 0%, rgba(6,5,4,0.8) 30%, rgba(6,5,4,0) 54%);
+  opacity: var(--copy-scrim, 1);
+}
+
+/* HUD */
+/* Bottom-right, not top-left. The nav lives in the top strip and the hero
+   copy owns the left column, so the only corner free at every breakpoint is
+   this one - and it stays free after the handoff, when the whole frame has
+   shrunk into the workspace card. */
+.stage__hud {
+  position: absolute; right: 0; bottom: 0; z-index: 4;
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 0 clamp(1rem, 2.4vw, 1.8rem) clamp(0.9rem, 2vw, 1.4rem);
+  font-family: var(--font-mono); font-size: 0.66rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-500);
+}
+.stage__hud-left { display: flex; align-items: center; gap: 0.6rem; }
+.stage__label { color: var(--accent); }
+.stage__rail { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255,255,255,0.06); z-index: 4; }
+.stage__rail i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-deep), var(--accent)); }
+
+/* ---- the scenes --------------------------------------------------------- */
+/* The scene column is nudged right of centre so it never sits under the hero
+   copy, which is left-aligned in the same viewport. After the handoff the
+   frame is a card and the offset just reads as padding. */
+.stage { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; }
+.scene {
+  grid-area: 1 / 1;
+  width: min(86%, 32rem);
+  opacity: 0;
+  /* will-change is toggled by heroScroll() for as long as the hero is on
+     screen, not declared here - see §5.3. */
+}
+/* §2.2 - the canvas is never blank. The prompt is the poster frame: painted
+   before any JS runs, and what a reduced-motion or JS-failed visitor sees. The
+   scrub types into it rather than fading it in. */
+.scene--prompt { opacity: 1; }
+/* The payoff frame is wider than the working scenes: the whole sequence has
+   been building toward "it is a real, deployed application", and it is also
+   the frame that has to look right once it is seated in the card. */
+/* The payoff frame is wider than the working scenes, and it is also the only
+   scene that has to survive being handed off into a much smaller box.
+
+   max-height is not belt-and-braces. Width is normally the binding constraint,
+   but .ship__chrome is a fixed rem height that does NOT shrink with the well,
+   so below roughly an 890px well the card stands taller than the box and the
+   frame's overflow:hidden shaves the chrome bar clean off the top. Measured:
+   13px over at an 800px well, 23px at 500px. Capping the height and letting
+   the shot take the remainder keeps the whole card inside at every size. */
+.scene--ship {
+  width: min(94%, 56rem); max-height: 94%;
+  /* flex, not just the cap: a percentage max-height on a block whose height is
+     auto is indefinite to its child, so the cap alone clamps this box and lets
+     .ship overflow it anyway. As a flex container with a shrinkable item, the
+     cap is passed down and actually bites. */
+  display: flex;
+}
+.scene--ship > .ship { flex: 1 1 auto; min-height: 0; }
+
+/* The fan needs more width than the single-column beats, but this number is a
+   negotiated ceiling, not a preference, and the arithmetic is worth keeping.
+
+   Through the hero the stage is held in the right-hand column by xPercent:19 -
+   19% of the FRAME - so the scene's left edge is 0.69*vw - W/2, and a wider
+   scene grows leftward into the copy, not rightward into empty frame. Two
+   things live over there:
+     - the panel-3 copy box, which ends at vw/2 - 8 once .shell caps out;
+     - the legibility scrim, which is opaque at the left edge and clears at 54%
+       of the frame (see .hero-media__frame::after).
+
+   Measured on the real page: at 1920 and 40rem the fan starts at 997 against a
+   copy box ending at 952, so it clears by 45px. At 46rem it cleared by 5px, and
+   half the leftmost card sat under the scrim at 1440. Some scrim overlap at
+   1440 is unavoidable and normal - the 32rem default beats sit under its tail
+   there too - but 40rem keeps the leftmost screenshot mostly out of it while
+   still making each card 256px, wider than a three-across grid could manage.
+   Widen this only alongside the xPercent. */
+.scene--shipped { width: min(94%, 40rem); }
+
+/* The plan frame carries the workflow diagram, which is a 385x377 ring rather
+   than a column of cards, so it wants a squarer box than the other beats. */
+.scene--plan { width: min(92%, 30rem); }
+
+/* prompt */
+.prompt {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding: 1.5rem 1.7rem;
+  border: 1px solid var(--ink-600); border-radius: 1.4rem;
+  background: linear-gradient(180deg, rgba(28,24,17,0.86), rgba(12,10,8,0.9));
+  box-shadow: 0 2rem 5rem rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  font-family: var(--font-mono); font-size: clamp(0.85rem, 1.35vw, 1.05rem); line-height: 1.5;
+}
+.prompt__glyph { color: var(--accent); }
+.prompt__text { color: var(--cream-050); }
+.prompt__caret {
+  display: inline-block; width: 0.5em; height: 1.1em; translate: 0 0.15em;
+  background: var(--accent); animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.prompt__meta {
+  display: flex; gap: 0.7rem; margin-top: 1rem; padding-left: 0.4rem;
+  color: var(--cream-500); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.62rem;
+}
+
+/* plan - NOTE the `agent-` prefix. The pricing section also has a `.plan`
+   (a tier card), and an unprefixed `.plan li { opacity: 0 }` here silently
+   blanked every feature list down the page. Hero-scene classes stay namespaced
+   for exactly that reason. */
+/* ---------------------------------------------------------------------------
+   THE WORKFLOW DIAGRAM · beat 2 of the hero canvas
+
+   apps/marquee's "Our Agentic Workflow Engine" diagram, rebuilt: the robot in
+   the middle, five stages ringed around it, five connector arrows between them.
+
+   EVERY OFFSET IS A PERCENTAGE OF A 385x377 BOX, because that is marquee's
+   container and those are marquee's own positions divided by it. Keeping the
+   ratios rather than the pixels is what lets the diagram scale with the canvas
+   and still be the same composition. aspect-ratio holds the box to 385/377 so
+   the percentages stay honest at every width.
+   ------------------------------------------------------------------------ */
+.wf {
+  position: relative;
+  width: 100%; max-width: 28rem; margin-inline: auto;
+  aspect-ratio: 1 / 1;
+}
+
+/* Robot — absolute centre of .wf (inset + margin:auto).
+   Do not centre via transform/translate: GSAP owns `transform` for the
+   entrance tween and would overwrite a transform-based centre. */
+.wf__robot {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 42%;
+  height: auto;
+  max-height: 42%;
+  margin: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(0 0.9rem 1.4rem rgba(0, 0, 0, 0.55));
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+/* Stage cards: badge tiles hidden; heading + subtext sit in a filled chip. */
+.wf__stage {
+  --wf-stage-w: 8.6rem;
+  position: absolute; z-index: 2;
+  display: flex; flex-direction: column; align-items: center;
+  width: var(--wf-stage-w);
+  text-align: center;
+  opacity: 0; transform: translateY(0.5rem);
+}
+.wf__badge { display: none; }
+.wf__text {
+  display: grid;
+  gap: 0.28rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem 0.6rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--cream-050) 10%, transparent);
+  background: color-mix(in srgb, var(--ink-800) 88%, var(--ink-950));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--cream-050) 8%, transparent),
+    0 8px 18px -10px rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.wf__text b {
+  font-family: var(--font-mono); font-weight: 600;
+  font-size: 0.68rem; letter-spacing: 0.1em; color: var(--cream-050);
+  white-space: nowrap;
+}
+.wf__text i {
+  font-style: normal; font-size: 0.62rem; line-height: 1.35;
+  color: var(--cream-300);
+  text-wrap: balance;
+}
+
+/* Five-stage ring — even placement around the centred bot. */
+.wf__stage[data-wf-pos='plan']      { top: 0; left: 50%; translate: -50% 0; }
+.wf__stage[data-wf-pos='architect'] { top: 22%; right: 0; left: auto; translate: 0 0; }
+.wf__stage[data-wf-pos='build']     { bottom: 6%; right: 8%; left: auto; translate: 0 0; }
+.wf__stage[data-wf-pos='test']      { bottom: 6%; left: 8%; translate: 0 0; }
+.wf__stage[data-wf-pos='evolve']    { top: 22%; left: 0; translate: 0 0; }
+
+/* The connector arrows. Marquee's exact paths; only the gradient is re-aimed at
+   a dark ground. They are filled shapes, not strokes, so nothing here scales a
+   stroke-width the viewBox would then distort. */
+.wf__link { position: absolute; z-index: 1; opacity: 0; overflow: visible; }
+
+/* Below 760px the canvas is too narrow for a full ring: captions collide
+   with each other long before the box runs out. The robot holds the frame on its
+   own there, which is the composition the brief asked for anyway. */
+@media (max-width: 760px) {
+  .wf { max-width: 15rem; }
+  .wf__stage, .wf__link { display: none; }
+  .wf__robot { width: 78%; max-height: 78%; }
+}
+
+/* shipped - BEAT 3.
+   Three real projects, dealt out as an overlapping fan rather than a grid.
+   The fan is doing real work, not decoration: at three-across-in-a-row each
+   card could only be a third of the frame, but overlapping them by a quarter
+   buys each card 40% of the frame instead, so the screenshots land ~25% larger
+   and stay legible as products. The step up to the right and the z-order give
+   the set depth, which is what sells "several of these exist".
+
+   The whole layout is proportional - flex-basis and negative margins in
+   percent, the rise in rem - so it holds its shape at every width without a
+   breakpoint. 3 x 40% - 2 x 10% = 100%, which is what keeps the fan flush to
+   the frame on both edges; change one of those numbers and you must change
+   the other. */
+.shipped { display: flex; align-items: flex-start; perspective: 1100px; }
+.shipped__title { color: var(--cream-500); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.6rem; margin-bottom: 0.9rem; }
+.shipped__card {
+  flex: 0 0 40%;
+  opacity: 0;
+  border: 1px solid var(--ink-600); border-radius: 0.7rem;
+  background: rgba(12,10,8,0.86); overflow: hidden;
+  transform-style: preserve-3d;
+}
+/* Each card steps up and in front of the one before it. The rising shadow is
+   what stops three overlapping dark screenshots reading as one dark shape. */
+.shipped__card:nth-child(1) { margin-top: 2.6rem; z-index: 1; box-shadow: 0 0.7rem 1.6rem rgba(0,0,0,0.5); }
+.shipped__card:nth-child(2) { margin-top: 1.3rem; z-index: 2; margin-inline-start: -10%; box-shadow: -0.5rem 0.9rem 2.2rem rgba(0,0,0,0.62); }
+.shipped__card:nth-child(3) { margin-top: 0;      z-index: 3; margin-inline-start: -10%; box-shadow: -0.6rem 1.1rem 2.8rem rgba(0,0,0,0.7); }
+
+/* The shot sits in its own aspect-locked window so the image can drift inside
+   the card without moving the card. 112% tall at -6% top leaves 6% of headroom
+   at each edge, which is more than the +/-3.5% the parallax ever uses - the
+   frame can never show through. aspect-ratio, not the intrinsic size, so a
+   card cannot reflow the fan while a webp is still in flight. */
+.shipped__shot {
+  display: block; position: relative; overflow: hidden;
+  aspect-ratio: 1906 / 1078;
+  border-bottom: 1px solid var(--ink-600);
+}
+.shipped__shot img {
+  position: absolute; left: 0; top: -6%;
+  width: 100%; height: 112%;
+  object-fit: cover; object-position: top center;
+}
+.shipped__meta { display: grid; gap: 0.1rem; padding: 0.48rem 0.6rem 0.55rem; }
+.shipped__meta b {
+  font-family: var(--font-mono); font-weight: 500; font-size: 0.62rem;
+  letter-spacing: 0.05em; color: var(--cream-050);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.shipped__meta i { font-style: normal; font-size: 0.57rem; line-height: 1.3; color: var(--cream-500); }
+
+/* test */
+.test { display: grid; gap: 0.55rem; }
+.test li {
+  /* The tick is positioned against the ROW, so it has to add the row's own
+     inline padding back on to land inside the ring. Hardcoding that number in
+     two places is what put the tick out in the padding, beside an empty circle,
+     the first time. One variable now, read by both. */
+  --pad-x: 1.1rem;
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.75rem var(--pad-x); border-radius: 0.8rem;
+  border: 1px solid var(--ink-600); background: rgba(18,18,17,0.72); backdrop-filter: blur(10px);
+  font-size: 0.88rem; color: var(--cream-300);
+  opacity: 0;
+}
+/* A REAL TICK, not one diagonal stroke.
+   This was a single 45deg line inside a ring, which at 16px reads as the
+   "prohibited" sign - the exact opposite of the thing it is marking. Two
+   borders rotated -45deg is the same trick .plan__list uses, and it reads as a
+   check at every size. The client's copy writes these rows with a leading tick,
+   so the mark has to actually be one. */
+.test li::before {
+  content: ''; width: 1rem; height: 1rem; flex: 0 0 auto; border-radius: 50%;
+  border: 1px solid var(--good);
+  position: relative;
+}
+.test li::after {
+  content: ''; position: absolute; left: calc(var(--pad-x) + 0.29rem); top: 50%;
+  width: 0.42rem; height: 0.22rem;
+  border-left: 1.5px solid var(--good); border-bottom: 1.5px solid var(--good);
+  transform: translateY(-65%) rotate(-45deg);
+}
+.test li { position: relative; }
+
+/* ship */
+.ship {
+  display: flex; flex-direction: column; max-height: 100%;
+  border-radius: 1rem; overflow: hidden;
+  border: 1px solid var(--ink-600);
+  box-shadow: 0 3rem 7rem rgba(0,0,0,0.7);
+  background: var(--ink-850);
+}
+.ship__chrome {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--ink-600);
+  background: rgba(18,18,17,0.9);
+}
+.ship__chrome i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--ink-500); }
+.ship__url { margin-left: 0.8rem; color: var(--cream-500); font-size: 0.62rem; }
+/* flex-shrink with min-height:0 is what lets the cap above actually bite; the
+   cover keeps the shot's own proportions while its box gives up the height. */
+.ship__shot {
+  display: block; width: 100%; height: auto;
+  flex: 1 1 auto; min-height: 0;
+  object-fit: cover; object-position: top center;
+}
+
+/* Everything after the hero paints above the travelling media. See the
+   z-index note on .hero-media. */
+main, .footer { position: relative; z-index: 2; }
+
+/* ---------------------------------------------------------------------------
+   WORKSPACE · handoff destination
+   ------------------------------------------------------------------------ */
+/* Clears the fixed nav: the eyebrow is the first thing the handoff delivers
+   you to, and it must not arrive underneath the bar. */
+.workspace { padding-top: clamp(7rem, 15vh, 11rem); }
+.workspace__head { display: grid; gap: 1rem; justify-items: start; margin-bottom: 2.5rem; }
+
+/* The well. aspect-ratio reserves the box so nothing shifts (CLS 0) whether
+   the Flip runs, fails, or is skipped under reduced motion. */
+/* The case-study grid. The well keeps its own width:100%/aspect-ratio and just
+   becomes the first column, so the handoff still measures exactly what it
+   always measured - only the column it sits in got narrower. */
+.workspace__case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(11rem, 17vw, 15rem);
+  gap: clamp(0.8rem, 1.4vw, 1.3rem);
+  align-items: stretch;
+}
+.ws-aside {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.4vw, 1.3rem);
+}
+.ws-aside__item {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--ink-700); border-radius: var(--radius-card);
+  background: var(--ink-850);
+  /* opacity 0 is the arrival state; Act 5 brings these in with the status card.
+     .no-js and reduced motion get their escapes below, same as .proj-status. */
+  opacity: 0;
+}
+.ws-aside__item img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+}
+.ws-aside__cap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0.9rem 0.7rem 0.5rem;
+  font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream-100);
+  background: linear-gradient(180deg, rgba(6,5,4,0), rgba(6,5,4,0.88) 55%);
+}
+.no-js .ws-aside__item, .static-hero .ws-aside__item { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ws-aside__item { opacity: 1; } }
+
+.workspace__caption {
+  margin-top: 1.1rem; text-align: center;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cream-500);
+}
+
+/* Below 900px the aside stops being a column and becomes a row under the well,
+   which keeps all three visible instead of squeezing them into a gutter. */
+@media (max-width: 900px) {
+  .workspace__case { grid-template-columns: 1fr; }
+  .ws-aside { grid-template-rows: none; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* --radius-card (2.5rem) is drawn for the big well. On a card a third of
+     that width it curves away most of the shot, so the row takes its own. */
+  .ws-aside__item { aspect-ratio: 16 / 9; border-radius: 1.25rem; }
+}
+
+.workspace__zone {
+  /* position:relative is the containing block for .proj-status, and it is safe
+     to add: the box is aspect-locked, so it does not change the destination
+     rect the handoff measures every frame. */
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-card);
+  background: var(--ink-850);
+  border: 1px solid var(--ink-700);
+}
+.workspace__zone.is-occupied { background: transparent; border-color: transparent; }
+@media (max-width: 700px) { .workspace__zone { aspect-ratio: 4 / 3; } }
+
+/* ---------------------------------------------------------------------------
+   PROJECT STATUS · the card floating over the workspace well
+
+   Inside .workspace__zone, which is the box the pinned hero canvas is handed
+   off into. Two things make that safe rather than clever:
+
+     1. The well is aspect-locked, so a child does not change the rect the
+        handoff interpolates towards. Add a child that affects layout here and
+        the card lands a few pixels off, every time.
+     2. .hero-media is z-index 0 and paints below <main>, so this needs no
+        z-index war to sit on top of the landed frame. It only needs to be
+        positioned, and to keep its hands off the pointer.
+   ------------------------------------------------------------------------ */
+.proj-status {
+  position: absolute; z-index: 2; pointer-events: none;
+  /* BOTTOM-LEFT, not bottom-right. .stage__hud lives at the media's
+     bottom-right corner ("EVOLVE · 98%") and stays there after the handoff has
+     shrunk the frame into this well, so the right corner is the one corner that
+     is already taken. Measured at 1440x900 before it was moved. */
+  left: clamp(0.9rem, 2vw, 1.8rem); bottom: clamp(0.9rem, 2vw, 1.8rem);
+  width: min(17rem, 62%);
+  display: grid; gap: 0.55rem;
+  padding: clamp(0.9rem, 1.6vw, 1.15rem);
+  border: 1px solid var(--ink-600); border-radius: 1.1rem;
+  background: rgba(11, 9, 7, 0.82);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 1.2rem 2.6rem rgba(0, 0, 0, 0.45);
+  /* Hidden until the hero canvas lands in the well: Act 5 in js/motion/hero.js
+     animates it in, and starting hidden HERE rather than in JS is what keeps it
+     from flashing between first paint and the trigger binding. Every path that
+     never runs Act 5 needs an escape, or the card is invisible forever:
+       .no-js         no script at all, so no Act 5
+       .static-hero   set for reduced motion; the media never travels
+     Below 560px the card is display:none anyway, which covers the <480px tier. */
+  opacity: 0; visibility: hidden;
+}
+.no-js .proj-status,
+.static-hero .proj-status { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .proj-status { opacity: 1; visibility: visible; } }
+.proj-status__label { color: var(--cream-500); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.proj-status__name { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: -0.02em; line-height: 1; }
+/* ---- the build readout ------------------------------------------------
+   All five checks stay on the card at all times - the brief lists five and a
+   status card that hides three of them is not showing project status. So there
+   is no window and no mask here: the sequence in projectStatus() runs DOWN the
+   visible list, lighting and ticking each row in turn, rather than scrolling
+   rows past a viewport. --ps-line only sets the row rhythm now. */
+.ps-feed { --ps-line: 1.4rem; }
+.ps-feed__track { display: block; }
+.ps-line {
+  height: var(--ps-line);
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.7rem; color: var(--cream-300); white-space: nowrap;
+}
+.ps-mark { width: 0.8rem; height: 0.8rem; flex: 0 0 auto; overflow: visible; }
+/* -90deg so the ring fills from twelve o'clock, which is the direction every
+   progress ring in the world turns. */
+.ps-mark__ring {
+  fill: none; stroke: var(--good); stroke-width: 1.7;
+  transform: rotate(-90deg); transform-origin: 50% 50%;
+}
+.ps-mark__tick {
+  fill: none; stroke: var(--good); stroke-width: 2.1;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.ps-meter { display: flex; align-items: center; gap: 0.5rem; }
+.ps-meter__track {
+  flex: 1 1 auto; height: 2px; border-radius: 2px;
+  background: rgba(255, 255, 255, 0.09); overflow: hidden;
+}
+.ps-meter__track i {
+  display: block; height: 100%; width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--good));
+}
+.ps-meter__count { font-size: 0.56rem; letter-spacing: 0.12em; color: var(--cream-500); }
+
+.proj-status__ready {
+  display: flex; align-items: center; gap: 0.42rem;
+  padding-top: 0.5rem; border-top: 1px solid var(--ink-600);
+  font-size: 0.72rem; color: var(--cream-050);
+}
+.proj-status__ready i {
+  width: 0.42rem; height: 0.42rem; border-radius: 50%; flex: 0 0 auto;
+  background: var(--good); box-shadow: 0 0 0 0.22rem rgba(74, 222, 128, 0.16);
+  animation: ps-pulse 2.2s ease-in-out infinite;
+}
+/* In CSS, not in the timeline: an infinite repeat inside a GSAP timeline makes
+   that timeline's duration infinite, which breaks the reverse the arrival
+   trigger depends on. */
+@keyframes ps-pulse {
+  0%, 100% { box-shadow: 0 0 0 0.22rem rgba(74, 222, 128, 0.16); }
+  50%      { box-shadow: 0 0 0 0.42rem rgba(74, 222, 128, 0.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-status__ready i { animation: none; }
+}
+/* Below 560px the well is barely wider than the card, and a card covering the
+   screenshot it is annotating is worse than no card. */
+@media (max-width: 560px) { .proj-status { display: none; } }
+
+/* ---------------------------------------------------------------------------
+   AUTONOMOUS QA · the proof section
+
+   Two columns above 900px: the argument on the left, the receipt on the right.
+   The card is the only thing on the home page that reads as a screenshot
+   without being one, so it borrows the canvas's own surface treatment (raised
+   ink, hairline, backdrop blur) rather than the .feature card's gradient.
+   ------------------------------------------------------------------------ */
+.qa__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.qa__head { display: grid; gap: 1rem; align-content: start; }
+
+.qa-card {
+  display: grid; gap: 1rem;
+  padding: clamp(1.3rem, 2.4vw, 1.9rem);
+  border: 1px solid var(--ink-600); border-radius: 1.6rem;
+  background: rgba(18, 18, 17, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.qa-card__label { color: var(--accent); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.qa-card__checks { display: grid; gap: 0.5rem; }
+.qa-card__checks li {
+  --pad-x: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.7rem var(--pad-x); border-radius: 0.8rem;
+  border: 1px solid var(--ink-600); background: rgba(6, 5, 4, 0.5);
+  font-size: 0.88rem; color: var(--cream-100);
+}
+/* Same ring-and-tick as the canvas beat, for the same reason: the copy is
+   written with a leading tick, so the mark has to be a tick. */
+.qa-card__checks li::before {
+  content: ''; width: 1rem; height: 1rem; flex: 0 0 auto; border-radius: 50%;
+  border: 1px solid var(--good); position: relative;
+}
+.qa-card__checks li { position: relative; }
+.qa-card__checks li::after {
+  content: ''; position: absolute; left: calc(var(--pad-x) + 0.29rem); top: 50%;
+  width: 0.42rem; height: 0.22rem;
+  border-left: 1.5px solid var(--good); border-bottom: 1.5px solid var(--good);
+  transform: translateY(-65%) rotate(-45deg);
+}
+.qa-card__verdict {
+  padding-top: 0.85rem; border-top: 1px solid var(--ink-600);
+  text-align: center; color: var(--good);
+  font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .qa__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* ---------------------------------------------------------------------------
+   THE PROMPT ARC
+   ------------------------------------------------------------------------ */
+.arc {
+  position: relative; overflow: hidden;
+  min-height: 150svh;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, var(--ink-900), #0d0a07 40%, var(--ink-900));
+}
+.arc__center {
+  position: sticky; top: 50vh; translate: 0 -50%;
+  z-index: 3; text-align: center; display: grid; gap: 1.1rem; justify-items: center;
+  padding-inline: var(--gutter);
+}
+.arc__h2 { text-wrap: balance; }
+.arc__claims { display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center; font-size: 0.85rem; color: var(--cream-300); }
+.arc__claims li { position: relative; }
+.arc__claims li + li::before { content: '·'; position: absolute; left: -0.9rem; color: var(--ink-500); }
+
+.arc__col {
+  position: absolute; top: 0; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; justify-content: center; gap: 1.4rem;
+  font-family: var(--font-mono); font-size: clamp(0.7rem, 1.05vw, 0.92rem);
+  color: var(--cream-500);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.arc__col--left  { right: calc(50% + 16rem); align-items: flex-end;   text-align: right; }
+.arc__col--right { left:  calc(50% + 16rem); align-items: flex-start; text-align: left;  }
+.arc__col span { display: block; transform-origin: center; }
+.arc.is-live .arc__col span { will-change: transform, opacity; }
+.arc__col--left  span { transform-origin: right center; }
+.arc__col--right span { transform-origin: left center; }
+
+@media (max-width: 1100px) {
+  .arc__col--left  { right: calc(50% + 8rem); }
+  .arc__col--right { left:  calc(50% + 8rem); }
+}
+@media (max-width: 700px) {
+  .arc__col--left  { right: calc(50% + 2rem); }
+  .arc__col--right { left:  calc(50% + 2rem); }
+  .arc__col { font-size: 0.62rem; gap: 1rem; }
+}
+
+/* The columns are white-space:nowrap and some prompts are long, so they run
+   off the outer edge. Fade them out there rather than letting them hit the
+   viewport wall and look truncated. */
+.arc__col--left  { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%); mask-image: linear-gradient(90deg, transparent 0, #000 22%); }
+.arc__col--right { -webkit-mask-image: linear-gradient(270deg, transparent 0, #000 22%); mask-image: linear-gradient(270deg, transparent 0, #000 22%); }
+
+.arc__fade { position: absolute; left: 0; right: 0; height: 26vh; z-index: 2; pointer-events: none; }
+.arc__fade--top    { top: 0;    background: linear-gradient(180deg, var(--ink-900), transparent); }
+.arc__fade--bottom { bottom: 0; background: linear-gradient(0deg,   var(--ink-900), transparent); }
+
+/* ---------------------------------------------------------------------------
+   ENGINE · horizontal scroll
+   ------------------------------------------------------------------------ */
+.engine { position: relative; background: var(--ink-850); }
+/* grid-template-columns is load-bearing. .engine__track is width:max-content
+   and about 2200px wide; without an explicit column the grid sizes itself to
+   that, and .engine__head - which is width:100% of the column - centres its
+   content inside 2200px instead of inside the viewport. minmax(0,1fr) pins the
+   column to the container and lets the track overflow it, which is what the
+   pin is there to reveal. */
+.engine__pin {
+  min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr);
+  align-content: center; gap: 2.5rem; overflow: hidden; padding-block: 4rem;
+}
+.engine__head { display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; }
+.engine__progress { flex: 1; max-width: 22rem; height: 1px; background: var(--ink-600); }
+.engine__progress i { display: block; height: 100%; width: 0; background: var(--accent); }
+
+/* A COLUMN GRID, not a flex row, and the reason is alignment.
+   Each panel is header / glass tile / list. The headings wrap to different line
+   counts ("EVOLVE · learn, improve & scale continuously" takes three lines
+   where "TEST · ensure quality" takes two), so with flex every panel sized its
+   own rows and the icon tiles sat at five different heights.
+
+   Three shared rows here plus `grid-template-rows: subgrid` on the panel means
+   all five panels resolve against the SAME row lines: the tallest header sets
+   the header row, and every glass tile starts on the same line. It aligns
+   whatever the copy does, at any width, with no min-height to keep in sync.
+
+   Row and column gaps are split because the panel inherits the track's gaps
+   through the subgrid: columns keep the wide gutter between cards, rows keep
+   the 1.4rem rhythm inside them.
+
+   engineHorizontal() only reads track.scrollWidth and engineRail() only sets
+   width/overflow inline, and both behave the same on a single-row column grid
+   as they did on flex. */
+.engine__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(84vw, 26rem);
+  grid-template-rows: auto auto 1fr;
+  column-gap: clamp(1rem, 2.4vw, 2rem);
+  row-gap: 1.4rem;
+  padding-inline: var(--gutter);
+  width: max-content;
+}
+.stage-panel {
+  /* spans the track's three rows and adopts its row lines, which is what puts
+     every glass tile on the same line across all five cards. The width comes
+     from grid-auto-columns now, not from the panel. */
+  grid-row: span 3;
+  display: grid; grid-template-rows: subgrid;
+  padding: clamp(1.4rem, 2.6vw, 2.2rem);
+  border: 1px solid var(--ink-600); border-radius: 1.6rem;
+  background: linear-gradient(180deg, rgba(28,24,17,0.5), rgba(12,10,8,0.5));
+}
+.stage-panel header { display: grid; gap: 0.7rem; }
+.stage-panel__idx { color: var(--accent); }
+/* align-content:start, because the list now sits in the track's 1fr row. Left
+   to stretch, a short list spread its own items to fill that row and the gaps
+   inside one card came out as 50,50,73 instead of an even rhythm. The slack
+   belongs at the bottom of the card, not between the lines. */
+.stage-panel__list {
+  display: grid; gap: 0.7rem; align-content: start;
+  font-size: 0.9rem; color: var(--cream-300);
+}
+.stage-panel__list li { position: relative; padding-left: 1.1rem; }
+.stage-panel__list li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.36rem; height: 1px; background: var(--accent); }
+
+/* §4.5 - the cheap-and-good glass panel, not the WebGL renderer. */
+.stage-panel__glass {
+  position: relative; height: 9rem; border-radius: 1.1rem; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(254,160,2,0.16), transparent 60%),
+    radial-gradient(90% 80% at 80% 90%, rgba(191,78,11,0.2), transparent 60%),
+    rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  display: grid; place-items: center;
+}
+/* cursor-following specular highlight, fed by --mx/--my from JS */
+.stage-panel__glass::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(14rem 14rem at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.14), transparent 60%);
+  opacity: 0; transition: opacity var(--dur-base) var(--ease-brand);
+}
+.stage-panel:hover .stage__glass::after, .stage-panel__glass:hover::after { opacity: 1; }
+
+/* The five engine glyphs were drawn in CSS from two pseudo-element rings. They
+   are Lucide icons now, from the shared sprite, so they read as the actual
+   thing each stage does rather than as an abstract mark. */
+.icon { width: 1em; height: 1em; display: block; flex: 0 0 auto; }
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.glyph {
+  width: 3.4rem; height: 3.4rem;
+  display: grid; place-items: center;
+  color: var(--accent);
+}
+.glyph .icon { width: 100%; height: 100%; }
+
+/* ---------------------------------------------------------------------------
+   WHY · feature grid
+   ------------------------------------------------------------------------ */
+.why__head { display: grid; gap: 1rem; margin-bottom: 3rem; max-width: 90rem; }
+.why__head .t-h2 { line-height: 1.18; }
+.why__glue { white-space: nowrap; }
+.why__grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .why__grid { grid-template-columns: 1fr; } }
+
+.feature {
+  position: relative; overflow: hidden;
+  padding: var(--feature-pad);
+  border: 1px solid var(--line); border-radius: 1.6rem;
+  background: linear-gradient(180deg, rgba(28,24,17,0.42), rgba(12,10,8,0.42));
+  display: grid; align-content: start; gap: 1.1rem; min-height: 0;
+  transform-origin: center;
+}
+.feature--hero {
+  grid-column: span 3;
+  grid-template-columns: minmax(16rem, 0.95fr) minmax(18rem, 1.05fr);
+  grid-template-rows: auto;
+  align-items: start;
+  gap: var(--feature-hero-gap);
+  min-height: 0;
+  padding: var(--feature-hero-pad) var(--feature-pad);
+}
+.feature--hero .feature__blob { grid-column: 1 / -1; grid-row: 1; }
+.feature--hero .feature__body { grid-column: 1; grid-row: 1; align-self: start; max-width: 38ch; }
+.feature--hero .feature__stage { grid-column: 2; grid-row: 1; height: var(--stage-hero-min); min-height: 0; }
+.feature--hero .stage-ui { min-height: 100%; }
+.feature--hero .feature__stage::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: calc(var(--stage-fade) * var(--stage-hero-fade));
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--ink-850));
+}
+@media (max-width: 900px) {
+  .feature--hero { grid-column: auto; grid-template-columns: 1fr; min-height: 0; }
+  .feature--hero .feature__blob { grid-column: 1; grid-row: 1; }
+  .feature--hero .feature__body,
+  .feature--hero .feature__stage { grid-column: auto; grid-row: auto; }
+  .feature--hero .feature__body { max-width: none; }
+  .feature--hero .feature__stage { height: auto; min-height: var(--stage-hero-min); }
+}
+.feature:not(.feature--hero) {
+  padding: 0;
+  gap: 0;
+  grid-template-rows: minmax(var(--stage-card-min), 1fr) auto;
+}
+.feature:not(.feature--hero) .feature__stage {
+  min-height: var(--stage-card-min);
+  border: 0;
+  border-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background: var(--ink-800);
+}
+.feature:not(.feature--hero) .stage-ui {
+  min-height: var(--stage-card-min);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - var(--stage-fade)), transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - var(--stage-fade)), transparent 100%);
+}
+.feature:not(.feature--hero) .feature__body {
+  z-index: 3;
+  max-width: none;
+  padding: 0 var(--feature-pad) var(--feature-pad);
+  margin-top: calc(var(--stage-fade) * var(--stage-fade-inset) * -1);
+}
+.feature__stage {
+  position: relative; z-index: 2;
+  margin: 0;
+  min-height: var(--stage-min);
+  display: grid;
+  border-radius: var(--stage-radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--ink-850);
+  contain: layout paint;
+}
+.feature:not(.feature--hero) .feature__stage::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: var(--stage-fade);
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, var(--stage-blend) 72%);
+  backdrop-filter: blur(var(--stage-fade-blur));
+  -webkit-backdrop-filter: blur(var(--stage-fade-blur));
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 32%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 32%, #000 100%);
+}
+.stage-ui {
+  display: grid; align-content: start; gap: var(--stage-gap);
+  min-height: var(--stage-min);
+  padding: var(--stage-pad);
+  font-size: var(--stage-type);
+  color: var(--cream-100);
+  transform-origin: center;
+}
+.stage-ui__chrome {
+  display: flex; align-items: center; gap: 0.4rem;
+  color: var(--cream-050);
+  font-weight: 500;
+}
+.stage-ui__chrome img { width: 1rem; height: 1rem; border-radius: 0.22rem; }
+.stage-ui__chrome .icon { width: 0.7rem; height: 0.7rem; color: var(--cream-500); }
+.stage-ui__spacer { flex: 1; }
+.stage-ui__count {
+  min-width: 1.2rem; text-align: center;
+  border-radius: 999px; padding: 0.08rem 0.4rem;
+  background: var(--ink-700); color: var(--cream-300);
+}
+.stage-ui__preview {
+  display: inline-flex; align-items: center; gap: 0.28rem;
+  padding: 0.2rem 0.5rem; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--cream-100);
+}
+.stage-ui__preview .icon { width: 0.7rem; height: 0.7rem; }
+.stage-ui__preview.is-on {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--ink-600));
+  color: var(--accent);
+}
+.stage-ui__thread { display: grid; gap: 0.45rem; }
+.stage-msg {
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--line);
+  background: rgba(12, 10, 8, 0.55);
+  color: var(--cream-300);
+}
+.stage-msg p { margin: 0; }
+.stage-msg--user { color: var(--cream-100); background: rgba(254, 160, 2, 0.06); }
+.stage-plan {
+  display: grid; gap: 0.3rem;
+  margin-top: 0.5rem; padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+.stage-plan__idx { color: var(--accent); }
+.stage-plan__link { color: var(--cream-050); }
+.stage-ui__composer {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(6, 5, 4, 0.45);
+}
+.stage-ui__ask { flex: 1; color: var(--cream-500); }
+.stage-ui__composer .stage-prompt__send { margin-left: auto; }
+
+.stage-prompt .stage-prompt__body { padding: 0.7rem 0.85rem 0.55rem; font-size: var(--stage-type); }
+.stage-prompt .stage-prompt__bar { padding: 0.35rem 0.4rem; }
+.stage-prompt .stage-prompt__chip.is-on {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--ink-600));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.stage-prompt .stage-prompt__send.is-on { transform: scale(var(--scale-press)); }
+
+.stage-cursor {
+  position: absolute; left: 0; top: 0; z-index: 6;
+  width: var(--cursor-size); height: var(--cursor-size);
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: calc(var(--cursor-origin-x) * 100%) calc(var(--cursor-origin-y) * 100%);
+}
+.stage-cursor img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.stage-cursor__click { opacity: 0; }
+.stage-cursor.is-click .stage-cursor__ptr { opacity: 0; }
+.stage-cursor.is-click .stage-cursor__click { opacity: 1; }
+.stage-cursor__ring {
+  position: absolute;
+  left: calc(var(--cursor-origin-x) * 100% - var(--cursor-ring) / 2);
+  top: calc(var(--cursor-origin-y) * 100% - var(--cursor-ring) / 2);
+  width: var(--cursor-ring); height: var(--cursor-ring);
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+.stage-cursor.is-click .stage-cursor__ring {
+  animation: cursor-ping var(--cursor-press) var(--ease-out) forwards;
+}
+@keyframes cursor-ping {
+  from { transform: scale(0.35); opacity: 0.85; }
+  to { transform: scale(1.85); opacity: 0; }
+}
+
+.stage-prompt__chip,
+.stage-prompt__send,
+.stage-ui__preview,
+.stage-plan__link,
+.stage-filters span,
+.stage-projects li,
+.eflow__col {
+  transition:
+    transform var(--cursor-press) var(--ease-out),
+    border-color var(--cursor-press) var(--ease-out),
+    background-color var(--cursor-press) var(--ease-out),
+    color var(--cursor-press) var(--ease-out),
+    box-shadow var(--cursor-press) var(--ease-out),
+    outline-color var(--cursor-press) var(--ease-out);
+}
+.stage-prompt__chip.is-hot,
+.stage-prompt__send.is-hot,
+.stage-ui__preview.is-hot,
+.stage-plan__link.is-hot,
+.stage-filters span.is-hot,
+.stage-projects li.is-hot,
+.eflow__col.is-hot {
+  outline: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.stage-plan__link { cursor: default; color: var(--cream-050); }
+.stage-plan__link.is-on { color: var(--accent); }
+.eflow__col.is-on {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--preview-teal) 35%, transparent);
+}
+.stage-projects li.is-on {
+  background: rgba(254, 160, 2, 0.08);
+  border-radius: 0.4rem;
+}
+
+.stage-entities {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin: 0; padding: 0; list-style: none;
+}
+.stage-entities li {
+  padding: 0.22rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(6, 5, 4, 0.4);
+  color: var(--cream-300);
+}
+
+.stage-ui--preview { position: relative; overflow: hidden; }
+.feature:not(.feature--hero) .stage-ui--preview {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.stage-boot {
+  display: grid; justify-items: center; align-content: center; gap: 0.35rem;
+  padding: 1.4rem 0.6rem 1rem;
+  min-height: 0;
+  text-align: center; color: var(--cream-100);
+}
+.stage-boot .quiet { color: var(--cream-500); }
+.stage-boot__mark {
+  width: 2rem; height: 2rem; display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--prompt-send-fill);
+  color: var(--ink-900); font-weight: 700;
+}
+.stage-boot__track {
+  display: block; width: 5.5rem; height: 2px;
+  border-radius: 99px;
+  background: var(--ink-600);
+  overflow: hidden;
+}
+.stage-boot__rail {
+  display: block; width: 100%; height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.stage-ui--preview.is-ready .stage-boot { display: none; }
+.stage-ui--preview.is-ready .eflow { display: grid; height: 100%; }
+.eflow {
+  display: none;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 0;
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--preview-cream);
+  color: var(--preview-ink);
+}
+.eflow__kicker {
+  font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--preview-muted);
+}
+.eflow__h { font-family: var(--font-display); font-size: 0.95rem; line-height: 1.2; }
+.eflow__h em { color: var(--preview-teal); font-style: normal; }
+.eflow__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.35rem; }
+.eflow__col {
+  display: grid; gap: 0.15rem;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(22, 20, 18, 0.06);
+}
+.eflow__col span {
+  font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--preview-muted);
+}
+.eflow__col b { font-size: 0.62rem; }
+.eflow__col em { font-size: 0.58rem; color: var(--preview-teal); font-style: normal; }
+
+.stage-filters { display: flex; gap: 0.35rem; color: var(--cream-500); }
+.stage-filters span {
+  padding: 0.16rem 0.45rem; border-radius: 999px;
+  border: 1px solid transparent;
+}
+.stage-filters span.is-on {
+  border-color: var(--line);
+  color: var(--cream-050);
+  background: rgba(254, 160, 2, 0.08);
+}
+.stage-projects { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.stage-projects li {
+  display: grid; grid-template-columns: 1.3rem 1fr auto; gap: 0.45rem; align-items: center;
+}
+.stage-projects i {
+  display: grid; place-items: center;
+  width: 1.3rem; height: 1.3rem; border-radius: 0.3rem;
+  background: rgba(254, 160, 2, 0.16); color: var(--accent);
+  font-style: normal; font-weight: 600;
+}
+.stage-projects b { display: block; color: var(--cream-050); }
+.stage-projects em { color: var(--cream-500); font-style: normal; }
+.stage-draft {
+  padding: 0.1rem 0.35rem; border-radius: 999px;
+  background: rgba(6, 5, 4, 0.55);
+  border: 1px solid var(--line);
+  color: var(--cream-300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-ui--preview .stage-boot { display: none; }
+  .stage-ui--preview .eflow { display: grid; }
+  .stage-cursor { display: none; }
+  .gradlab__canvas, .gradlab__noise { display: none; }
+}
+.feature__body { display: grid; gap: 0.7rem; position: relative; z-index: 2; max-width: 44ch; }
+/* screen blend so the ring reads as light in the room rather than a brown
+   smudge sitting on top of the card */
+.feature__blob {
+  position: absolute; inset: -34% -12% auto auto; width: 38rem; height: 38rem;
+  z-index: 1; opacity: 0.7; pointer-events: none; mix-blend-mode: screen;
+}
+
+/* ---------------------------------------------------------------------------
+   INTEGRATIONS · generated arc diagram, quote centered in the bowl
+   ------------------------------------------------------------------------ */
+
+/* ---------------------------------------------------------------------------
+   GALLERY
+   ------------------------------------------------------------------------ */
+/* ---------------------------------------------------------------------------
+   MADE WITH AIWA · the contact sheet
+
+   Was two marquee rows travelling in opposite directions at 30 px/s. It is a
+   static grid now, on purpose: the section is a magazine spread, and a spread
+   does not move. What carries it instead is what carries a printed page -
+   alignment to one measure, a numbered index, a hairline under every plate,
+   and a single restrained move on hover.
+   ------------------------------------------------------------------------ */
+.gallery__head { display: grid; gap: 1.15rem; margin-bottom: clamp(2.2rem, 4vw, 3.4rem); }
+
+/* The masthead: eyebrow, a rule that eats the remaining measure, and the one
+   outbound link in the section sitting on the end of it. */
+.gallery__masthead { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.1rem; }
+.gallery__rule { height: 1px; background: var(--ink-600); }
+.gallery__all {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream-300); white-space: nowrap;
+  transition: color var(--dur-micro) var(--ease-brand);
+}
+.gallery__all .icon {
+  width: 0.85rem; height: 0.85rem;
+  transition: transform var(--dur-micro) var(--ease-brand);
+}
+.gallery__all:hover { color: var(--accent); }
+.gallery__all:hover .icon { transform: translateX(0.25rem); }
+
+.gallery__grid {
+  counter-reset: plate;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.8rem, 2.6vw, 2.6rem) clamp(1rem, 1.6vw, 1.6rem);
+  list-style: none; padding: 0; margin: 0;
+}
+.shot { counter-increment: plate; }
+.shot__link { display: grid; gap: 0.85rem; }
+
+/* The plate. overflow:hidden is what makes the hover classic rather than
+   bouncy: the frame holds its position on the grid and the image eases inside
+   it, so the composition never shifts. */
+.shot__frame {
+  display: block; overflow: hidden;
+  border: 1px solid var(--ink-600); border-radius: 0.8rem;
+  background: var(--ink-850);
+}
+.shot__frame img {
+  display: block; width: 100%; aspect-ratio: 16 / 11;
+  object-fit: cover; object-position: top left;
+  transition: transform var(--dur-reveal) var(--ease-brand);
+}
+
+/* Caption: index, rule, title, line. The rule is the plate's baseline - eight
+   of them at the same height across four columns is the whole effect. */
+.shot__meta {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.7rem;
+  padding-top: 0.75rem; border-top: 1px solid var(--ink-600);
+  transition: border-color var(--dur-base) var(--ease-brand);
+}
+.shot__idx {
+  font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.5;
+  letter-spacing: 0.1em; color: var(--accent); font-variant-numeric: tabular-nums;
+}
+/* Numbered by the counter, never by hand: drop a plate and 01-08 still reads
+   01-07 rather than skipping one. */
+.shot__idx::before { content: counter(plate, decimal-leading-zero); }
+.shot__body { display: grid; gap: 0.15rem; }
+.shot__title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 1.02rem; line-height: 1.2; letter-spacing: -0.02em; color: var(--cream-050);
+  transition: color var(--dur-micro) var(--ease-brand);
+}
+.shot__desc { font-size: 0.76rem; line-height: 1.4; color: var(--cream-500); }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shot__link:hover .shot__frame img { transform: scale(1.045); }
+  .shot__link:hover .shot__title { color: var(--accent); }
+  .shot__link:hover .shot__meta { border-top-color: var(--accent); }
+}
+.shot__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 0.4rem; border-radius: 0.2rem; }
+
+@media (max-width: 1180px) { .gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 860px)  { .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------------------------------------------------------------------------
+   PRICING
+   ------------------------------------------------------------------------ */
+.pricing__head { display: grid; gap: 1rem; justify-items: center; text-align: center; margin-bottom: 3rem; }
+.pricing__head .section__lead { text-align: center; }
+
+.switch {
+  position: relative; display: inline-flex; margin-top: 0.8rem;
+  padding: 0.28rem; border: 1px solid var(--ink-600); border-radius: 999px; background: var(--ink-850);
+}
+/* §3.5 - a positioned ::before that slides. Numbers swap instantly. */
+.switch__pill {
+  position: absolute; top: 0.28rem; bottom: 0.28rem; left: 0.28rem; width: calc(50% - 0.28rem);
+  border-radius: 999px; background: var(--accent);
+  transition: transform var(--dur-base) var(--ease-brand);
+}
+.switch[data-billing='annual'] .switch__pill { transform: translateX(100%); }
+/* Equal-width options: the sliding pill is a flat 50%, so an "Annual 13% OFF"
+   label that is wider than "Monthly" would leave the pill short of its own
+   text on one side. */
+.switch__opt { position: relative; z-index: 1; flex: 1 1 0; min-width: 9.5rem; text-align: center; padding: 0.5rem 1.1rem; border-radius: 999px; font-size: 0.85rem; color: var(--cream-300); transition: color var(--dur-base) var(--ease-brand); white-space: nowrap; }
+.switch__opt.is-active { color: var(--ink-900); font-weight: 600; }
+.switch__opt em { font-style: normal; font-size: 0.68rem; opacity: 0.75; }
+
+/* Bottom-aligned, like apps/marquee's row (align-items: flex-end): the cards
+   are their content's height and hang from a shared baseline, so Solo and
+   Agency - the two that carry a credit slider - stand taller than Launchpad
+   and Enterprise between them. The CTAs still line up, because the CTA is the
+   last row of every card and the cards share their bottom edge; that is the
+   same guarantee the old `1fr` list row bought, for free. */
+.pricing__grid { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; }
+@media (max-width: 1100px) { .pricing__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .pricing__grid { grid-template-columns: 1fr; } }
+
+.plan {
+  position: relative; display: grid; gap: 0.85rem;
+  grid-auto-rows: min-content;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid var(--ink-600); border-radius: 1.4rem;
+  background: rgba(18,18,17,0.5);
+}
+.plan--featured { border-color: rgba(254,160,2,0.4); background: linear-gradient(180deg, rgba(254,160,2,0.07), rgba(18,18,17,0.5)); }
+.plan__flag { position: absolute; top: -0.65rem; left: 1.4rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--accent); color: var(--ink-900); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; }
+.plan__name { font-size: 1.1rem; }
+.plan__price { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
+.plan__price b { font-family: var(--font-display); font-size: 2.6rem; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.plan__price em { font-style: normal; font-size: 0.72rem; color: var(--cream-500); }
+.plan__meta { font-size: 0.78rem; color: var(--cream-500); }
+.plan__list { display: grid; gap: 0.5rem; font-size: 0.82rem; color: var(--cream-300); padding-top: 0.6rem; border-top: 1px solid var(--ink-600); }
+.plan__list li { position: relative; padding-left: 1.1rem; }
+.plan__list li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 0.5rem; height: 0.28rem; border-left: 1.5px solid var(--good); border-bottom: 1.5px solid var(--good); transform: rotate(-45deg); }
+.plan__list li.is-limit { color: var(--cream-500); }
+.plan__list li.is-limit::before { border-color: var(--ink-500); }
+.plan__list em { font-style: normal; margin-left: 0.35rem; padding: 0.05rem 0.35rem; border-radius: 0.3rem; background: rgba(254,160,2,0.15); color: var(--accent); font-size: 0.62rem; }
+.plan__cta { margin-top: 0.6rem; justify-content: center; }
+
+/* ---- credit slider · Solo and Agency ------------------------------------
+   apps/web's CreditSlider (components/billing/PricingTable.tsx), ported. That
+   component's own comment calls it "the lander's stepped credit slider, with
+   finesse", so this is the round trip: the STOPS are the controls - real
+   buttons in a radiogroup, with generous hit areas, hover growth and arrow
+   keys - not a native range with a draggable thumb.
+
+   The beam and the knob are a HEAT RAMP. The sunset palette runs amber ->
+   orange -> red, so base-to-max literally reads as rising heat and the top
+   step FEELS heavier, which is what its "Heavy operations" label claims.
+   ------------------------------------------------------------------------ */
+.credits { display: grid; gap: 0.3rem; }
+
+.credits__stops { position: relative; height: 1.75rem; margin-inline: 0.25rem; }
+.credits__track {
+  position: absolute; inset-inline: 0; top: 50%;
+  height: 3px; margin-top: -1.5px; border-radius: 999px; background: var(--app-hover);
+}
+.credits__beam {
+  position: absolute; left: 0; top: 50%; width: 0;
+  height: 3px; margin-top: -1.5px; border-radius: 999px;
+  transition: width var(--dur-base) var(--ease-out);
+}
+.credits[data-heat='0'] .credits__beam { background: var(--app-sunset-1); }
+.credits[data-heat='1'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2)); }
+.credits[data-heat='2'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2), var(--app-sunset-3)); }
+
+/* 1.75rem of hit area around a 0.625rem dot - the target is the button, the
+   dot is only what you see. */
+.credits__stop {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  width: 1.75rem; height: 1.75rem; padding: 0;
+  border: 0; border-radius: 50%; background: none; cursor: pointer;
+}
+.credits__stop > span {
+  width: 0.625rem; height: 0.625rem; border-radius: 50%;
+  background: color-mix(in srgb, var(--app-muted-fg) 50%, transparent);
+  transition: width var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.credits__stop:hover > span {
+  transform: scale(1.25);
+  background: color-mix(in srgb, var(--app-foreground) 80%, transparent);
+}
+.credits__stop[aria-checked='true'] > span { width: 1rem; height: 1rem; transform: none; }
+.credits[data-heat='0'] .credits__stop[aria-checked='true'] > span {
+  background: var(--app-sunset-1); box-shadow: 0 0 0 3px rgb(255 179 0 / 0.25);
+}
+.credits[data-heat='1'] .credits__stop[aria-checked='true'] > span {
+  background: linear-gradient(to bottom right, var(--app-sunset-1), var(--app-sunset-2));
+  box-shadow: 0 0 0 3px rgb(255 94 0 / 0.25);
+}
+.credits[data-heat='2'] .credits__stop[aria-checked='true'] > span {
+  background: linear-gradient(to bottom right, var(--app-sunset-2), var(--app-sunset-3));
+  box-shadow: 0 0 0 3px rgb(206 20 0 / 0.3);
+}
+/* The sweet spot is marked before you touch anything. */
+.credits__stop[data-popular]:not([aria-checked='true']) > span { box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6); }
+.credits[data-heat='1'] .credits__stop[data-popular][aria-checked='true'] > span {
+  box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6), 0 0 0 5px rgb(255 94 0 / 0.25);
+}
+.credits__stop:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(255 94 0 / 0.5); }
+
+.credits__read {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; font-weight: 500; color: var(--app-foreground);
+}
+.credits__read b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.credits__mark { width: 0.85rem; height: 0.85rem; flex: none; color: var(--app-sunset-1); fill: rgb(255 94 0 / 0.25); }
+.credits__step { font-weight: 400; color: var(--cream-500); }
+.credits__best {
+  flex: none; font-style: normal; font-size: 0.62rem; font-weight: 600;
+  padding: 0.05rem 0.35rem; border-radius: 999px;
+  background: rgb(16 185 129 / 0.15); color: #10b981;
+}
+.credits__outcome { font-size: 0.7rem; color: color-mix(in srgb, var(--app-foreground) 70%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .credits__beam, .credits__stop > span { transition: none; }
+}
+
+.pricing__foot { text-align: center; margin-top: 2rem; }
+
+/* ---------------------------------------------------------------------------
+   FAQ · centered head + spaced accordion (no hairline rules between rows).
+   ------------------------------------------------------------------------ */
+.faq {
+  padding-block: clamp(4.5rem, 12vh, 8.5rem);
+}
+.faq__inner {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 3.75rem);
+  max-width: 48rem;
+  margin-inline: auto;
+}
+.faq__head {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+  text-align: center;
+}
+.faq__title {
+  color: var(--cream-050);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.faq__lead {
+  max-width: 36rem;
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.55;
+  color: var(--cream-300);
+  text-wrap: pretty;
+}
+
+/* Legacy two-column FAQ chrome (builder pages still use .faq__grid). */
+.faq__grid { display: grid; gap: 3rem; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; }
+@media (max-width: 900px) { .faq__grid { grid-template-columns: 1fr; } }
+.faq__aside { display: grid; gap: 1rem; position: sticky; top: 8rem; }
+@media (max-width: 900px) { .faq__aside { position: static; } }
+
+.accordion {
+  display: grid;
+  gap: clamp(1.75rem, 3.2vw, 2.5rem);
+}
+.accordion__item {
+  border: 0;
+  transition: opacity 0.65s var(--ease-brand);
+}
+.accordion__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.35rem 0;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--cream-050);
+  line-height: 1.35;
+}
+.accordion__head > span:first-child { flex: 1 1 auto; }
+
+/* Circular +/- control */
+.accordion__icon {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--cream-050) 45%, transparent);
+  transition: border-color var(--dur-base) var(--ease-brand), transform var(--dur-base) var(--ease-brand);
+}
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0.7rem;
+  height: 1.5px;
+  background: var(--cream-050);
+  translate: -50% -50%;
+}
+.accordion__icon::after {
+  width: 1.5px;
+  height: 0.7rem;
+  transition: opacity var(--dur-base) var(--ease-brand);
+}
+[data-accordion-status='active'] .accordion__icon {
+  transform: none;
+  border-color: color-mix(in srgb, var(--cream-050) 70%, transparent);
+}
+[data-accordion-status='active'] .accordion__icon::after { opacity: 0; }
+
+.accordion__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s var(--ease-brand); }
+[data-accordion-status='active'] .accordion__body { grid-template-rows: 1fr; }
+.accordion__body > * { overflow: hidden; }
+.accordion__body p {
+  padding: 0.85rem 0 0.15rem;
+  max-width: 42rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--cream-300);
+}
+.accordion__body p:not(:last-of-type) { padding-bottom: 0.7rem; }
+.accordion__body p:last-of-type { padding-bottom: 0.35rem; }
+
+/* Soften sibling dimming so spacing stays the hero of the layout */
+@media (min-width: 992px) and (hover: hover) {
+  .accordion:not(.has-open):hover .accordion__item { opacity: 0.45; }
+  .accordion:not(.has-open) .accordion__item:hover { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------------------
+   FINAL CTA
+   ------------------------------------------------------------------------ */
+.cta { position: relative; overflow: hidden; text-align: center; padding-block: clamp(6rem, 16vh, 12rem); }
+.cta__blob {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: min(130vw, 78rem); height: min(130vw, 78rem);
+  opacity: 0.38; pointer-events: none; mix-blend-mode: screen;
+}
+.cta__inner { position: relative; z-index: 1; display: grid; gap: 1.6rem; justify-items: center; }
+.cta__h2 { line-height: 0.85; }
+.cta__inner p b { color: var(--cream-050); font-weight: 600; }
+.cta__actions { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+
+/* ---------------------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------------------ */
+.footer {
+  border-top: 1px solid var(--ink-600); padding-block: 4rem 2.5rem;
+  opacity: 0; filter: blur(10px);
+  transition: opacity var(--dur-reveal) var(--ease-out), filter var(--dur-reveal) var(--ease-out);
+}
+.footer.is-in { opacity: 1; filter: blur(0); }
+.no-js .footer { opacity: 1; filter: none; }
+.footer__top { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding-bottom: 2.5rem; }
+.footer__logo { display: flex; align-items: center; }
+.footer__logo img { height: 2.05rem; width: auto; } /* see .nav__logo img */
+.footer__news { display: flex; gap: 0.5rem; align-items: center; }
+.footer__news input {
+  padding: 0.8rem 1.1rem; border-radius: 999px; border: 1px solid var(--ink-600);
+  background: var(--ink-850); font-size: 0.85rem; min-width: 15rem;
+}
+.footer__news input::placeholder { color: var(--cream-500); }
+.footer__cols {
+  display: grid;
+  /* auto-fit, not repeat(5): the column count is the LINK INVENTORY's business
+     (scripts/build-pages.mjs owns it), and a hardcoded count here means adding a
+     footer column silently squashes the other four. */
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 1.5rem; padding-block: 2.5rem; border-top: 1px solid var(--ink-600);
+}
+@media (max-width: 700px) { .footer__cols { grid-template-columns: repeat(2, 1fr); } }
+.footer__cols div { display: grid; gap: 0.55rem; align-content: start; font-size: 0.85rem; color: var(--cream-300); }
+.footer__col-name { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-500); }
+.footer__cols a { transition: color var(--dur-micro) var(--ease-brand); }
+.footer__cols a:hover { color: var(--accent); }
+.footer__legal { padding-top: 1.5rem; border-top: 1px solid var(--ink-600); }
+
+/* ===========================================================================
+   RESPONSIVE - the tiers §2.8 asks for, plus the places where a desktop
+   composition simply has no narrow-screen equivalent and needs a real one.
+   ======================================================================== */
+
+/* ---- mobile nav ---------------------------------------------------------- */
+.nav__burger { display: none; position: relative; width: 2.4rem; height: 2.4rem; }
+.nav__burger i {
+  position: absolute; left: 0.55rem; right: 0.55rem; height: 1.5px; background: currentColor;
+  transition: transform var(--dur-base) var(--ease-brand), opacity var(--dur-base) var(--ease-brand);
+}
+.nav__burger i:first-child { top: 0.9rem; }
+.nav__burger i:last-child { bottom: 0.9rem; }
+.nav__burger[aria-expanded='true'] i:first-child { transform: translateY(0.3rem) rotate(45deg); }
+.nav__burger[aria-expanded='true'] i:last-child { transform: translateY(-0.3rem) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  /* Logo left, burger right. `order: -1` put the burger first, which reads
+     as a back arrow more than a menu. */
+  .nav__burger { display: block; }
+  .nav__links {
+    display: grid; gap: 0.4rem;
+    position: absolute; top: calc(100% + 0.6rem); left: 0; right: 0;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--ink-600); border-radius: 1.4rem;
+    background: rgba(11, 9, 7, 0.94);
+    backdrop-filter: blur(16px);
+    opacity: 0; visibility: hidden; transform: translateY(-0.5rem);
+    transition: opacity var(--dur-base) var(--ease-brand),
+                transform var(--dur-base) var(--ease-brand),
+                visibility 0s linear var(--dur-base);
+  }
+  .nav.is-open .nav__links {
+    opacity: 1; visibility: visible; transform: none; transition-delay: 0s;
+  }
+  .nav__links a { padding: 0.5rem 0; font-size: 1rem; }
+  .nav__inner { position: relative; }
+  /* No CTA in the mobile bar: the logo and the burger are the whole job at this
+     width. The menu itself does not carry one either - "Start Building" is the
+     full-width button in the hero, and again in the closing CTA. */
+  .nav__cta-wrap { display: none; }
+}
+
+.workspace__zone-shot {
+  display: none;
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  border-radius: inherit;
+}
+
+/* ---- §2.8 tier 3 · under 480px ------------------------------------------
+   No pin, no scrub, no handoff. The canvas stops being a travelling object
+   and becomes what it always was underneath: the hero's background. Scoping
+   it to the hero with position:absolute is what stops the fixed frame from
+   showing through every transparent section below.                        */
+/* ---------------------------------------------------------------------------
+   THE STATIC TIERS · §2.8 tier 3 (<480px) and tier 4 (reduced motion)
+   ---------------------------------------------------------------------------
+   Both tiers remove the scrub, so both must also remove the thing the scrub
+   pays for: four viewports of scrolling. Without a scrubbed canvas behind
+   them, panels 2-4 are three blank screens between two paragraphs, and the
+   spacer panel - whose only job was to mark where the handoff begins - is a
+   whole empty viewport that now marks nothing.
+   So the hero collapses to one full-height opening plus two ordinary blocks,
+   the spacer is removed, and the canvas is scoped to the first viewport it
+   actually sits behind. Every rule below is shared by both tiers because the
+   two tiers want exactly the same shape; only the emphasis differs.
+
+   `.no-js` joins them for the same reason again: with no script, nothing
+   pins, nothing scrubs and nothing is handed off, so the page needs to be the
+   static composition rather than four blank screens over a canvas that will
+   never move.
+   ------------------------------------------------------------------------ */
+/* Three things are normally handed their final state by the entrance timeline
+   (§2.3). With no script there is no timeline, so CSS has to hand it over
+   instead - otherwise the nav never fades in and the canvas stays under the
+   15px atmosphere blur that beat 5 was supposed to lift. */
+.no-js .loader { display: none; }
+.no-js .hero-media__scrim { backdrop-filter: none; -webkit-backdrop-filter: none; }
+/* The scrub is what normally parks the canvas in the right-hand column. With
+   no script it has to be parked here, or it lands centred, under the copy. */
+@media (min-width: 1100px) {
+  .no-js .stage, .static-hero .stage { transform: translateX(19%); }
+}
+.static-hero .hero__panel, .no-js .hero__panel { min-height: auto; padding-block: 3rem; }
+.static-hero .hero__panel.is-1, .no-js .hero__panel.is-1 { min-height: 100svh; padding-block: calc(var(--nav-h) + 3rem) 3rem; }
+@media (max-width: 620px) {
+  .static-hero .hero__panel.is-1, .no-js .hero__panel.is-1 { padding-block: calc(var(--nav-h) + 1.25rem) 2rem; }
+}
+.static-hero .hero__panel.is-spacer, .no-js .hero__panel.is-spacer { display: none; }
+.static-hero .hero-media, .no-js .hero-media {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100svh;
+}
+.static-hero .workspace__zone-shot, .no-js .workspace__zone-shot { display: block; }
+.static-hero .workspace__zone, .no-js .workspace__zone { background: var(--ink-850); }
+
+@media (max-width: 479px) {
+  /* the scene is texture here, not a readable UI - the copy owns the column */
+  .stage { opacity: 0.3; filter: blur(2px); }
+  .hero-media__frame::after {
+    background: linear-gradient(180deg, rgba(6,5,4,0.86), rgba(6,5,4,0.7) 60%, rgba(6,5,4,0.9));
+  }
+  .stage__hud, .stage__rail { display: none; }
+}
+
+/* ---- arc: columns above 760px, a marquee rail below ---------------------- */
+.arc__rail { display: none; }
+@media (max-width: 760px) {
+  .arc__col { display: none; }
+  /* stacked, so the interpunct separators would land at the start of a wrapped
+     line rather than between two items */
+  .arc__claims { flex-direction: column; gap: 0.4rem; }
+  .arc__claims li + li::before { content: none; }
+  .arc__rail {
+    display: block; position: absolute; left: 0; right: 0; bottom: 18vh; z-index: 1;
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--cream-500);
+  }
+  .arc__rail .marquee__group { gap: 2rem; padding-right: 2rem; }
+  .arc__rail span { white-space: nowrap; }
+
+  /* The 150svh box and the sticky, viewport-centred claim exist so the two
+     COLUMNS of typed sentences can arc past a claim that holds still. Those
+     columns are display:none three rules up, so down here the mechanic was
+     buying nothing and costing ~380px of empty screen above "What people
+     type". Back into normal flow: the claim sits under the section's own
+     padding and the rail follows it. */
+  .arc { min-height: 0; }
+  .arc__center { position: static; top: auto; translate: none; }
+  .arc__rail { position: static; margin-top: 2.5rem; }
+}
+
+/* ---- general narrow-screen tidy ------------------------------------------ */
+@media (max-width: 900px) {
+  .faq__grid { gap: 2rem; }
+  .engine__head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .engine__progress { max-width: none; width: 100%; }
+}
+@media (max-width: 700px) {
+  .hero__cta { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .footer__top { flex-direction: column; align-items: flex-start; }
+  .footer__news { width: 100%; }
+  .footer__news input { flex: 1; min-width: 0; }
+  /* the gallery's plates are grid items now, not marquee tiles */
+}
+
+/* ---------------------------------------------------------------------------
+   STAGE PROMPT · the mini AIWA composer inside the Why cards
+
+   This is the Marquee Next prompt component, renamed wholesale from .prompt to
+   .stage-prompt on the way in. It is NOT reusing the hero's .prompt: that one
+   is a single baseline-aligned row (glyph, text, caret) and this one is a
+   column with a toolbar, chips and a send button. Sharing the class name would
+   have made each one's base rule fight the other's at equal specificity, decided
+   by source order - which is the kind of bug that only shows up on the beat
+   nobody screenshotted.
+   ------------------------------------------------------------------------ */
+.stage-prompt {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-radius: 1.4rem;
+  background: linear-gradient(180deg, rgba(28,24,17,0.86), rgba(12,10,8,0.9));
+  box-shadow: 0 2rem 5rem rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+.stage-prompt__body {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding: 1.35rem 1.5rem 1.1rem;
+  font-family: var(--font-mono); font-size: clamp(0.85rem, 1.35vw, 1.05rem); line-height: 1.5;
+}
+.stage-prompt__glyph { color: var(--accent); }
+.stage-prompt__text { color: var(--cream-050); }
+.stage-prompt__caret {
+  display: inline-block; width: 0.5em; height: 1.1em; translate: 0 0.15em;
+  background: var(--accent); animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.stage-prompt__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--prompt-bar-gap);
+  flex-wrap: nowrap;
+  padding: var(--prompt-bar-pad-y) var(--prompt-bar-pad-x);
+  border-top: 1px solid var(--prompt-hairline);
+  font-family: var(--font-body);
+}
+.stage-prompt__bar-left, .stage-prompt__bar-right {
+  display: flex; align-items: center; gap: var(--prompt-bar-gap); min-width: 0;
+  flex: 0 1 auto;
+}
+.stage-prompt__bar-right { flex: 0 0 auto; }
+.stage-prompt__plus {
+  display: grid; place-items: center;
+  width: var(--prompt-ctrl); height: var(--prompt-ctrl); flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--prompt-plus-bg);
+  color: var(--cream-300);
+}
+.stage-prompt__plus .icon { width: var(--prompt-icon); height: var(--prompt-icon); }
+.stage-prompt__model, .stage-prompt__chip, .stage-prompt__build {
+  display: inline-flex; align-items: center; gap: var(--prompt-chip-gap);
+  min-height: var(--prompt-ctrl);
+  font-size: var(--prompt-type); font-weight: 500; color: var(--cream-050);
+  white-space: nowrap; line-height: 1;
+}
+.stage-prompt__model {
+  padding: var(--prompt-model-pad);
+}
+.stage-prompt__model img {
+  width: var(--prompt-favicon); height: var(--prompt-favicon);
+  border-radius: var(--prompt-favicon-radius); object-fit: cover; flex: 0 0 auto;
+}
+.stage-prompt__model .icon, .stage-prompt__chip .icon {
+  width: var(--prompt-icon); height: var(--prompt-icon); color: var(--cream-500);
+}
+.stage-prompt__chip {
+  padding: var(--prompt-chip-pad);
+  border-radius: 999px;
+  background: var(--prompt-chip-bg);
+  border: 1px solid var(--line);
+}
+.stage-prompt__chip-db { color: var(--good); }
+.stage-prompt__chip-spark { color: var(--accent); }
+.stage-prompt__build { color: var(--accent); }
+.stage-prompt__build .icon {
+  width: var(--prompt-icon); height: var(--prompt-icon); color: var(--accent);
+}
+.stage-prompt__mic {
+  display: grid; place-items: center;
+  width: var(--prompt-ctrl); height: var(--prompt-ctrl);
+  flex: 0 0 auto; color: var(--cream-300);
+}
+.stage-prompt__mic .icon { width: var(--prompt-icon-lg); height: var(--prompt-icon-lg); }
+.stage-prompt__send {
+  display: grid; place-items: center;
+  width: var(--prompt-send); height: var(--prompt-send); flex: 0 0 auto;
+  border-radius: 50%;
+  color: var(--ink-900);
+  background: var(--prompt-send-fill);
+}
+.stage-prompt__send .icon { width: var(--prompt-icon-lg); height: var(--prompt-icon-lg); }
+
+@media (max-width: 700px) {
+  .stage-prompt__chip span, .stage-prompt__model span { display: none; }
+  .stage-prompt__bar { gap: var(--prompt-chip-gap); }
+}
+
+/* ===========================================================================
+   PHONES · the mobile pass
+
+   The fluid root in tokens.css targets a 16px root at EACH tier's design
+   width, so a 390px phone renders rem values at very nearly their desktop
+   size. That is the whole problem: nothing shrinks on its own down here, so
+   the desktop rhythm has to be re-stated rather than left to scale.
+
+   Three jobs, in order of how much they cost a phone reader:
+   give the page back its vertical space, size the display type for a screen
+   held at arm's length, and make every CTA a real thumb target.
+   ======================================================================== */
+@media (max-width: 620px) {
+  /* 117px of padding at the top of a section, on a 780px-tall screen, meant
+     every section opened with a third of a screen of nothing. */
+  .section { padding-block: clamp(3rem, 8vh, 4.5rem); }
+
+  /* Display leading is set for 100px headlines. At 43px, 0.88 stops reading as
+     tight and starts reading as collided - the descenders of one line meet the
+     caps of the next. */
+  h1, h2, h3, h4 { line-height: 1.02; letter-spacing: -0.025em; }
+  .t-display { font-size: clamp(2.5rem, 11vw, 3.2rem); line-height: 0.98; }
+  .t-h2 { font-size: clamp(1.9rem, 8.2vw, 2.4rem); }
+  .t-h3 { font-size: clamp(1.35rem, 6vw, 1.8rem); }
+  .cta__h2 { line-height: 0.95; }
+  .section__lead, .hero__sub { text-wrap: pretty; }
+
+  /* A shorter bar. 71px of fixed chrome over an 844px screen is 8% of the
+     viewport spent on a logo and a burger; ~57px does the same job. --nav-h
+     follows it, because the hero's top padding is measured from it. */
+  :root { --nav-h: 3.5rem; }
+  .nav { padding-top: 0.6rem; }
+  .nav__inner { min-height: 2.75rem; padding: 0.3rem; }
+  .nav__logo img { height: 1.5rem; }
+  .nav__burger { width: 2.25rem; height: 2.25rem; }
+  .nav__burger i { left: 0.5rem; right: 0.5rem; }
+  .nav__burger i:first-child { top: 0.8rem; }
+  .nav__burger i:last-child { bottom: 0.8rem; }
+
+  /* Full-width CTAs. A 172px button floating in a 390px column is a smaller
+     target than the thumb aiming at it, and it leaves the column looking
+     unfinished on the right. */
+  /* `grid-template-columns: 1fr` is load-bearing: .cta__actions carries a
+     base `justify-content: center`, which in grid centres a max-content COLUMN
+     inside the full-width box - so the buttons stacked but stayed 172px. */
+  .hero__cta, .cta__actions { display: grid; grid-template-columns: 1fr; gap: 0.7rem; width: 100%; }
+  /* ...including the loose ones. "See the workflow engine" is a bare .btn in
+     the third hero panel, not inside a CTA row, so it needs naming. */
+  .hero__cta .btn, .cta__actions .btn, .hero__panel-inner > .btn { width: 100%; justify-content: center; }
+
+  /* Cards: desktop padding is ~12% of the viewport at this width, so the
+     content column inside a card was narrower than it needed to be. */
+  .plan { padding: 1.35rem 1.15rem; gap: 0.7rem; }
+  .plan__price b { font-size: 2.2rem; }
+  .plan__list { gap: 0.45rem; }
+
+  /* THE CASE-STUDY ASIDE. Three 16:9 cards across a 379px column is 112x63
+     each - and at that size --radius-card (2.5rem) eats the whole card, while
+     the caption overlay is a two-line 9px label covering most of the shot.
+     Three blobs, not an argument.
+
+     On a phone they become a swipeable rail: one card is wide enough to
+     actually read, the caption moves out from over the image to under it, and
+     the whole row costs one card's height instead of three stacked. The
+     negative margin bleeds the rail to both screen edges so it reads as
+     scrollable; the matching padding keeps the first card on the text column. */
+  .ws-aside {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 62vw;
+    gap: 0.7rem; min-width: 0;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter);
+  }
+  .ws-aside::-webkit-scrollbar { display: none; }
+  .ws-aside__item {
+    aspect-ratio: auto; scroll-snap-align: center;
+    border: 0; background: none; border-radius: 0; overflow: visible;
+  }
+  .ws-aside__item img {
+    aspect-ratio: 16 / 9; height: auto; border-radius: 1rem;
+    border: 1px solid var(--ink-700); background: var(--ink-850);
+  }
+  .ws-aside__cap {
+    position: static; padding: 0.5rem 0.15rem 0; background: none;
+    font-size: 0.62rem; letter-spacing: 0.14em;
+  }
+
+  /* The contact sheet at two-up. A 4/3 crop anchored top-left keeps each
+     thumbnail showing the app's own header, which is the part that is still
+     recognisable at 160px wide - a 16/11 crop of a whole page is mush. */
+  .gallery__grid { gap: 1.5rem 0.8rem; }
+  .shot__link { gap: 0.6rem; }
+  .shot__frame { border-radius: 0.6rem; }
+  .shot__frame img { aspect-ratio: 4 / 3; }
+  .shot__meta { gap: 0.45rem; padding-top: 0.55rem; }
+  .shot__title { font-size: 0.88rem; }
+  /* Two-up columns are 167px, so some descriptors take two lines and some
+     one. Reserve both lines on every plate: eight captions ending at eight
+     different heights is what stops a grid reading as ruled. */
+  .shot__desc { font-size: 0.7rem; min-height: 2.8em; }
+  .gallery__masthead { gap: 0.7rem; }
+  .gallery__all { font-size: 0.62rem; letter-spacing: 0.12em; }
+
+  /* Thumb targets. The credit stops match the app's 28px hit area, which is
+     fine under a mouse and too small under a thumb - the DOT stays the size it
+     is, only the invisible target around it grows. Footer links were 22px rows
+     with no padding, which is a column of near-misses. */
+  .credits__stop { width: 2.5rem; height: 2.5rem; }
+  .credits__stops { height: 2.5rem; }
+  .footer__cols a { padding-block: 0.3rem; }
+}

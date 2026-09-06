@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AI App Builder, Build, Deploy &amp; Evolve Web and Mobile Apps With AI | AIWA</title>
+<meta name="description" content="AIWA builds, deploys and evolves full-stack web and mobile apps with a team of AI agents. Frontend, backend, database and auth generated together, then tested in a real browser and shipped to a live URL or an app store." />
+<link rel="canonical" href="https://aiwa.codes/ai-app-builder" />
+<link rel="icon" href="/aiwa-favicon.svg" type="image/svg+xml" />
+
+<!-- Same two faces the home page preloads, for the same reason (§2.9): the
+     heading is set in Bricolage and a low-priority font fetch is visible. -->
+<link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/page.css" />
+
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body class="page">
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/#top" aria-label="AIWA home">
+      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+    </a>
+    <button class="nav__burger" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <i></i><i></i>
+    </button>
+    <div class="nav__links" id="nav-links">
+      <a href="/#why">Features</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a>
+      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Community</a>
+    </div>
+    <div class="nav__cta-wrap">
+      <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
+        <span class="btn__label">Login</span>
+      </a>
+      <a class="btn btn--primary nav__cta nav__cta--build" href="/#pricing" tabindex="-1" aria-hidden="true">
+        <span class="btn__label">Start Building</span>
+        <span class="btn__arrow"><span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="shell shell--wide">
+<section class="page-hero">
+  <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="page-hero__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>AIWA App Builder</p>
+    <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>Build, deploy and evolve full-stack apps<br />with a team of AI agents</h1>
+    <p class="t-body page-hero__lead" data-blur-child>One description gets you a working application: interface, backend, database, auth and a live URL. Then the agents stay on it, testing every change in a real browser, keeping context across every decision, and shipping to Android and iOS when you are ready.</p>
+    <div class="page-hero__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Build My App Free</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="#how">
+          <span class="btn__label">See how it works</span>
+        </a>
+    </div>
+    <p class="page-hero__note" data-blur-child>Free to start · no credit card required</p>
+  </div>
+</section>
+
+<section class="page-section page-section--tight">
+  <dl class="page-meta" data-blur-in>
+    <div><dt>Generated together</dt><dd>Full stack<em>UI, API, database, auth</em></dd></div>
+    <div><dt>Ships to</dt><dd>Web + native<em>signed APK and IPA</em></dd></div>
+    <div><dt>Tested in</dt><dd>Real browser<em>before every deploy</em></dd></div>
+    <div><dt>Models</dt><dd>Four<em>switch per task</em></dd></div>
+  </dl>
+</section>
+
+<section class="page-section">
+  <div class="page-section__head" data-blur-parent>
+    <h2 class="t-h3" data-blur-child>The first version is easy now. The second one is where projects die.</h2>
+    <p class="t-body section__lead" data-blur-child>A prompt-to-app tool will give you something that runs. The trouble starts at the first real change: the generator has forgotten why the app looks the way it does, regenerates a working screen, and quietly breaks the flow beside it.</p>
+    <p class="t-body section__lead" data-blur-child>So the work becomes archaeology. You re-explain your own app to the tool every session, and the app gets worse in the places you are not looking.</p>
+    <p class="t-body section__lead" data-blur-child>An app is not a one-time generation. It is a codebase that has to keep its own history.</p>
+    <p class="t-body section__lead" data-blur-child><strong style="color:var(--cream-050)">AIWA keeps that history, and tests it before every deploy.</strong></p>
+  </div>
+</section>
+
+<section class="page-section" id="agents">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>The AIWA difference</p>
+    <h2 class="t-h2" data-blur-child data-grad>Five agents, one codebase, no amnesia</h2>
+    <p class="t-body section__lead" data-blur-child>Every AIWA app is planned, built, tested and evolved by the same five agents that run the rest of the platform.</p>
+  </div>
+  <div class="why__grid" data-blur-parent data-stagger="100">
+    <article class="feature feature--wide" data-blur-child data-spring>
+      <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Product Manager</h3>
+        <p class="t-body">Turns your description into a plan: screens, data model, states and the order to build them in, before any code exists.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Architecture</h3>
+        <p class="t-body">Fits every feature to the codebase that already exists rather than regenerating around it, which is the whole reason change two behaves like change one.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">AI Builder</h3>
+        <p class="t-body">Generates the frontend, the API, the database schema and the auth flows together, as a full file tree you can read and export.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Autonomous QA</h3>
+        <p class="t-body">Exercises the app in a real browser before deployment: routes, forms, auth, mobile layout. What it breaks, it fixes.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Evolution Agent</h3>
+        <p class="t-body">Keeps working after launch. Version history, restore, and a weekly report on what changed and what it recommends next.</p>
+      </div>
+    </article>
+  </div>
+  <p class="t-body pricing__foot" data-blur-in>This is the difference between a tool that generates an app and a team that maintains one.</p>
+</section>
+
+<section class="page-section" id="how">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>How it works</p>
+    <h2 class="t-h2" data-blur-child data-grad>From a sentence to an app in the store</h2>
+  </div>
+  <div class="steps" data-blur-parent data-stagger="80">
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Describe the app</h3>
+        <p class="t-body">What it does, who signs in, what it stores. One paragraph is enough; the planning agent asks about the parts you left open.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Review the plan, not the code</h3>
+        <p class="t-body">Screens, data model, roles and build order come back first. Change the plan while it is still a paragraph rather than a pull request.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Full stack built and deployed</h3>
+        <p class="t-body">Interface, API, Postgres database and auth generated together, tested in a real browser, and live on a URL you can send to someone.</p>
+      </div>
+    </div>
+    <div class="steps__item" data-blur-child>
+      <p class="steps__idx" aria-hidden="true"></p>
+      <div class="steps__body">
+        <h3>Export to Android and iOS</h3>
+        <p class="t-body">When the web app is right, export a signed APK or IPA from the same project. One codebase, three places it runs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section" id="features">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Features</p>
+    <h2 class="t-h2" data-blur-child data-grad>Everything the app needs, generated together</h2>
+  </div>
+  <div class="why__grid" data-blur-parent data-stagger="100">
+    <article class="feature feature--hero" data-blur-child data-spring>
+      <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <div class="feature__body">
+        <h3 class="t-h4">Web and native from one project</h3>
+        <p class="t-body">The same app ships to a URL and to the stores. Export a signed APK for Android or IPA for iOS without a second codebase.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Invisible managed backend</h3>
+        <p class="t-body">A dedicated Postgres database, auth, row-level security and real-time subscriptions, provisioned automatically. You never touch a config file.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Project Brain™</h3>
+        <p class="t-body">Every architectural decision, schema change and feature is remembered. Come back in six months, ask for a change, and nothing else moves.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Multi-model generation</h3>
+        <p class="t-body">Claude Opus · Sonnet · GPT-4o · Gemini 2.5 Pro. Pick the model for the task, pay in credits, and switch whenever the job changes.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Tested before it ships</h3>
+        <p class="t-body">Autonomous QA drives the real app in a real browser on every change: routes, forms, auth, responsive layout. Regressions are caught before your users find them.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Live preview and one-click deploy</h3>
+        <p class="t-body">Watch the app build as it is generated, then publish to your custom domain. AIWA handles the pipeline, SSL and CDN.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Code export and GitHub sync</h3>
+        <p class="t-body">Full source, full schema, in your repository. Connect the AI providers, database, payment and email services you already pay for, with your keys.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="page-section" id="compare">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Comparison</p>
+    <h2 class="t-h2" data-blur-child data-grad>AIWA vs other AI app builders</h2>
+  </div>
+  <div class="compare" data-blur-in>
+    <table>
+      <thead>
+        <tr><th scope="col">Feature</th><th scope="col" class="is-ours">AIWA</th><th scope="col">Lovable</th><th scope="col">Bolt.new</th><th scope="col">Replit Agent</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Full stack generation</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+        <tr><th scope="row">Persistent context across sessions</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td>Partial</td><td>Manual</td><td>Partial</td></tr>
+        <tr><th scope="row">Browser-level automated QA</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td>Partial</td></tr>
+        <tr><th scope="row">Native mobile export (APK + IPA)</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td></tr>
+        <tr><th scope="row">Managed Postgres + auth provisioned</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td>Manual</td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+        <tr><th scope="row">Version history and one-click restore</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td>Partial</td><td><s aria-hidden="true"></s><span class="sr-only">No</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+        <tr><th scope="row">Full source export and GitHub sync</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="page-section" id="use-cases">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Use cases</p>
+    <h2 class="t-h2" data-blur-child data-grad>What people build here</h2>
+  </div>
+  <div class="cases" data-blur-parent data-stagger="70">
+    <article data-blur-child>
+      <h3>Internal tools</h3>
+      <p>The dashboard, approval queue or scheduler your team runs on, built in an afternoon instead of waiting two quarters for engineering time.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Marketplaces</h3>
+      <p>Two-sided products with listings, messaging, payments and reviews, on a real database with real permissions.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Mobile-first products</h3>
+      <p>Ship the web app first, validate it, then export the signed APK and IPA from the same project when the idea holds up.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Client work</h3>
+      <p>Agencies delivering full applications, not prototypes, with version history and a QA pass the client can see.</p>
+    </article>
+    <article data-blur-child>
+      <h3>MVPs before the raise</h3>
+      <p>Working software to show an investor or a first customer, built and deployed before the deck is finished.</p>
+    </article>
+  </div>
+</section>
+
+<section class="page-section faq" id="faq">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>FAQ</p>
+    <h2 class="t-h2" data-blur-child data-grad>Questions people ask before they start</h2>
+  </div>
+  <div class="faq__grid faq__grid--single">
+  <div class="accordion" data-accordion data-accordion-close-siblings="true" data-blur-in>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>What kind of apps can AIWA build?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Full-stack applications with a database, authentication and real users: internal tools, marketplaces, dashboards, booking and client portals. If it needs accounts and data, it is in scope.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Will a later change break what already works?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">That is what AI Architecture and Project Brain™ exist to prevent: every feature is fitted to the codebase that exists rather than regenerated around it, and Autonomous QA drives the whole app in a browser before the change deploys.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>How does the mobile export work?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">From the same project you export a signed APK for Android or an IPA for iOS, ready for store submission. There is no second codebase and no separate mobile build to keep in sync.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Do I get the code?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes. Full source and database schema, exported or synced to GitHub whenever you want. AIWA connects to the providers and services you already pay for using your own keys.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>What does it cost to build one?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Credits, not seats. A full app costs roughly 50 credits, and a free account starts with 45 welcome credits and no card.</p></div></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="page-section" id="related">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Explore more</p>
+    <h2 class="t-h2" data-blur-child data-grad>Related solutions</h2>
+  </div>
+  <div class="related" data-blur-parent data-stagger="70">
+    <a href="/ai-saas-builder" data-blur-child>
+      <h3>AI SaaS Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Ship a production-ready SaaS: frontend, backend, auth and Stripe payments, from a prompt.</p>
+    </a>
+    <a href="/ai-crm-builder" data-blur-child>
+      <h3>AI CRM Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build a custom CRM around exactly how your team sells: fields, pipelines, automations, reports.</p>
+    </a>
+  </div>
+</section>
+
+<section class="section cta">
+  <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="cta__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Describe it. Ship it.</p>
+    <h2 class="t-display cta__h2" data-blur-child data-grad>Describe it.<br />Ship it.</h2>
+    <p class="t-body" data-blur-child>One paragraph in. A tested, deployed, full-stack application out.</p>
+    <div class="cta__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Build My App Free</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn" href="/#pricing">
+          <span class="btn__label">See pricing</span>
+        </a>
+    </div>
+    <p class="footer__legal t-small" data-blur-child style="border:0;padding:0">No credit card required</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-footer>
+  <div class="shell shell--wide">
+    <div class="footer__top">
+      <a class="footer__logo" href="/#top" aria-label="AIWA home">
+        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+      </a>
+      <form class="footer__news" onsubmit="return false">
+        <label class="sr-only" for="news">Email address</label>
+        <input id="news" type="email" placeholder="Join our newsletter" />
+        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+      </form>
+    </div>
+    <div class="footer__cols">
+      <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder" aria-current="page">App Builder</a></div>
+      <div><span class="footer__col-name">Pages</span><a href="/#why">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
+      <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
+      <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
+      <div><span class="footer__col-name">Contact</span><a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+    </div>
+    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/vendor/lenis.min.js"></script>
+<script type="module" src="/js/page.js"></script>
+</body>
+</html>

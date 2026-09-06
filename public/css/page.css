@@ -1,0 +1,405 @@
+/* ============================================================================
+   AIWA · Sub-page styles
+
+   The home page is one continuous scroll-driven composition; everything else on
+   this site is a PAGE - a reading surface with a nav, a heading, blocks of
+   content and a footer. Those pages share the tokens, the type scale, the
+   button, the blur-reveal and the footer from tokens/base/site.css, and add
+   only what a page needs and the home page has no use for.
+
+   NOTHING HERE REDEFINES A TOKEN. If a value looks like it wants to be a token,
+   it belongs in tokens.css and the spec, not in this file.
+
+   The vocabulary, in the order it appears below:
+
+     .page             body class - nav visible from the first paint (§2.2's
+                       opacity:0 is a hero-entrance state and there is no
+                       entrance here), and top padding for the fixed nav.
+     .page-hero        eyebrow + display heading + lead + actions, over a blob
+     .page-meta        the hairline strip of facts under a page hero
+     .steps            numbered "how it works" rail
+     .compare          feature-by-product comparison table
+     .cases            use-case grid (a lighter .feature)
+     .related          "explore more" cards
+     .prose            long-form copy: legal documents and doc articles
+     .toc              on-this-page nav for a long document
+     .hub              the /legal directory listing
+     .cards            docs + resources card grids
+     .quickstart       the terminal-ish code block on /docs
+     .notfound         /404
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   The page shell
+   ------------------------------------------------------------------------ */
+/* overflow-x: CLIP, never hidden. The page hero's blob is deliberately wider
+   than the page (that is how a glow reads as atmosphere rather than as a
+   graphic), and something has to stop it adding a horizontal scrollbar. It
+   cannot be `overflow: hidden` on the hero: measured at 1440x900, the hero's
+   clip box draws a visible hard rectangle around the blob's faint tail. And it
+   cannot be `overflow-x: hidden` HERE either - on the body that silently makes
+   the block axis a scroll container, which breaks .toc's position:sticky and
+   hands ScrollTrigger the wrong scroller. `clip` clips without becoming a
+   scroll container, which is the entire reason it exists. */
+.page { overflow-x: clip; }
+.page .nav { opacity: 1; }
+.page .footer { opacity: 1; filter: none; }          /* IO adds .is-in; a page
+   that is shorter than the viewport never scrolls, so the observer that owns
+   .is-in may never fire. A page must not be able to hide its own footer. */
+.page main { padding-top: calc(var(--nav-h) + 2.5rem); }
+
+/* Breadcrumb. One line, one hop up the tree, always the first thing in main. */
+.crumb {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--cream-500);
+  transition: color var(--dur-micro) var(--ease-brand);
+}
+.crumb::before {
+  content: ''; width: 0.9rem; height: 1px; background: currentColor;
+  transition: width var(--dur-base) var(--ease-brand);
+}
+.crumb:hover { color: var(--accent); }
+.crumb:hover::before { width: 1.4rem; }
+
+/* ---------------------------------------------------------------------------
+   .page-hero
+   The page's opening. Same instrument as the home hero's first panel - display
+   type on a dark ground with one amber blob behind it - at a third of the
+   height, because a page that is mostly content should not spend a full
+   viewport saying its own name.
+   ------------------------------------------------------------------------ */
+.page-hero { position: relative; padding-block: clamp(3rem, 8vh, 6rem) clamp(3rem, 7vh, 5rem); }
+/* Same treatment as .feature__blob and .cta__blob in site.css, and for the same
+   reason: mix-blend-mode SCREEN, no filter. A filter:blur() on the element gives
+   it its own containing box, and the SVG's rectangle then shows as a hard edge
+   wherever .page-hero clips it - which is exactly what a blob must never do. */
+.page-hero__blob {
+  position: absolute; right: -16%; top: 50%; translate: 0 -50%;
+  /* Sized to OVERFLOW the hero on every axis, which is the whole trick and the
+     same one .cta__blob uses: .page-hero clips, the blob's radial fill reaches
+     its own viewBox edge, so any edge that lands inside the section reads as a
+     rectangle. A page hero is ~470px tall at its shortest (the legal hub) and
+     this is ~990px, so there is no edge left inside to see. */
+  width: min(120vw, 62rem); height: min(120vw, 62rem);
+  z-index: 0; opacity: 0.34; pointer-events: none; mix-blend-mode: screen;
+  /* And the belt to that braces: the blob's radial fill still carries alpha at
+     its own viewBox edge, so a soft rectangle survives wherever the section does
+     clip it. This mask takes its alpha to zero before the box ends, which makes
+     the shape correct at any hero height rather than at the ones measured. */
+  -webkit-mask-image: radial-gradient(closest-side, #000 42%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 42%, transparent 100%);
+}
+.page-hero__inner { position: relative; z-index: 1; display: grid; gap: 1.5rem; justify-items: start; max-width: 56rem; }
+.page-hero__h1 { font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 0.98; text-wrap: balance; }
+.page-hero__lead { max-width: 44rem; font-size: clamp(1.05rem, 1.4vw, 1.3rem); }
+.page-hero__actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.4rem; }
+.page-hero__note { font-size: 0.82rem; color: var(--cream-500); }
+
+/* Narrower opening for a document: prose wants a measure, not a canvas. */
+.page-hero--doc { padding-bottom: clamp(2rem, 5vh, 3rem); }
+.page-hero--doc .page-hero__inner { max-width: 46rem; gap: 1.1rem; }
+
+/* ---------------------------------------------------------------------------
+   .page-meta - the fact strip. Hairline top and bottom, mono labels, so the
+   claims in the hero are immediately followed by something checkable.
+   ------------------------------------------------------------------------ */
+.page-meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.5rem;
+  padding-block: 1.6rem;
+  border-top: 1px solid var(--ink-600); border-bottom: 1px solid var(--ink-600);
+}
+.page-meta div { display: grid; gap: 0.3rem; align-content: start; }
+.page-meta dt, .page-meta__label {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cream-500);
+}
+.page-meta dd, .page-meta__value { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: -0.02em; }
+.page-meta dd em, .page-meta__value em { font-style: normal; font-family: var(--font-body); font-size: 0.8rem; color: var(--cream-500); margin-left: 0.45rem; letter-spacing: 0; }
+
+/* ---------------------------------------------------------------------------
+   .steps - the numbered rail.
+   The index is the visual: a mono numeral against a 1px amber tick, with the
+   connector drawn as a border on the item rather than a pseudo-element line, so
+   it cannot fall out of sync with the row heights.
+   ------------------------------------------------------------------------ */
+.steps { display: grid; gap: 0; counter-reset: step; }
+.steps__item {
+  counter-increment: step;
+  display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding-block: clamp(1.6rem, 3vh, 2.4rem);
+  border-top: 1px solid var(--ink-600);
+}
+.steps__item:last-child { border-bottom: 1px solid var(--ink-600); }
+.steps__idx {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--accent);
+  display: flex; align-items: baseline; gap: 0.6rem;
+}
+.steps__idx::before { content: counter(step, decimal-leading-zero); }
+.steps__idx::after { content: ''; flex: 1; height: 1px; background: var(--ink-600); transform: translateY(-0.35rem); }
+.steps__body { display: grid; gap: 0.6rem; max-width: 48rem; }
+.steps__body h3 { font-size: clamp(1.2rem, 1.9vw, 1.65rem); }
+@media (max-width: 660px) {
+  .steps__item { grid-template-columns: 1fr; gap: 0.7rem; }
+  .steps__idx::after { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   .compare - the comparison table.
+   Scrolls inside its own box; the first column is sticky, because a five-column
+   table read on a phone is useless the moment the feature name leaves the
+   screen. The AIWA column is tinted so the eye finds it without reading.
+   ------------------------------------------------------------------------ */
+.compare { overflow-x: auto; border: 1px solid var(--ink-600); border-radius: 1.4rem; background: var(--ink-850); }
+.compare table { border-collapse: collapse; width: 100%; min-width: 44rem; }
+.compare th, .compare td {
+  padding: 0.95rem 1.1rem; text-align: left; font-size: 0.85rem;
+  border-bottom: 1px solid var(--ink-700);
+}
+.compare thead th {
+  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-500); white-space: nowrap; background: var(--ink-800);
+}
+.compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: 0; }
+.compare tbody th {
+  font-weight: 400; color: var(--cream-100); font-family: var(--font-body); font-size: 0.85rem;
+  position: sticky; left: 0; background: var(--ink-850); min-width: 15rem;
+}
+.compare thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--ink-800); }
+.compare td { color: var(--cream-500); text-align: center; }
+.compare .is-ours { background: rgba(254, 160, 2, 0.05); color: var(--cream-050); }
+.compare thead .is-ours { color: var(--accent); background: rgba(254, 160, 2, 0.09); }
+/* Yes/no as marks, not words: a column of "Yes" reads slower than a column of ticks. */
+.compare i {
+  display: inline-block; width: 0.62rem; height: 0.34rem;
+  border-left: 1.5px solid var(--good); border-bottom: 1.5px solid var(--good);
+  transform: rotate(-45deg) translateY(-0.1rem);
+}
+.compare s { display: inline-block; width: 0.7rem; height: 1px; background: var(--ink-500); text-decoration: none; vertical-align: middle; }
+
+/* ---------------------------------------------------------------------------
+   .feature--wide - a lead card two columns wide.
+
+   site.css's .feature--hero spans all three, which is right for the home page's
+   Project Brain card (one statement, then three supporting cards). The agent
+   grids here have FIVE items, and 3 + 1 + 1 leaves a hole two columns wide.
+   2 + 3 fills the grid exactly, which is the only reason this variant exists.
+   ------------------------------------------------------------------------ */
+.feature--wide { grid-column: span 2; min-height: 15rem; align-content: end; }
+@media (max-width: 900px) { .feature--wide { grid-column: auto; min-height: 0; } }
+
+/* ---------------------------------------------------------------------------
+   .cases - the use-case grid. A .feature without the blob or the hover spring:
+   these are read, not clicked.
+   ------------------------------------------------------------------------ */
+.cases { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases article {
+  display: grid; gap: 0.6rem; align-content: start;
+  padding: clamp(1.3rem, 2.2vw, 1.9rem);
+  border: 1px solid var(--ink-600); border-radius: 1.4rem;
+  background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.35));
+}
+.cases h3 { font-size: 1.05rem; }
+.cases p { font-size: 0.88rem; color: var(--cream-300); line-height: 1.6; }
+@media (max-width: 900px) { .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .cases { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------------------
+   .related - "explore more". Cards that ARE links, so the whole card is the
+   target rather than a 12px "learn more" at the bottom of one.
+   ------------------------------------------------------------------------ */
+.related { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.related a {
+  display: grid; gap: 0.55rem; align-content: start;
+  padding: clamp(1.3rem, 2.2vw, 1.8rem);
+  border: 1px solid var(--ink-600); border-radius: 1.4rem;
+  background: var(--ink-800);
+  transition: border-color var(--dur-base) var(--ease-brand), background var(--dur-base) var(--ease-brand);
+}
+.related h3 { font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.related h3 span { color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem; transition: transform var(--dur-base) var(--ease-brand); }
+.related p { font-size: 0.86rem; color: var(--cream-300); line-height: 1.6; }
+@media (hover: hover) and (pointer: fine) {
+  .related a:hover { border-color: rgba(254, 160, 2, 0.45); background: var(--ink-700); }
+  .related a:hover h3 span { transform: translateX(0.3rem); }
+}
+
+/* ---------------------------------------------------------------------------
+   .prose - long-form copy.
+   Used by the legal documents and the doc articles, both of which arrive as
+   rendered markdown, so this styles BARE TAGS: the generator emits <h2>/<p>/
+   <ul>/<table> with no classes and this file decides what they look like.
+
+   scroll-margin-top on the headings is not decoration: every h2 is a link
+   target from .toc, and without it the fixed nav lands on top of the heading
+   the reader just asked for.
+   ------------------------------------------------------------------------ */
+.prose { max-width: 46rem; }
+.prose > * + * { margin-top: 1rem; }
+.prose h2 {
+  font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.15;
+  margin-top: 3rem; padding-top: 1.6rem; border-top: 1px solid var(--ink-600);
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+.prose > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.prose h3 {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.25; margin-top: 2rem;
+  color: var(--cream-050);
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+.prose p, .prose li { font-size: 1rem; line-height: 1.75; color: var(--cream-300); }
+.prose ul { display: grid; gap: 0.5rem; margin-top: 0.9rem; }
+.prose li { position: relative; padding-left: 1.2rem; }
+.prose li::before {
+  content: ''; position: absolute; left: 0; top: 0.75em;
+  width: 0.42rem; height: 1px; background: var(--accent); opacity: 0.7;
+}
+.prose strong { color: var(--cream-050); font-weight: 600; }
+.prose em { font-style: italic; }
+.prose a {
+  color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em; text-decoration-color: rgba(254, 160, 2, 0.4);
+  transition: text-decoration-color var(--dur-micro) var(--ease-brand);
+}
+.prose a:hover { text-decoration-color: var(--accent); }
+
+/* Tables are the widest thing in a legal document. They scroll in their own box
+   rather than pushing the page into a horizontal scroll on a phone. */
+.table-scroll { overflow-x: auto; margin-top: 1.4rem; border: 1px solid var(--ink-600); border-radius: 1rem; }
+.table-scroll table { border-collapse: collapse; width: 100%; min-width: 30rem; }
+.table-scroll th, .table-scroll td {
+  padding: 0.8rem 1rem; text-align: left; font-size: 0.88rem; line-height: 1.6;
+  border-bottom: 1px solid var(--ink-700);
+}
+.table-scroll th { color: var(--cream-050); font-weight: 600; background: var(--ink-800); white-space: nowrap; }
+.table-scroll td { color: var(--cream-300); }
+.table-scroll tbody tr:last-child td { border-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   .doc-layout - a document and its on-this-page nav.
+   The nav is sticky beside the prose above 1000px and collapses to a plain
+   block above the document below it, where there is no room for a column and a
+   sticky element would eat a third of a phone screen.
+   ------------------------------------------------------------------------ */
+.doc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.doc-layout .prose { max-width: 44rem; }
+.toc { position: sticky; top: calc(var(--nav-h) + 2rem); display: grid; gap: 0.7rem; }
+.toc__name {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cream-500);
+}
+.toc ol { display: grid; gap: 0.15rem; max-height: 60vh; overflow-y: auto; }
+.toc a {
+  display: block; padding: 0.3rem 0 0.3rem 0.8rem;
+  border-left: 1px solid var(--ink-600);
+  font-size: 0.82rem; line-height: 1.45; color: var(--cream-500);
+  transition: color var(--dur-micro) var(--ease-brand), border-color var(--dur-micro) var(--ease-brand);
+}
+.toc a:hover { color: var(--cream-050); border-color: var(--accent); }
+@media (max-width: 1000px) {
+  .doc-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .toc { position: static; padding: 1.2rem 1.4rem; border: 1px solid var(--ink-600); border-radius: 1.2rem; background: var(--ink-850); }
+  .toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: none; }
+  .doc-layout > .toc { order: -1; }
+}
+@media (max-width: 560px) { .toc ol { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------------------
+   .hub - the /legal directory. A list, not cards: these are documents, and a
+   reader arriving here is looking for one row by name.
+   ------------------------------------------------------------------------ */
+.hub { display: grid; gap: 3rem; }
+.hub__group { display: grid; gap: 0.9rem; }
+.hub__group-name {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cream-500);
+}
+.hub__list { border-top: 1px solid var(--ink-600); }
+.hub__list li { border-bottom: 1px solid var(--ink-600); }
+.hub__list a {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1.5rem;
+  padding-block: 1.3rem;
+  transition: padding-inline var(--dur-base) var(--ease-brand);
+}
+.hub__list h2 { font-size: clamp(1.1rem, 1.6vw, 1.35rem); color: var(--cream-050); transition: color var(--dur-micro) var(--ease-brand); }
+.hub__list p { margin-top: 0.3rem; font-size: 0.88rem; color: var(--cream-500); line-height: 1.55; max-width: 52ch; }
+/* a > span:last-child, NOT .hub__list span: the row wraps its heading and its
+   description in a span too, and the loose selector put both in mono. */
+.hub__list a > span:last-child {
+  font-family: var(--font-mono); font-size: 0.9rem; color: var(--ink-500);
+  transition: color var(--dur-base) var(--ease-brand), transform var(--dur-base) var(--ease-brand);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hub__list a:hover { padding-inline: 0.8rem 0; }
+  .hub__list a:hover h2 { color: var(--accent); }
+  .hub__list a:hover > span:last-child { color: var(--accent); transform: translateX(0.35rem); }
+}
+
+/* ---------------------------------------------------------------------------
+   .cards - docs sections and resource entries.
+   ------------------------------------------------------------------------ */
+.cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+.card {
+  display: grid; gap: 0.9rem; align-content: start;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  border: 1px solid var(--ink-600); border-radius: 1.6rem;
+  background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.3));
+}
+.card__head { display: grid; gap: 0.45rem; }
+.card__kind { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.card h3 { font-size: 1.15rem; }
+.card p { font-size: 0.88rem; color: var(--cream-300); line-height: 1.6; }
+.card__links { display: grid; gap: 0.1rem; padding-top: 0.3rem; border-top: 1px solid var(--ink-600); }
+.card__links a {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: baseline;
+  padding-block: 0.55rem;
+  font-size: 0.87rem; color: var(--cream-300);
+  transition: color var(--dur-micro) var(--ease-brand);
+}
+.card__links a + a { border-top: 1px solid rgba(42, 37, 30, 0.6); }
+.card__links a em { font-style: normal; font-family: var(--font-mono); font-size: 0.66rem; color: var(--ink-500); white-space: nowrap; }
+.card__links a:hover { color: var(--accent); }
+.card__links a:hover em { color: var(--cream-500); }
+.card__cta { justify-self: start; margin-top: 0.2rem; }
+
+/* ---------------------------------------------------------------------------
+   .quickstart - the four-line "you are here in 30 seconds" block on /docs.
+   Mono on the raised surface, with the prompt glyph coloured the way the hero
+   canvas colours its own.
+   ------------------------------------------------------------------------ */
+.quickstart {
+  display: grid; gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid var(--ink-600); border-radius: 1.6rem;
+  background: var(--ink-850);
+}
+.quickstart > .btn { justify-self: start; }
+.quickstart__rows { display: grid; gap: 0.9rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; }
+.quickstart__row { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: 0.8rem; align-items: baseline; }
+.quickstart__row b { color: var(--accent); font-weight: 400; }
+.quickstart__row span { color: var(--cream-100); }
+.quickstart__row span i { display: block; font-style: normal; color: var(--cream-500); font-size: 0.74rem; margin-top: 0.25rem; }
+
+/* ---------------------------------------------------------------------------
+   .notfound
+   ------------------------------------------------------------------------ */
+.notfound { min-height: 76vh; display: grid; align-content: center; gap: 1.5rem; justify-items: start; }
+.notfound__code { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--accent); }
+
+/* ---------------------------------------------------------------------------
+   Section rhythm for pages.
+   The home page's .section owns its own vertical space; on a page the blocks
+   are read one after another and want a tighter, even beat.
+   ------------------------------------------------------------------------ */
+.page-section { padding-block: clamp(3.5rem, 8vh, 6rem); }
+.page-section--tight { padding-block: clamp(2rem, 5vh, 3.5rem); }
+.page-section__head { display: grid; gap: 1rem; justify-items: start; margin-bottom: clamp(2rem, 4vh, 3rem); max-width: 56rem; }
+/* A page is read block by block; the home page's 4.4rem section heading is a
+   landmark in a scroll composition and simply too loud repeated eight times. */
+.page-section__head .t-h2 { font-size: clamp(1.9rem, 3.4vw, 3rem); }
+.page-section__head--center { justify-items: center; text-align: center; margin-inline: auto; }
+.page-section--alt { background: var(--ink-850); border-block: 1px solid var(--ink-600); }
+
+/* The FAQ on a page has no sticky aside; it is one column at full measure. */
+.page .faq__grid--single { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 900px) { .page .faq__grid { grid-template-columns: 1fr; } }

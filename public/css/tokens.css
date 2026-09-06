@@ -1,0 +1,182 @@
+/* ============================================================================
+   AIWA · Motion + visual tokens
+   Every value in the "motion" block is lifted verbatim from
+   AIWA-Codes-Landing-Page-Motion-Spec-v1.md §1.2 - §1.5. Nothing is invented
+   outside that list; if a number here disagrees with the spec, the spec wins.
+   ========================================================================= */
+
+:root {
+  /* -- §1.2 easing --------------------------------------------------------- */
+  --ease-brand: cubic-bezier(0.625, 0.05, 0, 1);
+  --ease-slider: cubic-bezier(0.38, 0.005, 0.215, 1);
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* -- §1.3 duration ------------------------------------------------------- */
+  --dur-micro: 350ms;
+  --dur-base: 400ms;
+  --dur-entrance: 500ms;
+  --dur-reveal: 800ms;
+  --dur-atmosphere: 1000ms;
+  --dur-sweep: 1000ms;
+  --dur-gradient-text: 2200ms;
+
+  /* -- §1.5 distance / blur ------------------------------------------------ */
+  --y-reveal: 2em;
+  --blur-reveal: 20px;
+  --blur-atmosphere: 15px;
+  --radius-card: 2.5rem;
+  --scale-press: 0.95;
+  --scale-hover: 1.05;
+
+  /* -- palette ------------------------------------------------------------
+     Sampled out of the shipping lander (apps/marquee/clone/index.html), so the
+     new skin is the same brand, not a new one. Warm near-black ground, warm
+     cream ink, amber accent. The accent is the headline-stroke colour in
+     §2.3 beat 1 - it reads at 1px on --ink-900, which is the one hard
+     requirement the spec puts on it.                                       */
+  --ink-900: #1a1714;  /* page ground - lifted warm charcoal */
+  --ink-950: #050403;  /* header / chrome - clearly darker than the page */
+  --ink-850: #0b0907;
+  --ink-800: #121211;  /* raised surface     */
+  --ink-700: #1c1811;  /* card              */
+  --ink-600: #2a251e;  /* hairline / border  */
+  --ink-500: #444443;
+
+  --cream-050: #fbf9f6; /* primary ink on dark */
+  --cream-100: #efeae1;
+  --cream-300: #ada598;
+  --cream-500: #8a8175;  /* muted copy        */
+
+  --accent: #fea002;     /* amber - headline stroke, active states           */
+  --accent-hot: #f2813e; /* mid stop                                        */
+  --accent-deep: #bf4e0b;/* far stop                                        */
+  --accent-glow: rgba(254, 160, 2, 0.14);
+  --good: #4ade80;
+
+  /* -- app parity ---------------------------------------------------------
+     Lifted verbatim from apps/web/src/styles/globals.css @theme. A control
+     that exists in both places (today: the button) is painted from THESE, not
+     from the --accent ramp above, so the lander's CTA and the product's CTA
+     are the same object rather than two shades of orange. If one of these
+     needs to change, change it in the app and copy it across.            */
+  --app-sunset-1: #ffb300;         /* --color-sunset-1  */
+  --app-sunset-2: #ff5e00;         /* --color-sunset-2 == --color-primary */
+  --app-primary-fg: #1f1f1e;       /* --color-primary-foreground - dark ink on orange */
+  --app-foreground: #f8f8f6;       /* --color-foreground */
+  --app-card: #2c2c2b;             /* --color-card - the outline button's surface */
+  --app-hover: #353533;            /* --color-accent - a touch above card */
+  --app-border: rgb(248 248 246 / 0.08); /* --color-border */
+  --app-ring: #ff5e00;             /* --color-ring */
+  --app-sunset-3: #ce1400;         /* --color-sunset-3 - the hot end of the credit beam */
+  --app-muted-fg: #c4c2b6;         /* --color-muted-foreground */
+  /* Tailwind's `transition-colors` default, which is what the app's button
+     actually animates - see the note on .btn in base.css. */
+  --app-dur-colors: 150ms;
+
+  /* Secondary - Dreamcut-style tactile charcoal pill: soft vertical fill,
+     top rim light, recessed underside, light outer lift. Used by .btn--ghost. */
+  --btn-secondary-top: #3c3a37;
+  --btn-secondary-mid: #2c2a28;
+  --btn-secondary-bottom: #1f1d1b;
+  --btn-secondary-rim: rgb(255 255 255 / 0.16);
+  --btn-secondary-edge: rgb(255 255 255 / 0.08);
+
+  /* five stops, used by the gradient sweep (§4.2) and the blob (§4.7).
+     Five is deliberate - §4.2: "fewer looks like a flat gradient, more turns
+     to mud at these speeds."                                              */
+  --stop-1: #fea002;
+  --stop-2: #f2813e;
+  --stop-3: #ffd28a;
+  --stop-4: #bf4e0b;
+  --stop-5: #e0a030;
+
+  /* -- type ---------------------------------------------------------------- */
+  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* -- layout -------------------------------------------------------------- */
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --measure: 78rem;
+  --nav-h: 4.25rem; /* 16px offset + the 52px bar - keep in step with .nav in site.css */
+  /* ---- Why AIWA feature stages -------------------------------------
+     Ported with the animated cards from the Marquee Next build. Cursor
+     timing, stage chrome sizing and the mini prompt component all read
+     from these, and featureStages.js reads several of them at runtime
+     (cssVar), so they have to live here rather than in the rules. */
+  --cursor-origin-x: 0.16;
+  --cursor-origin-y: 0.16;
+  --cursor-press: 0.22s;
+  --cursor-ring: 1.7rem;
+  --cursor-size: 2rem;
+  --feature-hero-gap: 1.15rem;
+  --feature-hero-pad: 1.15rem;
+  --feature-pad: clamp(1.4rem, 2.6vw, 2.2rem);
+  --line: color-mix(in srgb, var(--ink-600) var(--line-alpha), transparent);
+  --preview-cream: #f4efe6;
+  --preview-ink: #161412;
+  --preview-muted: #6f675c;
+  --preview-teal: #1f4a45;
+  --prompt-bar-gap: 0.4rem;
+  --prompt-bar-pad-x: 0.55rem;
+  --prompt-bar-pad-y: 0.45rem;
+  --prompt-chip-bg: rgba(6, 5, 4, 0.62);
+  --prompt-chip-gap: 0.32rem;
+  --prompt-chip-pad: 0.18rem 0.5rem 0.18rem 0.4rem;
+  --prompt-ctrl: 1.7rem;
+  --prompt-favicon: 1rem;
+  --prompt-favicon-radius: 0.22rem;
+  --prompt-hairline: rgba(251, 249, 246, 0.07);
+  --prompt-icon: 0.78rem;
+  --prompt-icon-lg: 0.92rem;
+  --prompt-model-pad: 0.15rem 0.3rem;
+  --prompt-plus-bg: rgba(251, 249, 246, 0.07);
+  --prompt-send: 1.85rem;
+  --prompt-send-fill: radial-gradient(circle at 32% 28%, var(--stop-3), var(--accent) 72%);
+  --prompt-type: 0.72rem;
+  --stage-blend: rgba(8, 7, 6, 0.82);
+  --stage-card-min: 22rem;
+  --stage-fade: 6.5rem;
+  --stage-fade-blur: 18px;
+  --stage-fade-inset: 0.78;
+  --stage-gap: 0.45rem;
+  --stage-hero-fade: 0.45;
+  --stage-hero-min: 12.25rem;
+  --stage-min: 12.5rem;
+  --stage-pad: 0.7rem;
+  --stage-radius: 1rem;
+  --stage-type: 0.68rem;
+  --stage-y: 0.5rem;
+  --cursor-home-x: 1.15rem;
+  --cursor-home-y: 1.35rem;
+  --cursor-aim-x: 0.62;
+  --cursor-aim-y: 0.55;
+  --cursor-dwell: 0.32s;
+  --cursor-press-in: 0.45;
+  --cursor-press-scale: 0.88;
+  --cursor-ref: 140;
+  --cursor-speed: 760;
+  --stage-click-zoom: 1.14;
+  --stage-hold: 3.2s;
+  --stage-pace: 0.72;
+  --icon-sm: 0.9rem;
+  --icon-md: 1.15rem;
+  --icon-lg: 2.6rem;
+  --scale-press: 0.95;
+  --dur-click: 200ms;
+  --line-alpha: 40%;
+  --line-muted: color-mix(in srgb, var(--ink-700) var(--line-alpha), transparent);
+}
+
+/* §1.6 - fluid root. Every rem in this stylesheet scales off it, which is why
+   the layout survives being pinned for 400vh without reflowing. */
+html { font-size: clamp(13px, 1.1111vw, 16px); }
+@media (max-width: 990px) { html { font-size: 2.0833vw; } }
+/* Below 768 the tiers used to be 2.1053vw down to 480 and 4.2667vw below it -
+   each ratio anchored so its own design width lands on a 16px root (760, then
+   375). The seam between them was the bug: a 500px-wide screen took the
+   760-anchored ratio and got a 10.5px root, which is 10.7px body copy and
+   9.2px captions. One CLAMPED phone ratio instead. It reproduces the old
+   values exactly where the design was drawn (15.4px at 360, 16.5px at 390)
+   and simply stops falling apart between 410 and 767. */
+@media (max-width: 767px) { html { font-size: clamp(15px, 4.2667vw, 16.5px); } }
