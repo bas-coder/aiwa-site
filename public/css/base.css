@@ -23,6 +23,10 @@
 /* §5.6 */
 html, body { overscroll-behavior: none; }
 html { scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
+/* Lenis: keep native scroll geometry; never stack CSS smooth on top. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
 * { -webkit-tap-highlight-color: transparent; }
 *:focus { outline: 0; }
 *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
@@ -48,6 +52,24 @@ ul, ol { list-style: none; }
 /* §5.5 - a pointer cursor on touch is a lie about affordance */
 @media only screen and (max-width: 999px) { a { cursor: default; } }
 
+/* Custom cursors — fine pointers only. CSS url() stays paint-cheap vs a JS
+   cursor layer; system fallbacks keep usability if SVG cursors are ignored. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: url('/icons/cursors/default.svg') 6 2, auto;
+  }
+  a, button, [role='button'], summary, label[for],
+  .shot__action, .nav__links a, .btn, .switch__opt {
+    cursor: url('/icons/cursors/hover.svg') 10 4, pointer;
+  }
+  a:active, button:active, .shot__action:active, .btn:active {
+    cursor: url('/icons/cursors/pressing.svg') 10 4, pointer;
+  }
+  input, textarea, select, [contenteditable='true'] {
+    cursor: url('/icons/cursors/text.svg') 8 12, text;
+  }
+}
+
 /* Hide scrollbars without losing scrollability */
 * { scrollbar-width: none; -ms-overflow-style: none; }
 *::-webkit-scrollbar { width: 0; height: 0; }
@@ -70,11 +92,6 @@ ul, ol { list-style: none; }
   font-family: var(--font-mono);
   font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--cream-500);
-  display: inline-flex; align-items: center; gap: 0.6rem;
-}
-.eyebrow::before {
-  content: ''; width: 0.36rem; height: 0.36rem; border-radius: 50%;
-  background: var(--accent); box-shadow: 0 0 0 0.25rem var(--accent-glow);
 }
 
 /* ---------------------------------------------------------------------------

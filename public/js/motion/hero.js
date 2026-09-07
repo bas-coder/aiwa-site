@@ -219,76 +219,38 @@ function buildSceneTimeline() {
   tl.to('[data-wf-robot]', {
     opacity: 1, scale: 1, duration: 0.045, ease: EASE.enter,
   }, 0.215);
+  /* Opacity only — do not animate x/y or GSAP will overwrite the CSS
+     transform that centres each card on its pentagon anchor. */
   tl.to('[data-wf-stage]', {
-    opacity: 1, y: 0, duration: 0.045, stagger: 0.02, ease: EASE.enter,
+    opacity: 1, duration: 0.045, stagger: 0.02, ease: EASE.enter,
   }, 0.235);
   /* Slightly behind the stages and slightly slower: the line should read as
      being drawn between two things that already exist. */
   tl.to('[data-wf-link]', {
     opacity: 1, duration: 0.05, stagger: 0.02,
   }, 0.25);
-  hide(scenes.plan, 0.42);
+  hide(scenes.plan, 0.28);
 
-  /* -- 0.42-0.68 · BUILD. Three real products, dealt out. --
-     This beat used to type a code file. The client's brief asks it for
-     evidence instead of process, so it now shows three projects actually built
-     in AIWA. Nothing types and nothing counts: the claim is that these
-     shipped, not that something is busy.
+  /* -- 0.28-0.80 · BUILD / From Idea to Working Product.
+     Aligned to the tall .hero__panel.is-3 scroll share. Stack scrub is owned
+     by ideaScrub.js; this beat only fades the stage in/out. -- */
+  show(scenes.build, 0.29, 0.04);
+  hide(scenes.build, 0.80);
 
-     The move is its own, not the lift-and-unblur every other beat uses. All
-     three start collapsed on top of the middle card, turned away in 3D, and
-     then fan out into place - one idea becoming several shipped products,
-     which is the sentence the panel next to it is making. stagger from
-     'center' is what makes it read that way round: the middle card resolves
-     first and the outer two peel off it, rather than three cards arriving in
-     a queue.
+  /* -- 0.80-0.90 · TEST. Assertions tick over. -- */
+  show(scenes.test, 0.81, 0.04);
+  tl.to('[data-test]', { opacity: 1, duration: 0.03, stagger: 0.022 }, 0.83);
+  hide(scenes.test, 0.90);
 
-     xPercent/yPercent, not pixels, because they resolve against each card's
-     own box - so the collapsed stack lands on the middle card at every width
-     with no per-breakpoint arithmetic. 78 is the gap between neighbouring
-     cards (30% of the frame) expressed as a share of one card (40%). */
-  show(scenes.build, 0.43, 0.04);
-  tl.fromTo('[data-ship-card]',
-    {
-      opacity: 0,
-      xPercent: (i) => (1 - i) * 78,
-      yPercent: (i) => (i - 1) * 9,
-      scale: 0.88,
-      rotateY: -16,
-      filter: 'blur(7px)',
-    },
-    {
-      opacity: 1, xPercent: 0, yPercent: 0, scale: 1, rotateY: 0,
-      filter: 'blur(0px)',
-      duration: 0.075, stagger: { each: 0.03, from: 'center' }, ease: EASE.enter,
-    }, 0.46);
-
-  /* A slow drift inside each frame, running the whole beat rather than
-     arriving with it. Three still screenshots sitting in three still cards
-     look like a slide; this makes the set feel live without anything actually
-     moving on the page. The rates differ per card (the stagger), so the group
-     never drifts as one block. Range is +/-3.5% against 6% of headroom on
-     each edge - see .shipped__shot. */
-  tl.fromTo('[data-ship-shot]',
-    { yPercent: -3.5 },
-    { yPercent: 3.5, duration: 0.25, ease: 'none', stagger: 0.02 }, 0.43);
-
-  hide(scenes.build, 0.68);
-
-  /* -- 0.68-0.84 · TEST. Assertions tick over. -- */
-  show(scenes.test, 0.69, 0.04);
-  tl.to('[data-test]', { opacity: 1, duration: 0.03, stagger: 0.022 }, 0.71);
-  hide(scenes.test, 0.84);
-
-  /* -- 0.84-1.00 · SHIP. It was a real application the whole time. -- */
+  /* -- 0.90-1.00 · SHIP. It was a real application the whole time. -- */
   tl.fromTo(scenes.ship,
     { autoAlpha: 0, y: 40, scale: 0.94, filter: 'blur(16px)' },
-    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.1 }, 0.85);
+    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.08 }, 0.91);
 
   /* -- The HUD reads the same progress the scenes do. -- */
   const STAGES = [
-    [0.00, 'plan'], [0.20, 'plan'], [0.42, 'architect'],
-    [0.50, 'build'], [0.68, 'test'], [0.84, 'evolve'],
+    [0.00, 'plan'], [0.20, 'plan'], [0.28, 'architect'],
+    [0.40, 'build'], [0.80, 'test'], [0.90, 'evolve'],
   ];
   tl.eventCallback('onUpdate', () => {
     const p = tl.progress();
@@ -503,15 +465,13 @@ export function heroScroll() {
      status" has no business being legible over an EMPTY well - it should
      arrive with the project it describes.
 
-     It now also brings in the three supporting screens beside the well, which
-     is the same moment for the same reason: the well is the project arriving,
-     and the rest of the case study should arrive with it rather than fading in
-     on its own schedule next to a card that is already there. The stagger runs
-     status-card-first, then the column top to bottom.
+     It reveals the project status card over the well: a card headed "project
+     status" has no business being legible over an EMPTY well — it should
+     arrive with the project it describes.
 
      If these selectors ever match nothing the length guard below turns Act 5
      into a no-op rather than an error. */
-  const arrivalTargets = [...document.querySelectorAll('.proj-status, [data-ws-aside]')];
+  const arrivalTargets = [...document.querySelectorAll('.proj-status')];
   if (arrivalTargets.length) {
     const arrival = gsap.fromTo(arrivalTargets,
       { autoAlpha: 0, filter: 'blur(12px)', y: '2em' },

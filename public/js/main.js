@@ -16,14 +16,16 @@ import { blurReveal, gradientText, marquees, springHovers, glassHighlights } fro
 import { heroEntrance, heroScroll } from './motion/hero.js';
 import { heroGradient } from './motion/heroGradient.js';
 import { blobs } from './motion/blob.js';
-import { featureStages } from './motion/featureStages.js';
+import { ideaScrub } from './motion/ideaScrub.js';
 import { runLoader } from './motion/loader.js';
 import {
   promptArc, engineHorizontal, engineRail,
   pricingSwitch, creditSliders, accordion, footerReveal, navState, navMenu, projectStatus, workspaceFocus,
 } from './motion/sections.js';
+import { galleryActions } from './motion/gallery.js';
 import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
+import { initSmoothScroll } from './motion/smoothScroll.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -32,21 +34,11 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 /* =========================================================================
-   §5.4 · Smooth scroll - Windows only.
-   macOS and iOS already have good native inertia and Lenis on top of it feels
-   syrupy; Windows wheels are steppy and genuinely benefit. This is a taste
-   call the reference made and it is the right one, so we keep it.
+   §5.4 · Smooth scroll — light Lenis on desktop fine-pointer only.
+   See motion/smoothScroll.js (Framer-like lerp, no touch smoothing).
    ====================================================================== */
-let lenis = null;
 function initLenis() {
-  const platform = navigator.userAgentData?.platform || navigator.platform || '';
-  const isWindows = /win/i.test(platform);
-  if (!isWindows || prefersReducedMotion() || typeof Lenis === 'undefined') return;
-
-  lenis = new Lenis({ duration: 1.1, wheelMultiplier: 1.1 });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  initSmoothScroll();
 }
 
 /* =========================================================================
@@ -105,7 +97,8 @@ function build() {
   teardowns.push(promptArc());
   teardowns.push(projectStatus());
   teardowns.push(workspaceFocus());
-  teardowns.push(featureStages());
+  teardowns.push(ideaScrub());
+  teardowns.push(galleryActions());
 
   /* §2.8 tiers 3 and 4 - under 480px, or reduced motion, the hero does not
      pin, so it also does not need four viewports. `.static-hero` collapses it
@@ -137,20 +130,24 @@ window.addEventListener('resize', () => {
 
 /* =========================================================================
    Start.
-   window.load, then fonts.ready - in that order, because SplitText measured
-   against fallback metrics re-lays-out the moment the real font arrives and
-   the character wipe visibly jumps.
+   Boot as soon as this module runs (deferred, DOM already parsed). Do NOT wait
+   for window.load — every below-fold image (gallery, visuals, real builds)
+   would hold the loader at logo opacity:0 and it looks like the preloader
+   never appeared. fonts.ready still gates SplitText / hero entrance.
    ====================================================================== */
 async function start() {
   initLenis();
   initScrollHygiene();
+
+  // Logo + stage tick while fonts / remaining assets finish — not after them.
+  const loaderDone = runLoader();
 
   try { await document.fonts.ready; } catch { /* older browsers: proceed */ }
 
   // Persistent across width rebuilds (not in teardowns) — self-resizes each frame.
   heroGradient();
 
-  await runLoader();
+  await loaderDone;
 
   const tooSmall = window.matchMedia('(max-width: 479px)').matches;
   if (!tooSmall) {
@@ -171,5 +168,4 @@ async function start() {
   build();
 }
 
-if (document.readyState === 'complete') start();
-else window.addEventListener('load', start);
+start();

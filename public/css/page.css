@@ -198,6 +198,8 @@
   padding: clamp(1.3rem, 2.2vw, 1.9rem);
   border: 1px solid var(--ink-600); border-radius: 1.4rem;
   background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.35));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .cases h3 { font-size: 1.05rem; }
 .cases p { font-size: 0.88rem; color: var(--cream-300); line-height: 1.6; }
@@ -344,6 +346,8 @@
   padding: clamp(1.4rem, 2.4vw, 2rem);
   border: 1px solid var(--ink-600); border-radius: 1.6rem;
   background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.3));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .card__head { display: grid; gap: 0.45rem; }
 .card__kind { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }

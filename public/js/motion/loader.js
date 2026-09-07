@@ -20,10 +20,21 @@ import { EASE, DUR, STAGGER, prefersReducedMotion } from './tokens.js';
 
 const KEY = 'aiwa_loader_seen';
 
+const forceShow = () => {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    return params.has('loader') || window.location.hash === '#loader';
+  } catch {
+    return false;
+  }
+};
+
 const seen = () => {
+  if (forceShow()) return false;
   try { return sessionStorage.getItem(KEY) === '1'; } catch { return false; }
 };
 const markSeen = () => {
+  if (forceShow()) return;
   try { sessionStorage.setItem(KEY, '1'); } catch { /* private mode; show it again */ }
 };
 

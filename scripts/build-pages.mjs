@@ -333,7 +333,7 @@ function navHtml(here) {
       <i></i><i></i>
     </button>
     <div class="nav__links" id="nav-links">
-${NAV.map((l) => `      <a href="${esc(l.href)}"${current(l.href, here)}${isExternal(l.href) ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(l.label)}</a>`).join('\n')}
+${NAV.map((l) => `      <a href="${esc(l.href)}"${current(l.href, here)}${isExternal(l.href) ? ' target="_blank" rel="noopener noreferrer"' : ''}><span class="nav__flip"><span>${esc(l.label)}</span><span aria-hidden="true">${esc(l.label)}</span></span></a>`).join('\n')}
     </div>
     <div class="nav__cta-wrap">
       <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
@@ -357,21 +357,28 @@ function footerHtml(here) {
     .join('')}</div>`;
 
   return `<footer class="footer" data-footer>
-  <div class="shell shell--wide">
-    <div class="footer__top">
-      <a class="footer__logo" href="/#top" aria-label="AIWA home">
-        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
-      </a>
-      <form class="footer__news" onsubmit="return false">
-        <label class="sr-only" for="news">Email address</label>
-        <input id="news" type="email" placeholder="Join our newsletter" />
-        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
-      </form>
-    </div>
-    <div class="footer__cols">
+  <div class="footer__plate">
+    <div class="shell shell--wide">
+      <div class="footer__top">
+        <a class="footer__logo" href="/#top" aria-label="AIWA home">
+          <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+        </a>
+        <form class="footer__news" onsubmit="return false">
+          <label class="sr-only" for="news">Email address</label>
+          <input id="news" type="email" placeholder="Join our newsletter" />
+          <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+        </form>
+      </div>
+      <div class="footer__cols">
 ${FOOTER_COLS.map(col).join('\n')}
+      </div>
+      <div class="footer__meta">
+        <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+      </div>
     </div>
-    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+    <div class="footer__wordmark-crop">
+      <img class="footer__wordmark" src="/images/aiwa-logo.webp" alt="" width="1000" height="459" aria-hidden="true" decoding="async" />
+    </div>
   </div>
 </footer>`;
 }
@@ -506,6 +513,8 @@ ${items.map((r) => `    <a href="${esc(r.href)}" data-blur-child>
 
 const ctaBlock = ({ eyebrow, h2, body, label = 'Start Building', href = 'https://app.aiwa.codes' }) => `<section class="section cta">
   <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="cta__fade cta__fade--top" aria-hidden="true"></div>
+  <div class="cta__fade cta__fade--bottom" aria-hidden="true"></div>
   <div class="cta__inner" data-blur-parent>
     <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h2 class="t-display cta__h2" data-blur-child data-grad>${h2}</h2>

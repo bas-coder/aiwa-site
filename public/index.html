@@ -25,6 +25,12 @@
 
 <body>
 
+<!-- Ambient glow — direct child of body (fixed). Kept out of #hero-media /
+     .hero so overflow/contain never slices the blur halo. -->
+<div class="hero__glow" aria-hidden="true">
+  <object class="hero__glow-obj" data="/images/glow.svg" type="image/svg+xml" tabindex="-1"></object>
+</div>
+
 <!-- ==========================================================================
      LOADER · pre-Act-0
      The moto-card loader, re-read for AIWA: instead of world clocks ticking
@@ -72,7 +78,10 @@
   <symbol id="icon-shield-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></g></symbol>
   <symbol id="icon-unplug" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 5 3-3" /><path d="m2 22 3-3" /><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" /><path d="M7.5 13.5 10 11" /><path d="M10.5 16.5 13 14" /><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z" /></g></symbol>
   <symbol id="icon-wand-sparkles" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72L3.64 21.64a1.21 1.21 0 0 0 1.72 0L21.64 4.72a1.21 1.21 0 0 0 0-1.72" /><path d="m14 7 3 3" /><path d="M5 6v4" /><path d="M19 14v4" /><path d="M10 2v2" /><path d="M7 8H3" /><path d="M21 16h-4" /><path d="M11 3H9" /></g></symbol>
+  <symbol id="icon-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></g></symbol>
+  <symbol id="icon-external-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></g></symbol>
   <symbol id="icon-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></g></symbol>
+  <symbol id="icon-credit-card-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /><line x1="2" x2="22" y1="2" y2="22" /></g></symbol>
 </svg>
 
 <div class="loader" id="loader" aria-hidden="true">
@@ -104,10 +113,10 @@
       <i></i><i></i>
     </button>
     <div class="nav__links" id="nav-links">
-      <a href="/#why">Features</a>
-      <a href="/#pricing">Pricing</a>
-      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a>
-      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Community</a>
+      <a href="/#why"><span class="nav__flip"><span>Features</span><span aria-hidden="true">Features</span></span></a>
+      <a href="/#pricing"><span class="nav__flip"><span>Pricing</span><span aria-hidden="true">Pricing</span></span></a>
+      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer"><span class="nav__flip"><span>Docs</span><span aria-hidden="true">Docs</span></span></a>
+      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer"><span class="nav__flip"><span>Community</span><span aria-hidden="true">Community</span></span></a>
     </div>
     <div class="nav__cta-wrap">
       <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
@@ -153,7 +162,10 @@
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span></span>
         </a>
-        <p class="hero__micro">Try it free · no credit card required</p>
+        <p class="hero__micro">
+          <svg class="hero__micro-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-credit-card-off"></use></svg>
+          Try it free · no credit card required
+        </p>
       </div>
 
       <!-- §4.3 · the trust marquee. Speed is measured, never hardcoded. -->
@@ -210,30 +222,33 @@
     </div>
   </section>
 
-  <section class="hero__panel is-3">
-    <div class="shell"><div class="hero__panel-inner hero__panel-inner--dense">
-      <p class="hero__para t-body">
-        AIWA doesn't just generate code. It understands the existing product, plans
-        changes intelligently, tests what it builds, and keeps improving it.
+  <section class="hero__panel is-3" data-idea-panel aria-label="From idea to working product">
+    <div class="shell"><div class="hero__panel-inner hero__panel-inner--dense hero__idea idea__copy">
+      <p class="idea__lead t-body">
+        AIWA doesn't just generate code. It understands the existing product,
+        plans changes intelligently, tests what it builds, and keeps improving it.
       </p>
-
-      <ul class="hero__chips two-tone">
-        <li><span class="quiet">Never forgets:</span> Project Brain™</li>
-        <li><span class="quiet">Never guesses:</span> AI Architecture</li>
-        <li><span class="quiet">Never ships blind:</span> Autonomous QA</li>
-      </ul>
-
-      <a class="btn btn--ghost" href="#engine">
+      <ol class="idea__steps" data-idea-steps>
+        <li class="idea__step is-active" data-idea-step>
+          <span class="idea__step-label">Plans before it builds</span>
+        </li>
+        <li class="idea__step" data-idea-step>
+          <span class="idea__step-label">Designs the database</span>
+        </li>
+        <li class="idea__step" data-idea-step>
+          <span class="idea__step-label">Reasons through architecture</span>
+        </li>
+        <li class="idea__step" data-idea-step>
+          <span class="idea__step-label">Ships a working app</span>
+        </li>
+      </ol>
+      <a class="btn btn--ghost idea__cta" href="#engine">
         <span class="btn__label">See the workflow engine</span>
         <span class="btn__arrow"><span>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span></span>
       </a>
-
-      <p class="hero__closing t-small">
-        From your first idea to your tenth client project. one AI product team that scales with you.
-      </p>
       </div>
     </div>
   </section>
@@ -261,6 +276,10 @@
 
         <!-- BEAT 1 · the prompt -->
         <div class="scene scene--prompt" data-scene="prompt">
+          <!-- Pattern.svg: perspective grid + amber bloom, behind the prompt only. -->
+          <div class="prompt__pattern" aria-hidden="true">
+            <img src="/images/Pattern.svg" alt="" width="833" height="535" decoding="async" />
+          </div>
           <div class="prompt">
             <span class="prompt__glyph">›</span>
             <!-- Seeded in markup so the poster frame reads correctly before any
@@ -298,40 +317,48 @@
                further down the page (.glyph, from the icon sprite), at badge size.
                -->
           <div class="wf" data-wf>
-            <svg class="wf__link" data-wf-link style="top:9.549%;left:17.922%;width:16.343%;height:10.729%" viewBox="0 0 62.92 40.45" aria-hidden="true">
-              <defs><linearGradient id="wf-g0" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
-                <stop offset="1" stop-color="var(--accent)" stop-opacity="0.55"/>
-              </linearGradient></defs>
-              <path d="M 62.523 2.116 L 54.291 12.143 L 52.416 7.16 C 33.787 14.967 16.863 26.036 2.357 39.653 L 1.538 40.421 L 0 38.783 L 0.819 38.014 C 15.537 24.198 32.714 12.969 51.624 5.055 L 49.723 -0.001 Z" fill="url(#wf-g0)"/>
-            </svg>
-            <svg class="wf__link" data-wf-link style="top:9.549%;left:65.455%;width:17.803%;height:9.984%" viewBox="0 0 68.54 37.64" aria-hidden="true">
-              <defs><linearGradient id="wf-g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
-                <stop offset="1" stop-color="var(--accent)" stop-opacity="0.55"/>
-              </linearGradient></defs>
-              <path d="M 0.642 0 C 22.312 6.463 42.778 16.954 59.883 29.558 L 63.234 25.325 L 68.017 37.385 L 55.181 35.499 L 58.487 31.321 C 41.597 18.886 21.387 8.533 0 2.154 Z" fill="url(#wf-g1)"/>
-            </svg>
-            <svg class="wf__link" data-wf-link style="bottom:30.769%;left:91.429%;width:3.356%;height:20.862%" viewBox="0 0 12.92 78.65" aria-hidden="true">
-              <defs><linearGradient id="wf-g2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
-                <stop offset="1" stop-color="var(--accent)" stop-opacity="0.55"/>
-              </linearGradient></defs>
-              <path d="M 8.319 0 C 10.19 10.177 11.167 20.666 11.167 31.383 C 11.167 43.827 9.849 55.965 7.344 67.663 L 12.58 68.984 L 3.543 78.293 L 0 65.812 L 5.164 67.114 C 7.624 55.593 8.92 43.64 8.92 31.383 C 8.92 20.803 7.955 10.45 6.108 0.406 L 7.213 0.203 Z" fill="url(#wf-g2)"/>
-            </svg>
-            <svg class="wf__link" data-wf-link style="bottom:0;left:50.292%;translate:-50% 0;width:38.231%;height:7.005%" viewBox="0 0 147.19 26.41" aria-hidden="true">
-              <defs><linearGradient id="wf-g3" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
-                <stop offset="1" stop-color="var(--accent)" stop-opacity="0.55"/>
-              </linearGradient></defs>
-              <path d="M 147.12 5.413 C 126.116 18.891 101.132 26.707 74.324 26.707 C 52.431 26.707 31.753 21.494 13.466 12.24 L 11.424 15.94 L 6.18 7.246 L 16.331 7.051 L 14.317 10.699 C 32.349 19.814 52.736 24.949 74.324 24.949 C 100.785 24.949 125.441 17.234 146.17 3.933 Z" fill="url(#wf-g3)"/>
-            </svg>
-            <svg class="wf__link" data-wf-link style="bottom:32.626%;left:4.156%;width:3.356%;height:16.690%" viewBox="0 0 12.92 62.92" aria-hidden="true">
-              <defs><linearGradient id="wf-g4" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
-                <stop offset="1" stop-color="var(--accent)" stop-opacity="0.55"/>
-              </linearGradient></defs>
-              <path d="M 12.916 11.797 L 7.614 11.295 C 7.421 14.621 7.322 17.973 7.322 21.348 C 7.322 35.493 9.047 49.233 12.298 62.371 L 10.116 62.91 C 6.822 49.598 5.075 35.676 5.075 21.348 C 5.075 17.902 5.177 14.48 5.377 11.084 L 0 10.576 L 7.515 0 Z" fill="url(#wf-g4)"/>
+            <!-- Five independent arc-arrows (Figma-style: circle → arc → vector + tip).
+                 One SVG so geometry shares a centre; each path is its own gradient
+                 (0% opacity at start → 100% at the head) and staggers via data-wf-link. -->
+            <svg class="wf__arcs" viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <marker id="wf-arrow" viewBox="0 0 10 10" refX="8.5" refY="5"
+                        markerWidth="3.6" markerHeight="3.6" orient="auto"
+                        markerUnits="strokeWidth">
+                  <path d="M 1.2 1.1 L 8.8 5 L 1.2 8.9 Z" fill="var(--accent)"/>
+                </marker>
+                <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="61.125" y1="15.762" x2="79.125" y2="28.840">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="86.000" y1="50.000" x2="79.125" y2="71.160">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="61.125" y1="84.238" x2="38.875" y2="84.238">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="20.875" y1="71.160" x2="14.000" y2="50.000">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="20.875" y1="28.840" x2="38.875" y2="15.762">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+              <!-- Radius 36: sits between the robot and the stage cards. -->
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag0)"
+                    d="M 61.125 15.762 A 36 36 0 0 1 79.125 28.840"/>
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag1)"
+                    d="M 86.000 50.000 A 36 36 0 0 1 79.125 71.160"/>
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag2)"
+                    d="M 61.125 84.238 A 36 36 0 0 1 38.875 84.238"/>
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag3)"
+                    d="M 20.875 71.160 A 36 36 0 0 1 14.000 50.000"/>
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag4)"
+                    d="M 20.875 28.840 A 36 36 0 0 1 38.875 15.762"/>
             </svg>
 
             <div class="wf__stage" data-wf-stage data-wf-pos="plan">
@@ -380,48 +407,58 @@
               </span>
             </div>
 
-            <!-- AIWA mascot — square open-arms artwork, centred in the ring. -->
+            <!-- AIWA mascot — transparent PNG, centred in the ring (no CSS fill / filter). -->
             <img class="wf__robot" data-wf-robot src="/images/aiwa-bot.png"
-                 alt="" width="1024" height="1024" loading="eager" decoding="async" />
+                 alt="" width="1254" height="1254" loading="eager" decoding="async" />
           </div>
         </div>
 
-        <!-- BEAT 3 · real products, shipped.
-             The client's brief for this panel asks for "visual evidence of
-             multiple real products being built and shipped". A file list and a
-             typing code panel could not make that claim: they showed AIWA
-             working, not AIWA finishing. These are six real projects built in
-             AIWA, and the label is the brief's own replacement term for "code
-             generation" (idea -> working product).
-
-             Card order alternates dark/light/dark down both rows, so the grid
-             reads as one set rather than two tonal blocks. -->
-        <div class="scene scene--shipped" data-scene="build">
-          <p class="shipped__title t-mono">From idea to working product</p>
-          <!-- loading="eager", NOT lazy. show()/hide() animate autoAlpha, so at
-               progress 0 this scene sits at visibility:hidden - and Chrome will
-               not load a lazy image inside a hidden subtree. Lazy here meant
-               blank cards that popped in exactly as the beat played. -->
-          <ul class="shipped">
-            <li class="shipped__card" data-ship-card>
-              <span class="shipped__shot">
-                <img src="/images/proj-chateau-velour.webp" alt="" width="560" height="316" loading="eager" decoding="async" data-ship-shot />
-              </span>
-              <span class="shipped__meta"><b>Chateau Velour</b><i>Winery &amp; tasting club</i></span>
-            </li>
-            <li class="shipped__card" data-ship-card>
-              <span class="shipped__shot">
-                <img src="/images/proj-festova.webp" alt="" width="560" height="316" loading="eager" decoding="async" data-ship-shot />
-              </span>
-              <span class="shipped__meta"><b>Festova</b><i>Event photo platform</i></span>
-            </li>
-            <li class="shipped__card" data-ship-card>
-              <span class="shipped__shot">
-                <img src="/images/proj-meridian.webp" alt="" width="560" height="316" loading="eager" decoding="async" data-ship-shot />
-              </span>
-              <span class="shipped__meta"><b>Meridian</b><i>Law firm</i></span>
-            </li>
-          </ul>
+        <!-- BEAT 3 · From Idea to Working Product.
+             Replaces the fan of shipped project cards. Left copy lives in
+             .hero__panel.is-3; this scene is the stacked visuals scrubbed by
+             ideaScrub.js as that tall panel scrolls. -->
+        <div class="scene scene--idea" data-scene="build">
+          <div class="idea__stage idea__stage--hero" data-idea-stage>
+            <div class="idea__stack" data-idea-stack>
+              <figure class="idea__panel">
+                <img
+                  src="/images/visuals/Plans%20before%20it%20builds.png"
+                  alt="AIWA planning step: Plan selected before Build in the workflow menu"
+                  width="1935"
+                  height="1605"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+              </figure>
+              <figure class="idea__panel">
+                <img
+                  src="/images/visuals/Designs%20the%20database.png"
+                  alt="AIWA designing the database schema for the product"
+                  width="1935"
+                  height="1605"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="idea__panel">
+                <img
+                  src="/images/visuals/Reasons%20through%20architecture.png"
+                  alt="AIWA reasoning through application architecture"
+                  width="1935"
+                  height="1605"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="idea__panel">
+                <img
+                  src="/images/visuals/Ships%20a%20working%20app.png"
+                  alt="AIWA shipping a working application preview"
+                  width="1935"
+                  height="1605"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+          </div>
         </div>
 
         <!-- BEAT 4 · the QA pass -->
@@ -476,13 +513,9 @@
     </div>
 
     <!-- THE SHAPE OF THIS SECTION.
-         The well cannot move or change aspect - it is the rect the pinned hero
-         canvas is handed off into, measured live every frame. So the section is
-         re-composed AROUND it instead: the well narrows into the first column
-         of a grid, and the second column carries three more screens from the
-         same product. That turns a single screenshot into a case study, which
-         is what "go from client brief to working product" wants to show, and it
-         costs the handoff nothing because a rect is a rect. -->
+         The well is the rect the pinned hero canvas is handed off into. It
+         fills the measure; supporting screens used to sit beside it and have
+         been removed so the landed product reads full-width. -->
     <div class="workspace__case">
 
     <!-- the well -->
@@ -569,27 +602,7 @@
       </div>
     </div>
 
-      <!-- The rest of the same product. Labelled, because three unlabelled
-           screenshots are decoration and three labelled ones are an argument:
-           this is a whole site, not one nice page. -->
-      <ul class="ws-aside">
-        <li class="ws-aside__item" data-ws-aside>
-          <img src="/images/fest-how.webp" alt="Festova's how-it-works page" width="760" height="427" loading="lazy" decoding="async" />
-          <span class="ws-aside__cap t-mono">How it works</span>
-        </li>
-        <li class="ws-aside__item" data-ws-aside>
-          <img src="/images/fest-features.webp" alt="Festova's event gallery features" width="760" height="427" loading="lazy" decoding="async" />
-          <span class="ws-aside__cap t-mono">Features</span>
-        </li>
-        <li class="ws-aside__item" data-ws-aside>
-          <img src="/images/fest-pricing.webp" alt="Festova's pricing page" width="760" height="427" loading="lazy" decoding="async" />
-          <span class="ws-aside__cap t-mono">Pricing</span>
-        </li>
-      </ul>
-
     </div>
-
-    <p class="workspace__caption t-mono">Festova &middot; event photo platform &middot; built and shipped with AIWA</p>
 
   </div>
 </section>
@@ -741,254 +754,197 @@
       </p>
     </div>
 
-    <!-- The card is one element with no scroll dependency of its own: it is
-         revealed by the section's blur-reveal and then simply sits there. The
-         ticks are drawn in CSS (.qa-card li::before), not typed, so they
-         inherit --good and cannot arrive as a font-dependent glyph. -->
+    <!-- Agent-status receipt (layout inspired by live-agent cards; no CTA).
+         Right stack is a tiny AIWA-native “PASS” collage — product proof, not
+         stock photography. -->
     <div class="qa-card" data-blur-in>
-      <p class="qa-card__label t-mono">Autonomous QA</p>
-      <ul class="qa-card__checks">
-        <li>Core workflows tested</li>
-        <li>Authentication verified</li>
-        <li>Business logic checked</li>
-        <li>Mobile experience ready</li>
-        <li>Production ready</li>
-      </ul>
-      <p class="qa-card__verdict t-mono">All checks passed</p>
+      <header class="qa-card__head">
+        <h3 class="qa-card__title">Autonomous QA</h3>
+        <p class="qa-card__powered">
+          <img src="/aiwa-favicon.svg" alt="" width="16" height="16" decoding="async" />
+          <span>Powered by <b>Project Brain™</b></span>
+        </p>
+      </header>
+
+      <div class="qa-card__agent">
+        <div class="qa-card__agent-main">
+          <p class="qa-card__status">
+            <span class="qa-card__pulse" aria-hidden="true"></span>
+            Agent testing for 23s
+          </p>
+          <ul class="qa-card__tasks">
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-clipboard-list"></use></svg>
+              <span>Testing core workflows</span>
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+              <span>Verifying authentication</span>
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code-xml"></use></svg>
+              <span>Checking business logic</span>
+            </li>
+          </ul>
+          <p class="qa-card__note">Auth verified. Checking mobile next…</p>
+        </div>
+
+        <div class="qa-card__aside" aria-hidden="true">
+          <div class="qa-pass qa-pass--back">
+            <span class="qa-pass__route t-mono">/checkout</span>
+            <span class="qa-pass__mark">PASS</span>
+          </div>
+          <div class="qa-pass qa-pass--front">
+            <span class="qa-pass__route t-mono">/login</span>
+            <span class="qa-pass__mark">PASS</span>
+            <span class="qa-pass__meta">12 assertions · 1.4s</span>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
 </section>
 
 <!-- ==========================================================================
-     WHY AIWA · §3.3 - feature grid, blur-reveal stagger, spring hover.
+     WHY AIWA · Built for business — static 1 + 3 audience cards.
+     Visuals: finished product shots + isolated AIWA UI fragments (Lovable-style).
+     No featureStages animation.
      ======================================================================= -->
 <section class="section why" id="why">
   <div class="shell shell--wide">
     <div class="why__head" data-blur-parent>
-      <p class="eyebrow" data-blur-child>Why AIWA</p>
-      <h2 class="t-h2" data-blur-child data-grad>AIWA doesn't just generate code.<br />It manages your entire product lifecycle.</h2>
+      <p class="eyebrow" data-blur-child>Built for business</p>
+      <h2 class="t-h2" data-blur-child data-grad>Don't just build apps.<br />Build opportunities.</h2>
+      <p class="t-body section__lead" data-blur-child>
+        Turn ideas into products, client projects, and business systems without assembling
+        a traditional development team.
+      </p>
     </div>
 
-    <!-- The animated feature stages, ported from the Marquee Next build. Each
-         card rebuilds a real surface from the app and loops a short sequence
-         with a pointer driving the clicks; js/motion/featureStages.js owns the
-         timing. The COPY is ours, unchanged - only the card chrome came across.
-         The composer inside them is .stage-prompt, deliberately not the hero's
-         .prompt; see the note on that block in site.css. -->
     <div class="why__grid" data-blur-parent data-stagger="100">
-      <article class="feature feature--hero" data-blur-child data-spring>
-        <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
-        <div class="feature__body">
-          <h3 class="t-h4">Project Brain™</h3>
-          <p class="t-body">AIWA remembers your product as it evolves. Ask for a change in month three
-            and it still knows why month one looks the way it does.</p>
-        </div>
-        <figure class="feature__stage" data-feature-stage="brain" aria-hidden="true">
-          <div class="stage-ui stage-ui--brain" aria-hidden="true">
-            <header class="stage-ui__chrome">
-              <img src="/aiwa-favicon.svg" alt="" width="16" height="16" />
-              <span>EstateFlow</span>
-              <svg class="icon" viewBox="0 0 24 24"><use href="#icon-chevron-down"></use></svg>
-              <span class="stage-ui__spacer"></span>
-              <span class="stage-ui__preview" data-stage-preview-btn>
-                <svg class="icon" viewBox="0 0 24 24"><use href="#icon-house"></use></svg>
-                Preview
-              </span>
-            </header>
-            <div class="stage-ui__thread">
-              <p class="stage-msg stage-msg--user" data-stage-item>I want to remix this SaaS Forge template into a production-quality CRM for real estate agencies. Do not rebuild from scratch.</p>
-              <div class="stage-msg" data-stage-item>
-                <p>SaaSforge is a full-stack starter. Fit EstateFlow to the architecture that already exists.</p>
-                <div class="stage-plan">
-                  <span class="stage-plan__idx t-mono">1. Product Intent</span>
-                  <p>EstateFlow is a modern CRM built for real estate agencies.</p>
-                  <span class="stage-plan__link" data-stage-plan>View plan</span>
-                </div>
-              </div>
-            </div>
-            <div class="stage-ui__composer">
-              <span class="stage-ui__ask">What's next?</span><span class="stage-prompt__caret"></span>
-              <span class="stage-prompt__send">
-                <svg class="icon" viewBox="0 0 24 24"><use href="#icon-arrow-up"></use></svg>
-              </span>
-            </div>
-          </div>
-          <span class="stage-cursor" data-stage-cursor>
-            <img class="stage-cursor__ptr" src="/icons/cursor.svg" alt="" width="32" height="32" />
-            <img class="stage-cursor__click" src="/icons/cursor-click.svg" alt="" width="32" height="32" />
-            <i class="stage-cursor__ring"></i>
-          </span>
-        </figure>
-      </article>
 
-      <article class="feature" data-blur-child data-spring>
-        <figure class="feature__stage" data-feature-stage="architect" aria-hidden="true">
-          <div class="stage-ui stage-ui--architect" aria-hidden="true">
-            <div class="stage-prompt">
-              <div class="stage-prompt__body">
-                <span class="stage-prompt__glyph">›</span>
-                <span class="stage-prompt__text" data-stage-type>Ask AIWA to build a personal blog</span><span class="stage-prompt__caret"></span>
-              </div>
-              <div class="stage-prompt__bar">
-                <div class="stage-prompt__bar-left">
-                  <span class="stage-prompt__plus"><svg class="icon" viewBox="0 0 24 24"><use href="#icon-plus"></use></svg></span>
-                  <span class="stage-prompt__model">
-                    <img src="/aiwa-favicon.svg" alt="" width="16" height="16" />
-                    <span>AIWA Mini</span>
-                    <svg class="icon" viewBox="0 0 24 24"><use href="#icon-chevron-down"></use></svg>
-                  </span>
-                  <span class="stage-prompt__chip" data-stage-chip>
-                    <svg class="icon stage-prompt__chip-db" viewBox="0 0 24 24"><use href="#icon-database"></use></svg>
-                    <span>Instant Postgres</span>
-                    <svg class="icon stage-prompt__chip-spark" viewBox="0 0 24 24"><use href="#icon-sparkles"></use></svg>
-                  </span>
-                </div>
-                <div class="stage-prompt__bar-right">
-                  <span class="stage-prompt__build">
-                    <svg class="icon" viewBox="0 0 24 24"><use href="#icon-wand-sparkles"></use></svg>
-                    <span>Build</span>
-                  </span>
-                  <span class="stage-prompt__send" data-stage-send>
-                    <svg class="icon" viewBox="0 0 24 24"><use href="#icon-arrow-up"></use></svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <ul class="stage-entities">
-              <li data-stage-item>profiles</li>
-              <li data-stage-item>workspaces</li>
-              <li data-stage-item>workspace_members</li>
-              <li data-stage-item>posts</li>
-              <li data-stage-item>comments</li>
-            </ul>
-          </div>
-          <span class="stage-cursor" data-stage-cursor>
-            <img class="stage-cursor__ptr" src="/icons/cursor.svg" alt="" width="32" height="32" />
-            <img class="stage-cursor__click" src="/icons/cursor-click.svg" alt="" width="32" height="32" />
-            <i class="stage-cursor__ring"></i>
-          </span>
+      <!-- 1 · Launch your own product — finished SaaS, not AIWA chrome -->
+      <article class="use-card use-card--hero" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--product">
+          <span class="use-card__glow use-card__glow--warm" aria-hidden="true"></span>
+          <img
+            src="/images/real/estate-flow.jpg"
+            alt="EstateFlow, a real-estate CRM built with AIWA"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
         </figure>
-        <div class="feature__body">
-          <h3 class="t-h4">AI Architecture</h3>
-          <p class="t-body">Every feature is fitted to your existing codebase before a line of it is generated.</p>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Launch your own product</h3>
+          <p class="use-card__lead">Turn that idea you've been sitting on into a real business.</p>
+          <p class="use-card__copy t-body">
+            Build your SaaS, marketplace, membership platform, directory, or next startup idea
+            with AIWA then launch it, charge customers, and keep improving it as you grow.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes">
+            <span>Build your idea</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
         </div>
       </article>
 
-      <article class="feature" data-blur-child data-spring>
-        <figure class="feature__stage" data-feature-stage="preview" aria-hidden="true">
-          <div class="stage-ui stage-ui--preview" aria-hidden="true">
-            <header class="stage-ui__chrome">
-              <span>EstateFlow</span>
-              <span class="stage-ui__spacer"></span>
-              <span class="stage-ui__preview is-armed" data-stage-preview-btn>Preview</span>
-            </header>
-            <div class="stage-boot" data-stage-boot>
-              <span class="stage-boot__mark">A</span>
-              <p>Setting up your preview</p>
-              <p class="quiet">Resuming the runtime…</p>
-              <span class="stage-boot__track"><i class="stage-boot__rail" data-stage-rail></i></span>
-            </div>
-            <div class="eflow" data-stage-app>
-              <p class="eflow__kicker">Real estate CRM</p>
-              <p class="eflow__h">Turn every inquiry into a <em>closed deal</em></p>
-              <div class="eflow__cols">
-                <div class="eflow__col" data-stage-item data-stage-deal>
-                  <span>Viewing</span>
-                  <b>Sarah Chen</b>
-                  <em>$825K</em>
-                </div>
-                <div class="eflow__col" data-stage-item>
-                  <span>Offer</span>
-                  <b>Elena Vasquez</b>
-                  <em>$2.1M</em>
-                </div>
-                <div class="eflow__col" data-stage-item>
-                  <span>Contract</span>
-                  <b>Sofia Romano</b>
-                  <em>$675K</em>
-                </div>
-              </div>
-            </div>
+      <!-- 2 · Build for clients — diverse shipped projects -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--collage">
+          <span class="use-card__glow use-card__glow--mint" aria-hidden="true"></span>
+          <div class="use-collage" aria-hidden="true">
+            <img src="/images/real/chateau-velour.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
+            <img src="/images/real/festova.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
+            <img src="/images/real/monograph.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
+            <img src="/images/real/stillpoint.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
           </div>
-          <span class="stage-cursor" data-stage-cursor>
-            <img class="stage-cursor__ptr" src="/icons/cursor.svg" alt="" width="32" height="32" />
-            <img class="stage-cursor__click" src="/icons/cursor-click.svg" alt="" width="32" height="32" />
-            <i class="stage-cursor__ring"></i>
-          </span>
         </figure>
-        <div class="feature__body">
-          <h3 class="t-h4">Autonomous QA</h3>
-          <p class="t-body">AIWA tests before you ship, in a real browser, and fixes what it breaks.</p>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Build for clients</h3>
+          <p class="use-card__lead">Deliver more. Hire less.</p>
+          <p class="use-card__copy t-body">
+            Build professional websites, portals, CRMs, dashboards, and custom apps for clients
+            without needing a full development team.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes/enterprise">
+            <span>Explore Agency</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
         </div>
       </article>
 
-      <article class="feature" data-blur-child data-spring>
-        <figure class="feature__stage" data-feature-stage="projects" aria-hidden="true">
-          <div class="stage-ui stage-ui--projects" aria-hidden="true">
-            <header class="stage-ui__chrome">
+      <!-- 3 · Run your business — isolated CRM pipeline fragment -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--fragment">
+          <span class="use-card__glow use-card__glow--sky" aria-hidden="true"></span>
+          <div class="use-frag use-frag--pipeline" aria-hidden="true">
+            <p class="use-frag__kicker">Pipeline</p>
+            <div class="use-frag__cols">
+              <div class="use-frag__col">
+                <span>Viewing</span>
+                <b>Sarah Chen</b>
+                <em>$825K</em>
+              </div>
+              <div class="use-frag__col is-hot">
+                <span>Offer</span>
+                <b>Elena Vasquez</b>
+                <em>$2.1M</em>
+              </div>
+              <div class="use-frag__col">
+                <span>Contract</span>
+                <b>Sofia Romano</b>
+                <em>$675K</em>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Run your business</h3>
+          <p class="use-card__lead">Build the software your business actually needs.</p>
+          <p class="use-card__copy t-body">
+            Create internal tools, dashboards, customer portals, booking systems, CRMs, and
+            workflows around the way your company already works.
+          </p>
+          <a class="use-card__cta" href="#gallery">
+            <span>See what you can build</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 4 · Turn skills into income — isolated AIWA projects list -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--fragment">
+          <span class="use-card__glow use-card__glow--peach" aria-hidden="true"></span>
+          <div class="use-frag use-frag--projects" aria-hidden="true">
+            <header class="use-frag__bar">
               <span>All projects</span>
-              <span class="stage-ui__count">5</span>
+              <span class="use-frag__count">5</span>
             </header>
-            <div class="stage-filters">
-              <span class="is-on" data-stage-filter="all">All projects</span>
-              <span data-stage-filter="fav">Favourite</span>
-              <span>Published</span>
-            </div>
-            <ul class="stage-projects">
-              <li data-stage-item data-stage-row>
-                <i>E</i>
-                <div>
-                  <b>EstateFlow</b>
-                  <em>profiles · workspaces · workspace_members</em>
-                </div>
-                <span class="stage-draft">Draft</span>
-              </li>
-              <li data-stage-item>
-                <i>C</i>
-                <div>
-                  <b>Château Velour</b>
-                  <em>wines · reservations · club_signups</em>
-                </div>
-                <span class="stage-draft">Draft</span>
-              </li>
-              <li data-stage-item>
-                <i>P</i>
-                <div>
-                  <b>PearlCRM</b>
-                  <em>patients · appointments · treatments</em>
-                </div>
-                <span class="stage-draft">Draft</span>
-              </li>
-              <li data-stage-item>
-                <i>W</i>
-                <div>
-                  <b>Wax &amp; Groove</b>
-                  <em>records · events · members</em>
-                </div>
-                <span class="stage-draft">Draft</span>
-              </li>
-              <li data-stage-item>
-                <i>I</i>
-                <div>
-                  <b>InvoicePilot</b>
-                  <em>invoices · clients · payments</em>
-                </div>
-                <span class="stage-draft">Draft</span>
-              </li>
+            <ul class="use-frag__list">
+              <li class="is-on"><i>E</i><div><b>EstateFlow</b><em>Published</em></div></li>
+              <li><i>C</i><div><b>Château Velour</b><em>Draft</em></div></li>
+              <li><i>F</i><div><b>Festova</b><em>Published</em></div></li>
             </ul>
           </div>
-          <span class="stage-cursor" data-stage-cursor>
-            <img class="stage-cursor__ptr" src="/icons/cursor.svg" alt="" width="32" height="32" />
-            <img class="stage-cursor__click" src="/icons/cursor-click.svg" alt="" width="32" height="32" />
-            <i class="stage-cursor__ring"></i>
-          </span>
         </figure>
-        <div class="feature__body">
-          <h3 class="t-h4">Continuous Evolution</h3>
-          <p class="t-body">Your application keeps improving after launch. Version history, restore, client review.</p>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Turn skills into income</h3>
+          <p class="use-card__lead">Your next revenue stream could start with a prompt.</p>
+          <p class="use-card__copy t-body">
+            Sell websites. Build apps for businesses. Launch micro-SaaS products. Create templates.
+            Turn what you build with AIWA into something people will pay for.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes">
+            <span>Start building</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
         </div>
       </article>
+
     </div>
   </div>
 </section>
@@ -1020,126 +976,208 @@
       </p>
     </div>
 
-    <!-- THE CONTACT SHEET. This was two marquee rows travelling in opposite
-         directions. A spread does not move: the argument is made by alignment,
-         a numbered index and one hairline per plate, so it is a static grid now
-         and the only motion left is the image easing inside its own frame.
-
-         The index is a CSS counter (see .shot__idx in site.css) - add or drop a
-         plate and the numbering is still right, which a hand-typed "05" would
-         not be. Each caption is its own image's alt text, said shorter. -->
+    <!-- Contact sheet of real AIWA builds. Badge lives on the frame; hover
+         reveals Copy prompt / Use template. No plate index or hairline. -->
     <ol class="gallery__grid" data-blur-parent data-stagger="70">
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-projects-grid.webp" alt="Five apps in one workspace" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Your projects</span>
-              <span class="shot__desc">Five apps, one workspace</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build a dog-walking business site for Bristol: book meet-and-greets, show neighbourhoods covered, and make it feel warm and local.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/bristol-paws.jpg" alt="Bristol Paws dog-walking website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Bristol Paws</span>
+              <span class="shot__desc">walks · bookings · neighbourhoods</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-live-preview.webp" alt="Chateau Velour running in the live preview" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Chateau Velour</span>
-              <span class="shot__desc">Running in the live preview</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build an event photo platform: guests scan a QR code, upload photos and video, and everything lands in one live gallery.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/festova.jpg" alt="Festova event photo platform" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">App</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Festova</span>
+              <span class="shot__desc">events · QR uploads · live gallery</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-prompt-start.webp" alt="A sentence typed into AIWA, and the build starting" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">One sentence in</span>
-              <span class="shot__desc">And the build starts</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build EstateFlow, a modern property website with listings, enquiry forms, and a clean editorial look for a boutique agency.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/estate-flow.jpg" alt="EstateFlow property website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">EstateFlow</span>
+              <span class="shot__desc">listings · enquiries · agency</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-published.webp" alt="A finished app live on its own URL" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Published</span>
-              <span class="shot__desc">Live on its own URL</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build a hospital website for Rehoboth General: wards, appointments, and a calm clinical design that feels trustworthy.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/rehoboth.jpg" alt="Rehoboth General Hospital website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Rehoboth MedCore</span>
+              <span class="shot__desc">wards · bookings · care</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-store-ready.webp" alt="Store readiness checks for iOS and Android" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Store readiness</span>
-              <span class="shot__desc">iOS and Android checks</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build Monograph, a minimal portfolio site for a designer: large type, project grid, and a quiet editorial layout.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/monograph.jpg" alt="Monograph portfolio website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Monograph</span>
+              <span class="shot__desc">portfolio · type · projects</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-assets.webp" alt="Every image in the build, in one asset library" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Assets</span>
-              <span class="shot__desc">Every image, one library</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build Château Velour, a dark atmospheric wine estate site with tasting notes, heritage story, and reservation CTA.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/chateau-velour.jpg" alt="Château Velour wine estate website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Château Velour</span>
+              <span class="shot__desc">estate · tastings · heritage</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-releases.webp" alt="Deploy history with rollback" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Releases</span>
-              <span class="shot__desc">Deploy history and rollback</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build Chairline, a dental practice CRM: patient pipeline from inquiry to recall, automated follow-ups, and scheduling without double-bookings.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/chairline.jpg" alt="Chairline dental practice CRM" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">App</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Chairline</span>
+              <span class="shot__desc">pipeline · recalls · scheduling</span>
+            </div>
+          </div>
+        </article>
       </li>
-      <li class="shot" data-blur-child>
-        <a class="shot__link" href="#gallery">
-          <span class="shot__frame">
-            <img src="/images/app-search.webp" alt="Search jumping straight to any project" width="1000" height="688" loading="lazy" decoding="async" />
-          </span>
-          <span class="shot__meta">
-            <span class="shot__idx" aria-hidden="true"></span>
-            <span class="shot__body">
-              <span class="shot__title">Search</span>
-              <span class="shot__desc">Jump straight to any project</span>
-            </span>
-          </span>
-        </a>
+      <li class="shot" data-blur-child data-shot
+          data-prompt="Build Stillpoint, a calm wellness studio site with class schedule, memberships, and nature-led photography.">
+        <article class="shot__card">
+          <div class="shot__frame">
+            <img src="/images/real/stillpoint.jpg" alt="Stillpoint wellness studio website" width="1200" height="800" loading="lazy" decoding="async" />
+            <span class="shot__badge">Website</span>
+            <div class="shot__actions">
+              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                <span data-shot-copy-label>Copy prompt</span>
+              </button>
+              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Use template
+              </a>
+            </div>
+          </div>
+          <div class="shot__meta">
+            <div class="shot__body">
+              <span class="shot__title">Stillpoint</span>
+              <span class="shot__desc">classes · memberships · wellness</span>
+            </div>
+          </div>
+        </article>
       </li>
     </ol>
 
@@ -1372,6 +1410,8 @@
      ======================================================================= -->
 <section class="section cta" id="cta">
   <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="cta__fade cta__fade--top" aria-hidden="true"></div>
+  <div class="cta__fade cta__fade--bottom" aria-hidden="true"></div>
   <div class="shell cta__inner" data-blur-parent>
     <h2 class="t-display cta__h2" data-blur-child data-grad>Ready<br />to launch?</h2>
     <p class="t-body" data-blur-child>Join <b>14,000+ founders</b>, agencies and creators turning ideas into real products with AIWA.</p>
@@ -1394,25 +1434,32 @@
      ======================================================================= -->
 <!-- FOOTER:START (generated by scripts/build-pages.mjs - do not edit by hand) -->
 <footer class="footer" data-footer>
-  <div class="shell shell--wide">
-    <div class="footer__top">
-      <a class="footer__logo" href="/#top" aria-label="AIWA home">
-        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
-      </a>
-      <form class="footer__news" onsubmit="return false">
-        <label class="sr-only" for="news">Email address</label>
-        <input id="news" type="email" placeholder="Join our newsletter" />
-        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
-      </form>
-    </div>
-    <div class="footer__cols">
+  <div class="footer__plate">
+    <div class="shell shell--wide">
+      <div class="footer__top">
+        <a class="footer__logo" href="/#top" aria-label="AIWA home">
+          <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+        </a>
+        <form class="footer__news" onsubmit="return false">
+          <label class="sr-only" for="news">Email address</label>
+          <input id="news" type="email" placeholder="Join our newsletter" />
+          <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+        </form>
+      </div>
+      <div class="footer__cols">
       <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
       <div><span class="footer__col-name">Pages</span><a href="/#why">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
       <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
       <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
       <div><span class="footer__col-name">Contact</span><a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+      </div>
+      <div class="footer__meta">
+        <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+      </div>
     </div>
-    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+    <div class="footer__wordmark-crop">
+      <img class="footer__wordmark" src="/images/aiwa-logo.webp" alt="" width="1000" height="459" aria-hidden="true" decoding="async" />
+    </div>
   </div>
 </footer>
 <!-- FOOTER:END -->

@@ -22,8 +22,8 @@
 import { blurReveal, gradientText, marquees, springHovers } from './motion/primitives.js';
 import { blobs } from './motion/blob.js';
 import { accordion, footerReveal, navState, navMenu } from './motion/sections.js';
-import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
+import { initSmoothScroll } from './motion/smoothScroll.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,16 +32,9 @@ gsap.registerPlugin(ScrollTrigger);
    for no gain. */
 ScrollTrigger.config({ ignoreMobileResize: true });
 
-/* §5.4 - Lenis on Windows only, exactly as main.js argues. A page and the home
-   page must not scroll differently; that is felt immediately on a nav click. */
+/* §5.4 — same smooth-scroll contract as the home page (motion/smoothScroll.js). */
 function initLenis() {
-  const platform = navigator.userAgentData?.platform || navigator.platform || '';
-  if (!/win/i.test(platform) || prefersReducedMotion() || typeof Lenis === 'undefined') return;
-
-  const lenis = new Lenis({ duration: 1.1, wheelMultiplier: 1.1 });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  initSmoothScroll();
 }
 
 let teardowns = [];
