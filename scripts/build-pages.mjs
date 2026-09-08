@@ -512,9 +512,11 @@ ${items.map((r) => `    <a href="${esc(r.href)}" data-blur-child>
   </div>`;
 
 const ctaBlock = ({ eyebrow, h2, body, label = 'Start Building', href = 'https://app.aiwa.codes' }) => `<section class="section cta">
-  <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
-  <div class="cta__fade cta__fade--top" aria-hidden="true"></div>
-  <div class="cta__fade cta__fade--bottom" aria-hidden="true"></div>
+  <div class="cta__media" aria-hidden="true">
+    <svg class="cta__blob" data-blob viewBox="0 0 400 400"></svg>
+    <div class="cta__fade cta__fade--top"></div>
+    <div class="cta__fade cta__fade--bottom"></div>
+  </div>
   <div class="cta__inner" data-blur-parent>
     <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h2 class="t-display cta__h2" data-blur-child data-grad>${h2}</h2>

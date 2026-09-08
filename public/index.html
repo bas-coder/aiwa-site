@@ -20,10 +20,44 @@
 <link rel="stylesheet" href="/css/base.css" />
 <link rel="stylesheet" href="/css/site.css" />
 
-<script>document.documentElement.classList.remove('no-js');</script>
+<script>
+document.documentElement.classList.remove('no-js');
+document.documentElement.classList.add('is-loading');
+</script>
 </head>
 
 <body>
+
+<!-- ==========================================================================
+     LOADER · pre-Act-0
+     Covers first paint through fonts. CSS shows the mark immediately; JS ticks
+     the stages and dismisses. Inline failsafe tears it down if modules never
+     boot, so the page cannot stick on a blank ink screen.
+     ======================================================================= -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__mark">
+      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" fetchpriority="high" decoding="sync" />
+    </div>
+    <div class="loader__stages">
+      <span data-loader-stage>plan</span>
+      <span data-loader-stage>architect</span>
+      <span data-loader-stage>build</span>
+      <span data-loader-stage>test</span>
+      <span data-loader-stage>evolve</span>
+    </div>
+  </div>
+  <div class="loader__rail"><i></i></div>
+</div>
+<script>
+window.__aiwaLoaderFailsafe = window.setTimeout(function () {
+  var el = document.getElementById('loader');
+  document.documentElement.classList.remove('is-loading');
+  if (!el) return;
+  el.classList.add('is-leaving');
+  window.setTimeout(function () { el.remove(); }, 800);
+}, 5000);
+</script>
 
 <!-- Ambient glow — direct child of body (fixed). Kept out of #hero-media /
      .hero so overflow/contain never slices the blur halo. -->
@@ -31,16 +65,6 @@
   <object class="hero__glow-obj" data="/images/glow.svg" type="image/svg+xml" tabindex="-1"></object>
 </div>
 
-<!-- ==========================================================================
-     LOADER · pre-Act-0
-     The moto-card loader, re-read for AIWA: instead of world clocks ticking
-     while a monogram resolves, the five agent stages tick while the logo
-     resolves. The logo is the same /aiwa/aiwa.webp lockup the app boots with
-     (apps/web AiwaBootScreen), so lander -> app reads as one product rather
-     than two. Same job - cover the font+asset gate with something that says
-     what the product is - but it is our own sentence, not theirs.
-     Shown once per session (sessionStorage), exactly like the reference.
-     ======================================================================= -->
 <!-- ==========================================================================
      ICON SPRITE · Lucide (ISC), see /icons/LICENSE.txt.
      Inline rather than 29 network requests, and inline rather than a separate
@@ -83,22 +107,6 @@
   <symbol id="icon-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></g></symbol>
   <symbol id="icon-credit-card-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /><line x1="2" x2="22" y1="2" y2="22" /></g></symbol>
 </svg>
-
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader__inner">
-    <div class="loader__mark">
-      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" fetchpriority="high" decoding="async" />
-    </div>
-    <div class="loader__stages">
-      <span data-loader-stage>plan</span>
-      <span data-loader-stage>architect</span>
-      <span data-loader-stage>build</span>
-      <span data-loader-stage>test</span>
-      <span data-loader-stage>evolve</span>
-    </div>
-  </div>
-  <div class="loader__rail"><i></i></div>
-</div>
 
 <!-- ==========================================================================
      NAV · arrives LAST in the entrance chain (§2.3 beat 4)
@@ -211,11 +219,12 @@
       <p class="hero__statement">
         <span class="quiet">Describe it in a sentence.</span>
         Watch five agents
-        plan<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-clipboard-list"></use></svg></span>,
-        architect<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-layers"></use></svg></span>,
-        build<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-code-xml"></use></svg></span>,
-        test<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-flask-conical"></use></svg></span>
-        and ship<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-rocket"></use></svg></span>
+        <span class="hero__glue">plan<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-clipboard-list"></use></svg></span>,</span>
+        <span class="hero__glue">architect<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-layers"></use></svg></span>,</span>
+        <span class="hero__glue">build<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-code-xml"></use></svg></span>,</span>
+        <span class="hero__glue">test<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-flask-conical"></use></svg></span></span>
+        and
+        <span class="hero__glue">ship<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-rocket"></use></svg></span></span>
         it.
       </p>
       </div>
@@ -282,10 +291,10 @@
           </div>
           <div class="prompt">
             <span class="prompt__glyph">›</span>
-            <!-- Seeded in markup so the poster frame reads correctly before any
-                 script runs, and still reads correctly if none ever does. The
-                 scrub overwrites it from character 0. -->
-            <span class="prompt__text" data-prompt-text>Build an event photo platform</span><span class="prompt__caret"></span>
+            <!-- Seeded so the poster frame reads before JS (and if JS never
+                 runs). hero.js replaces this with one measured line, then
+                 scrubs the remaining characters — never from a blank box. -->
+            <span class="prompt__text" data-prompt-text>Build an event photo platform:</span><span class="prompt__caret"></span>
           </div>
           <div class="prompt__meta t-mono">
             <span>claude sonnet 4.6</span><span>·</span><span>real database</span><span>·</span><span>build</span>
@@ -1409,9 +1418,11 @@
      FINAL CTA · §3.7
      ======================================================================= -->
 <section class="section cta" id="cta">
-  <svg class="cta__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
-  <div class="cta__fade cta__fade--top" aria-hidden="true"></div>
-  <div class="cta__fade cta__fade--bottom" aria-hidden="true"></div>
+  <div class="cta__media" aria-hidden="true">
+    <svg class="cta__blob" data-blob viewBox="0 0 400 400"></svg>
+    <div class="cta__fade cta__fade--top"></div>
+    <div class="cta__fade cta__fade--bottom"></div>
+  </div>
   <div class="shell cta__inner" data-blur-parent>
     <h2 class="t-display cta__h2" data-blur-child data-grad>Ready<br />to launch?</h2>
     <p class="t-body" data-blur-child>Join <b>14,000+ founders</b>, agencies and creators turning ideas into real products with AIWA.</p>

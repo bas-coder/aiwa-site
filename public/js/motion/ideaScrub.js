@@ -3,6 +3,8 @@
  *
  * Lives inside `.hero__panel.is-3` (center-sticky copy) + `.scene--idea` stack.
  * Scroll through the panel maps progress → active step + stack translateY.
+ * Stack is a column flex with gap; stride is measured in px so the gap scrolls
+ * through with each card (Lovable-style).
  *
  * Reduced motion: first panel static, first step active.
  */
@@ -12,6 +14,14 @@ import { prefersReducedMotion } from './tokens.js';
 const STEP_COUNT = 4;
 const ACTIVE_CLASS = 'is-active';
 const DONE_CLASS = 'is-done';
+
+function stackStridePx(stack) {
+  const panels = stack.querySelectorAll('.idea__panel');
+  if (panels.length < 2) {
+    return panels[0]?.offsetHeight || 0;
+  }
+  return panels[1].offsetTop - panels[0].offsetTop;
+}
 
 function applyProgress(steps, stack, progress) {
   const scaled = progress * STEP_COUNT;
@@ -28,8 +38,9 @@ function applyProgress(steps, stack, progress) {
   });
 
   if (stack) {
-    const offset = progress * (STEP_COUNT - 1) * 100;
-    stack.style.transform = `translate3d(0, ${-offset}%, 0)`;
+    const stride = stackStridePx(stack);
+    const offset = progress * (STEP_COUNT - 1) * stride;
+    stack.style.transform = `translate3d(0, ${-offset}px, 0)`;
   }
 }
 
@@ -55,9 +66,12 @@ export function ideaScrub(root = document) {
 
   resetVisuals(steps, stack);
 
+  const copy = panel.querySelector('.hero__idea') || panel;
+
   const st = ScrollTrigger.create({
-    trigger: panel,
-    start: 'top top',
+    trigger: copy,
+    start: 'center center',
+    endTrigger: panel,
     end: 'bottom bottom',
     scrub: true,
     invalidateOnRefresh: true,

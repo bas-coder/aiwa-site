@@ -1,92 +1,80 @@
 /**
- * The loader.
+ * Preloader.
  *
- * Its real job is to cover the gap between first paint and fonts.ready, so the
- * hero headline never flashes unstyled (§2.2, and the first two lines of the
- * §6 QA list). Everything visual about it is in service of that.
+ * CSS paints the overlay and logo on first paint. This module only ticks the
+ * stage labels and dismisses the overlay after both a minimum beat and the
+ * caller's gate (fonts.ready). It does not depend on GSAP: a failed tween
+ * used to leave the mark at opacity 0 forever, which read as "no preloader".
  *
- * Shown ONCE PER SESSION. A loader on every navigation is a tax on the people
- * who use the site most; sessionStorage is the same gate the moto-card build
- * uses and it is the right one.
- *
- * The mark is the app's own logo lockup (the same one apps/web boots with),
- * not a typeset wordmark, so the lander and the app open on the same image.
- * An image can't do the H1's three-pass character build, so it gets that
- * build's shape instead - blur off, scale settling, one continuous ease over
- * the same window - and the hero entrance still lands as a continuation.
+ * Shown on every full page load. Session skip made refresh look broken, and it
+ * also skipped the font-cover job this overlay exists to do.
  */
 
-import { EASE, DUR, STAGGER, prefersReducedMotion } from './tokens.js';
+import { prefersReducedMotion } from './tokens.js';
 
-const KEY = 'aiwa_loader_seen';
+const STAGE_MS = 160;
+const MIN_SHOW_MS = 1500;
+const EXIT_MS = 550;
+const FAILSAFE_MS = 4500;
+const LOADING_CLASS = 'is-loading';
+const LEAVING_CLASS = 'is-leaving';
+const STAGE_ON_CLASS = 'is-on';
 
-const forceShow = () => {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    return params.has('loader') || window.location.hash === '#loader';
-  } catch {
-    return false;
+const clearFailsafe = () => {
+  const id = window.__aiwaLoaderFailsafe;
+  if (id) {
+    window.clearTimeout(id);
+    window.__aiwaLoaderFailsafe = 0;
   }
 };
 
-const seen = () => {
-  if (forceShow()) return false;
-  try { return sessionStorage.getItem(KEY) === '1'; } catch { return false; }
-};
-const markSeen = () => {
-  if (forceShow()) return;
-  try { sessionStorage.setItem(KEY, '1'); } catch { /* private mode; show it again */ }
+const unlock = () => {
+  document.documentElement.classList.remove(LOADING_CLASS);
 };
 
-export function runLoader() {
+const settle = (value) => Promise.resolve(value).catch(() => {});
+
+export function runLoader(until = Promise.resolve()) {
   const loader = document.getElementById('loader');
-  if (!loader) return Promise.resolve();
-
-  const remove = () => loader.remove();
-
-  if (seen() || prefersReducedMotion()) {
-    remove();
+  if (!loader) {
+    unlock();
     return Promise.resolve();
   }
-  markSeen();
 
-  const mark = loader.querySelector('.loader__mark img');
+  document.documentElement.classList.add(LOADING_CLASS);
+  clearFailsafe();
+
+  const reduced = prefersReducedMotion();
   const stages = [...loader.querySelectorAll('[data-loader-stage]')];
-  const rail = loader.querySelector('.loader__rail i');
+  let stageIndex = 0;
+  const tickStage = () => {
+    if (!stages.length) return;
+    stages.forEach((el, i) => el.classList.toggle(STAGE_ON_CLASS, i === stageIndex));
+    stageIndex = (stageIndex + 1) % stages.length;
+  };
+  tickStage();
+  const stageTimer = reduced ? 0 : window.setInterval(tickStage, STAGE_MS);
+
+  const minShow = MIN_SHOW_MS;
+  let settled = false;
 
   return new Promise((resolve) => {
-    const tl = gsap.timeline({
-      defaults: { ease: EASE.primary },
-      onComplete: () => { remove(); resolve(); },
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      if (stageTimer) window.clearInterval(stageTimer);
+      unlock();
+      loader.classList.add(LEAVING_CLASS);
+      resolve();
+      const delay = reduced ? 0 : EXIT_MS;
+      window.setTimeout(() => loader.remove(), delay);
+    };
+
+    const minTimer = new Promise((done) => {
+      window.setTimeout(done, minShow);
     });
 
-    // the logo resolves out of the blur over the same ~0.68s the three
-    // character passes used to take, so the beat the stages tick against is
-    // unchanged
-    tl.fromTo(
-      mark,
-      { opacity: 0, scale: 0.94, filter: 'blur(14px)' },
-      { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.68, ease: EASE.enter },
-      0
-    );
-
-    // the five stages tick over while the rail fills - the page says what the
-    // product does before the page has finished loading
-    stages.forEach((s, i) => {
-      tl.call(() => {
-        stages.forEach((o) => o.classList.remove('is-on'));
-        s.classList.add('is-on');
-      }, null, 0.35 + i * 0.16);
-    });
-
-    tl.to(rail, { width: '100%', duration: 1.1, ease: EASE.scrub }, 0.2);
-
-    tl.to(loader, {
-      autoAlpha: 0,
-      scale: 1.06,
-      duration: 0.7,
-      ease: EASE.soft,
-      transformOrigin: 'center center',
-    }, '>-0.1');
+    Promise.all([settle(until), minTimer]).then(finish);
+    window.setTimeout(finish, FAILSAFE_MS);
   });
 }

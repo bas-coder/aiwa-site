@@ -48,6 +48,170 @@ import { EASE, DUR, STAGGER, REVEAL, ACCENT, INK, prefersReducedMotion, withWill
    is a screenshot of something nobody asked for. */
 const PROMPT_TEXT = 'Build an event photo platform: guests scan a QR code, upload photos and video, and everything lands in one live gallery';
 
+/* Prompt-beat leftover type-in is placed by measureHeroBreaks() so it
+   finishes before panel 2. These used to be fixed fractions of the hero. */
+const PROMPT_FALLBACK_WORD_COUNT = 6;
+const PROMPT_MIN_INITIAL_CHARS = 8;
+const PROMPT_LINE_SLACK_PX = 2;
+const PROMPT_COLON = ':';
+const PROMPT_SPACE = ' ';
+
+/* Scene switches used to be hardcoded fractions of the whole hero (prompt
+   until 0.20, plan until 0.28, idea until 0.80). Panel 3 is ~4 viewports, so
+   those numbers put the PLAN robot on screen while the idea list was already
+   the left copy. Breaks are measured from the live panels. */
+const FALLBACK_BREAKS = {
+  promptHide: 0.18,
+  planShow: 0.18,
+  ideaShow: 0.36,
+  planHide: 0.36,
+  ideaHide: 0.9,
+  shipShow: 0.9,
+  stageCenter: 0.84,
+};
+
+const clamp01 = (n) => Math.max(0, Math.min(1, n));
+
+function offsetFromHero(hero, el) {
+  if (!hero || !el) return 0;
+  return el.getBoundingClientRect().top - hero.getBoundingClientRect().top;
+}
+
+function measureHeroBreaks() {
+  const hero = document.querySelector('.hero');
+  const panel2 = document.querySelector('.hero__panel.is-2');
+  const panel3 = document.querySelector('.hero__panel.is-3');
+  const ideaCopy = document.querySelector('.hero__idea');
+  const spacer = document.getElementById('flip-start');
+  const vh = window.innerHeight;
+  const range = Math.max(1, (hero?.offsetHeight || vh) - vh);
+  const toProgress = (px) => clamp01(px / range);
+
+  if (!hero || !panel2 || !panel3 || !ideaCopy) {
+    return { ...FALLBACK_BREAKS };
+  }
+
+  const copyTop = offsetFromHero(hero, ideaCopy);
+  const statement = document.querySelector('.hero__statement');
+  const stmtTop = statement ? offsetFromHero(hero, statement) : offsetFromHero(hero, panel2);
+  /* Panel 2 copy is vertically centered, so it is on screen before the
+     panel top hits the viewport top. Switch on the statement itself. */
+  const atPlan = toProgress(stmtTop - vh * 0.55);
+  /* Switch as soon as the idea list is in the viewport — not when its
+     center hits mid-screen, which left the PLAN robot up beside the list. */
+  const atIdea = toProgress(copyTop - vh * 0.72);
+  const atIdeaEnd = toProgress(
+    offsetFromHero(hero, panel3) + panel3.offsetHeight - vh,
+  );
+  const planShow = clamp01(Math.max(0.05, atPlan));
+  const ideaShow = clamp01(Math.max(planShow + 0.04, atIdea));
+  const ideaEnd = clamp01(Math.max(ideaShow + 0.1, atIdeaEnd));
+  const spacerTop = spacer ? offsetFromHero(hero, spacer) : range;
+  const stageCenter = clamp01(Math.max(
+    ideaEnd - 0.06,
+    toProgress(spacerTop - vh * 0.2),
+  ));
+
+  return {
+    promptHide: planShow,
+    planShow,
+    ideaShow,
+    planHide: ideaShow,
+    ideaHide: ideaEnd,
+    shipShow: ideaEnd,
+    stageCenter,
+  };
+}
+
+function fallbackPromptLength(text) {
+  const colonAt = text.indexOf(PROMPT_COLON);
+  if (colonAt !== -1) return colonAt + 1;
+  let words = 0;
+  for (let i = 0; i < text.length; i += 1) {
+    if (text[i] === PROMPT_SPACE) {
+      words += 1;
+      if (words === PROMPT_FALLBACK_WORD_COUNT) return i;
+    }
+  }
+  return text.length;
+}
+
+function snapPromptLineEnd(text, fit) {
+  if (fit >= text.length) return text.length;
+  if (fit <= 0) return 0;
+  const landedOnBreak = text[fit] === PROMPT_SPACE || text[fit - 1] === PROMPT_SPACE;
+  if (landedOnBreak) {
+    let n = fit;
+    while (n > 0 && text[n - 1] === PROMPT_SPACE) n -= 1;
+    return n;
+  }
+  const prevSpace = text.lastIndexOf(PROMPT_SPACE, fit - 1);
+  if (prevSpace >= PROMPT_MIN_INITIAL_CHARS) return prevSpace;
+  return fit;
+}
+
+function promptFontShorthand(el) {
+  const cs = getComputedStyle(el);
+  return cs.font || [cs.fontStyle, cs.fontWeight, cs.fontSize, cs.fontFamily].filter(Boolean).join(' ');
+}
+
+let promptMeasureCtx = null;
+function measurePromptSliceWidth(font, text) {
+  if (!promptMeasureCtx) {
+    promptMeasureCtx = document.createElement('canvas').getContext('2d');
+  }
+  if (!promptMeasureCtx) return 0;
+  promptMeasureCtx.font = font;
+  return promptMeasureCtx.measureText(text).width;
+}
+
+/* Longest prefix of `text` that paints as one line inside the prompt card
+   at the scene's current layout width. Word-snapped so the caret never sits
+   mid-glyph. Recalculated whenever the hero rebuilds (width change). */
+function measurePromptFirstLineLength(promptEl, text) {
+  const fallback = fallbackPromptLength(text);
+  if (!promptEl || !text) return fallback;
+
+  const box = promptEl.closest('.prompt');
+  const scene = promptEl.closest('.scene');
+  if (!box || !scene) return fallback;
+
+  const sceneWidth = scene.clientWidth;
+  if (sceneWidth < 1) return fallback;
+
+  const boxStyle = getComputedStyle(box);
+  const padX = parseFloat(boxStyle.paddingLeft) + parseFloat(boxStyle.paddingRight);
+  const borderX = parseFloat(boxStyle.borderLeftWidth) + parseFloat(boxStyle.borderRightWidth);
+  const gap = parseFloat(boxStyle.gap) || parseFloat(boxStyle.columnGap) || 0;
+  const glyph = box.querySelector('.prompt__glyph');
+  const caret = box.querySelector('.prompt__caret');
+  const glyphW = glyph ? glyph.offsetWidth : 0;
+  const caretW = caret ? caret.offsetWidth : 0;
+  const siblingCount = (glyph ? 1 : 0) + (caret ? 1 : 0);
+  const available = sceneWidth - padX - borderX - glyphW - caretW - (gap * siblingCount) - PROMPT_LINE_SLACK_PX;
+  if (available < 1) return fallback;
+
+  const font = promptFontShorthand(promptEl);
+  const sample = measurePromptSliceWidth(font, text.slice(0, PROMPT_MIN_INITIAL_CHARS));
+  if (sample < 1) return fallback;
+
+  let lo = 0;
+  let hi = text.length;
+  let fit = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (measurePromptSliceWidth(font, text.slice(0, mid)) <= available) {
+      fit = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+
+  if (fit < PROMPT_MIN_INITIAL_CHARS) return fallback;
+  return snapPromptLineEnd(text, fit);
+}
+
 
 /* ===========================================================================
    ACT 1 · the entrance timeline (§2.3)
@@ -152,9 +316,20 @@ function buildSceneTimeline() {
   const pct = document.querySelector('[data-stage-pct]');
   const rail = document.querySelector('[data-stage-rail]');
   const promptEl = document.querySelector('[data-prompt-text]');
+  const caretEl = document.querySelector('.scene--prompt .prompt__caret');
+  const initialLen = measurePromptFirstLineLength(promptEl, PROMPT_TEXT);
+  const leftover = Math.max(0, PROMPT_TEXT.length - initialLen);
+  const paintPrompt = (n) => {
+    if (!promptEl) return;
+    const chars = Math.max(initialLen, Math.min(PROMPT_TEXT.length, Math.round(n)));
+    promptEl.textContent = PROMPT_TEXT.slice(0, chars);
+    if (caretEl) promptEl.appendChild(caretEl);
+  };
+  paintPrompt(initialLen);
 
-  // Paint a readable first frame immediately, before the timeline exists.
-  if (promptEl && !promptEl.textContent) promptEl.textContent = PROMPT_TEXT.slice(0, 34);
+  const breaks = measureHeroBreaks();
+  const planSpan = Math.max(0.04, breaks.planHide - breaks.planShow);
+  const typeDur = Math.max(0.06, breaks.promptHide * 0.85);
 
   const tl = gsap.timeline({ paused: true, defaults: { ease: EASE.scrub } });
 
@@ -178,16 +353,16 @@ function buildSceneTimeline() {
     tl.fromTo(stage,
       { xPercent: 19, scale: 0.94, opacity: 0.55, filter: 'blur(3px)' },
       { xPercent: 19, scale: 0.94, opacity: 1, filter: 'blur(0px)', duration: 0.14 }, 0);
-    tl.to(stage, { xPercent: 0, scale: 1, duration: 0.12 }, 0.76);
+    tl.to(stage, { xPercent: 0, scale: 1, duration: 0.12 }, breaks.stageCenter);
     // the scrim only ever has to cover the copy column, so it simply lifts
     // when the copy runs out
-    tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, 0.76);
+    tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, breaks.stageCenter);
   } else {
     tl.fromTo(stage,
       { scale: 1.04, opacity: 0.4, filter: 'blur(4px)' },
       { scale: 1.04, opacity: 0.4, filter: 'blur(4px)', duration: 0.72 }, 0);
-    tl.to(stage, { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.12 }, 0.74);
-    tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, 0.74);
+    tl.to(stage, { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.12 }, breaks.stageCenter);
+    tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, breaks.stageCenter);
   }
 
   const show = (el, at, len = 0.06) =>
@@ -196,74 +371,80 @@ function buildSceneTimeline() {
   const hide = (el, at, len = 0.05) =>
     tl.to(el, { autoAlpha: 0, y: -24, filter: 'blur(12px)', duration: len }, at);
 
-  /* -- 0.00-0.20 · PROMPT. The sentence types itself.
-     No fade-in: the prompt IS the poster frame and is already on screen at
-     progress 0 (see .scene--prompt in site.css). Fading it in would leave the
-     hero blank at rest, which is the one thing §2.2 forbids. -- */
+  /* -- Panel 1 · PROMPT. One measured line is already painted (poster
+     frame). Remaining characters scrub in before panel 2 — never from
+     length 0, and never into the idea list. -- */
   gsap.set(scenes.prompt, { autoAlpha: 1, y: 0, filter: 'blur(0px)' });
-  const typed = { n: 0 };
-  tl.to(typed, {
-    n: PROMPT_TEXT.length,
-    duration: 0.13,
-    onUpdate: () => { promptEl.textContent = PROMPT_TEXT.slice(0, Math.round(typed.n)); },
-  }, 0.03);
-  hide(scenes.prompt, 0.20);
+  const typed = { t: 0 };
+  tl.fromTo(typed, { t: 0 }, {
+    t: 1,
+    duration: typeDur,
+    immediateRender: false,
+    onUpdate: () => {
+      paintPrompt(initialLen + leftover * typed.t);
+    },
+  }, 0);
+  hide(scenes.prompt, breaks.promptHide);
 
-  /* -- 0.20-0.42 · PLAN. The workflow diagram assembles around the robot. --
-     Order is the argument: the robot arrives first, then the five stages light
-     up in workflow order (PLAN -> ARCHITECT -> BUILD -> TEST -> EVOLVE), and
-     each connector arrow fades in behind the stage it leads to. Marquee shows
-     the same diagram assembling; here it is scrubbed, so it also disassembles
-     when you scroll back up, which is free and correct. */
-  show(scenes.plan, 0.21, 0.04);
+  /* -- Panel 2 · PLAN. Workflow diagram while "Watch five agents…" is the
+     left copy. Ends when the idea list reaches viewport center. -- */
+  show(scenes.plan, breaks.planShow, Math.min(0.05, planSpan * 0.25));
   tl.to('[data-wf-robot]', {
-    opacity: 1, scale: 1, duration: 0.045, ease: EASE.enter,
-  }, 0.215);
+    opacity: 1, scale: 1, duration: Math.min(0.05, planSpan * 0.18), ease: EASE.enter,
+  }, breaks.planShow + planSpan * 0.06);
   /* Opacity only — do not animate x/y or GSAP will overwrite the CSS
      transform that centres each card on its pentagon anchor. */
   tl.to('[data-wf-stage]', {
-    opacity: 1, duration: 0.045, stagger: 0.02, ease: EASE.enter,
-  }, 0.235);
-  /* Slightly behind the stages and slightly slower: the line should read as
-     being drawn between two things that already exist. */
+    opacity: 1, duration: Math.min(0.05, planSpan * 0.18), stagger: Math.min(0.025, planSpan * 0.08), ease: EASE.enter,
+  }, breaks.planShow + planSpan * 0.14);
   tl.to('[data-wf-link]', {
-    opacity: 1, duration: 0.05, stagger: 0.02,
-  }, 0.25);
-  hide(scenes.plan, 0.28);
+    opacity: 1, duration: Math.min(0.055, planSpan * 0.2), stagger: Math.min(0.025, planSpan * 0.08),
+  }, breaks.planShow + planSpan * 0.22);
+  hide(scenes.plan, breaks.planHide);
 
-  /* -- 0.28-0.80 · BUILD / From Idea to Working Product.
-     Aligned to the tall .hero__panel.is-3 scroll share. Stack scrub is owned
-     by ideaScrub.js; this beat only fades the stage in/out. -- */
-  show(scenes.build, 0.29, 0.04);
-  hide(scenes.build, 0.80);
+  /* -- Panel 3 · BUILD / From Idea to Working Product.
+     Same window ideaScrub.js uses (copy center → panel bottom). Stack
+     motion is owned there; this beat only shows the scene. -- */
+  show(scenes.build, breaks.ideaShow, 0.04);
+  hide(scenes.build, breaks.ideaHide);
 
-  /* -- 0.80-0.90 · TEST. Assertions tick over. -- */
-  show(scenes.test, 0.81, 0.04);
-  tl.to('[data-test]', { opacity: 1, duration: 0.03, stagger: 0.022 }, 0.83);
-  hide(scenes.test, 0.90);
+  /* TEST beat is CSS-hidden; do not steal the idea window for it. */
 
-  /* -- 0.90-1.00 · SHIP. It was a real application the whole time. -- */
+  /* -- Spacer / last sliver of panel 3 · SHIP. Handoff still needs a
+     real product frame in the canvas. -- */
   tl.fromTo(scenes.ship,
     { autoAlpha: 0, y: 40, scale: 0.94, filter: 'blur(16px)' },
-    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.08 }, 0.91);
+    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.08 }, breaks.shipShow);
+
+  tl.set({}, {}, 1);
 
   /* -- The HUD reads the same progress the scenes do. -- */
   const STAGES = [
-    [0.00, 'plan'], [0.20, 'plan'], [0.28, 'architect'],
-    [0.40, 'build'], [0.80, 'test'], [0.90, 'evolve'],
+    [0, 'plan'],
+    [breaks.planShow, 'plan'],
+    [breaks.ideaShow, 'build'],
+    [breaks.shipShow, 'evolve'],
   ];
+  const IDEA_HUD = ['plan', 'architect', 'build', 'evolve'];
   tl.eventCallback('onUpdate', () => {
     const p = tl.progress();
     if (rail) rail.style.width = `${(p * 100).toFixed(1)}%`;
     if (pct) pct.textContent = String(Math.round(p * 100)).padStart(2, '0');
     if (label) {
       let name = 'plan';
-      for (const [at, n] of STAGES) if (p >= at) name = n;
+      if (p >= breaks.ideaShow && p < breaks.ideaHide) {
+        const span = Math.max(0.001, breaks.ideaHide - breaks.ideaShow);
+        const local = clamp01((p - breaks.ideaShow) / span);
+        name = IDEA_HUD[Math.min(IDEA_HUD.length - 1, Math.floor(local * IDEA_HUD.length))];
+      } else {
+        for (const [at, n] of STAGES) if (p >= at) name = n;
+      }
       if (label.textContent !== name) label.textContent = name;
     }
   });
 
   tl.progress(0).pause();
+  paintPrompt(initialLen);
   return tl;
 }
 
@@ -379,32 +560,18 @@ export function heroScroll() {
   const created = [];
 
   /* ---- System B: the scrub ----------------------------------------------
-     §2.4 IMPORTANT: do NOT write the playhead straight from the scroll
-     callback. The scroll handler only moves `target`; a separate rAF loop
-     eases `current` toward it at 18% per frame and writes THAT. Without the
-     lerp, trackpad scrolling judders - wheel events arrive in bursts and the
-     scene snaps between them. Keeping this shape is also what makes swapping
-     a real <video> back in a one-line change: point the write at
-     video.currentTime instead of sceneTl.progress(). */
-  const seek = { target: 0, current: 0 };
-  let raf = 0;
+     1:1 with scroll. A second lerp on top of Lenis made the right canvas
+     lag the left copy, so PLAN was still up while the idea list was already
+     the active text. ideaScrub is also scrub:true; both clocks must match. */
+  created.push(ScrollTrigger.create({
+    trigger: hero,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: true,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => { sceneTl.progress(self.progress); },
+  }));
 
-  const loop = () => {
-    raf = requestAnimationFrame(loop);
-    seek.current += (seek.target - seek.current) * 0.18;
-    if (Math.abs(seek.target - seek.current) < 0.0002) seek.current = seek.target;
-    sceneTl.progress(seek.current);
-  };
-  raf = requestAnimationFrame(loop);
-
-  /* The BOX gets no smoothing and does not live in the rAF loop.
-     §2.6 specifies scrub:true, 1:1, for the handoff - any lag lets the card
-     and the media separate at the exact moment they are meant to be one
-     object. Writing it from a ScrollTrigger onUpdate makes it synchronous with
-     scroll, so it is correct even on a frame the rAF loop never gets (a
-     throttled background tab, a slow frame, a scroll restored on load). The
-     scene playhead keeps its lerp because there the smoothing is the point;
-     here it would be a defect. */
   created.push(ScrollTrigger.create({ onUpdate: applyBox, onRefresh: applyBox }));
 
   /* §5.3 - the canvas and its scenes are animated only while the hero (and
@@ -422,15 +589,6 @@ export function heroScroll() {
     endTrigger: zone,
     end: 'bottom top',
     onToggle: (self) => hint(self.isActive),
-  }));
-
-  created.push(ScrollTrigger.create({
-    trigger: hero,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    invalidateOnRefresh: true,
-    onUpdate: (self) => { seek.target = self.progress; },
   }));
 
   /* ---- ACT 4: the handoff window ----------------------------------------
@@ -488,7 +646,6 @@ export function heroScroll() {
   }
 
   return () => {
-    cancelAnimationFrame(raf);
     created.forEach((t) => t?.kill?.());
     sceneTl.kill();
     hint(false);

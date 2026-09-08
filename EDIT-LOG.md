@@ -4,6 +4,72 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-08 — Hero left copy locked to the matching right scene
+
+- Scene timeline used fixed fractions of the whole hero (plan at 0.20–0.28). Panel 3 is four viewports, so the PLAN robot was still up while “Plans before it builds” was already the left copy. A second 18% lerp on top of Lenis made the canvas lag the text.
+- Breaks are measured from the live panels: prompt while panel 1 is in view, PLAN robot with “Watch five agents…”, idea screenshots from the moment the idea list hits viewport center through panel 3, ship on the spacer. ideaScrub uses that same copy-center → panel-bottom window. Extra lerp removed (1:1 scrub).
+- Panel 3 gets 100svh of lead padding so the idea list cannot sit under the five-agents line. Statement glue spans stop icon-commas wrapping alone.
+- Files: `public/js/motion/hero.js`, `public/js/motion/ideaScrub.js`, `public/css/site.css`, `public/index.html`.
+
+---
+
+## 2026-09-08 — Hero prompt starts with a measured first line
+
+- Root cause: scene timeline typed `{ n: 0 }` and `onUpdate` sliced `PROMPT_TEXT` from character 0, wiping the markup seed as soon as the timeline rendered. Visitors had to scroll the whole prompt in; left copy pulled ahead of the right visual.
+- Act 0 now paints one complete line measured from the real string + prompt/scene width (word-snapped; fallback is the phrase through the first colon). Remaining characters still scrub in across the prompt beat only (`0.03–0.16`, hide at `0.20`). Recalculates on the existing width rebuild.
+- Files: `public/js/motion/hero.js`, `public/index.html`, `public/css/site.css`.
+
+---
+
+## 2026-09-08 — CTA edge dissolve restored (without clipping “?”)
+
+- Unclip set `.cta { overflow: visible }` and parked fades at `z-index: 0`. That let `.cta__blob` paint past the section, so the top/bottom dissolves no longer defined the rims (blob mask is relative to the oversized SVG, not the section). An opaque fill on `.cta` itself also sat behind any fade and restored a hard rectangle.
+- Atmosphere (blob + fades + blurred ink wash + the ink plate) now lives in `.cta__media`: `overflow: hidden` + a vertical mask. `.cta` stays `overflow: visible` and unfilled. Copy is a sibling (`.cta__inner` / `.cta__h2` still overflow-visible, content-box padding, line-height 1.05) so the mask cannot slice `?`.
+- Files: `public/index.html`, `public/css/site.css`, `scripts/build-pages.mjs`.
+
+---
+
+## 2026-09-08 — Why AIWA cards: dissolve the visual/text seam
+
+- Audience cards had a knife-edge where the atmosphere well met the solid text plate (grid row cut + `--ink-900` vs plate).
+- Visual now masks out on a long ease (`--use-fade`); the body overlaps that fade with a blurred `--ink-850` wash so the two regions melt together. Text stays on the plate. Hero uses the same treatment on the side join, and stacked at ≤900px.
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-08 — Preloader actually shows
+
+- Logo was CSS `opacity: 0` waiting on GSAP; reduced-motion and sessionStorage removed the overlay before the tween, so refresh looked like no preloader (blank ink, or an instant skip).
+- Overlay + mark are visible on first paint (CSS keyframes). JS only ticks stages and dismisses after fonts.ready + a minimum beat. No GSAP, no session skip.
+- Inline 5s failsafe if modules never boot. `html.is-loading` locks scroll until dismiss.
+- Files: `public/index.html`, `public/css/site.css`, `public/css/base.css`, `public/js/motion/loader.js`, `public/js/main.js`.
+
+---
+
+## 2026-09-08 — CTA “?” still clipped: overflow visible + glyph padding
+
+- `.cta__h2` was already `overflow: visible`; Chromium still sliced the question mark because `background-clip: text` paints inside the padding box, and `line-height: 0.85` plus `-0.045em` tracking left no room for the `?` dot or its right edge.
+- Line-height → `1.05`, end/bottom padding, `width: max-content`, overflow visible on the heading and descendants. `[data-grad]` also `overflow: visible`.
+- Files: `public/css/site.css`, `public/css/base.css`.
+
+---
+
+## 2026-09-07 — CTA “Ready to launch?” unclipped
+
+- `.cta` overflow → `visible`; edge fades dropped under the copy (`z-index: 0`) so the top dissolve no longer slices the display headline.
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-07 — Idea visuals: no frame, gap, overflow visible
+
+- `.idea__stage`: border removed, `overflow: visible` (glows + next card can peek).
+- Stack is a column flex with `--idea-panel-gap`; scrub stride measured in px so the gap travels with each card.
+- Panel frame border removed; images still `object-fit: cover`.
+- Files: `public/css/site.css`, `public/js/motion/ideaScrub.js`.
+
+---
+
 ## 2026-09-07 — Preloader boots before window.load
 
 - `main.js` no longer waits for `window.load` before `runLoader()` — heavy below-fold images were holding the shell at logo `opacity:0`, so the preloader looked missing.

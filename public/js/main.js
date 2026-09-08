@@ -27,7 +27,16 @@ import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+/* Start the overlay before plugin setup. If registerPlugin throws, CSS still
+   painted the loader and the failsafe in index.html will tear it down. */
+const fontsReady = document.fonts?.ready ?? Promise.resolve();
+const loaderDone = runLoader(fontsReady);
+
+try {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+} catch (err) {
+  console.warn('[boot] gsap plugins', err);
+}
 
 /* §2.6 - mobile browser chrome collapsing on scroll changes innerHeight
    constantly. Rebuilding on that destroys the pin mid-scroll. */
@@ -131,16 +140,13 @@ window.addEventListener('resize', () => {
 /* =========================================================================
    Start.
    Boot as soon as this module runs (deferred, DOM already parsed). Do NOT wait
-   for window.load — every below-fold image (gallery, visuals, real builds)
-   would hold the loader at logo opacity:0 and it looks like the preloader
-   never appeared. fonts.ready still gates SplitText / hero entrance.
+   for window.load — below-fold images must not hold the overlay. The loader
+   promise is kicked at import so it runs even if later boot work throws.
+   fonts.ready still gates SplitText / hero entrance.
    ====================================================================== */
 async function start() {
   initLenis();
   initScrollHygiene();
-
-  // Logo + stage tick while fonts / remaining assets finish — not after them.
-  const loaderDone = runLoader();
 
   try { await document.fonts.ready; } catch { /* older browsers: proceed */ }
 
