@@ -322,7 +322,8 @@
   /* Lead with empty runway so panel 2 (“five agents”) leaves before the
      idea list reaches center. Matches hero.js measureHeroBreaks(). */
   padding-top: 100svh;
-  padding-bottom: max(calc(var(--nav-h) + 1rem), calc(50vh - 12rem));
+  /* Extra trail so the last plate can finish scrubbing before handoff. */
+  padding-bottom: max(70vh, calc(50vh + 4rem));
 }
 .hero__idea {
   position: sticky;
@@ -1031,10 +1032,81 @@ main, .footer { position: relative; z-index: 2; }
 
 /* The well. aspect-ratio reserves the box so nothing shifts (CLS 0) whether
    the Flip runs, fails, or is skipped under reduced motion. */
-/* The well fills the measure — supporting screens beside it were removed. */
+/* Case-study grid: the well keeps width:100%/aspect-ratio as column one, so
+   the handoff still measures the same kind of rect — only its column narrowed.
+   Column two is Build / Test / Ship & evolve. */
 .workspace__case {
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(11rem, 17vw, 15rem);
+  gap: clamp(0.8rem, 1.4vw, 1.3rem);
+  align-items: stretch;
   width: 100%;
+}
+.ws-aside {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.4vw, 1.3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ws-aside > li {
+  display: contents;
+}
+.ws-aside__item {
+  position: relative; overflow: hidden;
+  display: block; width: 100%; height: 100%;
+  margin: 0; padding: 0;
+  border: 1px solid var(--ink-700); border-radius: var(--radius-card);
+  background: var(--ink-850);
+  color: inherit; font: inherit; text-align: left;
+  cursor: pointer;
+  /* opacity 0 is the arrival state; Act 5 brings these in with the status card.
+     .no-js and reduced motion get their escapes below, same as .proj-status. */
+  opacity: 0;
+  transition:
+    border-color var(--dur-base, 0.35s) var(--ease-brand, ease),
+    box-shadow var(--dur-base, 0.35s) var(--ease-brand, ease);
+}
+.ws-aside__item:hover,
+.ws-aside__item:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--ink-700));
+  outline: none;
+}
+.ws-aside__item.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.ws-aside__item img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  pointer-events: none;
+}
+.ws-aside__cap {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 0.9rem 0.7rem 0.5rem;
+  font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream-100);
+  background: linear-gradient(180deg, rgba(6,5,4,0), rgba(6,5,4,0.88) 55%);
+  pointer-events: none;
+}
+.no-js .ws-aside__item, .static-hero .ws-aside__item { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .ws-aside__item { opacity: 1; } }
+
+.workspace__caption {
+  margin-top: 1.1rem; text-align: center;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cream-500);
+}
+
+/* Below 900px the aside stops being a column and becomes a row under the well,
+   which keeps all three visible instead of squeezing them into a gutter. */
+@media (max-width: 900px) {
+  .workspace__case { grid-template-columns: 1fr; }
+  .ws-aside { grid-template-rows: none; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* --radius-card (2.5rem) is drawn for the big well. On a card a third of
+     that width it curves away most of the shot, so the row takes its own. */
+  .ws-aside__item { aspect-ratio: 16 / 9; border-radius: 1.25rem; }
 }
 
 .workspace__zone {
@@ -1049,6 +1121,21 @@ main, .footer { position: relative; z-index: 2; }
   border: 1px solid var(--ink-700);
 }
 .workspace__zone.is-occupied { background: transparent; border-color: transparent; }
+/* Tab view: cover the landed hero frame with the selected workspace screen. */
+.workspace__zone.is-tab-view {
+  background: var(--ink-850);
+  border-color: var(--ink-700);
+}
+.workspace__zone.is-tab-view .workspace__zone-shot {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+.workspace__zone.is-tab-view .proj-status {
+  opacity: 0 !important;
+  visibility: hidden;
+}
 @media (max-width: 700px) { .workspace__zone { aspect-ratio: 4 / 3; } }
 
 /* ---------------------------------------------------------------------------
@@ -3439,6 +3526,33 @@ html.is-idea-scrub .hero-media__scrim {
   .plan { padding: 1.35rem 1.15rem; gap: 0.7rem; }
   .plan__price b { font-size: 2.2rem; }
   .plan__list { gap: 0.45rem; }
+
+  /* Workspace aside: three lifecycle shots become a snap-scroll row so none
+     collapse into an unreadably thin gutter under the well. */
+  .ws-aside {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 62vw;
+    gap: 0.7rem; min-width: 0;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter);
+  }
+  .ws-aside::-webkit-scrollbar { display: none; }
+  .ws-aside__item {
+    aspect-ratio: auto; scroll-snap-align: center;
+    border: 0; background: none; border-radius: 0; overflow: visible;
+  }
+  .ws-aside__item img {
+    aspect-ratio: 16 / 9; height: auto; border-radius: 1rem;
+    border: 1px solid var(--ink-700); background: var(--ink-850);
+  }
+  .ws-aside__item.is-active img {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  .ws-aside__cap {
+    position: static; padding: 0.5rem 0.15rem 0; background: none;
+    font-size: 0.62rem; letter-spacing: 0.14em;
+  }
 
   /* The contact sheet at two-up. A 4/3 crop anchored top-left keeps each
      thumbnail showing the app's own header, which is the part that is still

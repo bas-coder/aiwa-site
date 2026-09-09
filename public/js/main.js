@@ -20,7 +20,7 @@ import { ideaScrub } from './motion/ideaScrub.js';
 import { runLoader } from './motion/loader.js';
 import {
   promptArc, engineHorizontal, engineRail,
-  pricingSwitch, creditSliders, accordion, footerReveal, navState, navMenu, projectStatus, workspaceFocus,
+  pricingSwitch, creditSliders, accordion, footerReveal, navState, navMenu, projectStatus, workspaceFocus, workspaceTabs,
 } from './motion/sections.js';
 import { galleryActions } from './motion/gallery.js';
 import { prefersReducedMotion } from './motion/tokens.js';
@@ -105,6 +105,7 @@ function build() {
   teardowns.push(glassHighlights());
   teardowns.push(promptArc());
   teardowns.push(projectStatus());
+  teardowns.push(workspaceTabs());
   teardowns.push(workspaceFocus());
   teardowns.push(ideaScrub());
   teardowns.push(galleryActions());

@@ -199,6 +199,98 @@ export function projectStatus() {
 }
 
 /* ===========================================================================
+   WORKSPACE LIFECYCLE TABS
+   ---------------------------------------------------------------------------
+   The three cards beside the well are tabs. Clicking one puts that screenshot
+   in the left well (covers the landed Festova frame) and updates the caption.
+   The well's aspect-ratio and rect stay untouched so the handoff stays exact.
+   ======================================================================== */
+const WS_DEFAULT_CAPTION = 'Festova landed product · Build, test, ship & evolve beside it';
+const WS_ACTIVE = 'is-active';
+const WS_TAB_VIEW = 'is-tab-view';
+
+export function workspaceTabs() {
+  const zone = document.getElementById('workspace-zone');
+  const well = zone?.querySelector('[data-ws-well]');
+  const caption = document.querySelector('[data-ws-caption]');
+  const tabs = [...document.querySelectorAll('.ws-aside [data-ws-aside][data-ws-src]')];
+  if (!zone || !well || !tabs.length) return () => {};
+
+  const productSrc = well.getAttribute('src') || '/images/fest-main.webp';
+  const productAlt = well.getAttribute('alt') || '';
+
+  const selectTab = (tab) => {
+    const src = tab.getAttribute('data-ws-src');
+    if (!src) return;
+
+    tabs.forEach((el) => {
+      const on = el === tab;
+      el.classList.toggle(WS_ACTIVE, on);
+      el.setAttribute('aria-selected', on ? 'true' : 'false');
+      el.tabIndex = on ? 0 : -1;
+    });
+
+    well.src = src;
+    well.alt = tab.getAttribute('data-ws-alt') || '';
+    zone.classList.add(WS_TAB_VIEW);
+
+    if (caption) {
+      const next = tab.getAttribute('data-ws-caption') || WS_DEFAULT_CAPTION;
+      caption.textContent = next;
+    }
+  };
+
+  const onClick = (event) => {
+    const tab = event.currentTarget;
+    if (!(tab instanceof HTMLElement)) return;
+    selectTab(tab);
+  };
+
+  const onKeydown = (event) => {
+    const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (!keys.includes(event.key)) return;
+
+    event.preventDefault();
+    const i = tabs.indexOf(event.currentTarget);
+    if (i < 0) return;
+
+    let next = i;
+    if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = tabs.length - 1;
+    else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      next = (i - 1 + tabs.length) % tabs.length;
+    } else {
+      next = (i + 1) % tabs.length;
+    }
+
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  tabs.forEach((tab) => {
+    tab.tabIndex = -1;
+    tab.addEventListener('click', onClick);
+    tab.addEventListener('keydown', onKeydown);
+  });
+  /* First tab is focusable before a selection so keyboard users can enter. */
+  if (tabs[0]) tabs[0].tabIndex = 0;
+
+  return () => {
+    tabs.forEach((tab) => {
+      tab.removeEventListener('click', onClick);
+      tab.removeEventListener('keydown', onKeydown);
+      tab.classList.remove(WS_ACTIVE);
+      tab.setAttribute('aria-selected', 'false');
+      tab.tabIndex = 0;
+    });
+    zone.classList.remove(WS_TAB_VIEW);
+    well.src = productSrc;
+    well.alt = productAlt;
+    if (caption) caption.textContent = WS_DEFAULT_CAPTION;
+  };
+}
+
+/* ===========================================================================
    THE PROMPT ARC
    ---------------------------------------------------------------------------
    Our reading of moto-card's currency wall. There, two columns of foreign

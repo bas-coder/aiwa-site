@@ -65,9 +65,9 @@ const FALLBACK_BREAKS = {
   planShow: 0.18,
   ideaShow: 0.36,
   planHide: 0.36,
-  ideaHide: 0.9,
-  shipShow: 0.9,
-  stageCenter: 0.84,
+  ideaHide: 0.92,
+  shipShow: 0.94,
+  stageCenter: 0.94,
 };
 
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
@@ -100,16 +100,21 @@ function measureHeroBreaks() {
   /* Switch as soon as the idea list is in the viewport — not when its
      center hits mid-screen, which left the PLAN robot up beside the list. */
   const atIdea = toProgress(copyTop - vh * 0.72);
-  const atIdeaEnd = toProgress(
+  /* Scrub finishes when panel 3's bottom hits the viewport bottom. Handoff
+     must NOT start before that — stageCenter used to be ideaEnd - 0.06 and
+     stole the second half of the last plate. */
+  const atIdeaScrubEnd = toProgress(
     offsetFromHero(hero, panel3) + panel3.offsetHeight - vh,
   );
   const planShow = clamp01(Math.max(0.05, atPlan));
   const ideaShow = clamp01(Math.max(planShow + 0.04, atIdea));
-  const ideaEnd = clamp01(Math.max(ideaShow + 0.1, atIdeaEnd));
+  const ideaScrubEnd = clamp01(Math.max(ideaShow + 0.12, atIdeaScrubEnd));
+  /* Short hold on the last plate, then ship / stage handoff. */
+  const afterIdea = clamp01(Math.min(1, ideaScrubEnd + 0.03));
   const spacerTop = spacer ? offsetFromHero(hero, spacer) : range;
   const stageCenter = clamp01(Math.max(
-    ideaEnd - 0.06,
-    toProgress(spacerTop - vh * 0.2),
+    afterIdea,
+    toProgress(spacerTop - vh * 0.15),
   ));
 
   return {
@@ -117,8 +122,8 @@ function measureHeroBreaks() {
     planShow,
     ideaShow,
     planHide: ideaShow,
-    ideaHide: ideaEnd,
-    shipShow: ideaEnd,
+    ideaHide: afterIdea,
+    shipShow: afterIdea,
     stageCenter,
   };
 }
@@ -438,18 +443,16 @@ function buildSceneTimeline() {
   hide(scenes.plan, breaks.planHide);
 
   /* -- Panel 3 · BUILD / From Idea to Working Product.
-     Same window ideaScrub.js uses (copy center → panel bottom). Stack
-     motion is owned there; this beat only shows the scene. -- */
+     Stays up through the full idea scrub + hold. Handoff/ship only after. -- */
   show(scenes.build, breaks.ideaShow, 0.04);
   hide(scenes.build, breaks.ideaHide);
 
   /* TEST beat is CSS-hidden; do not steal the idea window for it. */
 
-  /* -- Spacer / last sliver of panel 3 · SHIP. Handoff still needs a
-     real product frame in the canvas. -- */
+  /* -- Spacer · SHIP. Only after the last idea plate has finished. -- */
   tl.fromTo(scenes.ship,
     { autoAlpha: 0, y: 40, scale: 0.94, filter: 'blur(16px)' },
-    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.08 }, breaks.shipShow);
+    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.06 }, breaks.shipShow);
 
   tl.set({}, {}, 1);
 
@@ -668,20 +671,14 @@ export function heroScroll() {
      target already carries its hidden state from CSS, so nothing flashes
      between first paint and this binding.
 
-     This used to reveal the workspace tab system (.workspace__pills and
-     .workspace__panes). That section was removed, and the arrival reveal
-     followed it onto the one thing still inside the well: the project status
-     card. It is the better target anyway, because a card headed "project
-     status" has no business being legible over an EMPTY well - it should
-     arrive with the project it describes.
-
-     It reveals the project status card over the well: a card headed "project
-     status" has no business being legible over an EMPTY well — it should
-     arrive with the project it describes.
+     Act 5 reveals the project-status card over the landed well and the
+     Build / Test / Ship & evolve stack beside it. A status card has no
+     business being legible over an EMPTY well — it should arrive with the
+     project it describes, and the lifecycle screens arrive in the same beat.
 
      If these selectors ever match nothing the length guard below turns Act 5
      into a no-op rather than an error. */
-  const arrivalTargets = [...document.querySelectorAll('.proj-status')];
+  const arrivalTargets = [...document.querySelectorAll('.proj-status, [data-ws-aside]')];
   if (arrivalTargets.length) {
     const arrival = gsap.fromTo(arrivalTargets,
       { autoAlpha: 0, filter: 'blur(12px)', y: '2em' },

@@ -81,6 +81,8 @@ export function ideaScrub(root = document) {
     trigger: copy,
     start: 'center center',
     endTrigger: panel,
+    /* Finish the stack before the panel fully leaves — last plate holds
+       through the bottom padding; hero handoff waits for ideaHide after. */
     end: 'bottom bottom',
     scrub: true,
     invalidateOnRefresh: true,

@@ -309,58 +309,61 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <div class="scene scene--plan" data-scene="plan">
 
           <!-- THE WORKFLOW DIAGRAM: AIWA robot in the middle, six stages on a
-               circular ring (PLAN at 12 o'clock, clockwise), and six connector
-               arcs between them. Stages sit on evenly spaced circle points;
-               arcs share radius 36 in a 100×100 viewBox. -->
+               circular ring (PLAN at 12 o'clock, clockwise). Arc segments only
+               fill the gaps BETWEEN cards (same radius 36); chips sit in those
+               breaks so the ring reads as stage → arrow → stage. -->
           <div class="wf" data-wf>
-            <!-- Six independent arc-arrows on one circular path.
-                 One SVG so geometry shares a centre; each path is its own gradient
-                 (0% opacity at start → 100% at the head) and staggers via data-wf-link. -->
+            <!-- Six gap-only arc-arrows on one circular path (radius 36).
+                 Each arc spans the open sector BETWEEN stage cards — not
+                 center-to-center — so the chips sit in the ring's gaps and
+                 arrowheads land just before the next card. Gradients fade
+                 0→1 along each segment; stagger via data-wf-link. -->
             <svg class="wf__arcs" viewBox="0 0 100 100" aria-hidden="true">
               <defs>
                 <marker id="wf-arrow" viewBox="0 0 10 10" refX="8.5" refY="5"
-                        markerWidth="3.6" markerHeight="3.6" orient="auto"
+                        markerWidth="4" markerHeight="4" orient="auto"
                         markerUnits="strokeWidth">
                   <path d="M 1.2 1.1 L 8.8 5 L 1.2 8.9 Z" fill="var(--accent)"/>
                 </marker>
-                <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="50" y1="14" x2="81.177" y2="32">
+                <!-- Clear 15° after each card, 20° before the next (room for tips). -->
+                <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="59.317" y1="15.227" x2="73.14" y2="22.422">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="81.177" y1="32" x2="81.177" y2="68">
+                <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="84.773" y1="40.683" x2="85.453" y2="56.251">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="81.177" y1="68" x2="50" y2="86">
+                <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="75.456" y1="75.456" x2="62.313" y2="83.829">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="50" y1="86" x2="18.823" y2="68">
+                <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="40.683" y1="84.773" x2="26.86" y2="77.578">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="18.823" y1="68" x2="18.823" y2="32">
+                <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="15.227" y1="59.317" x2="14.547" y2="43.749">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag5" gradientUnits="userSpaceOnUse" x1="18.823" y1="32" x2="50" y2="14">
+                <linearGradient id="wf-ag5" gradientUnits="userSpaceOnUse" x1="24.544" y1="24.544" x2="37.687" y2="16.171">
                   <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
               </defs>
-              <!-- Radius 36: sits between the robot and the stage cards. -->
+              <!-- Radius 36: same ring; endpoints cleared so cards sit in the gaps. -->
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag0)"
-                    d="M 50 14 A 36 36 0 0 1 81.177 32"/>
+                    d="M 59.317 15.227 A 36 36 0 0 1 73.14 22.422"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag1)"
-                    d="M 81.177 32 A 36 36 0 0 1 81.177 68"/>
+                    d="M 84.773 40.683 A 36 36 0 0 1 85.453 56.251"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag2)"
-                    d="M 81.177 68 A 36 36 0 0 1 50 86"/>
+                    d="M 75.456 75.456 A 36 36 0 0 1 62.313 83.829"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag3)"
-                    d="M 50 86 A 36 36 0 0 1 18.823 68"/>
+                    d="M 40.683 84.773 A 36 36 0 0 1 26.86 77.578"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag4)"
-                    d="M 18.823 68 A 36 36 0 0 1 18.823 32"/>
+                    d="M 15.227 59.317 A 36 36 0 0 1 14.547 43.749"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag5)"
-                    d="M 18.823 32 A 36 36 0 0 1 50 14"/>
+                    d="M 24.544 24.544 A 36 36 0 0 1 37.687 16.171"/>
             </svg>
 
             <div class="wf__stage" data-wf-stage data-wf-pos="plan">
@@ -516,17 +519,20 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 
     <div class="workspace__head" data-blur-parent>
       <p class="eyebrow" data-blur-child>The workspace</p>
-      <h2 class="t-h2" data-blur-child data-grad>Go from client brief<br />to working product faster</h2>
+      <h2 class="t-h2" data-blur-child data-grad>Build. Test. Ship.<br />Evolve — in one place</h2>
       <p class="t-body section__lead" data-blur-child>
-        AIWA handles the technical stack behind every build, so your team can take on
-        more projects without adding more development complexity.
+        Preview as you build, run readiness checks before you publish, then ship
+        and keep evolving with deploys and rollbacks — all inside the same AIWA workspace.
       </p>
     </div>
 
     <!-- THE SHAPE OF THIS SECTION.
-         The well is the rect the pinned hero canvas is handed off into. It
-         fills the measure; supporting screens used to sit beside it and have
-         been removed so the landed product reads full-width. -->
+         The well cannot move or change aspect - it is the rect the pinned hero
+         canvas is handed off into, measured live every frame. So the section is
+         re-composed AROUND it: the well is column one (landed product), and
+         column two is a three-step stack — Build / Test / Ship & evolve — that
+         matches the headline. A rect is a rect; the handoff does not care how
+         narrow its column became. -->
     <div class="workspace__case">
 
     <!-- the well -->
@@ -536,19 +542,23 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
            frame the handoff would have delivered. Hidden everywhere else, and
            it costs nothing there because the image is already in cache from
            the hero. -->
-      <img class="workspace__zone-shot" src="/images/fest-main.webp" alt="Festova, a live event photo platform built with AIWA, running at its own URL." width="1600" height="900" loading="lazy" decoding="async" />
+      <img
+        class="workspace__zone-shot"
+        data-ws-well
+        src="/images/fest-main.webp"
+        alt="Festova, a live event photo platform built with AIWA, running at its own URL."
+        width="1600"
+        height="900"
+        loading="lazy"
+        decoding="async"
+      />
 
-      <!-- The floating status card the brief asks for, over the landed media.
+      <!-- The floating status card over the landed media.
            It sits INSIDE the well, which is safe on both counts that matter:
            the well is aspect-locked so adding a child does not move the rect
            the handoff interpolates towards, and .hero-media is z-index 0 and
            below <main>, so this paints on top of the card without needing to
-           out-stack anything. pointer-events:none keeps it out of the way.
-
-           PROJECT NAME TRACKS THE IMAGE. The brief writes "Wax & Groove" on
-           this card but asks for the Festova project as the visual; those two
-           cannot both be true of one card, and the visual is what the client
-           asked to change, so the card names Festova. -->
+           out-stack anything. pointer-events:none keeps it out of the way. -->
       <div class="proj-status" aria-hidden="true">
         <p class="proj-status__label t-mono">Project status</p>
         <p class="proj-status__name">Festova</p>
@@ -613,7 +623,65 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
       </div>
     </div>
 
+      <!-- Workspace lifecycle tabs. Click a card to put that screen in the
+           well (left). Act 5 reveals these with the project-status card. -->
+      <ul class="ws-aside" role="tablist" aria-label="Workspace lifecycle">
+        <li role="presentation">
+          <button
+            type="button"
+            class="ws-aside__item"
+            role="tab"
+            id="ws-tab-build"
+            aria-selected="false"
+            aria-controls="workspace-zone"
+            data-ws-aside
+            data-ws-src="/images/app-live-preview.webp"
+            data-ws-alt="AIWA workspace with live preview beside the build chat"
+            data-ws-caption="Build · live preview in the workspace"
+          >
+            <img src="/images/app-live-preview.webp" alt="" width="1000" height="688" loading="lazy" decoding="async" />
+            <span class="ws-aside__cap t-mono">Build · live preview</span>
+          </button>
+        </li>
+        <li role="presentation">
+          <button
+            type="button"
+            class="ws-aside__item"
+            role="tab"
+            id="ws-tab-test"
+            aria-selected="false"
+            aria-controls="workspace-zone"
+            data-ws-aside
+            data-ws-src="/images/app-store-ready.webp"
+            data-ws-alt="Store readiness checks with AI fixes before shipping"
+            data-ws-caption="Test · readiness checks before publish"
+          >
+            <img src="/images/app-store-ready.webp" alt="" width="1000" height="688" loading="lazy" decoding="async" />
+            <span class="ws-aside__cap t-mono">Test · readiness</span>
+          </button>
+        </li>
+        <li role="presentation">
+          <button
+            type="button"
+            class="ws-aside__item"
+            role="tab"
+            id="ws-tab-ship"
+            aria-selected="false"
+            aria-controls="workspace-zone"
+            data-ws-aside
+            data-ws-src="/images/app-releases.webp"
+            data-ws-alt="Releases panel with live deploys and one-click rollbacks"
+            data-ws-caption="Ship &amp; evolve · deploys and rollbacks"
+          >
+            <img src="/images/app-releases.webp" alt="" width="1000" height="688" loading="lazy" decoding="async" />
+            <span class="ws-aside__cap t-mono">Ship &amp; evolve</span>
+          </button>
+        </li>
+      </ul>
+
     </div>
+
+    <p class="workspace__caption t-mono" data-ws-caption>Festova landed product · Build, test, ship &amp; evolve beside it</p>
 
   </div>
 </section>

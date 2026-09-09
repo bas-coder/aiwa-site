@@ -54,6 +54,15 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-09 — Idea scrub: finish last plate before handoff
+
+- `stageCenter` / `shipShow` no longer start at `ideaEnd - 0.06` (that stole the second half of “Ships a working app”).
+- Idea scene holds through scrub end + short beat; ship/stage handoff only after.
+- Extra bottom padding on `.hero__panel.is-3` so the last plate can settle before the next beat.
+- Files: `public/js/motion/hero.js`, `public/css/site.css`, `public/js/motion/ideaScrub.js`.
+
+---
+
 ## 2026-09-09 — Idea visuals: fix blank scrub plates
 
 - Renamed `/images/visuals/*.png` to kebab-case (no spaces) and updated `index.html` srcs.
