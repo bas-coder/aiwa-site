@@ -516,17 +516,20 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 
     <div class="workspace__head" data-blur-parent>
       <p class="eyebrow" data-blur-child>The workspace</p>
-      <h2 class="t-h2" data-blur-child data-grad>Go from client brief<br />to working product faster</h2>
+      <h2 class="t-h2" data-blur-child data-grad>Build. Test. Ship.<br />Evolve — in one place</h2>
       <p class="t-body section__lead" data-blur-child>
-        AIWA handles the technical stack behind every build, so your team can take on
-        more projects without adding more development complexity.
+        Preview as you build, run readiness checks before you publish, then ship
+        and keep evolving with deploys and rollbacks — all inside the same AIWA workspace.
       </p>
     </div>
 
     <!-- THE SHAPE OF THIS SECTION.
-         The well is the rect the pinned hero canvas is handed off into. It
-         fills the measure; supporting screens used to sit beside it and have
-         been removed so the landed product reads full-width. -->
+         The well cannot move or change aspect - it is the rect the pinned hero
+         canvas is handed off into, measured live every frame. So the section is
+         re-composed AROUND it: the well is column one (landed product), and
+         column two is a three-step stack — Build / Test / Ship & evolve — that
+         matches the headline. A rect is a rect; the handoff does not care how
+         narrow its column became. -->
     <div class="workspace__case">
 
     <!-- the well -->
@@ -538,17 +541,12 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
            the hero. -->
       <img class="workspace__zone-shot" src="/images/fest-main.webp" alt="Festova, a live event photo platform built with AIWA, running at its own URL." width="1600" height="900" loading="lazy" decoding="async" />
 
-      <!-- The floating status card the brief asks for, over the landed media.
+      <!-- The floating status card over the landed media.
            It sits INSIDE the well, which is safe on both counts that matter:
            the well is aspect-locked so adding a child does not move the rect
            the handoff interpolates towards, and .hero-media is z-index 0 and
            below <main>, so this paints on top of the card without needing to
-           out-stack anything. pointer-events:none keeps it out of the way.
-
-           PROJECT NAME TRACKS THE IMAGE. The brief writes "Wax & Groove" on
-           this card but asks for the Festova project as the visual; those two
-           cannot both be true of one card, and the visual is what the client
-           asked to change, so the card names Festova. -->
+           out-stack anything. pointer-events:none keeps it out of the way. -->
       <div class="proj-status" aria-hidden="true">
         <p class="proj-status__label t-mono">Project status</p>
         <p class="proj-status__name">Festova</p>
@@ -613,7 +611,27 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
       </div>
     </div>
 
+      <!-- Workspace lifecycle stack. Labelled so three screenshots are an
+           argument (build → test → ship & evolve), not decoration. Act 5
+           reveals these with the project-status card via [data-ws-aside]. -->
+      <ul class="ws-aside">
+        <li class="ws-aside__item" data-ws-aside>
+          <img src="/images/app-live-preview.webp" alt="AIWA workspace with live preview beside the build chat" width="1000" height="688" loading="lazy" decoding="async" />
+          <span class="ws-aside__cap t-mono">Build · live preview</span>
+        </li>
+        <li class="ws-aside__item" data-ws-aside>
+          <img src="/images/app-store-ready.webp" alt="Store readiness checks with AI fixes before shipping" width="1000" height="688" loading="lazy" decoding="async" />
+          <span class="ws-aside__cap t-mono">Test · readiness</span>
+        </li>
+        <li class="ws-aside__item" data-ws-aside>
+          <img src="/images/app-releases.webp" alt="Releases panel with live deploys and one-click rollbacks" width="1000" height="688" loading="lazy" decoding="async" />
+          <span class="ws-aside__cap t-mono">Ship &amp; evolve</span>
+        </li>
+      </ul>
+
     </div>
+
+    <p class="workspace__caption t-mono">Festova landed product · Build, test, ship &amp; evolve beside it</p>
 
   </div>
 </section>
