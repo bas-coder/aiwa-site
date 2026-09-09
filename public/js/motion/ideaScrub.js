@@ -88,6 +88,17 @@ export function ideaScrub(root = document) {
     onRefresh: (self) => applyProgress(steps, stack, self.progress),
   });
 
+  /* Large PNGs can finish after first measure — re-stride when each lands. */
+  const onArtLoad = () => {
+    ScrollTrigger.refresh();
+    applyProgress(steps, stack, st.progress || 0);
+  };
+  stack.querySelectorAll('img').forEach((img) => {
+    if (img.complete) return;
+    img.addEventListener('load', onArtLoad, { once: true });
+    img.addEventListener('error', onArtLoad, { once: true });
+  });
+
   applyProgress(steps, stack, st.progress || 0);
 
   return () => {

@@ -54,6 +54,15 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-09 — Idea visuals: fix blank scrub plates
+
+- Renamed `/images/visuals/*.png` to kebab-case (no spaces) and updated `index.html` srcs.
+- Panel images use absolute fill (`inset: 0` + `object-fit: cover`) so aspect-ratio parents don’t collapse paint.
+- Stage clips again (`overflow: hidden`) so mid-scrub gaps don’t read as missing art; stride refreshes when each PNG loads.
+- Files: `public/images/visuals/*`, `public/index.html`, `public/css/site.css`, `public/js/motion/ideaScrub.js`.
+
+---
+
 ## 2026-09-09 — Preloader stages: add SHIP
 
 - Loader stage row is now `PLAN ARCHITECT BUILD TEST SHIP EVOLVE` (uppercase).

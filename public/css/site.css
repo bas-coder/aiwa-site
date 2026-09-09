@@ -1633,8 +1633,9 @@ main, .footer { position: relative; z-index: 2; }
   overflow: visible;
 }
 
-/* Viewport for one card — no frame border; overflow visible so glows + next
-   card can peek (Lovable). Gap lives on the stack, not a hairline on the stage. */
+/* Viewport for one card. overflow:hidden frames the active plate; gap between
+   panels still scrolls through. (overflow:visible + contain:paint on the
+   canvas was letting mid-scrub gaps read as “missing” images.) */
 .idea__stage {
   position: relative;
   width: 100%;
@@ -1642,7 +1643,7 @@ main, .footer { position: relative; z-index: 2; }
   border-radius: var(--idea-stage-radius);
   border: 0;
   background: transparent;
-  overflow: visible;
+  overflow: hidden;
   box-shadow: none;
 }
 
@@ -1673,7 +1674,7 @@ main, .footer { position: relative; z-index: 2; }
   overflow: hidden;
   border: 0;
   box-sizing: border-box;
-  background: transparent;
+  background: color-mix(in srgb, var(--ink-850) 80%, transparent);
 }
 
 /* Soft glow sits behind the cropped plate (Lovable atmosphere, no inset pad). */
@@ -1690,15 +1691,15 @@ main, .footer { position: relative; z-index: 2; }
 }
 
 .idea__panel img {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 0;
-  filter: none;
+  border-radius: inherit;
 }
 
 /* Idea scrub beat: same flat page fill as FAQ (`body` / #faq → --ink-900).
