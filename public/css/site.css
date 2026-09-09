@@ -406,18 +406,25 @@
 }
 .hero__proof-text { text-wrap: pretty; }
 
-.hero__trust { width: min(100%, 42rem); display: grid; gap: 0.9rem; }
+.hero__trust {
+  width: min(100%, 42rem);
+  display: grid;
+  gap: 0.9rem;
+  /* Quieter under the CTA — process loop, not a second headline. */
+  opacity: 0.78;
+}
 .trust__item { display: inline-flex; align-items: center; gap: 0.4rem; padding-inline: 0.9rem; font-size: 0.8rem; color: var(--cream-300); white-space: nowrap; }
 .trust__item b { font-family: var(--font-display); font-size: 1rem; color: var(--cream-050); }
-/* plan it / build it / test it / ship it - lowercase with accent checks. */
+/* plan → build → test → ship → evolve — lowercase with accent checks. */
 .trust__item--step {
   font-family: var(--font-mono); font-size: 0.78rem;
-  letter-spacing: 0.06em; text-transform: none; color: var(--cream-100);
+  letter-spacing: 0.06em; text-transform: none; color: var(--cream-300);
   gap: 0.45rem; padding-inline: 0.75rem;
 }
 .trust__check {
   width: 0.85rem; height: 0.85rem; flex: 0 0 auto;
   color: var(--accent); stroke: currentColor;
+  opacity: 0.9;
 }
 .trust__dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-500); align-self: center; flex: 0 0 auto; }
 
@@ -804,7 +811,7 @@
 @keyframes blink { 50% { opacity: 0; } }
 .prompt__meta {
   display: flex; gap: 0.7rem; justify-content: center; margin-top: 1rem;
-  color: var(--cream-500); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.62rem;
+  color: var(--cream-300); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem;
 }
 
 /* plan - NOTE the `agent-` prefix. The pricing section also has a `.plan`

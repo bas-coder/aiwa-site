@@ -220,7 +220,7 @@ function measurePromptFirstLineLength(promptEl, text) {
 export function heroEntrance() {
   const h1 = document.getElementById('hero-h1');
   const scrim = document.querySelector('.hero-media__scrim');
-  const chained = [...document.querySelectorAll('.hero [data-entrance]')];
+  const chained = [...document.querySelectorAll('.hero [data-entrance]:not([hidden])')];
 
   /* §5.1 - reduced motion gets the final state, instantly. */
   if (prefersReducedMotion()) {

@@ -131,12 +131,12 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <span class="btn__label">Login</span>
       </a>
       <a class="btn btn--primary nav__cta nav__cta--build" href="/#pricing" tabindex="-1" aria-hidden="true">
-        <span class="btn__label">Start Building</span>
-        <span class="btn__arrow"><span>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span></span>
-      </a>
+      <span class="btn__label">Start Building</span>
+      <span class="btn__arrow"><span>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span></span>
+    </a>
     </div>
   </div>
 </nav>
@@ -176,30 +176,32 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         </p>
       </div>
 
-      <!-- §4.3 · the trust marquee. Speed is measured, never hardcoded. -->
+      <!-- §4.3 · process loop marquee. Speed is measured, never hardcoded. -->
       <div class="hero__trust" data-entrance>
-        <div class="marquee marquee--masked" data-marquee data-speed="30">
+        <div class="marquee marquee--masked" data-marquee data-speed="22">
           <div class="marquee__track">
-            <!-- The four terms appear TWICE in the group deliberately.
+            <!-- The five beats appear TWICE in the group deliberately.
                  marquees() clones the group once and animates the track by
                  translateX(-50%), so one group has to be at least as wide as
                  .hero__trust (42rem) or a visible gap walks across the row.
-                 Speed is still measured from the group, so it stays 30 px/s. -->
+                 Speed is still measured from the group (px/s via data-speed). -->
             <div class="marquee__group">
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>plan it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>build it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>test it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>ship it</span>
+              <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>evolve it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>plan it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>build it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>test it</span>
               <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>ship it</span>
+              <span class="trust__item trust__item--step"><svg class="trust__check" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg>evolve it</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="hero__scroll-hint" data-entrance>
+      <div class="hero__scroll-hint" data-entrance hidden aria-hidden="true">
         <div class="mouse" aria-hidden="true"></div>
       </div>
 
@@ -297,7 +299,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             <span class="prompt__text" data-prompt-text>Build an event photo platform:</span><span class="prompt__caret"></span>
           </div>
           <div class="prompt__meta t-mono">
-            <span>claude sonnet 4.6</span><span>·</span><span>real database</span><span>·</span><span>build</span>
+            <span>authentication</span><span>·</span><span>real database</span><span>·</span><span>qa</span>
           </div>
         </div>
 
@@ -337,23 +339,23 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
                   <path d="M 1.2 1.1 L 8.8 5 L 1.2 8.9 Z" fill="var(--accent)"/>
                 </marker>
                 <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="61.125" y1="15.762" x2="79.125" y2="28.840">
-                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
                 <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="86.000" y1="50.000" x2="79.125" y2="71.160">
-                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
                 <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="61.125" y1="84.238" x2="38.875" y2="84.238">
-                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
                 <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="20.875" y1="71.160" x2="14.000" y2="50.000">
-                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
                 <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="20.875" y1="28.840" x2="38.875" y2="15.762">
-                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
               </defs>
@@ -794,7 +796,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code-xml"></use></svg>
               <span>Checking business logic</span>
             </li>
-          </ul>
+      </ul>
           <p class="qa-card__note">Auth verified. Checking mobile next…</p>
         </div>
 
@@ -869,7 +871,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             <img src="/images/real/festova.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
             <img src="/images/real/monograph.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
             <img src="/images/real/stillpoint.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
-          </div>
+              </div>
         </figure>
         <div class="use-card__body">
           <h3 class="use-card__title">Build for clients</h3>
@@ -893,22 +895,22 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             <p class="use-frag__kicker">Pipeline</p>
             <div class="use-frag__cols">
               <div class="use-frag__col">
-                <span>Viewing</span>
-                <b>Sarah Chen</b>
-                <em>$825K</em>
-              </div>
+                  <span>Viewing</span>
+                  <b>Sarah Chen</b>
+                  <em>$825K</em>
+                </div>
               <div class="use-frag__col is-hot">
-                <span>Offer</span>
-                <b>Elena Vasquez</b>
-                <em>$2.1M</em>
-              </div>
+                  <span>Offer</span>
+                  <b>Elena Vasquez</b>
+                  <em>$2.1M</em>
+                </div>
               <div class="use-frag__col">
-                <span>Contract</span>
-                <b>Sofia Romano</b>
-                <em>$675K</em>
+                  <span>Contract</span>
+                  <b>Sofia Romano</b>
+                  <em>$675K</em>
+                </div>
               </div>
             </div>
-          </div>
         </figure>
         <div class="use-card__body">
           <h3 class="use-card__title">Run your business</h3>
@@ -1446,26 +1448,26 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 <!-- FOOTER:START (generated by scripts/build-pages.mjs - do not edit by hand) -->
 <footer class="footer" data-footer>
   <div class="footer__plate">
-    <div class="shell shell--wide">
-      <div class="footer__top">
-        <a class="footer__logo" href="/#top" aria-label="AIWA home">
-          <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
-        </a>
-        <form class="footer__news" onsubmit="return false">
-          <label class="sr-only" for="news">Email address</label>
-          <input id="news" type="email" placeholder="Join our newsletter" />
-          <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
-        </form>
-      </div>
-      <div class="footer__cols">
+  <div class="shell shell--wide">
+    <div class="footer__top">
+      <a class="footer__logo" href="/#top" aria-label="AIWA home">
+        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+      </a>
+      <form class="footer__news" onsubmit="return false">
+        <label class="sr-only" for="news">Email address</label>
+        <input id="news" type="email" placeholder="Join our newsletter" />
+        <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+      </form>
+    </div>
+    <div class="footer__cols">
       <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
       <div><span class="footer__col-name">Pages</span><a href="/#why">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
       <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
       <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
       <div><span class="footer__col-name">Contact</span><a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
-      </div>
+    </div>
       <div class="footer__meta">
-        <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+    <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
       </div>
     </div>
     <div class="footer__wordmark-crop">

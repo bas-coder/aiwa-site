@@ -54,6 +54,15 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-09 — Hero process marquee: add evolve it
+
+- Kept marquee (five cyclic beats don’t fit a static stagger cleanly).
+- Cycle is now `plan it → build it → test it → ship it → evolve it` (duplicated in-group for seamless loop).
+- Quieter tone: `data-speed` 30→22 px/s, softer row opacity / step color.
+- Files: `public/index.html`, `public/css/site.css`.
+
+---
+
 ## 2026-09-07 — CTA “Ready to launch?” unclipped
 
 - `.cta` overflow → `visible`; edge fades dropped under the copy (`z-index: 0`) so the top dissolve no longer slices the display headline.
