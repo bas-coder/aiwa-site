@@ -668,20 +668,14 @@ export function heroScroll() {
      target already carries its hidden state from CSS, so nothing flashes
      between first paint and this binding.
 
-     This used to reveal the workspace tab system (.workspace__pills and
-     .workspace__panes). That section was removed, and the arrival reveal
-     followed it onto the one thing still inside the well: the project status
-     card. It is the better target anyway, because a card headed "project
-     status" has no business being legible over an EMPTY well - it should
-     arrive with the project it describes.
-
-     It reveals the project status card over the well: a card headed "project
-     status" has no business being legible over an EMPTY well — it should
-     arrive with the project it describes.
+     Act 5 reveals the project-status card over the landed well and the
+     Build / Test / Ship & evolve stack beside it. A status card has no
+     business being legible over an EMPTY well — it should arrive with the
+     project it describes, and the lifecycle screens arrive in the same beat.
 
      If these selectors ever match nothing the length guard below turns Act 5
      into a no-op rather than an error. */
-  const arrivalTargets = [...document.querySelectorAll('.proj-status')];
+  const arrivalTargets = [...document.querySelectorAll('.proj-status, [data-ws-aside]')];
   if (arrivalTargets.length) {
     const arrival = gsap.fromTo(arrivalTargets,
       { autoAlpha: 0, filter: 'blur(12px)', y: '2em' },
