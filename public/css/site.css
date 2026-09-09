@@ -1701,6 +1701,32 @@ main, .footer { position: relative; z-index: 2; }
   filter: none;
 }
 
+/* Idea scrub beat: same flat page fill as FAQ (`body` / #faq → --ink-900).
+   Kill the hero canvas atmosphere so this reads as a section, not a scene. */
+html.is-idea-scrub .hero-media {
+  background: var(--ink-900);
+}
+html.is-idea-scrub .hero-media__gradient {
+  opacity: 0;
+  transition: opacity var(--dur-base, 0.4s) var(--ease-brand, ease);
+}
+html.is-idea-scrub .hero__glow {
+  opacity: 0;
+  transition: opacity var(--dur-base, 0.4s) var(--ease-brand, ease);
+}
+html.is-idea-scrub .hero-media__frame::after {
+  background: linear-gradient(
+    96deg,
+    color-mix(in srgb, var(--ink-900) 96%, transparent) 0%,
+    color-mix(in srgb, var(--ink-900) 82%, transparent) 30%,
+    transparent 54%
+  );
+}
+html.is-idea-scrub .hero-media__scrim {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 @media (max-width: 991px) {
   .hero__panel.is-3 {
     min-height: auto;

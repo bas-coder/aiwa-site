@@ -56,6 +56,7 @@ export function ideaScrub(root = document) {
   const panel = root.querySelector('[data-idea-panel]') || root.querySelector('.hero__panel.is-3');
   const stack = root.querySelector('[data-idea-stack]');
   const steps = [...root.querySelectorAll('[data-idea-step]')];
+  const IDEA_SCRUB_CLASS = 'is-idea-scrub';
 
   if (!panel || !stack || !steps.length) return () => {};
 
@@ -67,6 +68,14 @@ export function ideaScrub(root = document) {
   resetVisuals(steps, stack);
 
   const copy = panel.querySelector('.hero__idea') || panel;
+
+  /* Flat FAQ fill (`--ink-900`) for the whole tall panel run. */
+  const fillST = ScrollTrigger.create({
+    trigger: panel,
+    start: 'top top',
+    end: 'bottom bottom',
+    toggleClass: { targets: document.documentElement, className: IDEA_SCRUB_CLASS },
+  });
 
   const st = ScrollTrigger.create({
     trigger: copy,
@@ -82,7 +91,9 @@ export function ideaScrub(root = document) {
   applyProgress(steps, stack, st.progress || 0);
 
   return () => {
+    fillST.kill();
     st.kill();
+    document.documentElement.classList.remove(IDEA_SCRUB_CLASS);
     resetVisuals(steps, stack);
     gsap.set(stack, { clearProps: 'transform' });
   };

@@ -54,6 +54,20 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-09 — Preloader stages: add SHIP
+
+- Loader stage row is now `PLAN ARCHITECT BUILD TEST SHIP EVOLVE` (uppercase).
+- Files: `public/index.html`.
+
+---
+
+## 2026-09-09 — Idea scrub: FAQ fill (`--ink-900`)
+
+- While `.hero__panel.is-3` owns the viewport, `html.is-idea-scrub` flats the canvas to the same `--ink-900` as FAQ/body and fades hero gradient + corner glow.
+- Files: `public/js/motion/ideaScrub.js`, `public/css/site.css`.
+
+---
+
 ## 2026-09-09 — Hero process marquee: add evolve it
 
 - Kept marquee (five cyclic beats don’t fit a static stagger cleanly).
