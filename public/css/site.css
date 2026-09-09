@@ -309,7 +309,8 @@
 /* Tall scrub panel: left copy sticks at viewport center while stack advances.
    Shell stretches full panel height so sticky has runway. */
 .hero__panel.is-3 {
-  min-height: 480svh;
+  /* Five idea plates need ~1 extra viewport of scrub vs the old 4-step run. */
+  min-height: 580svh;
   align-items: stretch;
   padding-block: 0;
 }
@@ -322,8 +323,8 @@
   /* Lead with empty runway so panel 2 (“five agents”) leaves before the
      idea list reaches center. Matches hero.js measureHeroBreaks(). */
   padding-top: 100svh;
-  /* Extra trail so the last plate can finish scrubbing before handoff. */
-  padding-bottom: max(70vh, calc(50vh + 4rem));
+  /* Trail so Evolve can finish scrubbing before the spacer / handoff. */
+  padding-bottom: max(85vh, calc(60vh + 4rem));
 }
 .hero__idea {
   position: sticky;
@@ -712,28 +713,6 @@
   position: relative;
   z-index: 1;
 }
-/* The payoff frame is wider than the working scenes: the whole sequence has
-   been building toward "it is a real, deployed application", and it is also
-   the frame that has to look right once it is seated in the card. */
-/* The payoff frame is wider than the working scenes, and it is also the only
-   scene that has to survive being handed off into a much smaller box.
-
-   max-height is not belt-and-braces. Width is normally the binding constraint,
-   but .ship__chrome is a fixed rem height that does NOT shrink with the well,
-   so below roughly an 890px well the card stands taller than the box and the
-   frame's overflow:hidden shaves the chrome bar clean off the top. Measured:
-   13px over at an 800px well, 23px at 500px. Capping the height and letting
-   the shot take the remainder keeps the whole card inside at every size. */
-.scene--ship {
-  width: min(94%, 56rem); max-height: 94%;
-  /* flex, not just the cap: a percentage max-height on a block whose height is
-     auto is indefinite to its child, so the cap alone clamps this box and lets
-     .ship overflow it anyway. As a flex container with a shrinkable item, the
-     cap is passed down and actually bites. */
-  display: flex;
-}
-.scene--ship > .ship { flex: 1 1 auto; min-height: 0; }
-
 /* The fan needs more width than the single-column beats, but this number is a
    negotiated ceiling, not a preference, and the arithmetic is worth keeping.
 
@@ -995,29 +974,6 @@
 }
 .test li { position: relative; }
 
-/* ship */
-.ship {
-  display: flex; flex-direction: column; max-height: 100%;
-  border-radius: 1rem; overflow: hidden;
-  border: 1px solid var(--ink-600);
-  box-shadow: 0 3rem 7rem rgba(0,0,0,0.7);
-  background: var(--ink-850);
-}
-.ship__chrome {
-  display: flex; align-items: center; gap: 0.4rem;
-  padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--ink-600);
-  background: rgba(18,18,17,0.9);
-}
-.ship__chrome i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--ink-500); }
-.ship__url { margin-left: 0.8rem; color: var(--cream-500); font-size: 0.62rem; }
-/* flex-shrink with min-height:0 is what lets the cap above actually bite; the
-   cover keeps the shot's own proportions while its box gives up the height. */
-.ship__shot {
-  display: block; width: 100%; height: auto;
-  flex: 1 1 auto; min-height: 0;
-  object-fit: cover; object-position: top center;
-}
-
 /* Everything after the hero paints above the travelling media. See the
    z-index note on .hero-media. */
 main, .footer { position: relative; z-index: 2; }
@@ -1042,6 +998,31 @@ main, .footer { position: relative; z-index: 2; }
   align-items: stretch;
   width: 100%;
 }
+
+/* Mac browser shell around the handoff well. Chrome is a sibling ABOVE
+   #workspace-zone so Flip still measures the 16:9 content rect alone. */
+.workspace__browser {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--ink-700);
+  background: #1e1f21;
+  box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.45);
+}
+.workspace__chrome {
+  flex: 0 0 auto;
+  line-height: 0;
+  background: #1e1f21;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.workspace__chrome img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .ws-aside {
   display: grid;
   grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -1049,20 +1030,27 @@ main, .footer { position: relative; z-index: 2; }
   margin: 0;
   padding: 0;
   list-style: none;
+  /* Match the browser shell’s outer height so the first card top lines up
+     with the chrome top and the last card bottom with the preview bottom. */
+  min-height: 100%;
 }
+/* li is the grid item (not display:contents) so 1fr row height cannot
+   collapse to caption-only when the button’s img is absolutely filled. */
 .ws-aside > li {
-  display: contents;
+  min-height: 0;
+  height: 100%;
 }
 .ws-aside__item {
   position: relative; overflow: hidden;
   display: block; width: 100%; height: 100%;
   margin: 0; padding: 0;
-  border: 1px solid var(--ink-700); border-radius: var(--radius-card);
+  /* Smaller than --radius-card so labels clear the curve on a narrow column. */
+  border: 1px solid var(--ink-700); border-radius: 1rem;
   background: var(--ink-850);
   color: inherit; font: inherit; text-align: left;
   cursor: pointer;
   /* opacity 0 is the arrival state; Act 5 brings these in with the status card.
-     .no-js and reduced motion get their escapes below, same as .proj-status. */
+     .no-js and reduced motion get their escapes below, same as other arrival fades. */
   opacity: 0;
   transition:
     border-color var(--dur-base, 0.35s) var(--ease-brand, ease),
@@ -1078,13 +1066,20 @@ main, .footer { position: relative; z-index: 2; }
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 .ws-aside__item img {
+  position: absolute; inset: 0;
   display: block; width: 100%; height: 100%;
   object-fit: cover; object-position: top center;
   pointer-events: none;
 }
+/* Narrow card + top-left crop hid the Chateau preview (dark chat only).
+   Bias Build toward the live-preview pane so it matches the left well. */
+#ws-tab-build img {
+  object-position: 72% 12%;
+}
 .ws-aside__cap {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  padding: 0.9rem 0.7rem 0.5rem;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  /* Extra left padding so uppercase labels clear the 1rem corner radius. */
+  padding: 0.95rem 0.75rem 0.55rem 1.15rem;
   font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--cream-100);
   background: linear-gradient(180deg, rgba(6,5,4,0), rgba(6,5,4,0.88) 55%);
@@ -1104,142 +1099,36 @@ main, .footer { position: relative; z-index: 2; }
 @media (max-width: 900px) {
   .workspace__case { grid-template-columns: 1fr; }
   .ws-aside { grid-template-rows: none; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  /* --radius-card (2.5rem) is drawn for the big well. On a card a third of
-     that width it curves away most of the shot, so the row takes its own. */
-  .ws-aside__item { aspect-ratio: 16 / 9; border-radius: 1.25rem; }
+  .ws-aside__item { aspect-ratio: 16 / 9; border-radius: 0.85rem; }
+  .ws-aside__item img { position: absolute; }
 }
 
 .workspace__zone {
-  /* position:relative is the containing block for .proj-status, and it is safe
-     to add: the box is aspect-locked, so it does not change the destination
-     rect the handoff measures every frame. */
+  /* position:relative holds the tab viewer shot; the box is aspect-locked so
+     children do not change the destination rect the handoff measures. */
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-card);
+  border-radius: 0;
   background: var(--ink-850);
-  border: 1px solid var(--ink-700);
+  border: 0;
 }
-.workspace__zone.is-occupied { background: transparent; border-color: transparent; }
-/* Tab view: cover the landed hero frame with the selected workspace screen. */
-.workspace__zone.is-tab-view {
-  background: var(--ink-850);
-  border-color: var(--ink-700);
-}
-.workspace__zone.is-tab-view .workspace__zone-shot {
+.workspace__zone.is-occupied { background: transparent; }
+/* Seated = handoff done; hero canvas is hidden — keep an opaque plate so no
+   ambient glow bleeds through while the tab shot paints. */
+.workspace__zone.is-seated { background: var(--ink-850); }
+/* Tab viewer: cover the landed hero frame once the handoff has seated
+   (or immediately on static / no-js tiers). Same still as the Build tab by
+   default, so the swap is invisible. */
+.workspace__zone.is-tab-view.is-occupied .workspace__zone-shot,
+.static-hero .workspace__zone.is-tab-view .workspace__zone-shot,
+.no-js .workspace__zone.is-tab-view .workspace__zone-shot {
   display: block;
   position: absolute;
   inset: 0;
   z-index: 3;
 }
-.workspace__zone.is-tab-view .proj-status {
-  opacity: 0 !important;
-  visibility: hidden;
-}
 @media (max-width: 700px) { .workspace__zone { aspect-ratio: 4 / 3; } }
-
-/* ---------------------------------------------------------------------------
-   PROJECT STATUS · the card floating over the workspace well
-
-   Inside .workspace__zone, which is the box the pinned hero canvas is handed
-   off into. Two things make that safe rather than clever:
-
-     1. The well is aspect-locked, so a child does not change the rect the
-        handoff interpolates towards. Add a child that affects layout here and
-        the card lands a few pixels off, every time.
-     2. .hero-media is z-index 0 and paints below <main>, so this needs no
-        z-index war to sit on top of the landed frame. It only needs to be
-        positioned, and to keep its hands off the pointer.
-   ------------------------------------------------------------------------ */
-.proj-status {
-  position: absolute; z-index: 2; pointer-events: none;
-  /* BOTTOM-LEFT, not bottom-right. .stage__hud lives at the media's
-     bottom-right corner ("EVOLVE · 98%") and stays there after the handoff has
-     shrunk the frame into this well, so the right corner is the one corner that
-     is already taken. Measured at 1440x900 before it was moved. */
-  left: clamp(0.9rem, 2vw, 1.8rem); bottom: clamp(0.9rem, 2vw, 1.8rem);
-  width: min(17rem, 62%);
-  display: grid; gap: 0.55rem;
-  padding: clamp(0.9rem, 1.6vw, 1.15rem);
-  border: 1px solid var(--ink-600); border-radius: 1.1rem;
-  background: rgba(11, 9, 7, 0.82);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  box-shadow: 0 1.2rem 2.6rem rgba(0, 0, 0, 0.45);
-  /* Hidden until the hero canvas lands in the well: Act 5 in js/motion/hero.js
-     animates it in, and starting hidden HERE rather than in JS is what keeps it
-     from flashing between first paint and the trigger binding. Every path that
-     never runs Act 5 needs an escape, or the card is invisible forever:
-       .no-js         no script at all, so no Act 5
-       .static-hero   set for reduced motion; the media never travels
-     Below 560px the card is display:none anyway, which covers the <480px tier. */
-  opacity: 0; visibility: hidden;
-}
-.no-js .proj-status,
-.static-hero .proj-status { opacity: 1; visibility: visible; }
-@media (prefers-reduced-motion: reduce) { .proj-status { opacity: 1; visibility: visible; } }
-.proj-status__label { color: var(--cream-500); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; }
-.proj-status__name { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: -0.02em; line-height: 1; }
-/* ---- the build readout ------------------------------------------------
-   All five checks stay on the card at all times - the brief lists five and a
-   status card that hides three of them is not showing project status. So there
-   is no window and no mask here: the sequence in projectStatus() runs DOWN the
-   visible list, lighting and ticking each row in turn, rather than scrolling
-   rows past a viewport. --ps-line only sets the row rhythm now. */
-.ps-feed { --ps-line: 1.4rem; }
-.ps-feed__track { display: block; }
-.ps-line {
-  height: var(--ps-line);
-  display: flex; align-items: center; gap: 0.45rem;
-  font-size: 0.7rem; color: var(--cream-300); white-space: nowrap;
-}
-.ps-mark { width: 0.8rem; height: 0.8rem; flex: 0 0 auto; overflow: visible; }
-/* -90deg so the ring fills from twelve o'clock, which is the direction every
-   progress ring in the world turns. */
-.ps-mark__ring {
-  fill: none; stroke: var(--good); stroke-width: 1.7;
-  transform: rotate(-90deg); transform-origin: 50% 50%;
-}
-.ps-mark__tick {
-  fill: none; stroke: var(--good); stroke-width: 2.1;
-  stroke-linecap: round; stroke-linejoin: round;
-}
-
-.ps-meter { display: flex; align-items: center; gap: 0.5rem; }
-.ps-meter__track {
-  flex: 1 1 auto; height: 2px; border-radius: 2px;
-  background: rgba(255, 255, 255, 0.09); overflow: hidden;
-}
-.ps-meter__track i {
-  display: block; height: 100%; width: 100%;
-  transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--accent-deep), var(--good));
-}
-.ps-meter__count { font-size: 0.56rem; letter-spacing: 0.12em; color: var(--cream-500); }
-
-.proj-status__ready {
-  display: flex; align-items: center; gap: 0.42rem;
-  padding-top: 0.5rem; border-top: 1px solid var(--ink-600);
-  font-size: 0.72rem; color: var(--cream-050);
-}
-.proj-status__ready i {
-  width: 0.42rem; height: 0.42rem; border-radius: 50%; flex: 0 0 auto;
-  background: var(--good); box-shadow: 0 0 0 0.22rem rgba(74, 222, 128, 0.16);
-  animation: ps-pulse 2.2s ease-in-out infinite;
-}
-/* In CSS, not in the timeline: an infinite repeat inside a GSAP timeline makes
-   that timeline's duration infinite, which breaks the reverse the arrival
-   trigger depends on. */
-@keyframes ps-pulse {
-  0%, 100% { box-shadow: 0 0 0 0.22rem rgba(74, 222, 128, 0.16); }
-  50%      { box-shadow: 0 0 0 0.42rem rgba(74, 222, 128, 0.04); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .proj-status__ready i { animation: none; }
-}
-/* Below 560px the well is barely wider than the card, and a card covering the
-   screenshot it is annotating is worse than no card. */
-@media (max-width: 560px) { .proj-status { display: none; } }
 
 /* ---------------------------------------------------------------------------
    AUTONOMOUS QA · the proof section
@@ -1706,11 +1595,6 @@ main, .footer { position: relative; z-index: 2; }
 }
 .idea__step.is-done:not(.is-active) .idea__step-label {
   color: color-mix(in srgb, var(--cream-050) 55%, var(--idea-muted));
-}
-
-.idea__cta {
-  justify-self: start;
-  margin-top: 0.55rem;
 }
 
 .scene--idea {
@@ -2569,17 +2453,18 @@ html.is-idea-scrub .hero-media__scrim {
 .gallery__all:hover .icon { transform: translateX(0.25rem); }
 
 .gallery__grid {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(1.8rem, 2.6vw, 2.6rem) clamp(1rem, 1.6vw, 1.6rem);
+  /* Three-up so each plate is large enough to read the real product UI. */
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 3vw, 2.85rem) clamp(1.15rem, 1.9vw, 1.85rem);
   list-style: none; padding: 0; margin: 0;
 }
-.shot__card { display: grid; gap: 0.85rem; }
+.shot__card { display: grid; gap: 0.95rem; }
 
 /* The plate. overflow:hidden keeps the image + hover overlay inside the radius. */
 .shot__frame {
   position: relative;
   display: block; overflow: hidden;
-  border: 1px solid var(--ink-600); border-radius: 0.8rem;
+  border: 1px solid var(--ink-600); border-radius: 0.9rem;
   background: var(--ink-850);
   isolation: isolate;
 }
@@ -2648,29 +2533,15 @@ html.is-idea-scrub .hero-media__scrim {
   color: var(--ink-950);
 }
 .shot__action--solid:hover { background: #fff; }
-.shot__action--solid.is-copied {
-  background: color-mix(in srgb, var(--good) 85%, var(--cream-050));
-  color: var(--ink-950);
-}
-.shot__action--ghost {
-  background: color-mix(in srgb, var(--cream-050) 12%, transparent);
-  border: none;
-  color: var(--cream-050);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-.shot__action--ghost:hover {
-  background: color-mix(in srgb, var(--cream-050) 20%, transparent);
-}
 
 .shot__meta { display: grid; gap: 0.15rem; padding-top: 0.15rem; }
 .shot__body { display: grid; gap: 0.15rem; }
 .shot__title {
   font-family: var(--font-display); font-weight: 500;
-  font-size: 1.02rem; line-height: 1.2; letter-spacing: -0.02em; color: var(--cream-050);
+  font-size: clamp(1.05rem, 1.15vw, 1.15rem); line-height: 1.2; letter-spacing: -0.02em; color: var(--cream-050);
   transition: color var(--dur-micro) var(--ease-brand);
 }
-.shot__desc { font-size: 0.76rem; line-height: 1.4; color: var(--cream-500); }
+.shot__desc { font-size: 0.8rem; line-height: 1.4; color: var(--cream-500); }
 
 @media (hover: hover) and (pointer: fine) {
   .shot__card:hover .shot__frame img,
@@ -2690,7 +2561,6 @@ html.is-idea-scrub .hero-media__scrim {
   outline-offset: 0.2rem;
 }
 
-@media (max-width: 1180px) { .gallery__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 860px)  {
   .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Touch: actions stay reachable without hover. */
@@ -2776,9 +2646,8 @@ html.is-idea-scrub .hero-media__scrim {
    buttons in a radiogroup, with generous hit areas, hover growth and arrow
    keys - not a native range with a draggable thumb.
 
-   The beam and the knob are a HEAT RAMP. The sunset palette runs amber ->
-   orange -> red, so base-to-max literally reads as rising heat and the top
-   step FEELS heavier, which is what its "Heavy operations" label claims.
+   Beam + knob ramp amber -> orange -> DS green (--good). Max reads as
+   capacity/abundance, not danger-red heat.
    ------------------------------------------------------------------------ */
 .credits { display: grid; gap: 0.3rem; }
 
@@ -2794,7 +2663,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .credits[data-heat='0'] .credits__beam { background: var(--app-sunset-1); }
 .credits[data-heat='1'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2)); }
-.credits[data-heat='2'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2), var(--app-sunset-3)); }
+.credits[data-heat='2'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2), var(--good)); }
 
 /* 1.75rem of hit area around a 0.625rem dot - the target is the button, the
    dot is only what you see. */
@@ -2824,8 +2693,8 @@ html.is-idea-scrub .hero-media__scrim {
   box-shadow: 0 0 0 3px rgb(255 94 0 / 0.25);
 }
 .credits[data-heat='2'] .credits__stop[aria-checked='true'] > span {
-  background: linear-gradient(to bottom right, var(--app-sunset-2), var(--app-sunset-3));
-  box-shadow: 0 0 0 3px rgb(206 20 0 / 0.3);
+  background: linear-gradient(to bottom right, var(--app-sunset-2), var(--good));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 35%, transparent);
 }
 /* The sweet spot is marked before you touch anything. */
 .credits__stop[data-popular]:not([aria-checked='true']) > span { box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6); }
@@ -3262,7 +3131,7 @@ html.is-idea-scrub .hero-media__scrim {
 
 .workspace__zone-shot {
   display: none;
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  width: 100%; height: 100%; object-fit: cover; object-position: top left;
   border-radius: inherit;
 }
 
@@ -3517,8 +3386,6 @@ html.is-idea-scrub .hero-media__scrim {
      base `justify-content: center`, which in grid centres a max-content COLUMN
      inside the full-width box - so the buttons stacked but stayed 172px. */
   .hero__cta, .cta__actions { display: grid; grid-template-columns: 1fr; gap: 0.7rem; width: 100%; }
-  /* ...including the loose ones. "See the workflow engine" is a bare .btn in
-     the third hero panel, not inside a CTA row, so it needs naming. */
   .hero__cta .btn, .cta__actions .btn, .hero__panel-inner > .btn { width: 100%; justify-content: center; }
 
   /* Cards: desktop padding is ~12% of the viewport at this width, so the
@@ -3550,9 +3417,10 @@ html.is-idea-scrub .hero-media__scrim {
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent);
   }
   .ws-aside__cap {
-    position: static; padding: 0.5rem 0.15rem 0; background: none;
+    position: static; padding: 0.5rem 0.15rem 0 0.35rem; background: none;
     font-size: 0.62rem; letter-spacing: 0.14em;
   }
+  .workspace__browser { border-radius: 0.85rem; }
 
   /* The contact sheet at two-up. A 4/3 crop anchored top-left keeps each
      thumbnail showing the app's own header, which is the part that is still

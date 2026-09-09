@@ -60,15 +60,27 @@ ul, ol { list-style: none; }
   html {
     cursor: url('/icons/cursors/default.svg') 6 2, auto;
   }
+
+  /* I-beam on selectable copy and form fields (before interactive overrides). */
+  p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, figcaption,
+  td, th, .t-body, .t-h1, .t-h2, .t-h3, .section__lead, .eyebrow,
+  input, textarea, select, [contenteditable='true'] {
+    cursor: url('/Pointer/Text%20highlight%20Dark.svg') 16 16, text;
+  }
+
+  /* Open hand on clickable controls. */
   a, button, [role='button'], summary, label[for],
   .shot__action, .nav__links a, .btn, .switch__opt {
     cursor: url('/icons/cursors/hover.svg') 10 4, pointer;
   }
-  a:active, button:active, .shot__action:active, .btn:active {
-    cursor: url('/icons/cursors/pressing.svg') 10 4, pointer;
+
+  /* Open / closed hand when drag is available or in progress. */
+  [draggable='true'], .is-draggable, [data-grab] {
+    cursor: url('/icons/cursors/grab.svg') 12 8, grab;
   }
-  input, textarea, select, [contenteditable='true'] {
-    cursor: url('/icons/cursors/text.svg') 8 12, text;
+  [draggable='true']:active, .is-draggable:active,
+  .is-dragging, [data-grab]:active {
+    cursor: url('/icons/cursors/grabbing.svg') 12 10, grabbing;
   }
 }
 

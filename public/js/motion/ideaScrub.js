@@ -11,7 +11,6 @@
 
 import { prefersReducedMotion } from './tokens.js';
 
-const STEP_COUNT = 4;
 const ACTIVE_CLASS = 'is-active';
 const DONE_CLASS = 'is-done';
 
@@ -24,22 +23,23 @@ function stackStridePx(stack) {
 }
 
 function applyProgress(steps, stack, progress) {
-  const scaled = progress * STEP_COUNT;
+  const stepCount = Math.max(steps.length, 1);
+  const scaled = progress * stepCount;
   const activeIndex = Math.min(
-    STEP_COUNT - 1,
-    Math.floor(scaled >= STEP_COUNT ? STEP_COUNT - 1 : scaled),
+    stepCount - 1,
+    Math.floor(scaled >= stepCount ? stepCount - 1 : scaled),
   );
 
   steps.forEach((step, index) => {
     const isActive = index === activeIndex;
-    const isDone = index < activeIndex || (progress >= 1 && index === STEP_COUNT - 1);
+    const isDone = index < activeIndex || (progress >= 1 && index === stepCount - 1);
     step.classList.toggle(ACTIVE_CLASS, isActive);
     step.classList.toggle(DONE_CLASS, isDone);
   });
 
   if (stack) {
     const stride = stackStridePx(stack);
-    const offset = progress * (STEP_COUNT - 1) * stride;
+    const offset = progress * (stepCount - 1) * stride;
     stack.style.transform = `translate3d(0, ${-offset}px, 0)`;
   }
 }

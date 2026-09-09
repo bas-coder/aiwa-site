@@ -78,146 +78,24 @@ export function workspaceFocus() {
 }
 
 /* ===========================================================================
-   THE PROJECT STATUS READOUT
-   ---------------------------------------------------------------------------
-   The floating card over the workspace well. Act 5 in hero.js brings the CARD
-   in; this drives what happens INSIDE it, and the two are deliberately
-   separate concerns bound to the same trigger point.
-
-   The card used to be a static list of five ticks, which is a claim. This is
-   the same five checks completing: all five stay visible - the brief lists
-   five and a status card that hides three is not showing status - and the run
-   moves down the list, each row lifting out of its pending dim while its ring
-   fills clockwise, then snapping to a tick. The meter and the counter track
-   behind them, and "ready to publish" arrives only once the last one lands.
-
-   Two things make it safe rather than clever:
-
-     1. The finished state lives in the MARKUP, not here. Rings are green,
-        ticks are drawn, the meter is full, the ready line is showing. So a
-        visitor with no script, or reduced motion, sees a correct card and this
-        function simply never runs. Everything below is JS winding that state
-        back to zero and then playing it forward.
-
-     2. Colours are read from the stylesheet rather than repeated here, so the
-        ring cannot drift away from --good when the palette moves.
-   ======================================================================== */
-export function projectStatus() {
-  const card = document.querySelector('.proj-status');
-  const zone = document.getElementById('workspace-zone');
-  if (!card || !zone) return () => {};
-
-  const lines = [...card.querySelectorAll('[data-ps-line]')];
-  const rings = [...card.querySelectorAll('[data-ps-ring]')];
-  const ticks = [...card.querySelectorAll('[data-ps-tick]')];
-  const rail = card.querySelector('[data-ps-rail]');
-  const count = card.querySelector('[data-ps-count]');
-  const ready = card.querySelector('[data-ps-ready]');
-  if (!lines.length) return () => {};
-
-  /* Reduced motion keeps the markup's finished state, untouched. */
-  if (prefersReducedMotion()) return () => {};
-
-  const cs = getComputedStyle(document.documentElement);
-  const GOOD = cs.getPropertyValue('--good').trim() || '#4ade80';
-  const IDLE = cs.getPropertyValue('--ink-500').trim() || '#4a453d';
-  const WORK = cs.getPropertyValue('--accent').trim() || '#fea002';
-
-  const RING = 2 * Math.PI * 8.5;      // r=8.5 in the 20x20 viewBox
-  const TICK = 12;                     // measured length of the tick path
-
-  const total = String(lines.length).padStart(2, '0');
-  const setCount = (n) => {
-    const v = String(Math.max(0, Math.min(lines.length, n))).padStart(2, '0');
-    const next = `${v} / ${total}`;
-    if (count && count.textContent !== next) count.textContent = next;
-  };
-
-  /* ---- wind it back to nothing ---- */
-  const reset = () => {
-    gsap.set(lines, { opacity: 0.32 });
-    gsap.set(rings, { strokeDasharray: RING, strokeDashoffset: RING, stroke: IDLE });
-    gsap.set(ticks, { strokeDasharray: TICK, strokeDashoffset: TICK });
-    gsap.set(rail, { scaleX: 0 });
-    gsap.set(ready, { autoAlpha: 0, y: 6 });
-    setCount(0);
-  };
-  reset();
-
-  const STEP = 0.42;
-  const tl = gsap.timeline({ paused: true });
-
-  lines.forEach((li, i) => {
-    const at = i * STEP;
-    // it is the one being worked on: lift it out of the pending dim, and turn
-    // its ring to the accent while it runs
-    tl.to(li, { opacity: 1, duration: 0.18 }, at + 0.04);
-    tl.set(rings[i], { stroke: WORK }, at + 0.04);
-    tl.to(rings[i], { strokeDashoffset: 0, duration: 0.26, ease: 'none' }, at + 0.04);
-    // done: the ring goes green and the tick strokes itself in
-    tl.to(rings[i], { stroke: GOOD, duration: 0.1 }, at + 0.3);
-    tl.to(ticks[i], { strokeDashoffset: 0, duration: 0.18, ease: EASE.enter }, at + 0.3);
-    tl.to(rail, { scaleX: (i + 1) / lines.length, duration: 0.32, ease: EASE.enter }, at + 0.04);
-  });
-
-  /* The counter is tweened rather than stepped in callbacks, so it unwinds
-     correctly when the trigger reverses.
-
-     It is pinned to when the checks actually FINISH, not to the whole run. A
-     check's tick lands at i*STEP + 0.48, so the tween spans the first to the
-     last of those and floors: at 1.8s the readout said 04/05 with three ticks
-     drawn, which is the kind of detail that makes a status card look fake. */
-  const DONE_AT = 0.48;
-  const c = { v: 1 };
-  tl.fromTo(c, { v: 1 }, {
-    v: lines.length,
-    duration: (lines.length - 1) * STEP,
-    ease: 'none',
-    /* Without this the from-state renders the moment the tween is built, which
-       writes 01/05 over the 00/05 the reset just set, before anything has run. */
-    immediateRender: false,
-    onUpdate: () => setCount(Math.floor(c.v)),
-  }, DONE_AT);
-
-  tl.to(ready, {
-    autoAlpha: 1, y: 0, duration: 0.34, ease: EASE.enter,
-  }, lines.length * STEP + 0.1);
-
-  const st = ScrollTrigger.create({
-    trigger: zone,
-    start: 'center center+=100',
-    onEnter: () => tl.play(),
-    onEnterBack: () => tl.play(),
-    onLeaveBack: () => tl.reverse(),
-  });
-
-  return () => {
-    st.kill();
-    tl.kill();
-    gsap.set([...lines, ...rings, ...ticks, rail, ready], { clearProps: 'all' });
-  };
-}
-
-/* ===========================================================================
    WORKSPACE LIFECYCLE TABS
    ---------------------------------------------------------------------------
    The three cards beside the well are tabs. Clicking one puts that screenshot
-   in the left well (covers the landed Festova frame) and updates the caption.
+   in the left well and updates the caption. Build is selected by default.
    The well's aspect-ratio and rect stay untouched so the handoff stays exact.
    ======================================================================== */
-const WS_DEFAULT_CAPTION = 'Festova landed product · Build, test, ship & evolve beside it';
+const WS_DEFAULT_CAPTION = 'Build · live preview in the workspace';
 const WS_ACTIVE = 'is-active';
 const WS_TAB_VIEW = 'is-tab-view';
 
 export function workspaceTabs() {
   const zone = document.getElementById('workspace-zone');
   const well = zone?.querySelector('[data-ws-well]');
-  const caption = document.querySelector('[data-ws-caption]');
+  /* Must be the section caption only — tab buttons also carry data-ws-caption
+     as a data source; writing textContent onto the Build button wiped its <img>. */
+  const caption = document.querySelector('.workspace__caption');
   const tabs = [...document.querySelectorAll('.ws-aside [data-ws-aside][data-ws-src]')];
   if (!zone || !well || !tabs.length) return () => {};
-
-  const productSrc = well.getAttribute('src') || '/images/fest-main.webp';
-  const productAlt = well.getAttribute('alt') || '';
 
   const selectTab = (tab) => {
     const src = tab.getAttribute('data-ws-src');
@@ -233,10 +111,10 @@ export function workspaceTabs() {
     well.src = src;
     well.alt = tab.getAttribute('data-ws-alt') || '';
     zone.classList.add(WS_TAB_VIEW);
+    zone.setAttribute('aria-labelledby', tab.id || '');
 
     if (caption) {
-      const next = tab.getAttribute('data-ws-caption') || WS_DEFAULT_CAPTION;
-      caption.textContent = next;
+      caption.textContent = tab.getAttribute('data-ws-caption') || WS_DEFAULT_CAPTION;
     }
   };
 
@@ -268,12 +146,12 @@ export function workspaceTabs() {
   };
 
   tabs.forEach((tab) => {
-    tab.tabIndex = -1;
     tab.addEventListener('click', onClick);
     tab.addEventListener('keydown', onKeydown);
   });
-  /* First tab is focusable before a selection so keyboard users can enter. */
-  if (tabs[0]) tabs[0].tabIndex = 0;
+
+  /* Build is the default view — matches the hero handoff still. */
+  selectTab(tabs[0]);
 
   return () => {
     tabs.forEach((tab) => {
@@ -283,9 +161,13 @@ export function workspaceTabs() {
       tab.setAttribute('aria-selected', 'false');
       tab.tabIndex = 0;
     });
-    zone.classList.remove(WS_TAB_VIEW);
-    well.src = productSrc;
-    well.alt = productAlt;
+    if (tabs[0]) {
+      tabs[0].classList.add(WS_ACTIVE);
+      tabs[0].setAttribute('aria-selected', 'true');
+    }
+    zone.classList.add(WS_TAB_VIEW);
+    well.src = tabs[0]?.getAttribute('data-ws-src') || well.src;
+    well.alt = tabs[0]?.getAttribute('data-ws-alt') || '';
     if (caption) caption.textContent = WS_DEFAULT_CAPTION;
   };
 }

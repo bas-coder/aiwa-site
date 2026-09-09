@@ -4,6 +4,20 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-09 — Made with AIWA: three-up grid
+
+- Gallery default columns 4 → 3 so each template plate reads larger; removed the redundant ≤1180px three-col breakpoint. Two-up ≤860px unchanged. Slightly larger gaps, radius, and title/desc type for the bigger cards.
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-09 — QA card: powered-by copy
+
+- Autonomous QA card line: “Powered by Project Brain™” → “Powered by the AIWA agent”.
+- Files: `public/index.html`.
+
+---
+
 ## 2026-09-08 — Hero left copy locked to the matching right scene
 
 - Scene timeline used fixed fractions of the whole hero (plan at 0.20–0.28). Panel 3 is four viewports, so the PLAN robot was still up while “Plans before it builds” was already the left copy. A second 18% lerp on top of Lenis made the canvas lag the text.

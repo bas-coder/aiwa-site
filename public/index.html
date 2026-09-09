@@ -103,7 +103,6 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
   <symbol id="icon-shield-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></g></symbol>
   <symbol id="icon-unplug" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 5 3-3" /><path d="m2 22 3-3" /><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" /><path d="M7.5 13.5 10 11" /><path d="M10.5 16.5 13 14" /><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z" /></g></symbol>
   <symbol id="icon-wand-sparkles" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72L3.64 21.64a1.21 1.21 0 0 0 1.72 0L21.64 4.72a1.21 1.21 0 0 0 0-1.72" /><path d="m14 7 3 3" /><path d="M5 6v4" /><path d="M19 14v4" /><path d="M10 2v2" /><path d="M7 8H3" /><path d="M21 16h-4" /><path d="M11 3H9" /></g></symbol>
-  <symbol id="icon-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></g></symbol>
   <symbol id="icon-external-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></g></symbol>
   <symbol id="icon-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></g></symbol>
   <symbol id="icon-credit-card-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /><line x1="2" x2="22" y1="2" y2="22" /></g></symbol>
@@ -254,14 +253,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <li class="idea__step" data-idea-step>
           <span class="idea__step-label">Ships a working app</span>
         </li>
+        <li class="idea__step" data-idea-step>
+          <span class="idea__step-label">Keeps improving it</span>
+        </li>
       </ol>
-      <a class="btn btn--ghost idea__cta" href="#engine">
-        <span class="btn__label">See the workflow engine</span>
-        <span class="btn__arrow"><span>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span></span>
-      </a>
       </div>
     </div>
   </section>
@@ -464,8 +459,17 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               </figure>
               <figure class="idea__panel">
                 <img
-                  src="/images/visuals/ships-a-working-app.png"
+                  src="/images/visuals/ships-a-working-app.gif"
                   alt="AIWA shipping a working application preview"
+                  width="1935"
+                  height="1605"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="idea__panel">
+                <img
+                  src="/images/visuals/evolve-it.png"
+                  alt="AIWA keeping the product improving after launch"
                   width="1935"
                   height="1605"
                   decoding="async"
@@ -486,20 +490,8 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </ul>
         </div>
 
-        <!-- BEAT 5 · it is a real, deployed application -->
-        <div class="scene scene--ship" data-scene="ship">
-          <div class="ship">
-            <div class="ship__chrome">
-              <i></i><i></i><i></i>
-              <span class="ship__url t-mono">festova.aiwa.app</span>
-            </div>
-            <!-- 16:9, which is also the well's aspect. That is the whole reason
-                 this shot is cropped to it: the card has to fit the box it gets
-                 handed off into, and the previous 2048x1456 frame stood taller
-                 than the well once seated. -->
-            <img class="ship__shot" src="/images/fest-main.webp" alt="" width="1600" height="900" loading="eager" decoding="async" fetchpriority="high" />
-          </div>
-        </div>
+        <!-- Handoff has no duplicate workspace beat: #workspace owns the
+             Build live-preview still. Spacer + Flip seat into #workspace-zone. -->
 
       </div>
     </div>
@@ -519,121 +511,53 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 
     <div class="workspace__head" data-blur-parent>
       <p class="eyebrow" data-blur-child>The workspace</p>
-      <h2 class="t-h2" data-blur-child data-grad>Build. Test. Ship.<br />Evolve — in one place</h2>
+      <h2 class="t-h2" data-blur-child data-grad>Build. Test. Ship.<br />Evolve in one place</h2>
       <p class="t-body section__lead" data-blur-child>
         Preview as you build, run readiness checks before you publish, then ship
-        and keep evolving with deploys and rollbacks — all inside the same AIWA workspace.
+        and keep evolving with deploys and rollbacks, all inside the same AIWA workspace.
       </p>
     </div>
 
     <!-- THE SHAPE OF THIS SECTION.
-         The well cannot move or change aspect - it is the rect the pinned hero
-         canvas is handed off into, measured live every frame. So the section is
-         re-composed AROUND it: the well is column one (landed product), and
-         column two is a three-step stack — Build / Test / Ship & evolve — that
-         matches the headline. A rect is a rect; the handoff does not care how
-         narrow its column became. -->
+         The well cannot move or change aspect — it is the rect the pinned hero
+         canvas is handed off into. Column one is the Mac browser shell around
+         that well; column two is Build / Test / Ship & evolve tabs that drive it. -->
     <div class="workspace__case">
 
-    <!-- the well -->
-    <div class="workspace__zone" id="workspace-zone">
-      <!-- §2.8 tier 3: below 480px the hero never pins, so nothing is handed
-           off into this well. Rather than leave a hole, the well shows the
-           frame the handoff would have delivered. Hidden everywhere else, and
-           it costs nothing there because the image is already in cache from
-           the hero. -->
-      <img
-        class="workspace__zone-shot"
-        data-ws-well
-        src="/images/fest-main.webp"
-        alt="Festova, a live event photo platform built with AIWA, running at its own URL."
-        width="1600"
-        height="900"
-        loading="lazy"
-        decoding="async"
-      />
-
-      <!-- The floating status card over the landed media.
-           It sits INSIDE the well, which is safe on both counts that matter:
-           the well is aspect-locked so adding a child does not move the rect
-           the handoff interpolates towards, and .hero-media is z-index 0 and
-           below <main>, so this paints on top of the card without needing to
-           out-stack anything. pointer-events:none keeps it out of the way. -->
-      <div class="proj-status" aria-hidden="true">
-        <p class="proj-status__label t-mono">Project status</p>
-        <p class="proj-status__name">Festova</p>
-
-        <!-- A BUILD READOUT, not a list of ticks.
-             All five checks are on the card at once, as the brief lists them.
-             The run moves down the visible list: each row lifts out of its
-             pending dim while its ring fills clockwise from twelve o'clock,
-             then snaps to a tick.
-
-             The MARKUP state is the finished one - every ring green, every tick
-             drawn, the meter full, "ready to publish" showing. That is what a
-             no-script or reduced-motion visitor gets, and it is the only state
-             that is true without the animation. projectStatus() winds it back
-             to zero on init and plays it forward when the well arrives. -->
-        <div class="ps-feed">
-          <ul class="ps-feed__track">
-            <li class="ps-line" data-ps-line>
-              <svg class="ps-mark" viewBox="0 0 20 20" aria-hidden="true">
-                <circle class="ps-mark__ring" data-ps-ring cx="10" cy="10" r="8.5" />
-                <path class="ps-mark__tick" data-ps-tick d="M6 10.3 L8.8 13 L14 7.4" />
-              </svg>
-              <span>Frontend</span>
-            </li>
-            <li class="ps-line" data-ps-line>
-              <svg class="ps-mark" viewBox="0 0 20 20" aria-hidden="true">
-                <circle class="ps-mark__ring" data-ps-ring cx="10" cy="10" r="8.5" />
-                <path class="ps-mark__tick" data-ps-tick d="M6 10.3 L8.8 13 L14 7.4" />
-              </svg>
-              <span>Authentication</span>
-            </li>
-            <li class="ps-line" data-ps-line>
-              <svg class="ps-mark" viewBox="0 0 20 20" aria-hidden="true">
-                <circle class="ps-mark__ring" data-ps-ring cx="10" cy="10" r="8.5" />
-                <path class="ps-mark__tick" data-ps-tick d="M6 10.3 L8.8 13 L14 7.4" />
-              </svg>
-              <span>Database</span>
-            </li>
-            <li class="ps-line" data-ps-line>
-              <svg class="ps-mark" viewBox="0 0 20 20" aria-hidden="true">
-                <circle class="ps-mark__ring" data-ps-ring cx="10" cy="10" r="8.5" />
-                <path class="ps-mark__tick" data-ps-tick d="M6 10.3 L8.8 13 L14 7.4" />
-              </svg>
-              <span>Backend</span>
-            </li>
-            <li class="ps-line" data-ps-line>
-              <svg class="ps-mark" viewBox="0 0 20 20" aria-hidden="true">
-                <circle class="ps-mark__ring" data-ps-ring cx="10" cy="10" r="8.5" />
-                <path class="ps-mark__tick" data-ps-tick d="M6 10.3 L8.8 13 L14 7.4" />
-              </svg>
-              <span>QA</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="ps-meter">
-          <span class="ps-meter__track"><i data-ps-rail></i></span>
-          <span class="ps-meter__count t-mono" data-ps-count>05 / 05</span>
-        </div>
-
-        <p class="proj-status__ready" data-ps-ready><i></i>Ready to publish</p>
+    <!-- Browser shell · chrome sits ABOVE #workspace-zone so the handoff still
+         measures the aspect-locked content rect, not the traffic-light bar. -->
+    <div class="workspace__browser">
+      <div class="workspace__chrome" aria-hidden="true">
+        <img src="/browser-header.svg" alt="" width="1286" height="31" decoding="async" />
+      </div>
+      <!-- the well · large tab panel (Build selected by default) -->
+      <div class="workspace__zone is-tab-view" id="workspace-zone" role="tabpanel" aria-labelledby="ws-tab-build">
+        <!-- Fallback / tab viewer. Hidden until static tiers or is-tab-view;
+             after handoff the selected lifecycle screen covers the landed frame. -->
+        <img
+          class="workspace__zone-shot"
+          data-ws-well
+          src="/images/app-live-preview.webp"
+          alt="AIWA workspace with live preview beside the build chat"
+          width="1000"
+          height="688"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
 
-      <!-- Workspace lifecycle tabs. Click a card to put that screen in the
-           well (left). Act 5 reveals these with the project-status card. -->
+      <!-- Workspace lifecycle tabs. Click a card to put that screen in the well. -->
       <ul class="ws-aside" role="tablist" aria-label="Workspace lifecycle">
         <li role="presentation">
           <button
             type="button"
-            class="ws-aside__item"
+            class="ws-aside__item is-active"
             role="tab"
             id="ws-tab-build"
-            aria-selected="false"
+            aria-selected="true"
             aria-controls="workspace-zone"
+            tabindex="0"
             data-ws-aside
             data-ws-src="/images/app-live-preview.webp"
             data-ws-alt="AIWA workspace with live preview beside the build chat"
@@ -651,6 +575,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             id="ws-tab-test"
             aria-selected="false"
             aria-controls="workspace-zone"
+            tabindex="-1"
             data-ws-aside
             data-ws-src="/images/app-store-ready.webp"
             data-ws-alt="Store readiness checks with AI fixes before shipping"
@@ -668,6 +593,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             id="ws-tab-ship"
             aria-selected="false"
             aria-controls="workspace-zone"
+            tabindex="-1"
             data-ws-aside
             data-ws-src="/images/app-releases.webp"
             data-ws-alt="Releases panel with live deploys and one-click rollbacks"
@@ -681,7 +607,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 
     </div>
 
-    <p class="workspace__caption t-mono" data-ws-caption>Festova landed product · Build, test, ship &amp; evolve beside it</p>
+    <p class="workspace__caption t-mono" data-ws-caption>Build · live preview in the workspace</p>
 
   </div>
 </section>
@@ -841,7 +767,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <h3 class="qa-card__title">Autonomous QA</h3>
         <p class="qa-card__powered">
           <img src="/aiwa-favicon.svg" alt="" width="16" height="16" decoding="async" />
-          <span>Powered by <b>Project Brain™</b></span>
+          <span>Powered by the <b>AIWA agent</b></span>
         </p>
       </header>
 
@@ -994,21 +920,18 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         </div>
       </article>
 
-      <!-- 4 · Turn skills into income — isolated AIWA projects list -->
+      <!-- 4 · Turn skills into income — product projects visual -->
       <article class="use-card" data-blur-child data-spring>
-        <figure class="use-card__visual use-card__visual--fragment">
+        <figure class="use-card__visual use-card__visual--product">
           <span class="use-card__glow use-card__glow--peach" aria-hidden="true"></span>
-          <div class="use-frag use-frag--projects" aria-hidden="true">
-            <header class="use-frag__bar">
-              <span>All projects</span>
-              <span class="use-frag__count">5</span>
-            </header>
-            <ul class="use-frag__list">
-              <li class="is-on"><i>E</i><div><b>EstateFlow</b><em>Published</em></div></li>
-              <li><i>C</i><div><b>Château Velour</b><em>Draft</em></div></li>
-              <li><i>F</i><div><b>Festova</b><em>Published</em></div></li>
-            </ul>
-          </div>
+          <img
+            src="/images/visuals/turn-skills-into-income.png"
+            alt="AIWA projects list showing published and draft apps"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
         </figure>
         <div class="use-card__body">
           <h3 class="use-card__title">Turn skills into income</h3>
@@ -1056,20 +979,15 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
     </div>
 
     <!-- Contact sheet of real AIWA builds. Badge lives on the frame; hover
-         reveals Copy prompt / Use template. No plate index or hairline. -->
+         reveals Use template. No plate index or hairline. -->
     <ol class="gallery__grid" data-blur-parent data-stagger="70">
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build a dog-walking business site for Bristol: book meet-and-greets, show neighbourhoods covered, and make it feel warm and local.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/bristol-paws.jpg" alt="Bristol Paws dog-walking website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1083,18 +1001,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build an event photo platform: guests scan a QR code, upload photos and video, and everything lands in one live gallery.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/festova.jpg" alt="Festova event photo platform" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">App</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1108,18 +1021,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build EstateFlow, a modern property website with listings, enquiry forms, and a clean editorial look for a boutique agency.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/estate-flow.jpg" alt="EstateFlow property website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1133,18 +1041,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build a hospital website for Rehoboth General: wards, appointments, and a calm clinical design that feels trustworthy.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/rehoboth.jpg" alt="Rehoboth General Hospital website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1158,18 +1061,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build Monograph, a minimal portfolio site for a designer: large type, project grid, and a quiet editorial layout.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/monograph.jpg" alt="Monograph portfolio website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1183,18 +1081,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build Château Velour, a dark atmospheric wine estate site with tasting notes, heritage story, and reservation CTA.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/chateau-velour.jpg" alt="Château Velour wine estate website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1208,18 +1101,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build Chairline, a dental practice CRM: patient pipeline from inquiry to recall, automated follow-ups, and scheduling without double-bookings.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/chairline.jpg" alt="Chairline dental practice CRM" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">App</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
@@ -1233,18 +1121,13 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           </div>
         </article>
       </li>
-      <li class="shot" data-blur-child data-shot
-          data-prompt="Build Stillpoint, a calm wellness studio site with class schedule, memberships, and nature-led photography.">
+      <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
           <div class="shot__frame">
             <img src="/images/real/stillpoint.jpg" alt="Stillpoint wellness studio website" width="1200" height="800" loading="lazy" decoding="async" />
             <span class="shot__badge">Website</span>
             <div class="shot__actions">
-              <button type="button" class="shot__action shot__action--solid" data-shot-copy>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-copy"></use></svg>
-                <span data-shot-copy-label>Copy prompt</span>
-              </button>
-              <a class="shot__action shot__action--ghost" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
+              <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>

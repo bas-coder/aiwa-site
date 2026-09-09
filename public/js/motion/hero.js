@@ -43,9 +43,8 @@
 
 import { EASE, DUR, STAGGER, REVEAL, ACCENT, INK, prefersReducedMotion, withWillChange } from './tokens.js';
 
-/* The hero's demo product is Festova, a real project shipped with AIWA, and
-   BEAT 5 shows the actual site. The prompt has to describe THAT, or the payoff
-   is a screenshot of something nobody asked for. */
+/* The prompt names an event-photo product; BEAT 5 hands the canvas into the
+   workspace well on the same Build live-preview still the section opens with. */
 const PROMPT_TEXT = 'Build an event photo platform: guests scan a QR code, upload photos and video, and everything lands in one live gallery';
 
 /* Prompt-beat leftover type-in is placed by measureHeroBreaks() so it
@@ -66,7 +65,8 @@ const FALLBACK_BREAKS = {
   ideaShow: 0.36,
   planHide: 0.36,
   ideaHide: 0.92,
-  shipShow: 0.94,
+  /* Was shipShow: no ship scene anymore; marks handoff / evolve HUD. */
+  handoffStart: 0.94,
   stageCenter: 0.94,
 };
 
@@ -109,21 +109,22 @@ function measureHeroBreaks() {
   const planShow = clamp01(Math.max(0.05, atPlan));
   const ideaShow = clamp01(Math.max(planShow + 0.04, atIdea));
   const ideaScrubEnd = clamp01(Math.max(ideaShow + 0.12, atIdeaScrubEnd));
-  /* Short hold on the last plate, then ship / stage handoff. */
-  const afterIdea = clamp01(Math.min(1, ideaScrubEnd + 0.03));
+  /* Hold the last plate through the spacer — no ship/workspace duplicate
+     fills that window anymore, so hiding the idea scene early leaves a gap. */
   const spacerTop = spacer ? offsetFromHero(hero, spacer) : range;
   const stageCenter = clamp01(Math.max(
-    afterIdea,
+    ideaScrubEnd + 0.02,
     toProgress(spacerTop - vh * 0.15),
   ));
+  const afterIdea = stageCenter;
 
   return {
     promptHide: planShow,
     planShow,
     ideaShow,
     planHide: ideaShow,
-    ideaHide: afterIdea,
-    shipShow: afterIdea,
+    ideaHide: stageCenter,
+    handoffStart: afterIdea,
     stageCenter,
   };
 }
@@ -399,19 +400,26 @@ function buildSceneTimeline() {
   const frame = document.querySelector('.hero-media__frame');
   const twoColumn = window.matchMedia('(min-width: 1100px)').matches;
 
+  /* Prompt must read fully clear early in the beat. A long scrubbed fade
+     (was ~14% of the hero, and mobile held opacity at 0.4 until handoff)
+     meant scrolling past the prompt before it ever looked settled. */
+  const STAGE_ARRIVE_OPACITY = 0.72;
+  const STAGE_ARRIVE_BLUR = 'blur(2px)';
+  const STAGE_ARRIVE_DUR = 0.035;
+
   if (twoColumn) {
     tl.fromTo(stage,
-      { xPercent: 19, scale: 0.94, opacity: 0.55, filter: 'blur(3px)' },
-      { xPercent: 19, scale: 0.94, opacity: 1, filter: 'blur(0px)', duration: 0.14 }, 0);
+      { xPercent: 19, scale: 0.94, opacity: STAGE_ARRIVE_OPACITY, filter: STAGE_ARRIVE_BLUR },
+      { xPercent: 19, scale: 0.94, opacity: 1, filter: 'blur(0px)', duration: STAGE_ARRIVE_DUR }, 0);
     tl.to(stage, { xPercent: 0, scale: 1, duration: 0.12 }, breaks.stageCenter);
     // the scrim only ever has to cover the copy column, so it simply lifts
     // when the copy runs out
     tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, breaks.stageCenter);
   } else {
     tl.fromTo(stage,
-      { scale: 1.04, opacity: 0.4, filter: 'blur(4px)' },
-      { scale: 1.04, opacity: 0.4, filter: 'blur(4px)', duration: 0.72 }, 0);
-    tl.to(stage, { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.12 }, breaks.stageCenter);
+      { scale: 1.04, opacity: STAGE_ARRIVE_OPACITY, filter: STAGE_ARRIVE_BLUR },
+      { scale: 1.04, opacity: 1, filter: 'blur(0px)', duration: STAGE_ARRIVE_DUR }, 0);
+    tl.to(stage, { scale: 1, duration: 0.12 }, breaks.stageCenter);
     tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, breaks.stageCenter);
   }
 
@@ -443,16 +451,13 @@ function buildSceneTimeline() {
   hide(scenes.plan, breaks.planHide);
 
   /* -- Panel 3 · BUILD / From Idea to Working Product.
-     Stays up through the full idea scrub + hold. Handoff/ship only after. -- */
+     Stays up through scrub + spacer until stageCenter (handoff morph).
+     Hiding earlier left a blank gap after the ship/workspace beat was removed. -- */
   show(scenes.build, breaks.ideaShow, 0.04);
   hide(scenes.build, breaks.ideaHide);
 
   /* TEST beat is CSS-hidden; do not steal the idea window for it. */
-
-  /* -- Spacer · SHIP. Only after the last idea plate has finished. -- */
-  tl.fromTo(scenes.ship,
-    { autoAlpha: 0, y: 40, scale: 0.94, filter: 'blur(16px)' },
-    { autoAlpha: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.06 }, breaks.shipShow);
+  /* Duplicate workspace Mac window removed — #workspace owns that still. */
 
   tl.set({}, {}, 1);
 
@@ -461,7 +466,7 @@ function buildSceneTimeline() {
     [0, 'plan'],
     [breaks.planShow, 'plan'],
     [breaks.ideaShow, 'build'],
-    [breaks.shipShow, 'evolve'],
+    [breaks.handoffStart, 'evolve'],
   ];
   const IDEA_HUD = ['plan', 'architect', 'build', 'evolve'];
   tl.eventCallback('onUpdate', () => {
@@ -528,8 +533,6 @@ function buildSceneTimeline() {
       text and screenshot stay sharp.
    ======================================================================== */
 
-const REM = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-
 export function heroScroll() {
   const media = document.getElementById('hero-media');
   const hero = document.querySelector('.hero');
@@ -541,7 +544,7 @@ export function heroScroll() {
 
   /* One writer for the media's box, driven by a single 0..1 handoff value.
      0 = full-bleed viewport, square corners.
-     1 = exactly the zone's rect, radius/card corners.
+     1 = exactly the zone's rect (content pane under the Mac chrome; no radius).
      Past 1 it simply stays at 1, which is what glues the card to the section. */
   let handoff = 0;
   const applyBox = () => {
@@ -559,13 +562,19 @@ export function heroScroll() {
     media.style.top = `${top}px`;
     media.style.width = `${width}px`;
     media.style.height = `${height}px`;
-    media.style.borderRadius = `${2.5 * REM() * t}px`;
+    /* Zone sits inside .workspace__browser; corners are square under the chrome. */
+    media.style.borderRadius = '0px';
 
-    // Once it is fully landed and has scrolled clear, stop compositing it.
-    const offscreen = t >= 1 && (r.bottom < -200 || r.top > vh + 200);
-    media.style.visibility = offscreen ? 'hidden' : 'visible';
+    /* Once seated, the tab shot owns the well. Keeping #hero-media visible
+       under a transparent zone left stage glow / boot chrome reading as a
+       "loader behind the preview". Hide as soon as handoff completes; restore
+       on scroll-back while t < 1. Also hide when the well has scrolled clear. */
+    const seated = t >= 1;
+    const offscreen = seated && (r.bottom < -200 || r.top > vh + 200);
+    media.style.visibility = (seated || offscreen) ? 'hidden' : 'visible';
 
     zone.classList.toggle('is-occupied', t > 0.02);
+    zone.classList.toggle('is-seated', seated);
   };
 
   /* §5.1 / §2.8 tier 4 - reduced motion.
@@ -671,14 +680,12 @@ export function heroScroll() {
      target already carries its hidden state from CSS, so nothing flashes
      between first paint and this binding.
 
-     Act 5 reveals the project-status card over the landed well and the
-     Build / Test / Ship & evolve stack beside it. A status card has no
-     business being legible over an EMPTY well — it should arrive with the
-     project it describes, and the lifecycle screens arrive in the same beat.
+     Act 5 reveals the Build / Test / Ship & evolve tab stack beside the well
+     once the canvas has seated.
 
      If these selectors ever match nothing the length guard below turns Act 5
      into a no-op rather than an error. */
-  const arrivalTargets = [...document.querySelectorAll('.proj-status, [data-ws-aside]')];
+  const arrivalTargets = [...document.querySelectorAll('[data-ws-aside]')];
   if (arrivalTargets.length) {
     const arrival = gsap.fromTo(arrivalTargets,
       { autoAlpha: 0, filter: 'blur(12px)', y: '2em' },
@@ -700,6 +707,7 @@ export function heroScroll() {
     sceneTl.kill();
     hint(false);
     zone.classList.remove('is-occupied');
+    zone.classList.remove('is-seated');
     media.removeAttribute('style');
   };
 }

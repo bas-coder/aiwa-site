@@ -20,9 +20,8 @@ import { ideaScrub } from './motion/ideaScrub.js';
 import { runLoader } from './motion/loader.js';
 import {
   promptArc, engineHorizontal, engineRail,
-  pricingSwitch, creditSliders, accordion, footerReveal, navState, navMenu, projectStatus, workspaceFocus, workspaceTabs,
+  pricingSwitch, creditSliders, accordion, footerReveal, navState, navMenu, workspaceFocus, workspaceTabs,
 } from './motion/sections.js';
-import { galleryActions } from './motion/gallery.js';
 import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
@@ -104,11 +103,9 @@ function build() {
   teardowns.push(springHovers());
   teardowns.push(glassHighlights());
   teardowns.push(promptArc());
-  teardowns.push(projectStatus());
   teardowns.push(workspaceTabs());
   teardowns.push(workspaceFocus());
   teardowns.push(ideaScrub());
-  teardowns.push(galleryActions());
 
   /* §2.8 tiers 3 and 4 - under 480px, or reduced motion, the hero does not
      pin, so it also does not need four viewports. `.static-hero` collapses it
