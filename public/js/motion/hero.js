@@ -303,6 +303,51 @@ export function heroEntrance() {
 }
 
 /* ===========================================================================
+   Workflow ring intro — free-running (not scrubbed).
+   Scene show/hide stays on the scrub timeline; robot / stages / arcs play once
+   when the plan beat activates so mid-scroll never freezes a half-faded chip.
+   ======================================================================== */
+const WF_ROBOT_SEL = '[data-wf-robot]';
+const WF_STAGE_SEL = '[data-wf-stage]';
+const WF_LINK_SEL = '[data-wf-link]';
+const WF_ROBOT_DUR = DUR.micro;
+const WF_STAGE_DUR = DUR.micro;
+const WF_STAGE_STAGGER = 0.08;
+const WF_ARC_DUR = 0.4;
+const WF_ARC_STAGGER = 0.08;
+const WF_STAGE_AT = 0.12;
+const WF_ARC_AT = 0.22;
+
+let wfIntroTl = null;
+
+function resetWfInternals() {
+  if (wfIntroTl) {
+    wfIntroTl.kill();
+    wfIntroTl = null;
+  }
+  gsap.set(WF_ROBOT_SEL, { opacity: 0, scale: 0.96 });
+  /* Opacity only — do not touch x/y or GSAP overwrites the CSS transform that
+     centres each card on its ring anchor. */
+  gsap.set(WF_STAGE_SEL, { opacity: 0 });
+  gsap.set(WF_LINK_SEL, { opacity: 0 });
+}
+
+function playWfIntro() {
+  resetWfInternals();
+  wfIntroTl = gsap.timeline({ defaults: { ease: EASE.enter } });
+  wfIntroTl.to(WF_ROBOT_SEL, {
+    opacity: 1, scale: 1, duration: WF_ROBOT_DUR,
+  }, 0);
+  wfIntroTl.to(WF_STAGE_SEL, {
+    opacity: 1, duration: WF_STAGE_DUR, stagger: WF_STAGE_STAGGER,
+  }, WF_STAGE_AT);
+  wfIntroTl.to(WF_LINK_SEL, {
+    opacity: 1, duration: WF_ARC_DUR, stagger: WF_ARC_STAGGER,
+  }, WF_ARC_AT);
+  return wfIntroTl;
+}
+
+/* ===========================================================================
    The scrubbed build sequence - the "video" the hero canvas plays.
    Built once as a PAUSED timeline. ACT 2 then drives its .progress().
    Splitting construction from driving is what lets the pin, the scrub and the
@@ -386,20 +431,10 @@ function buildSceneTimeline() {
   }, 0);
   hide(scenes.prompt, breaks.promptHide);
 
-  /* -- Panel 2 · PLAN. Workflow diagram while "Watch five agents…" is the
-     left copy. Ends when the idea list reaches viewport center. -- */
+  /* -- Panel 2 · PLAN. Workflow diagram while "Watch six agents…" is the
+     left copy. Scene show/hide stays scrubbed; ring internals auto-play via
+     playWfIntro() when this beat activates (wired in heroScroll). -- */
   show(scenes.plan, breaks.planShow, Math.min(0.05, planSpan * 0.25));
-  tl.to('[data-wf-robot]', {
-    opacity: 1, scale: 1, duration: Math.min(0.05, planSpan * 0.18), ease: EASE.enter,
-  }, breaks.planShow + planSpan * 0.06);
-  /* Opacity only — do not animate x/y or GSAP will overwrite the CSS
-     transform that centres each card on its pentagon anchor. */
-  tl.to('[data-wf-stage]', {
-    opacity: 1, duration: Math.min(0.05, planSpan * 0.18), stagger: Math.min(0.025, planSpan * 0.08), ease: EASE.enter,
-  }, breaks.planShow + planSpan * 0.14);
-  tl.to('[data-wf-link]', {
-    opacity: 1, duration: Math.min(0.055, planSpan * 0.2), stagger: Math.min(0.025, planSpan * 0.08),
-  }, breaks.planShow + planSpan * 0.22);
   hide(scenes.plan, breaks.planHide);
 
   /* -- Panel 3 · BUILD / From Idea to Working Product.
@@ -572,6 +607,23 @@ export function heroScroll() {
     onUpdate: (self) => { sceneTl.progress(self.progress); },
   }));
 
+  /* Workflow ring: one-shot intro while panel 2 statement is the active copy.
+     Matches measureHeroBreaks (statement at 55% → plan; idea copy at 72% → idea). */
+  const statement = document.querySelector('.hero__statement');
+  const ideaCopy = document.querySelector('.hero__idea');
+  if (statement && ideaCopy) {
+    created.push(ScrollTrigger.create({
+      trigger: statement,
+      start: 'top 55%',
+      endTrigger: ideaCopy,
+      end: 'top 72%',
+      onEnter: () => { playWfIntro(); },
+      onEnterBack: () => { playWfIntro(); },
+      onLeave: () => { resetWfInternals(); },
+      onLeaveBack: () => { resetWfInternals(); },
+    }));
+  }
+
   created.push(ScrollTrigger.create({ onUpdate: applyBox, onRefresh: applyBox }));
 
   /* §5.3 - the canvas and its scenes are animated only while the hero (and
@@ -647,6 +699,7 @@ export function heroScroll() {
 
   return () => {
     created.forEach((t) => t?.kill?.());
+    resetWfInternals();
     sceneTl.kill();
     hint(false);
     zone.classList.remove('is-occupied');

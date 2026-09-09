@@ -220,13 +220,14 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
       <div class="hero__panel-inner">
       <p class="hero__statement">
         <span class="quiet">Describe it in a sentence.</span>
-        Watch five agents
-        <span class="hero__glue">plan<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-clipboard-list"></use></svg></span>,</span>
-        <span class="hero__glue">architect<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-layers"></use></svg></span>,</span>
-        <span class="hero__glue">build<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-code-xml"></use></svg></span>,</span>
-        <span class="hero__glue">test<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-flask-conical"></use></svg></span></span>
+        Watch six agents
+        <span class="hero__glue">plan,</span>
+        <span class="hero__glue">architect,</span>
+        <span class="hero__glue">build,</span>
+        <span class="hero__glue">test,</span>
+        <span class="hero__glue">ship</span>
         and
-        <span class="hero__glue">ship<span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#icon-rocket"></use></svg></span></span>
+        <span class="hero__glue">evolve</span>
         it.
       </p>
       </div>
@@ -306,29 +307,12 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <!-- BEAT 2 · the plan fans out -->
         <div class="scene scene--plan" data-scene="plan">
 
-          <!-- THE WORKFLOW DIAGRAM, lifted from apps/marquee.
-               This is the "Our Agentic Workflow Engine" diagram from the
-               shipping site: the AIWA robot in the middle, the five stages
-               ringed around it, and the five connector arrows between them.
-
-               THE GEOMETRY IS MARQUEE'S, TO THE PIXEL, ONLY EXPRESSED AS
-               PERCENTAGES. Its container is 385x377 and every child is placed
-               absolutely inside it (PLAN top:0 left:53%, ARCHITECT top:90px
-               right:0, and so on). Percentages of that same box reproduce the
-               composition exactly while letting the whole diagram scale with
-               the canvas, which a copy in pixels could not do.
-
-               The five arrow paths are marquee's own path data, verbatim, with
-               their viewBoxes. Only the fill changed: marquee fades them into a
-               light background, so the gradient here fades into the dark one.
-
-               The icons are drawn here rather than lifted: marquee's are Framer
-               icon components that hydrate at runtime and are not in its static
-               HTML at all. These are the same five shapes the engine panels use
-               further down the page (.glyph, from the icon sprite), at badge size.
-               -->
+          <!-- THE WORKFLOW DIAGRAM: AIWA robot in the middle, six stages on a
+               circular ring (PLAN at 12 o'clock, clockwise), and six connector
+               arcs between them. Stages sit on evenly spaced circle points;
+               arcs share radius 36 in a 100×100 viewBox. -->
           <div class="wf" data-wf>
-            <!-- Five independent arc-arrows (Figma-style: circle → arc → vector + tip).
+            <!-- Six independent arc-arrows on one circular path.
                  One SVG so geometry shares a centre; each path is its own gradient
                  (0% opacity at start → 100% at the head) and staggers via data-wf-link. -->
             <svg class="wf__arcs" viewBox="0 0 100 100" aria-hidden="true">
@@ -338,38 +322,44 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
                         markerUnits="strokeWidth">
                   <path d="M 1.2 1.1 L 8.8 5 L 1.2 8.9 Z" fill="var(--accent)"/>
                 </marker>
-                <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="61.125" y1="15.762" x2="79.125" y2="28.840">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <linearGradient id="wf-ag0" gradientUnits="userSpaceOnUse" x1="50" y1="14" x2="81.177" y2="32">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="86.000" y1="50.000" x2="79.125" y2="71.160">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <linearGradient id="wf-ag1" gradientUnits="userSpaceOnUse" x1="81.177" y1="32" x2="81.177" y2="68">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="61.125" y1="84.238" x2="38.875" y2="84.238">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <linearGradient id="wf-ag2" gradientUnits="userSpaceOnUse" x1="81.177" y1="68" x2="50" y2="86">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="20.875" y1="71.160" x2="14.000" y2="50.000">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <linearGradient id="wf-ag3" gradientUnits="userSpaceOnUse" x1="50" y1="86" x2="18.823" y2="68">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
-                <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="20.875" y1="28.840" x2="38.875" y2="15.762">
-                <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                <linearGradient id="wf-ag4" gradientUnits="userSpaceOnUse" x1="18.823" y1="68" x2="18.823" y2="32">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
+                  <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
+                </linearGradient>
+                <linearGradient id="wf-ag5" gradientUnits="userSpaceOnUse" x1="18.823" y1="32" x2="50" y2="14">
+                  <stop offset="0" stop-color="var(--accent)" stop-opacity="0"/>
                   <stop offset="1" stop-color="var(--accent)" stop-opacity="1"/>
                 </linearGradient>
               </defs>
               <!-- Radius 36: sits between the robot and the stage cards. -->
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag0)"
-                    d="M 61.125 15.762 A 36 36 0 0 1 79.125 28.840"/>
+                    d="M 50 14 A 36 36 0 0 1 81.177 32"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag1)"
-                    d="M 86.000 50.000 A 36 36 0 0 1 79.125 71.160"/>
+                    d="M 81.177 32 A 36 36 0 0 1 81.177 68"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag2)"
-                    d="M 61.125 84.238 A 36 36 0 0 1 38.875 84.238"/>
+                    d="M 81.177 68 A 36 36 0 0 1 50 86"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag3)"
-                    d="M 20.875 71.160 A 36 36 0 0 1 14.000 50.000"/>
+                    d="M 50 86 A 36 36 0 0 1 18.823 68"/>
               <path class="wf__arc" data-wf-link stroke="url(#wf-ag4)"
-                    d="M 20.875 28.840 A 36 36 0 0 1 38.875 15.762"/>
+                    d="M 18.823 68 A 36 36 0 0 1 18.823 32"/>
+              <path class="wf__arc" data-wf-link stroke="url(#wf-ag5)"
+                    d="M 18.823 32 A 36 36 0 0 1 50 14"/>
             </svg>
 
             <div class="wf__stage" data-wf-stage data-wf-pos="plan">
@@ -406,6 +396,15 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               <span class="wf__text">
                 <b>TEST</b>
                 <i>Ensure Quality of Performance</i>
+              </span>
+            </div>
+            <div class="wf__stage" data-wf-stage data-wf-pos="ship">
+              <span class="wf__badge" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10.2V5.2"/><path d="M6 5.2 3.4 7.2"/><path d="M6 5.2 8.6 7.2"/><path d="M4.2 3.4c.6-1.4 1.4-2.2 1.8-2.2s1.2.8 1.8 2.2"/><path d="M3.6 9.4h4.8"/></svg>
+              </span>
+              <span class="wf__text">
+                <b>SHIP</b>
+                <i>Deploy a working product</i>
               </span>
             </div>
             <div class="wf__stage" data-wf-stage data-wf-pos="evolve">

@@ -557,38 +557,6 @@
 
 .hero__statement { max-width: 36rem; font-size: clamp(1.5rem, 2.9vw, 2.6rem); text-wrap: balance; line-height: 1.45; }
 .hero__glue { white-space: nowrap; }
-/* Inline concept tiles - chip-in-copy pattern (reference), remapped to AIWA amber. */
-.tile {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1em;
-  height: 1em;
-  margin-inline: 0.22em 0.08em;
-  vertical-align: -0.14em;
-  border-radius: 0.26em;
-  background: linear-gradient(180deg, var(--app-sunset-1), var(--app-sunset-2));
-  color: var(--ink-950);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.32),
-    0 0 0 1px color-mix(in srgb, var(--accent-deep) 35%, transparent),
-    0 0.35em 0.9em -0.2em var(--accent-glow);
-  transform: translateY(0.02em);
-  transform-origin: center center;
-}
-/* Light play: alternate lean + tiny size shifts (4–9°, ~±6% scale). */
-.hero__statement .tile:nth-child(2) { transform: translateY(0.02em) rotate(-6deg) scale(0.95); }
-.hero__statement .tile:nth-child(3) { transform: translateY(0.02em) rotate(5deg)  scale(1.05); }
-.hero__statement .tile:nth-child(4) { transform: translateY(0.02em) rotate(-4deg) scale(0.98); }
-.hero__statement .tile:nth-child(5) { transform: translateY(0.02em) rotate(8deg)  scale(0.93); }
-.hero__statement .tile:nth-child(6) { transform: translateY(0.02em) rotate(-7deg) scale(1.06); }
-.tile svg {
-  display: block;
-  width: 0.55em;
-  height: 0.55em;
-  stroke: currentColor;
-  flex: 0 0 auto;
-}
 .hero__para { max-width: 34rem; }
 .hero__chips { display: grid; gap: 0.55rem; }
 .hero__chips li {
@@ -857,8 +825,9 @@
   pointer-events: none;
 }
 
-/* Stage cards: explicit pentagon anchors (no CSS trig — GSAP `y` was also
-   fighting the old `translate` polar placement and stacking every card on the robot). */
+/* Stage cards: explicit anchors on the circular ring (no CSS trig — GSAP `y`
+   was also fighting the old `translate` polar placement and stacking every
+   card on the robot). */
 .wf__stage {
   --wf-stage-w: 7.4rem;
   position: absolute;
@@ -897,14 +866,15 @@
   text-wrap: balance;
 }
 
-/* Even pentagon outside the arc ring (PLAN at 12 o'clock, clockwise). */
+/* Six evenly spaced points on the circular ring (PLAN at 12 o'clock, clockwise). */
 .wf__stage[data-wf-pos='plan']      { left: 50%;   top: 6%; }
-.wf__stage[data-wf-pos='architect'] { left: 88%;   top: 35%; }
-.wf__stage[data-wf-pos='build']     { left: 76%;   top: 86%; }
-.wf__stage[data-wf-pos='test']      { left: 24%;   top: 86%; }
-.wf__stage[data-wf-pos='evolve']    { left: 12%;   top: 35%; }
+.wf__stage[data-wf-pos='architect'] { left: 88%;   top: 28%; }
+.wf__stage[data-wf-pos='build']     { left: 88%;   top: 72%; }
+.wf__stage[data-wf-pos='test']      { left: 50%;   top: 94%; }
+.wf__stage[data-wf-pos='ship']      { left: 12%;   top: 72%; }
+.wf__stage[data-wf-pos='evolve']    { left: 12%;   top: 28%; }
 
-/* Five arc-arrows sharing one viewBox; 2px stroke, fade-in along the path. */
+/* Six arc-arrows sharing one viewBox; 2px stroke, fade-in along the path. */
 .wf__arcs {
   position: absolute;
   inset: 0;
