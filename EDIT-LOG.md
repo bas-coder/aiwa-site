@@ -4,6 +4,84 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-10 — Footer newsletter feedback (frontend)
+
+- Apply flips to Thank you (nav-style) and disables until reload; duplicate emails show a quiet status under the form. `subscribeNewsletter` in `public/js/newsletter.js` is a localStorage stub for engineers to replace with a real POST (same return shape). Wired from `main.js`, `page.js`, and aiwa22.
+- Files: `public/js/newsletter.js`, `public/js/main.js`, `public/js/page.js`, `public/css/site.css`, `scripts/build-pages.mjs`, all page footers.
+
+---
+
+## 2026-09-10 — Footer: drop hello@ email
+
+- Removed `hello@aiwa.codes` from the Contact column on every page footer and from `scripts/build-pages.mjs` so regenerated pages stay clean.
+- Files: all `public/**/*.html` footers, `scripts/build-pages.mjs`.
+
+---
+
+## 2026-09-10 — Run your business card visual
+
+- Wired the new portrait booking-form shot (`1036×1284`) on the Built for businesses card: correct dims/alt, warm glow, `use-card__visual--portrait` (`object-fit: contain`) so the form isn’t side-cropped, cache-bust `?v=2`.
+- Files: `public/index.html`, `public/css/site.css`.
+
+---
+
+## 2026-09-10 — Sitewide primary / secondary buttons
+
+- Homepage `btn--primary` (sunset) and `btn--ghost` (tactile charcoal) are the only button looks. Bare `.btn` defaults to secondary; `.btn--secondary` aliases ghost. Sub-page CTAs and `scripts/build-pages.mjs` emit `btn--ghost` for non-primary (no orphan flat `.btn`).
+- Files: `public/css/base.css`, `scripts/build-pages.mjs`, builder/404/docs/resources HTML CTAs.
+
+---
+
+## 2026-09-10 — Credit slider: opaque stops
+
+- Default/inactive dots are opaque plate beads (no beam showing through). Stops stack above the track; passed stops fill solid with the active heat color.
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-10 — Credit slider: solid stop colors
+
+- Pricing credit beam/knob no longer blend amber→orange→green; each heat level is one flat fill (`sunset-1` / `sunset-2` / `--good`).
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-10 — Engine glass hover: brand glow
+
+- Cursor-follow highlight on `.stage-panel__glass` switched from white specular to accent / accent-deep radial. Fixed hover selector typo (`.stage__glass` → `.stage-panel__glass`).
+- Files: `public/css/site.css`.
+
+---
+
+## 2026-09-10 — Idea scrub: last plate sync
+
+- Left steps used `floor(progress × n)` while the stack used `progress × (n−1)`, so “Keeps improving it” lit ~20% before Evolve finished seating (HUD ~84%). Both now share plate position; stack completes by 90% scrub and holds.
+- Files: `public/js/motion/ideaScrub.js`.
+
+---
+
+## 2026-09-10 — Footer wordmark FX sitewide
+
+- Pointed every page’s `.footer__wordmark` at `/images/aiwa-logo-footer.webp` (grain / pixel-sort / F-S / plus pattern) so legal, docs, builders, 404, and aiwa22 match the lander. Nav/small logos unchanged. `scripts/build-pages.mjs` already used the treated asset.
+- Files: 14 HTML pages under `public/` (+ lander already correct).
+
+---
+
+## 2026-09-10 — Engine: Deploy card + animated glyphs
+
+- Added **DEPLOY** stage (05) between TEST and EVOLVE in `#engine`; EVOLVE renumbered to 06. Deploy copy: publish live / domain+SSL+CDN / rollback / web+mobile export. Evolved EVOLVE bullets to avoid rollback overlap.
+- Replaced static sprite glyphs with inline Lucide SVGs; CSS hover animations on `.stage-panel__glass` (clipboard-check, layers, terminal, flask, rocket, refresh-cw). Reduced-motion safe. No React/Lottie.
+- Files: `public/index.html`, `public/css/site.css`, `public/js/motion/sections.js`.
+
+---
+
+## 2026-09-10 — Workspace screenshots (cache-bust names)
+
+- Pointed workspace well + tabs at new assets from `plan/screenshots/`: `workspace-build.webp` (Build.png), `workspace-export-mobile.webp` (Export to Mobile.png), `workspace-releases.webp` (Releases.png). Dropped Château-biased Build crop; retuned object-position per tab.
+- Files: `public/images/workspace-*.webp`, `public/index.html`, `public/css/site.css`.
+
+---
+
 ## 2026-09-10 — Workspace tab screenshots
 
 - Replaced workspace stills from `public/plan/screenshots/`: `Build.png` → `app-live-preview.webp`, `Export to Mobile.png` → `app-store-ready.webp`, `Releases.png` → `app-releases.webp` (1920×1280 WebP). Updated intrinsic sizes + alts in `public/index.html`.

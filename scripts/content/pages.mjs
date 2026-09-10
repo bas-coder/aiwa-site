@@ -592,3 +592,173 @@ export const RESOURCES = {
   ctaH2: 'Read one guide.<br />Then build the thing.',
   ctaBody: `A free account opens with ${FACTS.welcomeCredits} credits, which is a real application rather than a demo.`,
 };
+
+/* ===========================================================================
+   /features
+
+   A catalog of what the product actually does, written from docs.aiwa.codes
+   and the home page engine, not from a competitor's feature list. Base44's
+   /features is the shape (hero, jump nav, long catalog, close), AIWA is the
+   content: a product team with modes, memory, a managed backend, connectors
+   you bring keys for, and a path to a live URL or a signed mobile build.
+   ======================================================================== */
+export const FEATURES = {
+  title: 'Features · AIWA, the AI product team and the platform it runs on',
+  description:
+    'Plan, build, test, deploy and evolve full-stack apps with AIWA. Neon Postgres, auth, connectors, custom domains, version restore and mobile export, in one workspace.',
+  eyebrow: 'Features',
+  h1: 'Everything your AI product team<br />can actually do',
+  lead:
+    'Describe the product. AIWA plans it, builds the interface and the backend, tests it in a real browser, and publishes it to a live URL. Then it keeps working on the app that already exists.',
+  ctaLabel: 'Start Building',
+  note: 'Free to start · no credit card required',
+  meta: [
+    { label: 'Workflow', value: 'Plan to evolve', note: 'six stages, one workspace' },
+    { label: 'Modes', value: 'Four', note: 'Build · Plan · Explore · Debug' },
+    { label: 'Database', value: 'Neon Postgres', note: 'provisioned per project' },
+    { label: 'Builders shipping', value: FACTS.builders, note: 'founders and agencies' },
+  ],
+  jump: [
+    { href: '#workflow', label: 'Workflow' },
+    { href: '#modes', label: 'Modes' },
+    { href: '#memory', label: 'Memory' },
+    { href: '#backend', label: 'Backend' },
+    { href: '#connectors', label: 'Connect' },
+    { href: '#ship', label: 'Ship' },
+  ],
+  spots: [
+    {
+      id: 'workflow',
+      n: '01',
+      eyebrow: 'The agentic workflow',
+      title: 'Plans before it builds, then keeps going',
+      body: 'A chat box that dumps files is not a product team. AIWA works the way a real one does: scope the brief, design the solution, write the stack, drive the app in a browser, publish it, and come back to the same codebase tomorrow.',
+      points: [
+        'Turns a sentence into a scoped brief, with entities named before files',
+        'Schema, routes and state decided up front, not discovered mid-build',
+        'Full stack: UI, API, database, auth and jobs, streaming to a live preview',
+        'Tests the flows a user would click, then publishes only what passed',
+      ],
+      img: '/images/visuals/plans-before-it-builds.webp',
+      alt: 'AIWA planning a product before it writes code',
+    },
+    {
+      id: 'memory',
+      n: '02',
+      eyebrow: 'Project Brain™',
+      title: 'Change twelve behaves like change one',
+      body: 'AIWA keeps a persistent record of the product: pages, data, design decisions and the reasons they were made. A prompt in month six is fitted to the app that exists, rather than regenerated around it.',
+      points: [
+        'New features land on the architecture you already approved',
+        'Correct a decision once and later work respects the correction',
+        'Version history on every build, with restore when a change goes wrong',
+        'Explore the codebase in conversation before you ask it to move',
+      ],
+      img: '/images/visuals/reasons-through-architecture.webp',
+      alt: 'AIWA reasoning through application architecture',
+      flip: true,
+    },
+    {
+      id: 'backend',
+      n: '03',
+      eyebrow: 'Managed backend',
+      title: 'A working app, not a painted prototype',
+      body: 'If the product needs users, records and rules, AIWA provisions them with the interface. Each project can get Neon Postgres, Google or email sign-in, row-level access, and the APIs the screens actually call. You describe what people should be able to do.',
+      points: [
+        'Postgres per project, schema described in plain language instead of SQL',
+        'Google and email/password auth, with protected areas and roles',
+        'Server-side logic for the actions that must not live only in the browser',
+        'Infrastructure only where the product needs it. A portfolio can stay a site',
+      ],
+      img: '/images/visuals/designs-the-database.webp',
+      alt: 'AIWA designing a Postgres schema from a product description',
+    },
+  ],
+  modesHead: 'Four modes, because building is not one kind of thinking',
+  modesLead: 'Mode tells AIWA how to approach the request. You can switch at any time. There is no penalty for changing your mind.',
+  modes: [
+    { name: 'Build', body: 'Create or change something. Pages, features, design, connectors, behavior. The mode you will live in once you know what you want.' },
+    { name: 'Plan', body: 'Think before it writes. Requirements, flows, data, permissions and the risks, as a spec you can approve or send back.' },
+    { name: 'Explore', body: 'Understand the product without moving it. How auth works today, what a team workspace would take, where onboarding stalls.' },
+    { name: 'Debug', body: 'Find the cause, then fix it. Runtime errors, failed requests, auth loops, integration faults, with the reproduction you can give it.' },
+  ],
+  intelligenceHead: 'AIWA Min and AIWA Max',
+  intelligenceLead: 'Min for execution. Max for complexity. Match intelligence to the size of the problem so credits go where reasoning actually pays.',
+  intelligence: {
+    columns: ['AIWA Min', 'AIWA Max'],
+    rows: [
+      ['Best for', 'Focused changes', 'Architecture and hard problems'],
+      ['Speed', 'Faster', 'More deliberate'],
+      ['Credit use', 'Lower', 'Higher'],
+      ['Copy, layout, simple forms', true, 'Usually unnecessary'],
+      ['Multi-tenant workspaces, roles, billing', 'Possible', true],
+      ['Difficult debugging', 'Good', 'Recommended'],
+      ['Plan Mode on a large feature', 'Possible', true],
+    ],
+  },
+  connectorsHead: 'Connectors, with your keys',
+  connectorsLead: 'Payments, email, SMS, media, calendars and the model behind an in-app assistant. You connect the account. AIWA writes the code that uses it, live in the preview and on the published URL.',
+  connectorsNote: 'Secrets stay in the connector. They are not baked into the generated frontend.',
+  connectors: [
+    { name: 'Stripe', body: 'Checkout, subscriptions, upgrades, downgrades, gated features from real plan state.' },
+    { name: 'Resend', body: 'Welcome, booking, order, invitation and status mail from your own sending domain.' },
+    { name: 'Twilio', body: 'SMS confirmations, reminders and alerts fired by events inside the app.' },
+    { name: 'Cloudinary', body: 'Upload, transform and deliver images and other media the product stores.' },
+    { name: 'OpenAI', body: 'Assistants, generation, summarization, classification and extraction in the app you ship.' },
+    { name: 'Anthropic', body: 'Claude for document analysis, extraction, drafting and heavier reasoning features.' },
+    { name: 'Google Gemini', body: 'Assistants, generation, extraction and multimodal features on Gemini.' },
+    { name: 'xAI Grok', body: 'Generation, extraction and analysis with Grok inside the same connector model.' },
+    { name: 'Calendly', body: 'Demo, consultation and onboarding scheduling in the customer workflow.' },
+    { name: 'Google Calendar', body: 'Create, update and cancel events from bookings, appointments and CRM activity.' },
+    { name: 'Google Meet', body: 'Meeting links for bookings, demos, consultations and virtual appointments.' },
+    { name: 'Google Drive', body: 'Bring project files and shared resources into the workflows the app runs.' },
+  ],
+  shipHead: 'From live preview to a URL, a domain, or a store listing',
+  shipLead: 'The same project can be a preview, a production URL, a custom domain, or an Android and iOS export. You do not start over to leave the browser.',
+  ship: [
+    {
+      name: 'Live preview',
+      body: 'Watch the app run while it is being built. Auth, data and connectors execute against the real stack, not a drawing of one.',
+      img: '/images/app-live-preview.webp',
+      alt: 'AIWA workspace showing a live app preview',
+    },
+    {
+      name: 'Publish and domains',
+      body: 'One-click deploy to an AIWA URL. Supported plans connect a custom domain. SSL and the CDN are handled. Roll back a release that misbehaves.',
+      img: '/images/app-releases.webp',
+      alt: 'AIWA releases and publish surface',
+    },
+    {
+      name: 'Mobile export',
+      body: 'Run a mobile readiness scan, then export a signed APK for Android or the iOS build files. You submit with your own store accounts.',
+      img: '/images/app-store-ready.webp',
+      alt: 'AIWA mobile export ready for the app stores',
+    },
+  ],
+  catalogHead: 'Also in the workspace',
+  catalog: [
+    { name: 'Version history', body: 'Every build is kept. Restore a working version when a change fails, including when repeated repairs do not land.' },
+    { name: 'Production and development', body: 'Test authentication, payments and connectors on a preview before customers see the production URL.' },
+    { name: 'Templates', body: 'Start from a finished full-stack app. Preview it live, remix it, and change anything in plain language.' },
+    { name: 'Code export and GitHub', body: 'Download the project or sync a repo. Nothing AIWA builds is locked to the workspace you started in.' },
+    { name: 'Team invites', body: 'Add editors and viewers to a project without sharing your password. Agency seats are on the plans that include them.' },
+    { name: 'Client review', body: 'Share a preview for comment and sign-off. Feedback sits on the build, not in a parallel email thread.' },
+    { name: 'Public share and remix', body: 'A public link so someone else can open the app, or remix it into their own workspace and keep going.' },
+    { name: 'White label', body: 'Agencies can run the builder under their own brand: domain, logo, prices, their Stripe. From the white-label plan.' },
+    { name: 'Multi-model building', body: `${FACTS.models}. Pick the model for the job. Switch when the task changes.` },
+    { name: 'Request a connector', body: 'Need a service that is not in the catalog yet? Describe the actions and auth. The team takes requests.' },
+    { name: 'Existing projects', body: 'Keep iterating an AIWA app, or bring outside code in without rebuilding the parts that already work.' },
+    { name: 'Enterprise', body: 'Volume credits, contracts, onboarding and SSO. Talk to the team if the work is bigger than a single seat.' },
+  ],
+  faq: [
+    { q: 'Is this a chat that writes a frontend?', a: 'No. AIWA is a product team in a workspace: Plan, Build, Explore and Debug, against a real Postgres database, auth, APIs and connectors. The preview is the running app.' },
+    { q: 'Do I need my own API keys?', a: 'Only for connectors that call a service you already pay for: Stripe, Resend, Twilio, Cloudinary, model providers, calendars. The database, auth and hosting for an AIWA URL are provisioned with the project.' },
+    { q: 'What is the difference between Min and Max?', a: 'Min is for focused execution: copy, layout, a simple form. Max is for work that spans systems: multi-tenant workspaces, billing, thorny debugging. Using Max on a headline wastes credits. Using Min on an architecture change usually under-thinks it.' },
+    { q: 'Can I take the code with me?', a: 'Yes. Export the source or sync GitHub. Custom domains, mobile exports and a restore history stay available while the project lives on AIWA.' },
+    { q: 'Does it keep working after the first publish?', a: 'That is the point of Project Brain™ and the Evolve stage. You add features to the app that exists. Version restore is there when a change should not have shipped.' },
+  ],
+  related: [RELATED.website, RELATED.saas, RELATED.crm, RELATED.app],
+  ctaEyebrow: 'One conversation away',
+  ctaH2: 'Describe the product.<br />Watch the team build it.',
+  ctaBody: 'Open a free account and start in the workspace. The catalog above is what is already there.',
+};

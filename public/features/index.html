@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Features · AIWA, the AI product team and the platform it runs on</title>
+<meta name="description" content="Plan, build, test, deploy and evolve full-stack apps with AIWA. Neon Postgres, auth, connectors, custom domains, version restore and mobile export, in one workspace." />
+<link rel="canonical" href="https://aiwa.codes/features" />
+<link rel="icon" href="/aiwa-favicon.svg" type="image/svg+xml" />
+
+<link rel="preload" href="/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/page.css" />
+
+<script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body class="page">
+
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/#top" aria-label="AIWA home">
+      <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+    </a>
+    <button class="nav__burger" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <i></i><i></i>
+    </button>
+    <div class="nav__links" id="nav-links">
+      <a href="/features" aria-current="page"><span class="nav__flip"><span>Features</span><span aria-hidden="true">Features</span></span></a>
+      <a href="/#pricing"><span class="nav__flip"><span>Pricing</span><span aria-hidden="true">Pricing</span></span></a>
+      <a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer"><span class="nav__flip"><span>Docs</span><span aria-hidden="true">Docs</span></span></a>
+      <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer"><span class="nav__flip"><span>Community</span><span aria-hidden="true">Community</span></span></a>
+    </div>
+    <div class="nav__cta-wrap">
+      <a class="btn btn--ghost nav__cta nav__cta--login" href="https://app.aiwa.codes">
+        <span class="btn__label">Login</span>
+      </a>
+      <a class="btn btn--primary nav__cta nav__cta--build" href="/#pricing" tabindex="-1" aria-hidden="true">
+        <span class="btn__label">Start Building</span>
+        <span class="btn__arrow"><span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="page-main">
+<section class="page-hero">
+  <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>
+  <div class="shell shell--wide page-hero__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Features</p>
+    <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>Everything your AI product team<br />can actually do</h1>
+    <p class="t-body page-hero__lead" data-blur-child>Describe the product. AIWA plans it, builds the interface and the backend, tests it in a real browser, and publishes it to a live URL. Then it keeps working on the app that already exists.</p>
+    <div class="page-hero__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Start Building</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn btn--ghost" href="/#pricing">
+          <span class="btn__label">See pricing</span>
+        </a>
+    </div>
+    <p class="page-hero__note" data-blur-child>Free to start · no credit card required</p>
+  </div>
+</section>
+
+<nav class="feat-jump" data-toc aria-label="On this page">
+  <div class="shell shell--wide">
+    <ol class="feat-jump__list">
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#modes">Modes</a></li>
+      <li><a href="#memory">Memory</a></li>
+      <li><a href="#backend">Backend</a></li>
+      <li><a href="#connectors">Connect</a></li>
+      <li><a href="#ship">Ship</a></li>
+    </ol>
+  </div>
+</nav>
+
+<section class="page-section page-section--tight">
+  <div class="shell shell--wide">
+  <dl class="page-meta" data-blur-in>
+    <div><dt>Workflow</dt><dd>Plan to evolve<em>six stages, one workspace</em></dd></div>
+    <div><dt>Modes</dt><dd>Four<em>Build · Plan · Explore · Debug</em></dd></div>
+    <div><dt>Database</dt><dd>Neon Postgres<em>provisioned per project</em></dd></div>
+    <div><dt>Builders shipping</dt><dd>14,000+<em>founders and agencies</em></dd></div>
+  </dl>
+  </div>
+</section>
+
+<section class="page-section feat-spot" id="workflow">
+  <div class="shell shell--wide">
+    <div class="feat-spot__grid">
+      <div class="feat-spot__copy" data-blur-parent>
+        <p class="eyebrow" data-blur-child>01 · The agentic workflow</p>
+        <h2 class="t-h2" data-blur-child data-grad>Plans before it builds, then keeps going</h2>
+        <p class="t-body section__lead" data-blur-child>A chat box that dumps files is not a product team. AIWA works the way a real one does: scope the brief, design the solution, write the stack, drive the app in a browser, publish it, and come back to the same codebase tomorrow.</p>
+        <ul class="feat-spot__points" data-blur-child>
+          <li>Turns a sentence into a scoped brief, with entities named before files</li>
+          <li>Schema, routes and state decided up front, not discovered mid-build</li>
+          <li>Full stack: UI, API, database, auth and jobs, streaming to a live preview</li>
+          <li>Tests the flows a user would click, then publishes only what passed</li>
+        </ul>
+      </div>
+      <figure class="feat-spot__frame" data-blur-in>
+        <img src="/images/visuals/plans-before-it-builds.webp" alt="AIWA planning a product before it writes code" width="1600" height="1000" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="page-section feat-spot feat-spot--flip page-section--alt" id="memory">
+  <div class="shell shell--wide">
+    <div class="feat-spot__grid">
+      <div class="feat-spot__copy" data-blur-parent>
+        <p class="eyebrow" data-blur-child>02 · Project Brain™</p>
+        <h2 class="t-h2" data-blur-child data-grad>Change twelve behaves like change one</h2>
+        <p class="t-body section__lead" data-blur-child>AIWA keeps a persistent record of the product: pages, data, design decisions and the reasons they were made. A prompt in month six is fitted to the app that exists, rather than regenerated around it.</p>
+        <ul class="feat-spot__points" data-blur-child>
+          <li>New features land on the architecture you already approved</li>
+          <li>Correct a decision once and later work respects the correction</li>
+          <li>Version history on every build, with restore when a change goes wrong</li>
+          <li>Explore the codebase in conversation before you ask it to move</li>
+        </ul>
+      </div>
+      <figure class="feat-spot__frame" data-blur-in>
+        <img src="/images/visuals/reasons-through-architecture.webp" alt="AIWA reasoning through application architecture" width="1600" height="1000" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="page-section feat-spot" id="backend">
+  <div class="shell shell--wide">
+    <div class="feat-spot__grid">
+      <div class="feat-spot__copy" data-blur-parent>
+        <p class="eyebrow" data-blur-child>03 · Managed backend</p>
+        <h2 class="t-h2" data-blur-child data-grad>A working app, not a painted prototype</h2>
+        <p class="t-body section__lead" data-blur-child>If the product needs users, records and rules, AIWA provisions them with the interface. Each project can get Neon Postgres, Google or email sign-in, row-level access, and the APIs the screens actually call. You describe what people should be able to do.</p>
+        <ul class="feat-spot__points" data-blur-child>
+          <li>Postgres per project, schema described in plain language instead of SQL</li>
+          <li>Google and email/password auth, with protected areas and roles</li>
+          <li>Server-side logic for the actions that must not live only in the browser</li>
+          <li>Infrastructure only where the product needs it. A portfolio can stay a site</li>
+        </ul>
+      </div>
+      <figure class="feat-spot__frame" data-blur-in>
+        <img src="/images/visuals/designs-the-database.webp" alt="AIWA designing a Postgres schema from a product description" width="1600" height="1000" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="page-section page-section--alt" id="modes">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>How you work</p>
+    <h2 class="t-h2" data-blur-child data-grad>Four modes, because building is not one kind of thinking</h2>
+    <p class="t-body section__lead" data-blur-child>Mode tells AIWA how to approach the request. You can switch at any time. There is no penalty for changing your mind.</p>
+  </div>
+  <div class="cases cases--quad" data-blur-parent data-stagger="70">
+    <article data-blur-child>
+      <h3>Build</h3>
+      <p>Create or change something. Pages, features, design, connectors, behavior. The mode you will live in once you know what you want.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Plan</h3>
+      <p>Think before it writes. Requirements, flows, data, permissions and the risks, as a spec you can approve or send back.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Explore</h3>
+      <p>Understand the product without moving it. How auth works today, what a team workspace would take, where onboarding stalls.</p>
+    </article>
+    <article data-blur-child>
+      <h3>Debug</h3>
+      <p>Find the cause, then fix it. Runtime errors, failed requests, auth loops, integration faults, with the reproduction you can give it.</p>
+    </article>
+  </div>
+    <div class="feat-follow">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Intelligence</p>
+    <h2 class="t-h2" data-blur-child data-grad>AIWA Min and AIWA Max</h2>
+    <p class="t-body section__lead" data-blur-child>Min for execution. Max for complexity. Match intelligence to the size of the problem so credits go where reasoning actually pays.</p>
+  </div>
+  <div class="compare" data-blur-in>
+    <table>
+      <thead>
+        <tr><th scope="col">Feature</th><th scope="col" class="is-ours">AIWA Min</th><th scope="col">AIWA Max</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Best for</th><td class="is-ours">Focused changes</td><td>Architecture and hard problems</td></tr>
+        <tr><th scope="row">Speed</th><td class="is-ours">Faster</td><td>More deliberate</td></tr>
+        <tr><th scope="row">Credit use</th><td class="is-ours">Lower</td><td>Higher</td></tr>
+        <tr><th scope="row">Copy, layout, simple forms</th><td class="is-ours"><i aria-hidden="true"></i><span class="sr-only">Yes</span></td><td>Usually unnecessary</td></tr>
+        <tr><th scope="row">Multi-tenant workspaces, roles, billing</th><td class="is-ours">Possible</td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+        <tr><th scope="row">Difficult debugging</th><td class="is-ours">Good</td><td>Recommended</td></tr>
+        <tr><th scope="row">Plan Mode on a large feature</th><td class="is-ours">Possible</td><td><i aria-hidden="true"></i><span class="sr-only">Yes</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section" id="connectors">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Integrations</p>
+    <h2 class="t-h2" data-blur-child data-grad>Connectors, with your keys</h2>
+    <p class="t-body section__lead" data-blur-child>Payments, email, SMS, media, calendars and the model behind an in-app assistant. You connect the account. AIWA writes the code that uses it, live in the preview and on the published URL.</p>
+  </div>
+    <ul class="feat-chips" data-blur-parent data-stagger="40">
+      <li class="feat-chip" data-blur-child>
+        <strong>Stripe</strong>
+        <span>Checkout, subscriptions, upgrades, downgrades, gated features from real plan state.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Resend</strong>
+        <span>Welcome, booking, order, invitation and status mail from your own sending domain.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Twilio</strong>
+        <span>SMS confirmations, reminders and alerts fired by events inside the app.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Cloudinary</strong>
+        <span>Upload, transform and deliver images and other media the product stores.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>OpenAI</strong>
+        <span>Assistants, generation, summarization, classification and extraction in the app you ship.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Anthropic</strong>
+        <span>Claude for document analysis, extraction, drafting and heavier reasoning features.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Google Gemini</strong>
+        <span>Assistants, generation, extraction and multimodal features on Gemini.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>xAI Grok</strong>
+        <span>Generation, extraction and analysis with Grok inside the same connector model.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Calendly</strong>
+        <span>Demo, consultation and onboarding scheduling in the customer workflow.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Google Calendar</strong>
+        <span>Create, update and cancel events from bookings, appointments and CRM activity.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Google Meet</strong>
+        <span>Meeting links for bookings, demos, consultations and virtual appointments.</span>
+      </li>
+      <li class="feat-chip" data-blur-child>
+        <strong>Google Drive</strong>
+        <span>Bring project files and shared resources into the workflows the app runs.</span>
+      </li>
+    </ul>
+    <p class="feat-note" data-blur-in>Secrets stay in the connector. They are not baked into the generated frontend. <a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Open the connector catalog</a></p>
+  </div>
+</section>
+
+<section class="page-section page-section--alt" id="ship">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Ship it</p>
+    <h2 class="t-h2" data-blur-child data-grad>From live preview to a URL, a domain, or a store listing</h2>
+    <p class="t-body section__lead" data-blur-child>The same project can be a preview, a production URL, a custom domain, or an Android and iOS export. You do not start over to leave the browser.</p>
+  </div>
+  <div class="feat-shots" data-blur-parent data-stagger="80">
+    <article class="feat-shot" data-blur-child>
+      <figure class="feat-spot__frame">
+        <img src="/images/app-live-preview.webp" alt="AIWA workspace showing a live app preview" width="1920" height="1280" loading="lazy" decoding="async" />
+      </figure>
+      <h3>Live preview</h3>
+      <p>Watch the app run while it is being built. Auth, data and connectors execute against the real stack, not a drawing of one.</p>
+    </article>
+    <article class="feat-shot" data-blur-child>
+      <figure class="feat-spot__frame">
+        <img src="/images/app-releases.webp" alt="AIWA releases and publish surface" width="1920" height="1280" loading="lazy" decoding="async" />
+      </figure>
+      <h3>Publish and domains</h3>
+      <p>One-click deploy to an AIWA URL. Supported plans connect a custom domain. SSL and the CDN are handled. Roll back a release that misbehaves.</p>
+    </article>
+    <article class="feat-shot" data-blur-child>
+      <figure class="feat-spot__frame">
+        <img src="/images/app-store-ready.webp" alt="AIWA mobile export ready for the app stores" width="1920" height="1280" loading="lazy" decoding="async" />
+      </figure>
+      <h3>Mobile export</h3>
+      <p>Run a mobile readiness scan, then export a signed APK for Android or the iOS build files. You submit with your own store accounts.</p>
+    </article>
+  </div>
+  </div>
+</section>
+
+<section class="page-section" id="catalog">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>The rest of the workspace</p>
+    <h2 class="t-h2" data-blur-child data-grad>Also in the workspace</h2>
+  </div>
+  <div class="why__grid" data-blur-parent data-stagger="100">
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Version history</h3>
+        <p class="t-body">Every build is kept. Restore a working version when a change fails, including when repeated repairs do not land.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Production and development</h3>
+        <p class="t-body">Test authentication, payments and connectors on a preview before customers see the production URL.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Templates</h3>
+        <p class="t-body">Start from a finished full-stack app. Preview it live, remix it, and change anything in plain language.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Code export and GitHub</h3>
+        <p class="t-body">Download the project or sync a repo. Nothing AIWA builds is locked to the workspace you started in.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Team invites</h3>
+        <p class="t-body">Add editors and viewers to a project without sharing your password. Agency seats are on the plans that include them.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Client review</h3>
+        <p class="t-body">Share a preview for comment and sign-off. Feedback sits on the build, not in a parallel email thread.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Public share and remix</h3>
+        <p class="t-body">A public link so someone else can open the app, or remix it into their own workspace and keep going.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">White label</h3>
+        <p class="t-body">Agencies can run the builder under their own brand: domain, logo, prices, their Stripe. From the white-label plan.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Multi-model building</h3>
+        <p class="t-body">Claude Opus · Sonnet · GPT-4o · Gemini 2.5 Pro. Pick the model for the job. Switch when the task changes.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Request a connector</h3>
+        <p class="t-body">Need a service that is not in the catalog yet? Describe the actions and auth. The team takes requests.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Existing projects</h3>
+        <p class="t-body">Keep iterating an AIWA app, or bring outside code in without rebuilding the parts that already work.</p>
+      </div>
+    </article>
+    <article class="feature" data-blur-child data-spring>
+      <div class="feature__body">
+        <h3 class="t-h4">Enterprise</h3>
+        <p class="t-body">Volume credits, contracts, onboarding and SSO. Talk to the team if the work is bigger than a single seat.</p>
+      </div>
+    </article>
+  </div>
+  </div>
+</section>
+
+<section class="page-section page-section--alt faq" id="faq">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>FAQ</p>
+    <h2 class="t-h2" data-blur-child data-grad>Questions people ask before they start</h2>
+  </div>
+  <div class="faq__grid faq__grid--single">
+  <div class="accordion" data-accordion data-accordion-close-siblings="true" data-blur-in>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Is this a chat that writes a frontend?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">No. AIWA is a product team in a workspace: Plan, Build, Explore and Debug, against a real Postgres database, auth, APIs and connectors. The preview is the running app.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Do I need my own API keys?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Only for connectors that call a service you already pay for: Stripe, Resend, Twilio, Cloudinary, model providers, calendars. The database, auth and hosting for an AIWA URL are provisioned with the project.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>What is the difference between Min and Max?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Min is for focused execution: copy, layout, a simple form. Max is for work that spans systems: multi-tenant workspaces, billing, thorny debugging. Using Max on a headline wastes credits. Using Min on an architecture change usually under-thinks it.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Can I take the code with me?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">Yes. Export the source or sync GitHub. Custom domains, mobile exports and a restore history stay available while the project lives on AIWA.</p></div></div>
+    </div>
+    <div class="accordion__item" data-accordion-status="not-active">
+      <button class="accordion__head" aria-expanded="false">
+        <span>Does it keep working after the first publish?</span>
+        <span class="accordion__icon" aria-hidden="true"></span>
+      </button>
+      <div class="accordion__body"><div><p class="t-body">That is the point of Project Brain™ and the Evolve stage. You add features to the app that exists. Version restore is there when a change should not have shipped.</p></div></div>
+    </div>
+  </div>
+  </div>
+  </div>
+</section>
+
+<section class="page-section" id="related">
+  <div class="shell shell--wide">
+  <div class="page-section__head" data-blur-parent>
+    <p class="eyebrow" data-blur-child>Build something specific</p>
+    <h2 class="t-h2" data-blur-child data-grad>Related solutions</h2>
+  </div>
+  <div class="related" data-blur-parent data-stagger="70">
+    <a href="/ai-website-builder" data-blur-child>
+      <h3>AI Website Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build a site, deploy it live, and let SEO and CRO agents keep improving it.</p>
+    </a>
+    <a href="/ai-saas-builder" data-blur-child>
+      <h3>AI SaaS Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Ship a production-ready SaaS: frontend, backend, auth and Stripe payments, from a prompt.</p>
+    </a>
+    <a href="/ai-crm-builder" data-blur-child>
+      <h3>AI CRM Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build a custom CRM around exactly how your team sells: fields, pipelines, automations, reports.</p>
+    </a>
+    <a href="/ai-app-builder" data-blur-child>
+      <h3>AI App Builder <span aria-hidden="true">-&gt;</span></h3>
+      <p>Build, deploy and evolve full-stack web and mobile apps with a team of AI agents.</p>
+    </a>
+  </div>
+  </div>
+</section>
+
+<section class="section cta">
+  <div class="cta__media" aria-hidden="true">
+    <svg class="cta__blob" data-blob viewBox="0 0 400 400"></svg>
+    <div class="cta__fade cta__fade--top"></div>
+    <div class="cta__fade cta__fade--bottom"></div>
+  </div>
+  <div class="cta__inner" data-blur-parent>
+    <p class="eyebrow" data-blur-child>One conversation away</p>
+    <h2 class="t-display cta__h2" data-blur-child data-grad>Describe the product.<br />Watch the team build it.</h2>
+    <p class="t-body" data-blur-child>Open a free account and start in the workspace. The catalog above is what is already there.</p>
+    <div class="cta__actions" data-blur-child>
+      <a class="btn btn--primary" href="https://app.aiwa.codes">
+          <span class="btn__label">Start Building</span>
+          <span class="btn__arrow"><span>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span></span>
+        </a>
+      <a class="btn btn--ghost" href="/#pricing">
+          <span class="btn__label">See pricing</span>
+        </a>
+    </div>
+    <p class="footer__legal t-small" data-blur-child style="border:0;padding:0">No credit card required</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer" data-footer>
+  <div class="footer__plate">
+    <div class="shell shell--wide">
+    <div class="footer__top">
+      <a class="footer__logo" href="/#top" aria-label="AIWA home">
+        <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
+      </a>
+      <form class="footer__news" data-footer-news>
+          <label class="sr-only" for="news">Email address</label>
+          <div class="footer__news-row">
+            <input id="news" name="email" type="email" placeholder="Join our newsletter" required autocomplete="email" />
+            <button class="btn btn--ghost footer__news-submit" type="submit">
+              <span class="btn__label">
+                <span class="footer__news-flip">
+                  <span>Apply</span>
+                  <span aria-hidden="true">Thank you</span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <p class="footer__news-status" role="status" aria-live="polite" hidden></p>
+        </form>
+    </div>
+    <div class="footer__cols">
+      <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
+      <div><span class="footer__col-name">Pages</span><a href="/features" aria-current="page">Features</a><a href="/#engine">Workflow</a><a href="/#gallery">Made with AIWA</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
+      <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
+      <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
+      <div><span class="footer__col-name">Contact</span><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>
+    </div>
+      <div class="footer__meta">
+        <p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p>
+      </div>
+    </div>
+    <div class="footer__wordmark-crop">
+      <img class="footer__wordmark" src="/images/aiwa-logo-footer.webp" alt="" width="1000" height="459" aria-hidden="true" decoding="async" />
+    </div>
+  </div>
+</footer>
+
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
+<script src="/js/vendor/lenis.min.js"></script>
+<script type="module" src="/js/page.js"></script>
+</body>
+</html>

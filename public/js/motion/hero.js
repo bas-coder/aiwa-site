@@ -468,7 +468,7 @@ function buildSceneTimeline() {
     [breaks.ideaShow, 'build'],
     [breaks.handoffStart, 'evolve'],
   ];
-  const IDEA_HUD = ['plan', 'architect', 'build', 'evolve'];
+  const IDEA_HUD = ['plan', 'architect', 'build', 'ship', 'evolve'];
   tl.eventCallback('onUpdate', () => {
     const p = tl.progress();
     if (rail) rail.style.width = `${(p * 100).toFixed(1)}%`;
@@ -476,9 +476,15 @@ function buildSceneTimeline() {
     if (label) {
       let name = 'plan';
       if (p >= breaks.ideaShow && p < breaks.ideaHide) {
-        const span = Math.max(0.001, breaks.ideaHide - breaks.ideaShow);
-        const local = clamp01((p - breaks.ideaShow) / span);
-        name = IDEA_HUD[Math.min(IDEA_HUD.length - 1, Math.floor(local * IDEA_HUD.length))];
+        const fromScrub = document.documentElement.dataset.ideaPlate;
+        if (fromScrub !== undefined && fromScrub !== '') {
+          const plate = Number(fromScrub);
+          name = IDEA_HUD[Math.min(IDEA_HUD.length - 1, Math.max(0, plate))];
+        } else {
+          const span = Math.max(0.001, breaks.ideaHide - breaks.ideaShow);
+          const local = clamp01((p - breaks.ideaShow) / span);
+          name = IDEA_HUD[Math.min(IDEA_HUD.length - 1, Math.floor(local * IDEA_HUD.length))];
+        }
       } else {
         for (const [at, n] of STAGES) if (p >= at) name = n;
       }

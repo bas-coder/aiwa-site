@@ -17,6 +17,7 @@ import { heroEntrance, heroScroll } from './motion/hero.js';
 import { heroGradient } from './motion/heroGradient.js';
 import { blobs } from './motion/blob.js';
 import { ideaScrub } from './motion/ideaScrub.js';
+import { warmIdeaArt } from './motion/warmIdeaArt.js';
 import { runLoader } from './motion/loader.js';
 import {
   promptArc, engineHorizontal, engineRail,
@@ -25,11 +26,13 @@ import {
 import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
+import { footerNewsletter } from './newsletter.js';
 
 /* Start the overlay before plugin setup. If registerPlugin throws, CSS still
    painted the loader and the failsafe in index.html will tear it down. */
 const fontsReady = document.fonts?.ready ?? Promise.resolve();
-const loaderDone = runLoader(fontsReady);
+const firstIdeaPlate = warmIdeaArt();
+const loaderDone = runLoader(Promise.all([fontsReady, firstIdeaPlate]));
 
 try {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -138,13 +141,14 @@ window.addEventListener('resize', () => {
 /* =========================================================================
    Start.
    Boot as soon as this module runs (deferred, DOM already parsed). Do NOT wait
-   for window.load — below-fold images must not hold the overlay. The loader
-   promise is kicked at import so it runs even if later boot work throws.
-   fonts.ready still gates SplitText / hero entrance.
+   for window.load. The loader waits on fonts plus the first idea-scrub plate
+   (capped); the rest of that stack warms in the background so panel 3 is not
+   empty when it arrives. Later below-fold images still must not hold overlay.
    ====================================================================== */
 async function start() {
   initLenis();
   initScrollHygiene();
+  footerNewsletter();
 
   try { await document.fonts.ready; } catch { /* older browsers: proceed */ }
 

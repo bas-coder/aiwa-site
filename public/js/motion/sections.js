@@ -302,10 +302,10 @@ export function promptArc() {
    ON THE TRAVEL DISTANCE. The spec gives xPercent: -(100 x (n-1) / n)%, and
    its own note derives -80% for five panels. That formula is only correct when
    every panel is exactly one viewport wide, which is the case it was read out
-   of. Ours are a fixed 26rem - five of them are about 2200px, nowhere near
-   5 x 1440 - so -80% of the TRACK's width overshoots badly and leaves the last
-   panel stranded mid-screen with 800px of dead space beside it. §6 explicitly
-   fails that: "ends exactly at the last panel - no dead space."
+   of. Ours are a fixed 26rem — six of them overflow the pin — so a % of the
+   TRACK's width overshoots badly and leaves the last panel stranded mid-screen
+   with dead space beside it. §6 explicitly fails that: "ends exactly at the
+   last panel - no dead space."
    So the distance is measured instead: scroll the track by exactly the amount
    it overflows its container, no more. It is a function, not a number, so
    invalidateOnRefresh re-measures it on every resize and after any font or

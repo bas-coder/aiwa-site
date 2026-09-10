@@ -74,7 +74,7 @@
   --app-dur-colors: 150ms;
 
   /* Secondary - Dreamcut-style tactile charcoal pill: soft vertical fill,
-     top rim light, recessed underside, light outer lift. Used by .btn--ghost. */
+     top rim light, recessed underside, light outer lift. Used by default/secondary .btn. */
   --btn-secondary-top: #3c3a37;
   --btn-secondary-mid: #2c2a28;
   --btn-secondary-bottom: #1f1d1b;

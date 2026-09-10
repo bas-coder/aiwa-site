@@ -27,6 +27,13 @@
      .cards            docs + resources card grids
      .quickstart       the terminal-ish code block on /docs
      .notfound         /404
+     .page-main        flush marketing layout (/features): sections bring
+                       their own .shell so alt bands and the jump nav can
+                       go edge to edge
+     .feat-jump        sticky on-this-page rail under the fixed nav
+     .feat-spot        split copy + product still
+     .feat-shots       three shipping stills
+     .feat-chips       connector catalog
    ========================================================================= */
 
 /* ---------------------------------------------------------------------------
@@ -407,3 +414,168 @@
 /* The FAQ on a page has no sticky aside; it is one column at full measure. */
 .page .faq__grid--single { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 900px) { .page .faq__grid { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------------------
+   /features · flush marketing page
+   ------------------------------------------------------------------------ */
+.page-main > .cta { padding-inline: var(--gutter); }
+.page-main > .cta .cta__inner { max-width: var(--measure); margin-inline: auto; }
+
+.feat-jump {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 40;
+  border-block: 1px solid var(--ink-600);
+  background: color-mix(in srgb, var(--ink-900) 88%, transparent);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+.feat-jump__list {
+  display: flex;
+  gap: 0.25rem 1.4rem;
+  list-style: none;
+  margin: 0;
+  padding-block: 0.85rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.feat-jump__list::-webkit-scrollbar { display: none; }
+.feat-jump a {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-500);
+  white-space: nowrap;
+  padding-block: 0.2rem;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-micro) var(--ease-brand), border-color var(--dur-micro) var(--ease-brand);
+}
+.feat-jump a:hover { color: var(--cream-050); }
+.feat-jump a[aria-current="true"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.page-main .page-section[id],
+.feat-spot {
+  scroll-margin-top: calc(var(--nav-h) + 3.25rem);
+}
+
+.feat-spot__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.feat-spot--flip .feat-spot__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+.feat-spot--flip .feat-spot__copy { order: 2; }
+.feat-spot--flip .feat-spot__frame { order: 1; }
+.feat-spot__copy { display: grid; gap: 1rem; justify-items: start; max-width: 38rem; }
+.feat-spot__copy .t-h2 { font-size: clamp(1.7rem, 3vw, 2.6rem); }
+.feat-spot__points {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.4rem;
+}
+.feat-spot__points li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--cream-300);
+}
+.feat-spot__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.42rem;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.75;
+}
+.feat-spot__frame {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--ink-600);
+  border-radius: 1.1rem;
+  background: var(--ink-850);
+}
+.feat-spot__frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  object-position: top center;
+}
+@media (max-width: 900px) {
+  .feat-spot__grid,
+  .feat-spot--flip .feat-spot__grid { grid-template-columns: 1fr; }
+  .feat-spot--flip .feat-spot__copy,
+  .feat-spot--flip .feat-spot__frame { order: 0; }
+}
+
+.feat-shots {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.feat-shot { display: grid; gap: 0.7rem; align-content: start; }
+.feat-shot h3 { font-size: clamp(1.05rem, 1.3vw, 1.2rem); }
+.feat-shot p { font-size: 0.88rem; line-height: 1.6; color: var(--cream-300); }
+@media (max-width: 900px) { .feat-shots { grid-template-columns: 1fr; } }
+
+.feat-chips {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.feat-chip {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--ink-600);
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.35));
+}
+.feat-chip strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+}
+.feat-chip span { font-size: 0.84rem; line-height: 1.5; color: var(--cream-300); }
+.feat-note {
+  margin-top: 1.4rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--cream-500);
+}
+.feat-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(254, 160, 2, 0.4);
+}
+.feat-note a:hover { text-decoration-color: var(--accent); }
+@media (max-width: 900px) { .feat-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .feat-chips { grid-template-columns: 1fr; } }
+
+.page-main .compare table { min-width: 32rem; }
+.cases--quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) { .cases--quad { grid-template-columns: 1fr; } }
+
+@media (max-width: 900px) {
+  .page-main .why__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .page-main .why__grid { grid-template-columns: 1fr; }
+}
+
+.toc a[aria-current="true"] { color: var(--cream-050); border-color: var(--accent); }

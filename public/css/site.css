@@ -1071,10 +1071,15 @@ main, .footer { position: relative; z-index: 2; }
   object-fit: cover; object-position: top center;
   pointer-events: none;
 }
-/* Narrow card + top-left crop hid the Chateau preview (dark chat only).
-   Bias Build toward the live-preview pane so it matches the left well. */
+/* Build: chat + Festova preview — keep both panes readable in the narrow card. */
 #ws-tab-build img {
-  object-position: 72% 12%;
+  object-position: 58% 8%;
+}
+#ws-tab-test img {
+  object-position: center 35%;
+}
+#ws-tab-ship img {
+  object-position: 62% 10%;
 }
 .ws-aside__cap {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
@@ -1432,10 +1437,10 @@ main, .footer { position: relative; z-index: 2; }
    Each panel is header / glass tile / list. The headings wrap to different line
    counts ("EVOLVE · learn, improve & scale continuously" takes three lines
    where "TEST · ensure quality" takes two), so with flex every panel sized its
-   own rows and the icon tiles sat at five different heights.
+   own rows and the icon tiles sat at different heights.
 
    Three shared rows here plus `grid-template-rows: subgrid` on the panel means
-   all five panels resolve against the SAME row lines: the tallest header sets
+   all six panels resolve against the SAME row lines: the tallest header sets
    the header row, and every glass tile starts on the same line. It aligns
    whatever the copy does, at any width, with no min-height to keep in sync.
 
@@ -1458,7 +1463,7 @@ main, .footer { position: relative; z-index: 2; }
 }
 .stage-panel {
   /* spans the track's three rows and adopts its row lines, which is what puts
-     every glass tile on the same line across all five cards. The width comes
+     every glass tile on the same line across all six cards. The width comes
      from grid-auto-columns now, not from the panel. */
   grid-row: span 3;
   display: grid; grid-template-rows: subgrid;
@@ -1493,17 +1498,23 @@ main, .footer { position: relative; z-index: 2; }
   -webkit-backdrop-filter: blur(6px);
   display: grid; place-items: center;
 }
-/* cursor-following specular highlight, fed by --mx/--my from JS */
+/* cursor-following brand glow, fed by --mx/--my from JS */
 .stage-panel__glass::after {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(14rem 14rem at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.14), transparent 60%);
+  background: radial-gradient(
+    14rem 14rem at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 28%, transparent),
+    color-mix(in srgb, var(--accent-deep) 10%, transparent) 42%,
+    transparent 68%
+  );
   opacity: 0; transition: opacity var(--dur-base) var(--ease-brand);
+  pointer-events: none;
 }
-.stage-panel:hover .stage__glass::after, .stage-panel__glass:hover::after { opacity: 1; }
+.stage-panel:hover .stage-panel__glass::after,
+.stage-panel__glass:hover::after { opacity: 1; }
 
-/* The five engine glyphs were drawn in CSS from two pseudo-element rings. They
-   are Lucide icons now, from the shared sprite, so they read as the actual
-   thing each stage does rather than as an abstract mark. */
+/* Engine glyphs: Lucide geometry, CSS hover motion (lucide-animated ported
+   for vanilla — no React/Motion). Hover target is the glass tile. */
 .icon { width: 1em; height: 1em; display: block; flex: 0 0 auto; }
 .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 .glyph {
@@ -1511,7 +1522,129 @@ main, .footer { position: relative; z-index: 2; }
   display: grid; place-items: center;
   color: var(--accent);
 }
-.glyph .icon { width: 100%; height: 100%; }
+.glyph .icon { width: 100%; height: 100%; overflow: visible; }
+.glyph .icon > * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* PLAN · clipboard-check: check draws in */
+.glyph--plan .glyph__check {
+  stroke-dasharray: 16;
+  stroke-dashoffset: 0;
+}
+.stage-panel__glass:hover .glyph--plan .glyph__check {
+  animation: glyph-check-draw 0.45s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--plan .icon {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+
+/* ARCHITECT · layers: stagger up */
+.glyph--architect .glyph__layer {
+  transition: transform 0.4s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--architect .glyph__layer--1 {
+  transform: translateY(-1.5px);
+  transition-delay: 0.08s;
+}
+.stage-panel__glass:hover .glyph--architect .glyph__layer--2 {
+  transform: translateY(-0.75px);
+  transition-delay: 0.04s;
+}
+.stage-panel__glass:hover .glyph--architect .glyph__layer--3 {
+  transform: translateY(0.5px);
+}
+
+/* BUILD · terminal: cursor blink + prompt nudge */
+.glyph--build .glyph__cursor {
+  stroke-dasharray: 8;
+  transition: opacity 0.2s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--build .glyph__cursor {
+  animation: glyph-cursor-blink 0.9s steps(2, end) infinite;
+}
+.stage-panel__glass:hover .glyph--build .glyph__prompt {
+  animation: glyph-prompt-scan 0.7s var(--ease-brand);
+}
+
+/* TEST · flask: liquid sway */
+.stage-panel__glass:hover .glyph--test .glyph__liquid {
+  animation: glyph-liquid-sway 0.85s var(--ease-brand) infinite alternate;
+}
+.stage-panel__glass:hover .glyph--test .glyph__vessel {
+  animation: glyph-flask-tilt 0.85s var(--ease-brand) infinite alternate;
+}
+
+/* DEPLOY · rocket: lift + flame flicker */
+.stage-panel__glass:hover .glyph--deploy .icon {
+  animation: glyph-rocket-lift 0.7s var(--ease-brand) infinite alternate;
+}
+.stage-panel__glass:hover .glyph--deploy .glyph__flame {
+  animation: glyph-flame-flicker 0.35s ease-in-out infinite alternate;
+}
+
+/* EVOLVE · refresh-cw: partial rotate */
+.stage-panel__glass:hover .glyph--evolve .icon {
+  animation: glyph-refresh-spin 0.85s var(--ease-brand);
+}
+
+@keyframes glyph-nudge {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-2px); }
+}
+@keyframes glyph-check-draw {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes glyph-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+@keyframes glyph-prompt-scan {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1.5px); }
+}
+@keyframes glyph-liquid-sway {
+  from { transform: translateX(-1px) rotate(-1deg); }
+  to { transform: translateX(1px) rotate(1deg); }
+}
+@keyframes glyph-flask-tilt {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(2deg); }
+}
+@keyframes glyph-rocket-lift {
+  from { transform: translate(-0.5px, 1.5px); }
+  to { transform: translate(0.5px, -2px); }
+}
+@keyframes glyph-flame-flicker {
+  from { opacity: 0.55; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1.06); }
+}
+@keyframes glyph-refresh-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-panel__glass:hover .glyph--plan .glyph__check,
+  .stage-panel__glass:hover .glyph--plan .icon,
+  .stage-panel__glass:hover .glyph--build .glyph__cursor,
+  .stage-panel__glass:hover .glyph--build .glyph__prompt,
+  .stage-panel__glass:hover .glyph--test .glyph__liquid,
+  .stage-panel__glass:hover .glyph--test .glyph__vessel,
+  .stage-panel__glass:hover .glyph--deploy .icon,
+  .stage-panel__glass:hover .glyph--deploy .glyph__flame,
+  .stage-panel__glass:hover .glyph--evolve .icon {
+    animation: none;
+  }
+  .glyph--architect .glyph__layer { transition: none; }
+  .stage-panel__glass:hover .glyph--architect .glyph__layer--1,
+  .stage-panel__glass:hover .glyph--architect .glyph__layer--2,
+  .stage-panel__glass:hover .glyph--architect .glyph__layer--3 {
+    transform: none;
+  }
+}
 
 /* ---------------------------------------------------------------------------
    IDEA · From Idea to Working Product (hero panel scrub)
@@ -1648,7 +1781,8 @@ main, .footer { position: relative; z-index: 2; }
   pointer-events: none;
 }
 
-.idea__panel img {
+.idea__panel img,
+.idea__panel video {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -1797,6 +1931,12 @@ html.is-idea-scrub .hero-media__scrim {
 .use-card__visual--product img {
   position: absolute;
   inset: 0;
+}
+/* Portrait product shots (e.g. Run your business form) — show the full UI
+   instead of side-cropping a tall asset in the landscape card well. */
+.use-card__visual--portrait img {
+  object-fit: contain;
+  object-position: center top;
 }
 
 /* Soft Lovable-style color wash behind isolated fragments */
@@ -2633,58 +2773,94 @@ html.is-idea-scrub .hero-media__scrim {
    buttons in a radiogroup, with generous hit areas, hover growth and arrow
    keys - not a native range with a draggable thumb.
 
-   Beam + knob ramp amber -> orange -> DS green (--good). Max reads as
-   capacity/abundance, not danger-red heat.
+   Beam + knob use one solid color per stop (amber → orange → green). Dots are
+   always opaque so the beam never reads through them; passed stops fill with
+   the active heat color.
    ------------------------------------------------------------------------ */
 .credits { display: grid; gap: 0.3rem; }
 
 .credits__stops { position: relative; height: 1.75rem; margin-inline: 0.25rem; }
+.credits__track,
+.credits__beam {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 3px; margin-top: -1.5px; border-radius: 999px;
+  z-index: 0;
+  pointer-events: none;
+}
 .credits__track {
-  position: absolute; inset-inline: 0; top: 50%;
-  height: 3px; margin-top: -1.5px; border-radius: 999px; background: var(--app-hover);
+  inset-inline: 0;
+  background: var(--app-hover);
 }
 .credits__beam {
-  position: absolute; left: 0; top: 50%; width: 0;
-  height: 3px; margin-top: -1.5px; border-radius: 999px;
-  transition: width var(--dur-base) var(--ease-out);
+  right: auto; width: 0;
+  transition: width var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
 }
 .credits[data-heat='0'] .credits__beam { background: var(--app-sunset-1); }
-.credits[data-heat='1'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2)); }
-.credits[data-heat='2'] .credits__beam { background: linear-gradient(to right, var(--app-sunset-1), var(--app-sunset-2), var(--good)); }
+.credits[data-heat='1'] .credits__beam { background: var(--app-sunset-2); }
+.credits[data-heat='2'] .credits__beam { background: var(--good); }
 
 /* 1.75rem of hit area around a 0.625rem dot - the target is the button, the
-   dot is only what you see. */
+   dot is only what you see. Dots sit above the beam (z-index) and use an
+   opaque plate fill so the line never shows through. */
 .credits__stop {
   position: absolute; top: 50%; transform: translate(-50%, -50%);
+  z-index: 1;
   display: grid; place-items: center;
   width: 1.75rem; height: 1.75rem; padding: 0;
   border: 0; border-radius: 50%; background: none; cursor: pointer;
 }
 .credits__stop > span {
   width: 0.625rem; height: 0.625rem; border-radius: 50%;
-  background: color-mix(in srgb, var(--app-muted-fg) 50%, transparent);
+  /* Opaque card-plate bead — masks the track/beam underneath. */
+  background: #1c1b19;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--cream-050) 18%, transparent);
   transition: width var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out),
-              transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out),
               box-shadow var(--dur-base) var(--ease-out);
 }
 .credits__stop:hover > span {
   transform: scale(1.25);
-  background: color-mix(in srgb, var(--app-foreground) 80%, transparent);
+  background: #2a2825;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--cream-050) 32%, transparent);
 }
+
+/* Passed stops: solid heat color (same as beam) so the line reads continuous
+   without translucency. */
+.credits[data-heat='1'] .credits__stop[data-credits-stop='0'] > span,
+.credits[data-heat='2'] .credits__stop[data-credits-stop='0'] > span,
+.credits[data-heat='2'] .credits__stop[data-credits-stop='1'] > span {
+  box-shadow: none;
+}
+.credits[data-heat='1'] .credits__stop[data-credits-stop='0'] > span {
+  background: var(--app-sunset-2);
+}
+.credits[data-heat='2'] .credits__stop[data-credits-stop='0'] > span,
+.credits[data-heat='2'] .credits__stop[data-credits-stop='1'] > span {
+  background: var(--good);
+}
+
 .credits__stop[aria-checked='true'] > span { width: 1rem; height: 1rem; transform: none; }
 .credits[data-heat='0'] .credits__stop[aria-checked='true'] > span {
-  background: var(--app-sunset-1); box-shadow: 0 0 0 3px rgb(255 179 0 / 0.25);
+  background: var(--app-sunset-1);
+  box-shadow: 0 0 0 3px rgb(255 179 0 / 0.25);
 }
 .credits[data-heat='1'] .credits__stop[aria-checked='true'] > span {
-  background: linear-gradient(to bottom right, var(--app-sunset-1), var(--app-sunset-2));
+  background: var(--app-sunset-2);
   box-shadow: 0 0 0 3px rgb(255 94 0 / 0.25);
 }
 .credits[data-heat='2'] .credits__stop[aria-checked='true'] > span {
-  background: linear-gradient(to bottom right, var(--app-sunset-2), var(--good));
+  background: var(--good);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 35%, transparent);
 }
-/* The sweet spot is marked before you touch anything. */
-.credits__stop[data-popular]:not([aria-checked='true']) > span { box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6); }
+/* The sweet spot is marked before you touch anything — rim only, still opaque. */
+.credits__stop[data-popular]:not([aria-checked='true']) > span {
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--cream-050) 18%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--good) 55%, transparent);
+}
+.credits[data-heat='2'] .credits__stop[data-popular]:not([aria-checked='true']) > span {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--cream-050) 25%, transparent);
+}
 .credits[data-heat='1'] .credits__stop[data-popular][aria-checked='true'] > span {
   box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6), 0 0 0 5px rgb(255 94 0 / 0.25);
 }
@@ -2989,13 +3165,67 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .footer__logo { display: flex; align-items: center; }
 .footer__logo img { height: 2.05rem; width: auto; } /* see .nav__logo img */
-.footer__news { display: flex; gap: 0.5rem; align-items: center; }
+.footer__news {
+  position: relative;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+}
+.footer__news-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
 .footer__news input {
   padding: 0.8rem 1.1rem; border-radius: 999px; border: 1px solid var(--ink-600);
   background: color-mix(in srgb, var(--ink-950) 70%, var(--ink-800));
   font-size: 0.85rem; min-width: 15rem;
 }
 .footer__news input::placeholder { color: var(--cream-500); }
+/* Nav-style flip: Apply → Thank you on success. */
+.footer__news-submit {
+  min-width: 7.25rem;
+}
+.footer__news-submit .btn__label {
+  display: inline-flex;
+  align-items: flex-start;
+  overflow: hidden;
+  height: 1.15em;
+  line-height: 1.15;
+}
+.footer__news-flip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.45s var(--ease-brand);
+  will-change: transform;
+}
+.footer__news-flip > span {
+  display: block;
+  height: 1.15em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.footer__news.is-done .footer__news-flip {
+  transform: translateY(-50%);
+}
+.footer__news-status {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--cream-300);
+}
+.footer__news-status[data-tone='warn'],
+.footer__news-status[data-tone='error'] {
+  color: color-mix(in srgb, #f0a8a0 85%, var(--cream-050));
+}
+.footer__news-status[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .footer__news-flip { transition: none; }
+  .footer__news.is-done .footer__news-flip { transform: none; }
+  .footer__news.is-done .footer__news-flip > span:first-child { display: none; }
+  .footer__news.is-done .footer__news-flip > span:last-child { display: block; }
+}
 .footer__cols {
   display: grid;
   /* auto-fit, not repeat(5): the column count is the LINK INVENTORY's business
@@ -3118,7 +3348,7 @@ html.is-idea-scrub .hero-media__scrim {
 
 .workspace__zone-shot {
   display: none;
-  width: 100%; height: 100%; object-fit: cover; object-position: top left;
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
   border-radius: inherit;
 }
 
@@ -3215,6 +3445,7 @@ html.is-idea-scrub .hero-media__scrim {
   .hero__cta { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
   .footer__top { flex-direction: column; align-items: flex-start; }
   .footer__news { width: 100%; }
+  .footer__news-row { width: 100%; }
   .footer__news input { flex: 1; min-width: 0; }
   /* the gallery's plates are grid items now, not marquee tiles */
 }

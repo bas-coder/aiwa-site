@@ -24,6 +24,7 @@ import { blobs } from './motion/blob.js';
 import { accordion, footerReveal, navState, navMenu } from './motion/sections.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
+import { footerNewsletter } from './newsletter.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,6 +114,7 @@ function tocSync() {
 function start() {
   initLenis();
   initRefreshQueue();
+  footerNewsletter();
   build();
   tocSync();
 }

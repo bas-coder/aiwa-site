@@ -8,6 +8,7 @@
  *       public/ai-{website,saas,crm,app}-builder.html
  *       public/docs/index.html
  *       public/resources/index.html
+ *       public/features/index.html
  *       public/404.html
  *       public/index.html             (its nav and footer regions only)
  *
@@ -46,7 +47,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BUILDERS, DOCS, RESOURCES } from './content/pages.mjs';
+import { BUILDERS, DOCS, RESOURCES, FEATURES } from './content/pages.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG = join(HERE, '..');
@@ -116,7 +117,7 @@ if (orphans.length) fail(`bodies with no LEGAL_DOCS entry: ${orphans.join(', ')}
    Workflow, Why AIWA, Made with and FAQ came out of the nav and are all still
    reachable from the footer, which is why dropping them here costs nothing. */
 const NAV = [
-  { label: 'Features', href: '/#why' },
+  { label: 'Features', href: '/features' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Docs', href: 'https://docs.aiwa.codes' },
   { label: 'Community', href: 'https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e' },
@@ -137,7 +138,7 @@ const FOOTER_COLS = [
   {
     name: 'Pages',
     links: [
-      { label: 'Features', href: '/#why' },
+      { label: 'Features', href: '/features' },
       { label: 'Workflow', href: '/#engine' },
       { label: 'Made with AIWA', href: '/#gallery' },
       { label: 'Pricing', href: '/#pricing' },
@@ -164,7 +165,6 @@ const FOOTER_COLS = [
   {
     name: 'Contact',
     links: [
-      { label: 'hello@aiwa.codes', href: 'mailto:hello@aiwa.codes' },
       { label: 'Join the Community', href: 'https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e' },
       { label: 'X', href: 'https://x.com/aiwadotcodes' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/company/aiwacodes/' },
@@ -312,8 +312,8 @@ const ARROW =
   'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 const btn = (label, href, { primary = false, arrow = true } = {}) =>
-  `<a class="btn${primary ? ' btn--primary' : ''}" href="${esc(href)}">
-          <span class="btn__label">${esc(label)}</span>${arrow ? `
+  `<a class="btn ${primary ? 'btn--primary' : 'btn--ghost'}" href="${esc(href)}">
+          <span class="btn__label">${esc(label)}</span>${primary && arrow ? `
           <span class="btn__arrow"><span>
             ${ARROW}
             ${ARROW}
@@ -363,10 +363,20 @@ function footerHtml(here) {
         <a class="footer__logo" href="/#top" aria-label="AIWA home">
           <img src="/images/aiwa-logo.webp" alt="" width="1000" height="459" />
         </a>
-        <form class="footer__news" onsubmit="return false">
+        <form class="footer__news" data-footer-news>
           <label class="sr-only" for="news">Email address</label>
-          <input id="news" type="email" placeholder="Join our newsletter" />
-          <button class="btn btn--ghost" type="submit"><span class="btn__label">Apply</span></button>
+          <div class="footer__news-row">
+            <input id="news" name="email" type="email" placeholder="Join our newsletter" required autocomplete="email" />
+            <button class="btn btn--ghost footer__news-submit" type="submit">
+              <span class="btn__label">
+                <span class="footer__news-flip">
+                  <span>Apply</span>
+                  <span aria-hidden="true">Thank you</span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <p class="footer__news-status" role="status" aria-live="polite" hidden></p>
         </form>
       </div>
       <div class="footer__cols">
@@ -390,7 +400,8 @@ ${FOOTER_COLS.map(col).join('\n')}
  * page's sections, documents take the narrower default because prose wants a
  * measure and a 96rem legal paragraph is unreadable.
  */
-function shell({ here, title, description, body, canonical, wide = true }) {
+function shell({ here, title, description, body, canonical, wide = true, flush = false }) {
+  const mainClass = flush ? 'page-main' : `shell${wide ? ' shell--wide' : ''}`;
   return `<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -418,7 +429,7 @@ function shell({ here, title, description, body, canonical, wide = true }) {
 
 ${navHtml(here)}
 
-<main class="shell${wide ? ' shell--wide' : ''}">
+<main class="${mainClass}">
 ${body}
 </main>
 
@@ -449,7 +460,7 @@ const head = (eyebrow, heading, lead, { center = false, grad = true } = {}) => `
  * Seven features -> hero (3) + 6 = three full rows. Five agents -> wide (2) + 3.
  */
 const featureGrid = (items, lead = 'feature--hero') => `  <div class="why__grid" data-blur-parent data-stagger="100">
-${items.map((f, n) => `    <article class="feature${n === 0 ? ` ${lead}` : ''}" data-blur-child data-spring>${n === 0 ? `
+${items.map((f, n) => `    <article class="feature${n === 0 && lead ? ` ${lead}` : ''}" data-blur-child data-spring>${n === 0 && lead ? `
       <svg class="feature__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>` : ''}
       <div class="feature__body">
         <h3 class="t-h4">${esc(f.name)}</h3>
@@ -487,7 +498,7 @@ ${rows.map((r) => `        <tr><th scope="row">${esc(r[0])}</th>${r.slice(1).map
     </table>
   </div>`;
 
-const casesBlock = (cases) => `  <div class="cases" data-blur-parent data-stagger="70">
+const casesBlock = (cases, extra = '') => `  <div class="cases${extra ? ` ${extra}` : ''}" data-blur-parent data-stagger="70">
 ${cases.map((c) => `    <article data-blur-child>
       <h3>${esc(c.name)}</h3>
       <p>${esc(c.body)}</p>
@@ -533,9 +544,9 @@ const metaBlock = (items) => `  <dl class="page-meta" data-blur-in>
 ${items.map((m) => `    <div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}${m.note ? `<em>${esc(m.note)}</em>` : ''}</dd></div>`).join('\n')}
   </dl>`;
 
-const pageHero = ({ eyebrow, h1, lead, actions, note, doc = false, blob = true }) => `<section class="page-hero${doc ? ' page-hero--doc' : ''}">${blob ? `
+const pageHero = ({ eyebrow, h1, lead, actions, note, doc = false, blob = true, contained = false }) => `<section class="page-hero${doc ? ' page-hero--doc' : ''}">${blob ? `
   <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>` : ''}
-  <div class="page-hero__inner" data-blur-parent>
+  <div class="${contained ? 'shell shell--wide ' : ''}page-hero__inner" data-blur-parent>
     <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>${h1}</h1>
     <p class="t-body page-hero__lead" data-blur-child>${esc(lead)}</p>${actions ? `
@@ -704,6 +715,123 @@ ${g.links.map((l) => `        <a href="${esc(l.href)}"${isExternal(l.href) ? ' t
   emit('resources/index.html', shell({ here: '/resources', title: r.title, description: r.description, canonical: '/resources', body }));
 }
 
+/* ---- /features ---------------------------------------------------------- */
+{
+  const f = FEATURES;
+  const featJump = (items) => `<nav class="feat-jump" data-toc aria-label="On this page">
+  <div class="shell shell--wide">
+    <ol class="feat-jump__list">
+${items.map((i) => `      <li><a href="${esc(i.href)}">${esc(i.label)}</a></li>`).join('\n')}
+    </ol>
+  </div>
+</nav>`;
+
+  const featSpot = (s, alt) => `<section class="page-section feat-spot${s.flip ? ' feat-spot--flip' : ''}${alt ? ' page-section--alt' : ''}" id="${esc(s.id)}">
+  <div class="shell shell--wide">
+    <div class="feat-spot__grid">
+      <div class="feat-spot__copy" data-blur-parent>
+        <p class="eyebrow" data-blur-child>${esc(s.n)} · ${esc(s.eyebrow)}</p>
+        <h2 class="t-h2" data-blur-child data-grad>${esc(s.title)}</h2>
+        <p class="t-body section__lead" data-blur-child>${esc(s.body)}</p>
+        <ul class="feat-spot__points" data-blur-child>
+${s.points.map((p) => `          <li>${esc(p)}</li>`).join('\n')}
+        </ul>
+      </div>
+      <figure class="feat-spot__frame" data-blur-in>
+        <img src="${esc(s.img)}" alt="${esc(s.alt)}" width="1600" height="1000" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</section>`;
+
+  const featShots = (items) => `  <div class="feat-shots" data-blur-parent data-stagger="80">
+${items.map((s) => `    <article class="feat-shot" data-blur-child>
+      <figure class="feat-spot__frame">
+        <img src="${esc(s.img)}" alt="${esc(s.alt)}" width="1920" height="1280" loading="lazy" decoding="async" />
+      </figure>
+      <h3>${esc(s.name)}</h3>
+      <p>${esc(s.body)}</p>
+    </article>`).join('\n')}
+  </div>`;
+
+  const body = [
+    pageHero({
+      eyebrow: f.eyebrow,
+      h1: f.h1,
+      lead: f.lead,
+      actions: `${btn(f.ctaLabel, 'https://app.aiwa.codes', { primary: true })}
+      ${btn('See pricing', '/#pricing', { arrow: false })}`,
+      note: f.note,
+      contained: true,
+    }),
+    featJump(f.jump),
+    `<section class="page-section page-section--tight">
+  <div class="shell shell--wide">
+${metaBlock(f.meta)}
+  </div>
+</section>`,
+    ...f.spots.map((s, n) => featSpot(s, n % 2 === 1)),
+    `<section class="page-section page-section--alt" id="modes">
+  <div class="shell shell--wide">
+${head('How you work', f.modesHead, f.modesLead)}
+${casesBlock(f.modes, 'cases--quad')}
+    <div class="feat-follow">
+${head('Intelligence', f.intelligenceHead, f.intelligenceLead)}
+${compareBlock(f.intelligence)}
+    </div>
+  </div>
+</section>`,
+    `<section class="page-section" id="connectors">
+  <div class="shell shell--wide">
+${head('Integrations', f.connectorsHead, f.connectorsLead)}
+    <ul class="feat-chips" data-blur-parent data-stagger="40">
+${f.connectors.map((c) => `      <li class="feat-chip" data-blur-child>
+        <strong>${esc(c.name)}</strong>
+        <span>${esc(c.body)}</span>
+      </li>`).join('\n')}
+    </ul>
+    <p class="feat-note" data-blur-in>${esc(f.connectorsNote)} <a href="https://app.aiwa.codes/connectors">Open the connector catalog</a></p>
+  </div>
+</section>`,
+    `<section class="page-section page-section--alt" id="ship">
+  <div class="shell shell--wide">
+${head('Ship it', f.shipHead, f.shipLead)}
+${featShots(f.ship)}
+  </div>
+</section>`,
+    `<section class="page-section" id="catalog">
+  <div class="shell shell--wide">
+${head('The rest of the workspace', f.catalogHead, '')}
+${featureGrid(f.catalog, '')}
+  </div>
+</section>`,
+    `<section class="page-section page-section--alt faq" id="faq">
+  <div class="shell shell--wide">
+${head('FAQ', 'Questions people ask before they start', '')}
+  <div class="faq__grid faq__grid--single">
+${faqBlock(f.faq)}
+  </div>
+  </div>
+</section>`,
+    `<section class="page-section" id="related">
+  <div class="shell shell--wide">
+${head('Build something specific', 'Related solutions', '')}
+${relatedBlock(f.related)}
+  </div>
+</section>`,
+    ctaBlock({ eyebrow: f.ctaEyebrow, h2: f.ctaH2, body: f.ctaBody, label: f.ctaLabel }),
+  ].join('\n\n');
+
+  emit('features/index.html', shell({
+    here: '/features',
+    title: f.title,
+    description: f.description,
+    canonical: '/features',
+    body,
+    flush: true,
+  }));
+}
+
 /* ---- /legal hub --------------------------------------------------------- */
 {
   const GROUPS = [
@@ -860,7 +988,7 @@ for (const [rel, html] of written) {
 /* An orphan check, so deleting a page from the sources actually deletes it.
    A stale ai-old-builder.html would still be served, still be crawled, and
    still be linked from nothing - the worst kind of live page. */
-const generatedDirs = ['legal', 'docs', 'resources'];
+const generatedDirs = ['legal', 'docs', 'resources', 'features'];
 for (const dir of generatedDirs) {
   const abs = join(PUBLIC, dir);
   if (!existsSync(abs)) continue;
