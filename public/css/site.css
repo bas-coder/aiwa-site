@@ -1008,13 +1008,13 @@ main, .footer { position: relative; z-index: 2; }
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid var(--ink-700);
-  background: #1e1f21;
+  background: #1f1f1f;
   box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.45);
 }
 .workspace__chrome {
   flex: 0 0 auto;
   line-height: 0;
-  background: #1e1f21;
+  background: #1f1f1f;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .workspace__chrome img {
@@ -1087,12 +1087,6 @@ main, .footer { position: relative; z-index: 2; }
 }
 .no-js .ws-aside__item, .static-hero .ws-aside__item { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .ws-aside__item { opacity: 1; } }
-
-.workspace__caption {
-  margin-top: 1.1rem; text-align: center;
-  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--cream-500);
-}
 
 /* Below 900px the aside stops being a column and becomes a row under the well,
    which keeps all three visible instead of squeezing them into a gutter. */

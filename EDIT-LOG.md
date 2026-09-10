@@ -4,6 +4,19 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-10 — Workspace tab screenshots
+
+- Replaced workspace stills from `public/plan/screenshots/`: `Build.png` → `app-live-preview.webp`, `Export to Mobile.png` → `app-store-ready.webp`, `Releases.png` → `app-releases.webp` (1920×1280 WebP). Updated intrinsic sizes + alts in `public/index.html`.
+
+---
+
+## 2026-09-10 — Workspace browser chrome SVG
+
+- Synced updated `browser header.svg` → `public/browser-header.svg` (URL-safe). Intrinsic size 1008×36. Shell/chrome fill matched to SVG `#1f1f1f`.
+- Files: `public/browser-header.svg`, `public/index.html`, `public/css/site.css`.
+
+---
+
 ## 2026-09-10 — Footer wordmark FX bake
 
 - Baked footer-only logo treatment into `aiwa-logo-footer.webp`: grain 7%, pixel-sort (threshold 137, left, SAT), Floyd–Steinberg light/FX at scale 3, plus-pattern overlay (#fff @ 10% Normal). Nav/small logos unchanged.

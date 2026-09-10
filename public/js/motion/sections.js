@@ -81,19 +81,15 @@ export function workspaceFocus() {
    WORKSPACE LIFECYCLE TABS
    ---------------------------------------------------------------------------
    The three cards beside the well are tabs. Clicking one puts that screenshot
-   in the left well and updates the caption. Build is selected by default.
+   in the left well. Build is selected by default.
    The well's aspect-ratio and rect stay untouched so the handoff stays exact.
    ======================================================================== */
-const WS_DEFAULT_CAPTION = 'Build · live preview in the workspace';
 const WS_ACTIVE = 'is-active';
 const WS_TAB_VIEW = 'is-tab-view';
 
 export function workspaceTabs() {
   const zone = document.getElementById('workspace-zone');
   const well = zone?.querySelector('[data-ws-well]');
-  /* Must be the section caption only — tab buttons also carry data-ws-caption
-     as a data source; writing textContent onto the Build button wiped its <img>. */
-  const caption = document.querySelector('.workspace__caption');
   const tabs = [...document.querySelectorAll('.ws-aside [data-ws-aside][data-ws-src]')];
   if (!zone || !well || !tabs.length) return () => {};
 
@@ -112,10 +108,6 @@ export function workspaceTabs() {
     well.alt = tab.getAttribute('data-ws-alt') || '';
     zone.classList.add(WS_TAB_VIEW);
     zone.setAttribute('aria-labelledby', tab.id || '');
-
-    if (caption) {
-      caption.textContent = tab.getAttribute('data-ws-caption') || WS_DEFAULT_CAPTION;
-    }
   };
 
   const onClick = (event) => {
@@ -395,14 +387,14 @@ export function engineRail() {
    ======================================================================== */
 const TIER_STEPS = {
   solo: [
-    { credits: 130, priceMonthly: 29, label: 'Light builds' },
-    { credits: 335, priceMonthly: 59, label: 'Steady shipping', popular: true },
-    { credits: 670, priceMonthly: 119, label: 'Heavy operations' },
+    { credits: 200, priceMonthly: 29, label: 'Light builds' },
+    { credits: 515, priceMonthly: 59, label: 'Steady shipping', popular: true },
+    { credits: 1030, priceMonthly: 119, label: 'Heavy operations' },
   ],
   agency: [
-    { credits: 790, priceMonthly: 149, label: 'Boutique' },
-    { credits: 1820, priceMonthly: 299, label: 'Studio pace', popular: true },
-    { credits: 3200, priceMonthly: 549, label: 'Heavy operations' },
+    { credits: 1100, priceMonthly: 149, label: 'Boutique' },
+    { credits: 2535, priceMonthly: 299, label: 'Studio pace', popular: true },
+    { credits: 4455, priceMonthly: 549, label: 'Heavy operations' },
   ],
 };
 const ANNUAL_MONTHS_BILLED = 10.5;
