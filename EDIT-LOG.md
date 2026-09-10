@@ -4,6 +4,17 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-10 — Homepage v2 (visitor-value section order / path A)
+
+- Added `public/index-v2.html` as an experimental alternate homepage. Copied from `public/index.html`; **did not modify v1**.
+- Spine after Workspace (path A): **Gallery → Why → Engine → QA → Pricing → FAQ → CTA → Footer**.
+- **Arc** (“What people type” / Describe it. Ship it. Evolve it) **omitted** from v2 (not between Workspace and Engine).
+- Hero → Workspace flip handoff left intact (`#top`, `#flip-start`, `#workspace`, `#workspace-zone`). All motion IDs preserved; same script stack (`main.js` + vendors).
+- Title: `AIWA · Meet your AI product team (v2)`; canonical: `https://aiwa.codes/index-v2.html`. Nav/footer in-page anchors use same-page `#…` so they stay on v2.
+- Serve at `/index-v2.html`.
+
+---
+
 ## 2026-09-10 — Features: hide jump nav
 
 - Hid the sticky Workflow / Modes / Memory / Backend / Connect / Ship jump bar (`.feat-jump`) on the features page.
