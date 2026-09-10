@@ -4,6 +4,20 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-10 — Footer wordmark FX bake
+
+- Baked footer-only logo treatment into `aiwa-logo-footer.webp`: grain 7%, pixel-sort (threshold 137, left, SAT), Floyd–Steinberg light/FX at scale 3, plus-pattern overlay (#fff @ 10% Normal). Nav/small logos unchanged.
+- Regenerable via `scripts/process-footer-logo.py`. Wired in `public/index.html` + `scripts/build-pages.mjs`.
+
+---
+
+## 2026-09-10 — QA card: drop status footnote
+
+- Removed “Auth verified. Checking mobile next…” from the Autonomous QA card (and unused `.qa-card__note` styles).
+- Files: `public/index.html`, `public/css/site.css`.
+
+---
+
 ## 2026-09-09 — Made with AIWA: three-up grid
 
 - Gallery default columns 4 → 3 so each template plate reads larger; removed the redundant ≤1180px three-col breakpoint. Two-up ≤860px unchanged. Slightly larger gaps, radius, and title/desc type for the bigger cards.

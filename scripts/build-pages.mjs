@@ -377,7 +377,7 @@ ${FOOTER_COLS.map(col).join('\n')}
       </div>
     </div>
     <div class="footer__wordmark-crop">
-      <img class="footer__wordmark" src="/images/aiwa-logo.webp" alt="" width="1000" height="459" aria-hidden="true" decoding="async" />
+      <img class="footer__wordmark" src="/images/aiwa-logo-footer.webp" alt="" width="1000" height="459" aria-hidden="true" decoding="async" />
     </div>
   </div>
 </footer>`;
