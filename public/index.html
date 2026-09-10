@@ -733,224 +733,6 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 </section>
 
 <!-- ==========================================================================
-     AUTONOMOUS QA · the proof section.
-
-     Placed here, after the engine's five stages and before "Why AIWA",
-     because it is the TEST stage's evidence: the engine has just claimed the
-     app is driven in a real browser, and this is the receipt.
-
-     The brief supplied this as a headline, a subheadline and "then the
-     visual". The visual it showed was the hero canvas's own QA beat, which
-     has nowhere to put a headline - its scenes sit behind the scrolling text
-     panels, and a fourth panel would move the scrub timings §2.4 pins. So the
-     checklist lives here as a still, and the canvas beat carries the same five
-     lines (see .scene--test) so the two never disagree.
-     ======================================================================= -->
-<section class="section qa" id="qa">
-  <div class="shell shell--wide qa__grid">
-
-    <div class="qa__head" data-blur-parent>
-      <p class="eyebrow" data-blur-child>Autonomous QA</p>
-      <h2 class="t-h2" data-blur-child data-grad>Ship with confidence,<br />not crossed fingers</h2>
-      <p class="t-body section__lead" data-blur-child>
-        AIWA tests real workflows in a browser before your product goes live catching
-        broken interactions, authentication problems and usability issues before your
-        customers or clients do.
-      </p>
-    </div>
-
-    <!-- Agent-status receipt (layout inspired by live-agent cards; no CTA).
-         Right stack is a tiny AIWA-native “PASS” collage — product proof, not
-         stock photography. -->
-    <div class="qa-card" data-blur-in>
-      <header class="qa-card__head">
-        <h3 class="qa-card__title">Autonomous QA</h3>
-        <p class="qa-card__powered">
-          <img src="/aiwa-favicon.svg" alt="" width="16" height="16" decoding="async" />
-          <span>Powered by the <b>AIWA agent</b></span>
-        </p>
-      </header>
-
-      <div class="qa-card__agent">
-        <div class="qa-card__agent-main">
-          <p class="qa-card__status">
-            <span class="qa-card__pulse" aria-hidden="true"></span>
-            Agent testing for 23s
-          </p>
-          <ul class="qa-card__tasks">
-            <li>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-clipboard-list"></use></svg>
-              <span>Testing core workflows</span>
-            </li>
-            <li>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
-              <span>Verifying authentication</span>
-            </li>
-            <li>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code-xml"></use></svg>
-              <span>Checking business logic</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="qa-card__aside" aria-hidden="true">
-          <div class="qa-pass qa-pass--back">
-            <span class="qa-pass__route t-mono">/checkout</span>
-            <span class="qa-pass__mark">PASS</span>
-          </div>
-          <div class="qa-pass qa-pass--front">
-            <span class="qa-pass__route t-mono">/login</span>
-            <span class="qa-pass__mark">PASS</span>
-            <span class="qa-pass__meta">12 assertions · 1.4s</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ==========================================================================
-     WHY AIWA · Built for business — static 1 + 3 audience cards.
-     Visuals: finished product shots + isolated AIWA UI fragments (Lovable-style).
-     No featureStages animation.
-     ======================================================================= -->
-<section class="section why" id="why">
-  <div class="shell shell--wide">
-    <div class="why__head" data-blur-parent>
-      <p class="eyebrow" data-blur-child>Built for business</p>
-      <h2 class="t-h2" data-blur-child data-grad>Don't just build apps.<br />Build opportunities.</h2>
-      <p class="t-body section__lead" data-blur-child>
-        Turn ideas into products, client projects, and business systems without assembling
-        a traditional development team.
-      </p>
-    </div>
-
-    <div class="why__grid" data-blur-parent data-stagger="100">
-
-      <!-- 1 · Launch your own product — finished SaaS, not AIWA chrome -->
-      <article class="use-card use-card--hero" data-blur-child data-spring>
-        <figure class="use-card__visual use-card__visual--product">
-          <span class="use-card__glow use-card__glow--warm" aria-hidden="true"></span>
-          <img
-            src="/images/real/estate-flow.jpg"
-            alt="EstateFlow, a real-estate CRM built with AIWA"
-            width="1600"
-            height="1000"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <div class="use-card__body">
-          <h3 class="use-card__title">Launch your own product</h3>
-          <p class="use-card__lead">Turn that idea you've been sitting on into a real business.</p>
-          <p class="use-card__copy t-body">
-            Build your SaaS, marketplace, membership platform, directory, or next startup idea
-            with AIWA then launch it, charge customers, and keep improving it as you grow.
-          </p>
-          <a class="use-card__cta" href="https://app.aiwa.codes">
-            <span>Build your idea</span>
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- 2 · Build for clients — diverse shipped projects -->
-      <article class="use-card" data-blur-child data-spring>
-        <figure class="use-card__visual use-card__visual--collage">
-          <span class="use-card__glow use-card__glow--mint" aria-hidden="true"></span>
-          <div class="use-collage" aria-hidden="true">
-            <img src="/images/real/chateau-velour.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
-            <img src="/images/real/festova.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
-            <img src="/images/real/monograph.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
-            <img src="/images/real/stillpoint.jpg" alt="" width="640" height="400" loading="lazy" decoding="async" />
-              </div>
-        </figure>
-        <div class="use-card__body">
-          <h3 class="use-card__title">Build for clients</h3>
-          <p class="use-card__lead">Deliver more. Hire less.</p>
-          <p class="use-card__copy t-body">
-            Build professional websites, portals, CRMs, dashboards, and custom apps for clients
-            without needing a full development team.
-          </p>
-          <a class="use-card__cta" href="https://app.aiwa.codes/enterprise">
-            <span>Explore Agency</span>
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- 3 · Run your business — isolated CRM pipeline fragment -->
-      <article class="use-card" data-blur-child data-spring>
-        <figure class="use-card__visual use-card__visual--fragment">
-          <span class="use-card__glow use-card__glow--sky" aria-hidden="true"></span>
-          <div class="use-frag use-frag--pipeline" aria-hidden="true">
-            <p class="use-frag__kicker">Pipeline</p>
-            <div class="use-frag__cols">
-              <div class="use-frag__col">
-                  <span>Viewing</span>
-                  <b>Sarah Chen</b>
-                  <em>$825K</em>
-                </div>
-              <div class="use-frag__col is-hot">
-                  <span>Offer</span>
-                  <b>Elena Vasquez</b>
-                  <em>$2.1M</em>
-                </div>
-              <div class="use-frag__col">
-                  <span>Contract</span>
-                  <b>Sofia Romano</b>
-                  <em>$675K</em>
-                </div>
-              </div>
-            </div>
-        </figure>
-        <div class="use-card__body">
-          <h3 class="use-card__title">Run your business</h3>
-          <p class="use-card__lead">Build the software your business actually needs.</p>
-          <p class="use-card__copy t-body">
-            Create internal tools, dashboards, customer portals, booking systems, CRMs, and
-            workflows around the way your company already works.
-          </p>
-          <a class="use-card__cta" href="#gallery">
-            <span>See what you can build</span>
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- 4 · Turn skills into income — product projects visual -->
-      <article class="use-card" data-blur-child data-spring>
-        <figure class="use-card__visual use-card__visual--product">
-          <span class="use-card__glow use-card__glow--peach" aria-hidden="true"></span>
-          <img
-            src="/images/visuals/turn-skills-into-income.png"
-            alt="AIWA projects list showing published and draft apps"
-            width="1600"
-            height="1000"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <div class="use-card__body">
-          <h3 class="use-card__title">Turn skills into income</h3>
-          <p class="use-card__lead">Your next revenue stream could start with a prompt.</p>
-          <p class="use-card__copy t-body">
-            Sell websites. Build apps for businesses. Launch micro-SaaS products. Create templates.
-            Turn what you build with AIWA into something people will pay for.
-          </p>
-          <a class="use-card__cta" href="https://app.aiwa.codes">
-            <span>Start building</span>
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
-          </a>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<!-- ==========================================================================
      MADE WITH AIWA · was §3.4's two opposed marquee rows; now an editorial
      contact sheet. See the notes inside.
      ======================================================================= -->
@@ -1144,6 +926,215 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
 
   </div>
 </section>
+
+<!-- ==========================================================================
+     AUTONOMOUS QA · the proof section.
+
+     Placed here, after Made with AIWA and before "Why AIWA",
+     because it is the TEST stage's evidence: the engine has claimed the
+     app is driven in a real browser, and this is the receipt.
+
+     The brief supplied this as a headline, a subheadline and "then the
+     visual". The visual it showed was the hero canvas's own QA beat, which
+     has nowhere to put a headline - its scenes sit behind the scrolling text
+     panels, and a fourth panel would move the scrub timings §2.4 pins. So the
+     checklist lives here as a still, and the canvas beat carries the same five
+     lines (see .scene--test) so the two never disagree.
+     ======================================================================= -->
+<section class="section qa" id="qa">
+  <div class="shell shell--wide qa__grid">
+
+    <div class="qa__head" data-blur-parent>
+      <p class="eyebrow" data-blur-child>Autonomous QA</p>
+      <h2 class="t-h2" data-blur-child data-grad>Ship with confidence,<br />not crossed fingers</h2>
+      <p class="t-body section__lead" data-blur-child>
+        AIWA tests real workflows in a browser before your product goes live catching
+        broken interactions, authentication problems and usability issues before your
+        customers or clients do.
+      </p>
+    </div>
+
+    <!-- Agent-status receipt (layout inspired by live-agent cards; no CTA).
+         Right stack is a tiny AIWA-native “PASS” collage — product proof, not
+         stock photography. -->
+    <div class="qa-card" data-blur-in>
+      <header class="qa-card__head">
+        <h3 class="qa-card__title">Autonomous QA</h3>
+        <p class="qa-card__powered">
+          <img src="/aiwa-favicon.svg" alt="" width="16" height="16" decoding="async" />
+          <span>Powered by the <b>AIWA agent</b></span>
+        </p>
+      </header>
+
+      <div class="qa-card__agent">
+        <div class="qa-card__agent-main">
+          <p class="qa-card__status">
+            <span class="qa-card__pulse" aria-hidden="true"></span>
+            Agent testing for 23s
+          </p>
+          <ul class="qa-card__tasks">
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-clipboard-list"></use></svg>
+              <span>Testing core workflows</span>
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+              <span>Verifying authentication</span>
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code-xml"></use></svg>
+              <span>Checking business logic</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="qa-card__aside" aria-hidden="true">
+          <div class="qa-pass qa-pass--back">
+            <span class="qa-pass__route t-mono">/checkout</span>
+            <span class="qa-pass__mark">PASS</span>
+          </div>
+          <div class="qa-pass qa-pass--front">
+            <span class="qa-pass__route t-mono">/login</span>
+            <span class="qa-pass__mark">PASS</span>
+            <span class="qa-pass__meta">12 assertions · 1.4s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     WHY AIWA · Built for businesses — static 1 + 3 audience cards.
+     Visuals: card images from /images/visuals/.
+     No featureStages animation.
+     ======================================================================= -->
+<section class="section why" id="why">
+  <div class="shell shell--wide">
+    <div class="why__head" data-blur-parent>
+      <p class="eyebrow" data-blur-child>Built for businesses</p>
+      <h2 class="t-h2" data-blur-child data-grad>Don't just build apps.<br />Build opportunities.</h2>
+      <p class="t-body section__lead" data-blur-child>
+        Turn ideas into products, client projects, and business systems without assembling
+        a traditional development team.
+      </p>
+    </div>
+
+    <div class="why__grid" data-blur-parent data-stagger="100">
+
+      <!-- 1 · Launch your own product -->
+      <article class="use-card use-card--hero" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--product">
+          <span class="use-card__glow use-card__glow--warm" aria-hidden="true"></span>
+          <img
+            src="/images/visuals/Launch your own product.png"
+            alt="Product dashboard built with AIWA"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Launch your own product</h3>
+          <p class="use-card__lead">Turn that idea you've been sitting on into a real business.</p>
+          <p class="use-card__copy t-body">
+            Build your SaaS, marketplace, membership platform, directory, or next startup idea
+            with AIWA then launch it, charge customers, and keep improving it as you grow.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes">
+            <span>Build your idea</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 2 · Build for clients -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--product">
+          <span class="use-card__glow use-card__glow--mint" aria-hidden="true"></span>
+          <img
+            src="/images/visuals/Build for clients.png"
+            alt="Client project built with AIWA"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Build for clients</h3>
+          <p class="use-card__lead">Deliver more. Hire less.</p>
+          <p class="use-card__copy t-body">
+            Build professional websites, portals, CRMs, dashboards, and custom apps for clients
+            without needing a full development team.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes/enterprise">
+            <span>Explore Agency</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 3 · Run your business -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--product">
+          <span class="use-card__glow use-card__glow--sky" aria-hidden="true"></span>
+          <img
+            src="/images/visuals/Run your business.png"
+            alt="Business operations app built with AIWA"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Run your business</h3>
+          <p class="use-card__lead">Build the software your business actually needs.</p>
+          <p class="use-card__copy t-body">
+            Create internal tools, dashboards, customer portals, booking systems, CRMs, and
+            workflows around the way your company already works.
+          </p>
+          <a class="use-card__cta" href="#gallery">
+            <span>See what you can build</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 4 · Turn skills into income — product projects visual -->
+      <article class="use-card" data-blur-child data-spring>
+        <figure class="use-card__visual use-card__visual--product">
+          <span class="use-card__glow use-card__glow--peach" aria-hidden="true"></span>
+          <img
+            src="/images/visuals/turn-skills-into-income.png"
+            alt="AIWA projects list showing published and draft apps"
+            width="1600"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="use-card__body">
+          <h3 class="use-card__title">Turn skills into income</h3>
+          <p class="use-card__lead">Your next revenue stream could start with a prompt.</p>
+          <p class="use-card__copy t-body">
+            Sell websites. Build apps for businesses. Launch micro-SaaS products. Create templates.
+            Turn what you build with AIWA into something people will pay for.
+          </p>
+          <a class="use-card__cta" href="https://app.aiwa.codes">
+            <span>Start building</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
 
 <!-- ==========================================================================
      PRICING · §3.5 - sliding pill on the toggle, everything else static.
@@ -1385,7 +1376,6 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
           <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span></span>
       </a>
-      <a class="btn btn--ghost" href="#faq"><span class="btn__label">Read the FAQ</span></a>
     </div>
   </div>
 </section>
