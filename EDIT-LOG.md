@@ -4,6 +4,13 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-10 — Features: hide jump nav
+
+- Hid the sticky Workflow / Modes / Memory / Backend / Connect / Ship jump bar (`.feat-jump`) on the features page.
+- Files: `public/features/index.html`.
+
+---
+
 ## 2026-09-10 — Footer newsletter feedback (frontend)
 
 - Apply flips to Thank you (nav-style) and disables until reload; duplicate emails show a quiet status under the form. `subscribeNewsletter` in `public/js/newsletter.js` is a localStorage stub for engineers to replace with a real POST (same return shape). Wired from `main.js`, `page.js`, and aiwa22.

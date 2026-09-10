@@ -1932,12 +1932,6 @@ html.is-idea-scrub .hero-media__scrim {
   position: absolute;
   inset: 0;
 }
-/* Portrait product shots (e.g. Run your business form) — show the full UI
-   instead of side-cropping a tall asset in the landscape card well. */
-.use-card__visual--portrait img {
-  object-fit: contain;
-  object-position: center top;
-}
 
 /* Soft Lovable-style color wash behind isolated fragments */
 .use-card__glow {
