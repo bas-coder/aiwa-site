@@ -215,7 +215,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
       <!-- Visually first (order: -1) but last in the entrance chain: DOM order
            drives heroEntrance(), so this node must come after the others. -->
       <p class="hero__proof" data-entrance>
-        <span class="hero__proof-dot" aria-hidden="true"></span>
+        <span class="pulse-dot pulse-dot--accent hero__proof-dot" aria-hidden="true"></span>
         <span class="hero__proof-text">Join 14,000+ founders, agencies and creators turning ideas into real products</span>
       </p>
     </div>
@@ -268,7 +268,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
     </div>
   </section>
 
-  <!-- Empty. Its only job is to mark, at center center, where the shrink begins. -->
+  <!-- 1px marker. Handoff start is the workspace well entering, not this node. -->
   <section class="hero__panel is-spacer" id="flip-start" aria-hidden="true"></section>
 
   <!-- ---- System A: the pinned canvas. Also the handoff source. ---- -->
@@ -549,10 +549,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <img
           class="workspace__zone-shot"
           data-ws-well
-          src="/images/workspace-build.webp"
+          src="/plan/screenshots/Build.png?v=5"
           alt="AIWA workspace Build view with Festova live preview"
-          width="1920"
-          height="1280"
+          width="2600"
+          height="1732"
           loading="lazy"
           decoding="async"
         />
@@ -571,10 +571,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             aria-controls="workspace-zone"
             tabindex="0"
             data-ws-aside
-            data-ws-src="/images/workspace-build.webp"
+            data-ws-src="/plan/screenshots/Build.png?v=5"
             data-ws-alt="AIWA workspace Build view with Festova live preview"
           >
-            <img src="/images/workspace-build.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" />
+            <img src="/plan/screenshots/Build.png?v=5" alt="" width="2600" height="1732" loading="lazy" decoding="async" />
             <span class="ws-aside__cap t-mono">Build · live preview</span>
           </button>
         </li>
@@ -588,10 +588,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             aria-controls="workspace-zone"
             tabindex="-1"
             data-ws-aside
-            data-ws-src="/images/workspace-export-mobile.webp"
+            data-ws-src="/plan/screenshots/Export%20to%20Mobile.webp?v=5"
             data-ws-alt="Export to Mobile readiness checks in the AIWA workspace"
           >
-            <img src="/images/workspace-export-mobile.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" />
+            <img src="/plan/screenshots/Export%20to%20Mobile.webp?v=5" alt="" width="2400" height="1600" loading="lazy" decoding="async" />
             <span class="ws-aside__cap t-mono">Test · readiness</span>
           </button>
         </li>
@@ -605,10 +605,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
             aria-controls="workspace-zone"
             tabindex="-1"
             data-ws-aside
-            data-ws-src="/images/workspace-releases.webp"
+            data-ws-src="/plan/screenshots/Releases.png?v=5"
             data-ws-alt="Releases panel with live deploys and rollbacks"
           >
-            <img src="/images/workspace-releases.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" />
+            <img src="/plan/screenshots/Releases.png?v=5" alt="" width="2400" height="1600" loading="lazy" decoding="async" />
             <span class="ws-aside__cap t-mono">Ship &amp; evolve</span>
           </button>
         </li>
@@ -647,7 +647,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
     </div>
 
     <!-- Contact sheet of real AIWA builds. Badge lives on the frame; hover
-         reveals Use template. No plate index or hairline. -->
+         reveals Use template + Live demo. No plate index or hairline. -->
     <ol class="gallery__grid" data-blur-parent data-stagger="70">
       <li class="shot" data-blur-child data-shot>
         <article class="shot__card">
@@ -658,6 +658,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates/offset" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
+              </a>
+              <a class="shot__action shot__action--ghost" href="https://offset-88ca.aiwacodes.com/" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
               </a>
             </div>
           </div>
@@ -679,6 +683,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
+              <a class="shot__action shot__action--ghost" href="https://aurel-w99w.aiwacodes.com/" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
+              </a>
             </div>
           </div>
           <div class="shot__meta">
@@ -698,6 +706,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates/snapgather-festival" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
+              </a>
+              <a class="shot__action shot__action--ghost" href="https://snapgather-festival.aiwacodes.com/" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
               </a>
             </div>
           </div>
@@ -719,6 +731,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
+              <a class="shot__action shot__action--ghost" href="https://kelo-vhn9.aiwacodes.com/" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
+              </a>
             </div>
           </div>
           <div class="shot__meta">
@@ -739,6 +755,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
               </a>
+              <a class="shot__action shot__action--ghost" href="https://3pv77x-4010.csb.app/?slide=1" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
+              </a>
             </div>
           </div>
           <div class="shot__meta">
@@ -758,6 +778,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
               <a class="shot__action shot__action--solid" href="https://app.aiwa.codes/templates/monograph" target="_blank" rel="noopener noreferrer">
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
                 Use template
+              </a>
+              <a class="shot__action shot__action--ghost" href="https://monograph-portfolio.aiwacodes.com/" target="_blank" rel="noopener noreferrer">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-external-link"></use></svg>
+                Live demo
               </a>
             </div>
           </div>
@@ -851,10 +875,10 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
         <figure class="use-card__visual use-card__visual--product">
           <span class="use-card__glow use-card__glow--warm" aria-hidden="true"></span>
           <img
-            src="/images/visuals/Run your business.png?v=3"
+            src="/images/visuals/Run your business.png?v=4"
             alt="Custom booking form for a pet-services business built with AIWA"
-            width="838"
-            height="1201"
+            width="1268"
+            height="1130"
             loading="lazy"
             decoding="async"
           />
@@ -1096,7 +1120,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
       <div class="qa-card__agent">
         <div class="qa-card__agent-main">
           <p class="qa-card__status">
-            <span class="qa-card__pulse" aria-hidden="true"></span>
+            <span class="pulse-dot pulse-dot--good qa-card__pulse" aria-hidden="true"></span>
             Agent testing for 23s
           </p>
           <ul class="qa-card__tasks">
@@ -1407,7 +1431,7 @@ window.__aiwaLoaderFailsafe = window.setTimeout(function () {
     </div>
     <div class="footer__cols">
       <div><span class="footer__col-name">Solutions</span><a href="/ai-website-builder">Website Builder</a><a href="/ai-saas-builder">SaaS Builder</a><a href="/ai-crm-builder">CRM Builder</a><a href="/ai-app-builder">App Builder</a></div>
-      <div><span class="footer__col-name">Pages</span><a href="/features">Features</a><a href="#engine">Workflow</a><a href="#gallery">Made with AIWA</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
+      <div><span class="footer__col-name">Pages</span><a href="/features">Features</a><a href="/white-label">White-Label</a><a href="#engine">Workflow</a><a href="#gallery">Made with AIWA</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="/aiwa22">aiwa22</a></div>
       <div><span class="footer__col-name">Resources</span><a href="https://docs.aiwa.codes" target="_blank" rel="noopener noreferrer">Docs</a><a href="/resources">Resources</a><a href="https://app.aiwa.codes/templates" target="_blank" rel="noopener noreferrer">Templates</a><a href="https://app.aiwa.codes/connectors" target="_blank" rel="noopener noreferrer">Connectors</a><a href="https://app.aiwa.codes/enterprise" target="_blank" rel="noopener noreferrer">Enterprise</a></div>
       <div><span class="footer__col-name">Legal</span><a href="/legal">Legal overview</a><a href="/legal/terms">Terms of Service</a><a href="/legal/privacy">Privacy Policy</a><a href="/legal/acceptable-use">Acceptable Use Policy</a><a href="/legal/refund">Refund and Cancellation Policy</a><a href="/legal/cookies">Cookie Policy</a></div>
       <div><span class="footer__col-name">Contact</span><a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">Join the Community</a><a href="https://x.com/aiwadotcodes" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/company/aiwacodes/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://web.facebook.com/aiwacodes" target="_blank" rel="noopener noreferrer">Facebook</a></div>

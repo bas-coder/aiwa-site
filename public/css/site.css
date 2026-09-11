@@ -137,7 +137,7 @@
 .nav.is-stuck .nav__inner::after { opacity: 0.1; }
 /* 24px -> 16px, as the marquee's does, which is also what buys the room the
    narrower bar needs. */
-.nav.is-stuck .nav__links { gap: 1rem; }
+.nav.is-stuck .nav__links { gap: 0.75rem; }
 /* h-9 px-4 - the app's own button size, which is also the marquee nav's 36px
    and what holds the bar to 52px. The hero CTAs keep the marketing scale. */
 .nav__cta-wrap {
@@ -195,6 +195,9 @@
 .nav__links {
   display: flex; gap: 1.7rem; font-size: 0.85rem; color: var(--cream-300);
   transition: gap var(--dur-base) var(--ease-brand); /* tightens with the bar - see .is-stuck above */
+}
+@media (max-width: 1180px) {
+  .nav__links { gap: 1.15rem; }
 }
 /* Framer-style flip: idle label slides up, duplicate enters from below. */
 .nav__links a {
@@ -285,21 +288,21 @@
   pointer-events: none;
 }
 .hero__panel > * { pointer-events: auto; }
-/* Exactly one viewport tall, and empty. Its `center center` has to resolve to
-   the same scroll position as the hero's `bottom bottom` - that is what makes
-   the handoff start on the frame the canvas stops being full-bleed. Give it
-   content, or a height its siblings do not share, and the two drift apart.
-   (svh, matching the other panels, not vh: on a phone the two differ by the
-   toolbar's height, and mixing them puts this panel out of step with the three
-   above it. A small residual drift is survivable here only because the canvas
-   is permanently fixed rather than pinned - there is no hand-back frame for a
-   mismatch to land on.) */
-.hero__panel.is-spacer { pointer-events: none; height: 100svh; min-height: 100svh; padding: 0; }
+/* 1px marker at the hero's end. Handoff start is the workspace well entering
+   the viewport (hero.js), not this node's centre — a 100svh empty panel was
+   a full blank screen between the last idea plate and the Flip. */
+.hero__panel.is-spacer {
+  pointer-events: none;
+  height: 1px;
+  min-height: 1px;
+  padding: 0;
+  overflow: hidden;
+}
 
 /* One column for copy, one for the canvas, held for the whole hero.
    Consistency reads as design; a layout that reshuffles every panel reads as
-   fidgeting. The canvas only moves once - at the very end, when it slides to
-   centre because it is about to become the card. */
+   fidgeting. The canvas stays in the right-hand column — a few points of
+   leftward drift through the idea plates, then a fade into the Flip. */
 /* NOTE: this is a child of .shell, never combined with it. Putting a second
    max-width on .shell itself would inherit its `margin-inline: auto` and
    centre the column instead of anchoring it to the page gutter. */
@@ -309,8 +312,8 @@
 /* Tall scrub panel: left copy sticks at viewport center while stack advances.
    Shell stretches full panel height so sticky has runway. */
 .hero__panel.is-3 {
-  /* Five idea plates need ~1 extra viewport of scrub vs the old 4-step run. */
-  min-height: 580svh;
+  /* Five idea plates; trail is a short sticky release, not a leftover screen. */
+  min-height: 510svh;
   align-items: stretch;
   padding-block: 0;
 }
@@ -323,8 +326,8 @@
   /* Lead with empty runway so panel 2 (“five agents”) leaves before the
      idea list reaches center. Matches hero.js measureHeroBreaks(). */
   padding-top: 100svh;
-  /* Trail so Evolve can finish scrubbing before the spacer / handoff. */
-  padding-bottom: max(85vh, calc(60vh + 4rem));
+  /* Short settle so the last plate can unstick into Workspace, not 85vh of air. */
+  padding-bottom: 16vh;
 }
 .hero__idea {
   position: sticky;
@@ -389,6 +392,7 @@
   gap: 0.55rem;
   max-width: 100%;
   padding: 0.42rem 0.95rem 0.42rem 0.72rem;
+  overflow: visible;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--cream-050) 14%, transparent);
   background: color-mix(in srgb, var(--cream-050) 5%, transparent);
@@ -397,14 +401,6 @@
   color: var(--cream-100);
   font-size: 0.78rem;
   line-height: 1.35;
-}
-.hero__proof-dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: var(--accent-hot);
-  box-shadow: 0 0 0 0.2rem var(--accent-glow);
 }
 .hero__proof-text { text-wrap: pretty; }
 
@@ -634,9 +630,9 @@
 /* Legibility scrim under the left column, where the hero copy sits. Without
    it the headline fights the scene for the same pixels; with it the scene
    reads as ground and the copy as figure, which is the relationship §2.5
-   wants ("the restraint is what makes the media read as the subject"). */
-/* Once the copy has scrolled past, the scrim lifts and the scene owns the
-   frame. JS drives --copy-scrim off the same progress the scenes read. */
+   wants ("the restraint is what makes the media read as the subject").
+   Two-column keeps the scrim: copy is still there through the idea plates.
+   Narrow lifts it at stageCenter, driven by --copy-scrim. */
 .hero-media__frame::after {
   content: ''; position: absolute; inset: 0; z-index: 3; pointer-events: none;
   background: linear-gradient(96deg, rgba(6,5,4,0.94) 0%, rgba(6,5,4,0.8) 30%, rgba(6,5,4,0) 54%);
@@ -1073,13 +1069,13 @@ main, .footer { position: relative; z-index: 2; }
 }
 /* Build: chat + Festova preview — keep both panes readable in the narrow card. */
 #ws-tab-build img {
-  object-position: 58% 8%;
+  object-position: 72% 6%;
 }
 #ws-tab-test img {
-  object-position: center 35%;
+  object-position: center 42%;
 }
 #ws-tab-ship img {
-  object-position: 62% 10%;
+  object-position: 78% 8%;
 }
 .ws-aside__cap {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
@@ -1212,25 +1208,11 @@ main, .footer { position: relative; z-index: 2; }
   gap: 0.55rem;
   margin: 0;
   padding-bottom: 0.75rem;
+  overflow: visible;
   border-bottom: 1px solid var(--qa-line);
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--good);
-}
-
-.qa-card__pulse {
-  width: 0.7rem;
-  height: 0.7rem;
-  flex: 0 0 auto;
-  border-radius: 0.2rem;
-  background: var(--good);
-  box-shadow: 0 0 0.65rem color-mix(in srgb, var(--good) 55%, transparent);
-  animation: qa-pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes qa-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(0.86); }
 }
 
 .qa-card__tasks {
@@ -1308,10 +1290,6 @@ main, .footer { position: relative; z-index: 2; }
   font-size: 0.52rem;
   color: var(--cream-500);
   letter-spacing: 0.02em;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .qa-card__pulse { animation: none; }
 }
 
 @media (max-width: 900px) {
@@ -1861,6 +1839,214 @@ html.is-idea-scrub .hero-media__scrim {
 @media (max-width: 900px) {
   .why__grid { grid-template-columns: 1fr; }
   .why__grid > .use-card--hero { grid-column: auto; }
+}
+
+/* ---------------------------------------------------------------------------
+   WHITE-LABEL · homepage teaser + shared Northstar studio mock.
+   The dedicated /white-label page reuses .ns-studio; layout for that page
+   lives in page.css. Partner palette is scoped inside the mock so AIWA
+   chrome stays amber.
+   ------------------------------------------------------------------------ */
+.wl-home { position: relative; }
+.wl-home__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(1.6rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.wl-home__visual { margin: 0; }
+.wl-home__copy { display: grid; gap: 1rem; justify-items: start; max-width: 38rem; }
+.wl-home__copy .t-h2 { line-height: 1.12; }
+.wl-home__captions {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0.4rem 0 0.2rem;
+  font-size: 0.9rem;
+  color: var(--cream-300);
+  line-height: 1.55;
+}
+.wl-home__captions li { position: relative; padding-left: 1.15rem; }
+.wl-home__captions li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.5rem;
+  height: 0.28rem;
+  border-left: 1.5px solid var(--good);
+  border-bottom: 1.5px solid var(--good);
+  transform: rotate(-45deg);
+}
+.wl-home__captions strong { color: var(--cream-050); font-weight: 600; }
+.wl-home__note { font-size: 0.82rem; color: var(--cream-500); }
+@media (max-width: 900px) {
+  .wl-home__grid { grid-template-columns: 1fr; }
+}
+
+.ns-studio {
+  --ns-bg: #0c1824;
+  --ns-surface: #152a3c;
+  --ns-line: rgba(180, 220, 230, 0.16);
+  --ns-accent: #3ec6c6;
+  --ns-gold: #f0c14b;
+  --ns-text: #eaf4f6;
+  --ns-muted: #8aa3ad;
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.85fr) minmax(0, 1.15fr);
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid var(--ink-600);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, rgba(28, 24, 17, 0.42), rgba(12, 10, 8, 0.5));
+  min-height: 22rem;
+}
+.ns-studio__editor,
+.ns-studio__preview {
+  border: 1px solid var(--ns-line);
+  border-radius: 1.2rem;
+  background: var(--ns-bg);
+  color: var(--ns-text);
+  min-width: 0;
+}
+.ns-studio__editor {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  padding: 1rem 1rem 1.1rem;
+}
+.ns-studio__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ns-muted);
+}
+.ns-studio__field {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ns-line);
+  border-radius: 0.7rem;
+  background: var(--ns-surface);
+}
+.ns-studio__field span {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ns-muted);
+}
+.ns-studio__field strong { font-size: 0.88rem; font-weight: 600; }
+.ns-studio__row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.ns-studio__logo {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.7rem;
+  background: var(--ns-surface);
+  border: 1px solid var(--ns-line);
+  color: var(--ns-gold);
+}
+.ns-studio__swatches { display: flex; gap: 0.35rem; }
+.ns-swatch {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.ns-swatch--ink { background: var(--ns-bg); }
+.ns-swatch--accent { background: var(--ns-accent); }
+.ns-swatch--gold { background: var(--ns-gold); }
+.ns-studio__status {
+  font-size: 0.72rem;
+  color: var(--ns-accent);
+}
+.ns-studio__preview { display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+.ns-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--ns-line);
+  background: rgba(8, 16, 24, 0.7);
+}
+.ns-chrome__dots { display: flex; gap: 0.28rem; }
+.ns-chrome__dots i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ns-muted);
+  opacity: 0.55;
+}
+.ns-chrome__url {
+  flex: 1;
+  min-width: 0;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ns-surface);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ns-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ns-signin {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.45rem;
+  padding: 1.6rem 1rem;
+  text-align: center;
+}
+.ns-signin p { margin: 0; }
+.ns-signin__brand { font-size: 1.05rem; font-weight: 600; }
+.ns-signin__hint { font-size: 0.78rem; color: var(--ns-muted); }
+.ns-signin__btn {
+  margin-top: 0.45rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  background: var(--ns-accent);
+  color: var(--ns-bg);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.ns-mark { width: 1.15rem; height: 1.15rem; color: var(--ns-gold); }
+.ns-mark--lg { width: 2.4rem; height: 2.4rem; }
+.ns-studio--compact { min-height: 0; grid-template-columns: 1fr; padding: 0.55rem; }
+.ns-studio--compact .ns-studio__editor { display: none; }
+.ns-studio--mail {
+  min-height: 0;
+  grid-template-columns: 1fr;
+  padding: 0.55rem;
+}
+.ns-studio--mail .ns-studio__editor { display: none; }
+.ns-mail {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem 1.05rem 1.15rem;
+}
+.ns-mail__from { font-size: 0.72rem; color: var(--ns-muted); }
+.ns-mail__from b { color: var(--ns-text); font-weight: 600; }
+.ns-mail__subject { font-size: 0.92rem; font-weight: 600; }
+.ns-mail__tag {
+  justify-self: start;
+  margin-top: 0.2rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(62, 198, 198, 0.16);
+  color: var(--ns-accent);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+@media (max-width: 720px) {
+  .ns-studio { grid-template-columns: 1fr; min-height: 0; }
 }
 
 .use-card {
@@ -2654,6 +2840,14 @@ html.is-idea-scrub .hero-media__scrim {
   color: var(--ink-950);
 }
 .shot__action--solid:hover { background: #fff; }
+.shot__action--ghost {
+  background: color-mix(in srgb, var(--ink-900) 55%, transparent);
+  color: var(--cream-050);
+  border-color: transparent;
+}
+.shot__action--ghost:hover {
+  background: color-mix(in srgb, var(--ink-850) 88%, transparent);
+}
 
 .shot__meta { display: grid; gap: 0.15rem; padding-top: 0.15rem; }
 .shot__body { display: grid; gap: 0.15rem; }
@@ -2767,7 +2961,7 @@ html.is-idea-scrub .hero-media__scrim {
    buttons in a radiogroup, with generous hit areas, hover growth and arrow
    keys - not a native range with a draggable thumb.
 
-   Beam + knob use one solid color per stop (amber → orange → green). Dots are
+   Beam + knob use one solid color per stop (gold → amber → green). Dots are
    always opaque so the beam never reads through them; passed stops fill with
    the active heat color.
    ------------------------------------------------------------------------ */
@@ -2790,7 +2984,7 @@ html.is-idea-scrub .hero-media__scrim {
   transition: width var(--dur-base) var(--ease-out), background-color var(--dur-base) var(--ease-out);
 }
 .credits[data-heat='0'] .credits__beam { background: var(--app-sunset-1); }
-.credits[data-heat='1'] .credits__beam { background: var(--app-sunset-2); }
+.credits[data-heat='1'] .credits__beam { background: var(--accent); }
 .credits[data-heat='2'] .credits__beam { background: var(--good); }
 
 /* 1.75rem of hit area around a 0.625rem dot - the target is the button, the
@@ -2826,7 +3020,7 @@ html.is-idea-scrub .hero-media__scrim {
   box-shadow: none;
 }
 .credits[data-heat='1'] .credits__stop[data-credits-stop='0'] > span {
-  background: var(--app-sunset-2);
+  background: var(--accent);
 }
 .credits[data-heat='2'] .credits__stop[data-credits-stop='0'] > span,
 .credits[data-heat='2'] .credits__stop[data-credits-stop='1'] > span {
@@ -2839,8 +3033,8 @@ html.is-idea-scrub .hero-media__scrim {
   box-shadow: 0 0 0 3px rgb(255 179 0 / 0.25);
 }
 .credits[data-heat='1'] .credits__stop[aria-checked='true'] > span {
-  background: var(--app-sunset-2);
-  box-shadow: 0 0 0 3px rgb(255 94 0 / 0.25);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 .credits[data-heat='2'] .credits__stop[aria-checked='true'] > span {
   background: var(--good);
@@ -2856,7 +3050,7 @@ html.is-idea-scrub .hero-media__scrim {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--cream-050) 25%, transparent);
 }
 .credits[data-heat='1'] .credits__stop[data-popular][aria-checked='true'] > span {
-  box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6), 0 0 0 5px rgb(255 94 0 / 0.25);
+  box-shadow: 0 0 0 2px rgb(190 242 100 / 0.6), 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 .credits__stop:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(255 94 0 / 0.5); }
 
@@ -3357,8 +3551,8 @@ html.is-idea-scrub .hero-media__scrim {
    Both tiers remove the scrub, so both must also remove the thing the scrub
    pays for: four viewports of scrolling. Without a scrubbed canvas behind
    them, panels 2-4 are three blank screens between two paragraphs, and the
-   spacer panel - whose only job was to mark where the handoff begins - is a
-   whole empty viewport that now marks nothing.
+   spacer marker - whose only job is to keep #flip-start in the tree - marks
+   nothing without a scrub.
    So the hero collapses to one full-height opening plus two ordinary blocks,
    the spacer is removed, and the canvas is scoped to the first viewport it
    actually sits behind. Every rule below is shared by both tiers because the

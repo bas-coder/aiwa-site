@@ -113,11 +113,12 @@ if (orphans.length) fail(`bodies with no LEGAL_DOCS entry: ${orphans.join(', ')}
    including the home page's. Add a page here and it appears in fourteen
    footers; do not add it to a page by hand.
    ======================================================================== */
-/* Four items, per the client brief: Features | Pricing | Docs | Community.
+/* Five items: Features | White-Label | Pricing | Docs | Community.
    Workflow, Why AIWA, Made with and FAQ came out of the nav and are all still
    reachable from the footer, which is why dropping them here costs nothing. */
 const NAV = [
   { label: 'Features', href: '/features' },
+  { label: 'White-Label', href: '/white-label' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Docs', href: 'https://docs.aiwa.codes' },
   { label: 'Community', href: 'https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e' },
@@ -139,6 +140,7 @@ const FOOTER_COLS = [
     name: 'Pages',
     links: [
       { label: 'Features', href: '/features' },
+      { label: 'White-Label', href: '/white-label' },
       { label: 'Workflow', href: '/#engine' },
       { label: 'Made with AIWA', href: '/#gallery' },
       { label: 'Pricing', href: '/#pricing' },
@@ -960,11 +962,21 @@ function replaceRegion(src, name, replacement, file) {
   return `${src.slice(0, from + open.length)}\n${replacement}\n${src.slice(to)}`;
 }
 
-for (const rel of ['index.html', 'aiwa22/index.html']) {
+/* index.html and aiwa22 are hand-authored bodies. /white-label is the same:
+   custom marketing sections, with only nav and footer filled from NAV /
+   FOOTER_COLS so a fifth page cannot drift. here is the path used for
+   aria-current, so White-Label lights up on its own page. */
+const HAND_PAGES = [
+  { rel: 'index.html', here: '/' },
+  { rel: 'aiwa22/index.html', here: '/' },
+  { rel: 'white-label/index.html', here: '/white-label' },
+];
+
+for (const { rel, here } of HAND_PAGES) {
   const file = join(PUBLIC, rel);
   let src = readFileSync(file, 'utf8');
-  src = replaceRegion(src, 'NAV', navHtml('/'), `public/${rel}`);
-  src = replaceRegion(src, 'FOOTER', footerHtml('/'), `public/${rel}`);
+  src = replaceRegion(src, 'NAV', navHtml(here), `public/${rel}`);
+  src = replaceRegion(src, 'FOOTER', footerHtml(here), `public/${rel}`);
   emit(rel, src);
 }
 

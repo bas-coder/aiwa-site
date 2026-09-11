@@ -64,11 +64,24 @@ const FALLBACK_BREAKS = {
   planShow: 0.18,
   ideaShow: 0.36,
   planHide: 0.36,
-  ideaHide: 0.92,
+  ideaHide: 1,
   /* Was shipShow: no ship scene anymore; marks handoff / evolve HUD. */
-  handoffStart: 0.94,
-  stageCenter: 0.94,
+  handoffStart: 1,
+  stageCenter: 0.88,
 };
+
+/* Flip progress at which the last idea plate is fully gone. Hold it until
+   the well is actually entering so there is no empty HUD frame. */
+const HANDOFF_IDEA_FADE = 0.12;
+const SCENE_EXIT_Y = 24;
+const SCENE_EXIT_BLUR = 12;
+
+/* Two-column rest: scene sits in the right-hand column. A full slide to
+   xPercent 0 was the Flip crutch — it hauled the idea cards through the
+   copy. Drift is a few points of that column, still clearly on the right. */
+const STAGE_COL_X = 19;
+const STAGE_COL_X_DRIFT = 14;
+const STAGE_COL_SCALE = 0.94;
 
 const clamp01 = (n) => Math.max(0, Math.min(1, n));
 
@@ -82,7 +95,7 @@ function measureHeroBreaks() {
   const panel2 = document.querySelector('.hero__panel.is-2');
   const panel3 = document.querySelector('.hero__panel.is-3');
   const ideaCopy = document.querySelector('.hero__idea');
-  const spacer = document.getElementById('flip-start');
+  const zone = document.getElementById('workspace-zone');
   const vh = window.innerHeight;
   const range = Math.max(1, (hero?.offsetHeight || vh) - vh);
   const toProgress = (px) => clamp01(px / range);
@@ -109,22 +122,23 @@ function measureHeroBreaks() {
   const planShow = clamp01(Math.max(0.05, atPlan));
   const ideaShow = clamp01(Math.max(planShow + 0.04, atIdea));
   const ideaScrubEnd = clamp01(Math.max(ideaShow + 0.12, atIdeaScrubEnd));
-  /* Hold the last plate through the spacer — no ship/workspace duplicate
-     fills that window anymore, so hiding the idea scene early leaves a gap. */
-  const spacerTop = spacer ? offsetFromHero(hero, spacer) : range;
-  const stageCenter = clamp01(Math.max(
-    ideaScrubEnd + 0.02,
-    toProgress(spacerTop - vh * 0.15),
-  ));
-  const afterIdea = stageCenter;
+  /* The well lives after the hero, so zone-enter maps to 1 on this clock.
+     Stage drift ends with the idea plates; Flip fade (applyIdeaHold) owns
+     the exit. Hiding the idea scene on this timeline was the blank HUD. */
+  const atZoneEnter = zone
+    ? toProgress(offsetFromHero(hero, zone) - vh)
+    : 1;
+  const handoffStart = clamp01(Math.max(ideaScrubEnd, atZoneEnter));
+  const stageCenter = ideaScrubEnd;
+  const ideaHide = 1;
 
   return {
     promptHide: planShow,
     planShow,
     ideaShow,
     planHide: ideaShow,
-    ideaHide: stageCenter,
-    handoffStart: afterIdea,
+    ideaHide,
+    handoffStart,
     stageCenter,
   };
 }
@@ -384,13 +398,11 @@ function buildSceneTimeline() {
 
   const tl = gsap.timeline({ paused: true, defaults: { ease: EASE.scrub } });
 
-  /* ---- Where the scene lives, and the one time it moves --------------
-     Wide viewports get two columns: copy left, canvas right, held steady for
-     the whole hero. The canvas moves exactly once - over the empty spacer
-     panel, when the copy is gone and it slides to centre and grows, because
-     the next thing it does is become the card. Moving it any earlier would be
-     motion for its own sake, and moving it more than once would make the
-     column layout look accidental.
+  /* ---- Where the scene lives -----------------------------------------
+     Wide viewports: copy left, canvas right. The column holds through the
+     hero. Through the idea plates the scene drifts a few points left — still
+     a right-hand column, never a slide to centre. Exit is the Flip fade
+     (applyIdeaHold), not a recentre crutch.
 
      Narrow viewports fall back to the spec's own model (§2.1): one full-bleed
      canvas with the text panels scrolling over it. There the legibility scrim
@@ -408,13 +420,12 @@ function buildSceneTimeline() {
   const STAGE_ARRIVE_DUR = 0.035;
 
   if (twoColumn) {
+    gsap.set(frame, { '--copy-scrim': 1 });
     tl.fromTo(stage,
-      { xPercent: 19, scale: 0.94, opacity: STAGE_ARRIVE_OPACITY, filter: STAGE_ARRIVE_BLUR },
-      { xPercent: 19, scale: 0.94, opacity: 1, filter: 'blur(0px)', duration: STAGE_ARRIVE_DUR }, 0);
-    tl.to(stage, { xPercent: 0, scale: 1, duration: 0.12 }, breaks.stageCenter);
-    // the scrim only ever has to cover the copy column, so it simply lifts
-    // when the copy runs out
-    tl.fromTo(frame, { '--copy-scrim': 1 }, { '--copy-scrim': 0, duration: 0.1 }, breaks.stageCenter);
+      { xPercent: STAGE_COL_X, scale: STAGE_COL_SCALE, opacity: STAGE_ARRIVE_OPACITY, filter: STAGE_ARRIVE_BLUR },
+      { xPercent: STAGE_COL_X, scale: STAGE_COL_SCALE, opacity: 1, filter: 'blur(0px)', duration: STAGE_ARRIVE_DUR }, 0);
+    const driftDur = Math.max(0.08, 1 - breaks.ideaShow);
+    tl.to(stage, { xPercent: STAGE_COL_X_DRIFT, duration: driftDur }, breaks.ideaShow);
   } else {
     tl.fromTo(stage,
       { scale: 1.04, opacity: STAGE_ARRIVE_OPACITY, filter: STAGE_ARRIVE_BLUR },
@@ -451,10 +462,9 @@ function buildSceneTimeline() {
   hide(scenes.plan, breaks.planHide);
 
   /* -- Panel 3 · BUILD / From Idea to Working Product.
-     Stays up through scrub + spacer until stageCenter (handoff morph).
-     Hiding earlier left a blank gap after the ship/workspace beat was removed. -- */
+     Stays up through the last plate. applyIdeaHold() fades it once Flip
+     has begun — hiding it on this clock left a blank HUD frame. -- */
   show(scenes.build, breaks.ideaShow, 0.04);
-  hide(scenes.build, breaks.ideaHide);
 
   /* TEST beat is CSS-hidden; do not steal the idea window for it. */
   /* Duplicate workspace Mac window removed — #workspace owns that still. */
@@ -542,8 +552,8 @@ function buildSceneTimeline() {
 export function heroScroll() {
   const media = document.getElementById('hero-media');
   const hero = document.querySelector('.hero');
-  const flipStart = document.getElementById('flip-start');
   const zone = document.getElementById('workspace-zone');
+  const ideaScene = document.querySelector('[data-scene="build"]');
   if (!media || !hero || !zone) return () => {};
 
   const sceneTl = buildSceneTimeline();
@@ -583,6 +593,30 @@ export function heroScroll() {
     zone.classList.toggle('is-seated', seated);
   };
 
+  /* Last plate stays painted until Flip is a few percent in.
+     Do not write autoAlpha while t is 0 — that would unhide the idea scene
+     during prompt/plan. Once Flip has written, clear so the scene timeline
+     owns the node again on the way back. */
+  let ideaHoldArmed = false;
+  const applyIdeaHold = (t) => {
+    if (!ideaScene) return;
+    if (t <= 0) {
+      if (ideaHoldArmed) {
+        gsap.set(ideaScene, { clearProps: 'opacity,visibility,y,filter,transform' });
+        ideaHoldArmed = false;
+        sceneTl.progress(sceneTl.progress());
+      }
+      return;
+    }
+    ideaHoldArmed = true;
+    const fade = Math.min(1, Math.max(0, t / HANDOFF_IDEA_FADE));
+    gsap.set(ideaScene, {
+      autoAlpha: 1 - fade,
+      y: -SCENE_EXIT_Y * fade,
+      filter: `blur(${SCENE_EXIT_BLUR * fade}px)`,
+    });
+  };
+
   /* §5.1 / §2.8 tier 4 - reduced motion.
      No pin, no scrub, no handoff: the canvas simply holds its poster frame in
      the hero, exactly as the spec's "video shows frame 0 only" describes, and
@@ -602,7 +636,7 @@ export function heroScroll() {
       clearProps: 'filter',
       opacity: wide ? 1 : 0.45,
       scale: 1,
-      xPercent: wide ? 19 : 0,
+      xPercent: wide ? STAGE_COL_X : 0,
     });
     return () => {
       gsap.set('.stage', { clearProps: 'all' });
@@ -662,23 +696,28 @@ export function heroScroll() {
   }));
 
   /* ---- ACT 4: the handoff window ----------------------------------------
-     Starts at the empty spacer panel's centre, ends at the zone's centre -
-     the two triggers §2.6 names. Because the spacer is exactly one viewport
-     tall and is the hero's last child, its `center center` is the same scroll
-     position as the hero's `bottom bottom`: the canvas begins to shrink on
-     precisely the frame it stops being full-bleed. That coincidence is the
-     reason the spacer exists at all, and it is why it must stay empty and
-     exactly 100vh. */
+     Starts as the well enters the viewport, ends at the well's centre.
+     #flip-start stays in the DOM as a 1px marker; it is not this clock.
+     A 100vh spacer made the last plate vanish into an empty HUD frame
+     before the morph began. */
   created.push(ScrollTrigger.create({
-    trigger: flipStart,
-    start: 'center center',
-    endTrigger: zone,
+    trigger: zone,
+    start: 'top bottom',
     end: 'center center',
     scrub: true,
     invalidateOnRefresh: true,
-    onUpdate: (self) => { handoff = self.progress; applyBox(); },
-    onLeave: () => { handoff = 1; applyBox(); },
-    onLeaveBack: () => { handoff = 0; applyBox(); },
+    onUpdate: (self) => {
+      handoff = self.progress;
+      applyIdeaHold(self.progress);
+      applyBox();
+    },
+    onLeave: () => { handoff = 1; applyIdeaHold(1); applyBox(); },
+    onLeaveBack: () => { handoff = 0; applyIdeaHold(0); applyBox(); },
+    onRefresh: (self) => {
+      handoff = self.progress;
+      applyIdeaHold(self.progress);
+      applyBox();
+    },
   }));
 
   /* ---- ACT 5: the arrival reveal ---------------------------------------

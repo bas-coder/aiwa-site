@@ -34,6 +34,10 @@
      .feat-spot        split copy + product still
      .feat-shots       three shipping stills
      .feat-chips       connector catalog
+     .wl-hero          /white-label split hero + Northstar preview
+     .wl-card          branded-experience cards with compact mocks
+     .wl-econ          resale example table
+     .wl-pricing       program billing switch + two cards
    ========================================================================= */
 
 /* ---------------------------------------------------------------------------
@@ -426,9 +430,7 @@
   top: var(--nav-h);
   z-index: 40;
   border-block: 1px solid var(--ink-600);
-  background: color-mix(in srgb, var(--ink-900) 88%, transparent);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background: var(--ink-900);
 }
 .feat-jump__list {
   display: flex;
@@ -579,3 +581,131 @@
 }
 
 .toc a[aria-current="true"] { color: var(--cream-050); border-color: var(--accent); }
+
+/* ---------------------------------------------------------------------------
+   /white-label
+   ------------------------------------------------------------------------ */
+.wl-hero figure { margin: 0; }
+.page .accordion__body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba(254, 160, 2, 0.4);
+}
+.page .accordion__body a:hover { text-decoration-color: var(--accent); }
+.wl-hero .page-hero__blob { right: -8%; }
+.wl-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.6rem, 4vw, 3.4rem);
+  align-items: center;
+}
+.wl-hero__copy { display: grid; gap: 1.15rem; justify-items: start; max-width: 40rem; }
+.wl-hero__copy .page-hero__h1 { font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 0.98; text-wrap: balance; }
+.wl-hero__copy .page-hero__lead { max-width: 40rem; font-size: clamp(1.05rem, 1.4vw, 1.3rem); }
+.wl-hero .ns-studio { min-height: 24rem; }
+@media (max-width: 900px) {
+  .wl-hero__grid { grid-template-columns: 1fr; }
+}
+
+.wl-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.wl-card {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  padding: clamp(1.2rem, 2vw, 1.6rem);
+  border: 1px solid var(--ink-600);
+  border-radius: 1.4rem;
+  background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.35));
+}
+.wl-card h3 { font-size: 1.08rem; }
+.wl-card p { font-size: 0.88rem; color: var(--cream-300); line-height: 1.6; }
+.wl-card .ns-studio { min-height: 0; }
+@media (max-width: 720px) {
+  .wl-cards { grid-template-columns: 1fr; }
+}
+
+.wl-caps {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.wl-caps article {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  padding: clamp(1.2rem, 2vw, 1.6rem);
+  border: 1px solid var(--ink-600);
+  border-radius: 1.4rem;
+  background: linear-gradient(180deg, var(--ink-800), rgba(18, 18, 17, 0.35));
+}
+.wl-caps h3 { font-size: 1.02rem; }
+.wl-caps p { font-size: 0.86rem; color: var(--cream-300); line-height: 1.6; }
+.wl-caps__bridge {
+  margin-top: 1.4rem;
+  max-width: 46rem;
+}
+@media (max-width: 900px) {
+  .wl-caps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .wl-caps { grid-template-columns: 1fr; }
+}
+
+.wl-econ {
+  display: grid;
+  gap: 1.2rem;
+  max-width: 40rem;
+}
+.wl-econ .table-scroll { margin-top: 0; }
+.wl-econ__title { font-size: 1.05rem; }
+.wl-econ__caption { font-size: 0.84rem; color: var(--cream-500); line-height: 1.6; }
+.wl-econ__note { font-size: 0.9rem; color: var(--cream-300); line-height: 1.65; max-width: 46rem; }
+
+.wl-pricing .pricing__head { margin-bottom: 2.2rem; }
+.wl-pricing__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 48rem;
+  margin-inline: auto;
+  align-items: stretch;
+}
+.wl-pricing__grid .plan { height: 100%; }
+.wl-pricing__includes {
+  max-width: 48rem;
+  margin: 1.6rem auto 0;
+  padding: 1.3rem 1.4rem;
+  border: 1px solid var(--ink-600);
+  border-radius: 1.4rem;
+  background: rgba(18, 18, 17, 0.5);
+}
+.wl-pricing__includes h3 {
+  font-size: 0.92rem;
+  margin-bottom: 0.7rem;
+}
+.wl-pricing__includes .plan__list { padding-top: 0; border-top: 0; }
+.wl-pricing__foot {
+  max-width: 48rem;
+  margin: 1rem auto 0;
+  text-align: center;
+  color: var(--cream-500);
+}
+@media (max-width: 720px) {
+  .wl-pricing__grid { grid-template-columns: 1fr; }
+}
+
+.wl-setup-note {
+  margin-top: 1.4rem;
+  font-size: 0.88rem;
+  color: var(--cream-500);
+  line-height: 1.6;
+  max-width: 46rem;
+}

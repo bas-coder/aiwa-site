@@ -10,6 +10,7 @@
   --ease-brand: cubic-bezier(0.625, 0.05, 0, 1);
   --ease-slider: cubic-bezier(0.38, 0.005, 0.215, 1);
   --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-ping: cubic-bezier(0, 0, 0.2, 1);
 
   /* -- §1.3 duration ------------------------------------------------------- */
   --dur-micro: 350ms;
@@ -166,6 +167,13 @@
   --dur-click: 200ms;
   --line-alpha: 40%;
   --line-muted: color-mix(in srgb, var(--ink-700) var(--line-alpha), transparent);
+
+  /* Live ping — still core, expanding ring. One treatment site-wide. */
+  --pulse-dot-size: 0.5rem;
+  --pulse-dot-period: 1.75s;
+  --pulse-dot-spread: 2.2;
+  --pulse-dot-ring-opacity: 0.7;
+  --pulse-dot-color: var(--accent);
 }
 
 /* §1.6 - fluid root. Every rem in this stylesheet scales off it, which is why

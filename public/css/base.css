@@ -256,6 +256,48 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height
 }
 
 /* ---------------------------------------------------------------------------
+   Live ping · status dots
+   Core never moves. A ring scales out and fades — the Mastra/Linear live
+   indicator, not a square that breathes. Tone is --pulse-dot-color.
+   ------------------------------------------------------------------------ */
+.pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: var(--pulse-dot-size);
+  height: var(--pulse-dot-size);
+  flex: 0 0 auto;
+  isolation: isolate;
+  pointer-events: none;
+  border-radius: 50%;
+  overflow: visible;
+}
+.pulse-dot::before,
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pulse-dot-color);
+}
+.pulse-dot::before {
+  z-index: 0;
+  opacity: var(--pulse-dot-ring-opacity);
+  animation: pulse-dot-ping var(--pulse-dot-period) var(--ease-ping) infinite;
+}
+.pulse-dot::after {
+  z-index: 1;
+}
+.pulse-dot--good { --pulse-dot-color: var(--good); }
+.pulse-dot--accent { --pulse-dot-color: var(--accent); }
+
+@keyframes pulse-dot-ping {
+  75%, 100% {
+    transform: scale(var(--pulse-dot-spread));
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
    §4.1 Blur-reveal - initial hidden state lives in CSS so nothing flashes
    before main.js binds. JS clears these.
    ------------------------------------------------------------------------ */
@@ -329,4 +371,5 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height
   }
   [data-blur-in], [data-blur-child] { opacity: 1; filter: none; transform: none; }
   .marquee__track { animation: none; }
+  .pulse-dot::before { animation: none !important; opacity: 0; }
 }

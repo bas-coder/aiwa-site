@@ -25,6 +25,7 @@ import { accordion, footerReveal, navState, navMenu } from './motion/sections.js
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
+import { wlPricingSwitch } from './wl-pricing.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -51,6 +52,7 @@ function build() {
   teardowns.push(blobs());
   teardowns.push(springHovers());
   teardowns.push(accordion());
+  teardowns.push(wlPricingSwitch());
   teardowns.push(footerReveal());
   teardowns.push(navState());
   teardowns.push(navMenu());
