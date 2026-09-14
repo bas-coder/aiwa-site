@@ -3320,6 +3320,10 @@ html.is-idea-scrub .hero-media__scrim {
   --footer-pad-x: clamp(1.25rem, 3.5vw, 3rem);
   --footer-pad-y: clamp(1.75rem, 4vw, 3.25rem);
   --footer-radius: var(--radius-card);
+  /* Cursor-reactive wordmark heat (footerWordmark.js). */
+  --fw-amp: 0;
+  --fw-px: 50%;
+  --fw-py: 42%;
   padding: var(--footer-inset);
   padding-bottom: calc(var(--footer-inset) + 0.25rem);
   opacity: 0; filter: blur(10px);
@@ -3447,8 +3451,8 @@ html.is-idea-scrub .hero-media__scrim {
    this wrapper isolates the blend and kills the glow). */
 .footer__wordmark-crop {
   --fw-crop: 0.58;
-  --fw-w: 1000;
-  --fw-h: 459;
+  --fw-w: 2271;
+  --fw-h: 1043;
   --fw-fade-start: 42%;
   position: relative;
   width: min(92%, 58rem);
@@ -3458,11 +3462,52 @@ html.is-idea-scrub .hero-media__scrim {
   aspect-ratio: var(--fw-w) / calc(var(--fw-h) * var(--fw-crop));
   pointer-events: none;
 }
+/* Plus-pattern film (~10% white + tile) — strength tracks heat amp. */
+.footer__wordmark-crop.is-fx::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M3.5 1.5h1v5h-1zM1.5 3.5h5v1h-5z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+  opacity: calc(0.05 + (var(--fw-amp) * 0.1));
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 var(--fw-fade-start),
+    rgba(0, 0, 0, 0.55) 72%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 var(--fw-fade-start),
+    rgba(0, 0, 0, 0.55) 72%,
+    transparent 100%
+  );
+}
+.footer__wordmark-crop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    42% 78% at var(--fw-px) var(--fw-py),
+    rgb(255 248 235 / 0.28),
+    rgb(254 160 2 / 0.12) 38%,
+    transparent 70%
+  );
+  opacity: var(--fw-amp);
+  mix-blend-mode: overlay;
+}
 .footer__wordmark {
   display: block;
   width: 100%;
   height: auto;
-  opacity: 0.28;
+  opacity: calc(0.26 + (var(--fw-amp) * 0.34));
   mix-blend-mode: luminosity;
   /* Soft dissolve into the plate — on the img, not the crop, so blend works. */
   -webkit-mask-image: linear-gradient(
@@ -3481,6 +3526,13 @@ html.is-idea-scrub .hero-media__scrim {
   );
   user-select: none;
   pointer-events: none;
+  /* Grain + mild warp + posterize (SVG filter injected by footerWordmark.js). */
+  will-change: opacity, filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer { --fw-amp: 0.28; }
+  .footer__wordmark { opacity: 0.28; will-change: auto; }
+  .footer__wordmark-crop::after { opacity: 0.28; }
 }
 
 /* ===========================================================================

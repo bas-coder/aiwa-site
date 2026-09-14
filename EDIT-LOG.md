@@ -1,6 +1,14 @@
-# AIWA Lander — Edit Log
+﻿# AIWA Lander — Edit Log
 
 Running record of design/implementation changes made while owning the lander directly (no markdown-to-frontend handoff). Newest session first.
+
+---
+
+## 2026-09-14 — Footer wordmark live FX on SVG
+
+- Replaced baked `aiwa-logo-footer.webp` with `/icons/AIWA.svg` on every page footer + `build-pages.mjs`.
+- Live FX via `public/js/motion/footerWordmark.js`: SVG filter (grain + horizontal warp + posterize), CSS plus-pattern film, cursor-driven amber heat on the footer plate. Wired from `main.js` and `page.js`.
+- Crop aspect updated to `2271×1043`. Reduced-motion keeps a static amp.
 
 ---
 

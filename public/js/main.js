@@ -27,6 +27,7 @@ import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
+import { footerWordmark } from './motion/footerWordmark.js';
 
 /* Start the overlay before plugin setup. If registerPlugin throws, CSS still
    painted the loader and the failsafe in index.html will tear it down. */
@@ -101,6 +102,7 @@ function build() {
   teardowns.push(creditSliders());
   teardowns.push(accordion());
   teardowns.push(footerReveal());
+  teardowns.push(footerWordmark());
   teardowns.push(navState());
   teardowns.push(navMenu());
   teardowns.push(springHovers());

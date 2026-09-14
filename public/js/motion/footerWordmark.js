@@ -1,16 +1,21 @@
 /**
- * Footer wordmark FX — grain / warp filter + cursor-driven heat.
+ * Footer wordmark FX — live remake of the baked stack:
+ *   grain (~7%), horizontal warp (pixel-sort stand-in), posterize (F-S stand-in),
+ *   plus-pattern overlay (CSS), cursor heat glow.
  * Shared by home (main.js) and subpages (page.js).
  */
 
 import { prefersReducedMotion } from './tokens.js';
 
 const FILTER_ID = 'fw-wordmark-fx';
+const DISPLACE_ID = 'fw-displace';
 const IDLE_AMP = 0.22;
 const HOVER_AMP = 1;
 const LEAVE_AMP = 0.12;
 const LERP = 0.14;
 const HEAT_LERP = 0.18;
+const DISPLACE_IDLE = 2.4;
+const DISPLACE_HOVER = 5.5;
 
 function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
@@ -25,19 +30,19 @@ function ensureFilterDefs() {
   svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
   svg.innerHTML = `
     <defs>
-      <filter id="${FILTER_ID}" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <filter id="${FILTER_ID}" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="noise"/>
         <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
         <feComponentTransfer in="mono" result="grain">
-          <feFuncA type="linear" slope="0.22" intercept="0"/>
+          <feFuncA type="linear" slope="0.28" intercept="0"/>
         </feComponentTransfer>
         <feBlend in="SourceGraphic" in2="grain" mode="soft-light" result="grained"/>
-        <feTurbulence type="turbulence" baseFrequency="0.015 0.45" numOctaves="2" seed="7" result="warp"/>
-        <feDisplacementMap in="grained" in2="warp" scale="3.2" xChannelSelector="R" yChannelSelector="G" result="sorted"/>
+        <feTurbulence type="turbulence" baseFrequency="0.012 0.55" numOctaves="2" seed="7" result="warp"/>
+        <feDisplacementMap id="${DISPLACE_ID}" in="grained" in2="warp" scale="${DISPLACE_IDLE}" xChannelSelector="R" yChannelSelector="G" result="sorted"/>
         <feComponentTransfer in="sorted">
-          <feFuncR type="discrete" tableValues="0 0.08 0.16 0.24 0.32 0.4 0.48 0.56 0.64 0.72 0.8 0.88 0.96 1"/>
-          <feFuncG type="discrete" tableValues="0 0.08 0.16 0.24 0.32 0.4 0.48 0.56 0.64 0.72 0.8 0.88 0.96 1"/>
-          <feFuncB type="discrete" tableValues="0 0.08 0.16 0.24 0.32 0.4 0.48 0.56 0.64 0.72 0.8 0.88 0.96 1"/>
+          <feFuncR type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
+          <feFuncG type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
+          <feFuncB type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
         </feComponentTransfer>
       </filter>
     </defs>
@@ -54,6 +59,8 @@ export function footerWordmark() {
   ensureFilterDefs();
   mark.style.filter = `url(#${FILTER_ID})`;
   crop.classList.add('is-fx');
+
+  const displace = document.getElementById(DISPLACE_ID);
 
   if (prefersReducedMotion()) {
     footer.style.setProperty('--fw-amp', '0.28');
@@ -79,6 +86,10 @@ export function footerWordmark() {
     footer.style.setProperty('--fw-amp', String(amp));
     footer.style.setProperty('--fw-px', `${px}%`);
     footer.style.setProperty('--fw-py', `${py}%`);
+    if (displace) {
+      const scale = DISPLACE_IDLE + (DISPLACE_HOVER - DISPLACE_IDLE) * amp;
+      displace.setAttribute('scale', String(scale.toFixed(2)));
+    }
   };
 
   const tick = () => {
@@ -144,7 +155,7 @@ export function footerWordmark() {
   };
   const mo = new MutationObserver(syncIdle);
   mo.observe(footer, { attributes: true, attributeFilter: ['class'] });
-  if (footer.classList.contains('is-in') || prefersReducedMotion()) {
+  if (footer.classList.contains('is-in')) {
     targetAmp = IDLE_AMP;
     paint();
     start();
