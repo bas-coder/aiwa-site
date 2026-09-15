@@ -4,6 +4,21 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-15 — Resale: drop pool tip under image
+
+- Removed the credit-pool “keep it funded” note under the storefront art (didn’t match the image; lead + FAQ already cover the idea).
+- Files: `public/white-label/index.html`, `public/css/page.css`, `public/plan/white-label-lander-brief.md`.
+
+---
+
+## 2026-09-15 — Resale storefront: short frame + $0.08
+
+- Regenerated `#wl-economics` art as **16:9** so Northstar awning and crate labels stay visible in the short container (`max-height: 18.5rem`); wholesale crates **$0.08** (not $0.70).
+- Container `aspect-ratio` → `16 / 9`; image cache-bust `?v=5`.
+- Files: `public/images/wl-resale-storefront.png`, `public/css/page.css`, `public/white-label/index.html`.
+
+---
+
 ## 2026-09-15 — WL credit flat rate $0.70 → $0.08
 
 - Partner credit rate updated project-wide to **$0.08**/credit; example economics now **200 × $0.08 = $16**, difference before other expenses **$184**.

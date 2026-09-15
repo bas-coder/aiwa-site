@@ -199,8 +199,6 @@ Section ID: `wl-setup`.
 
 **Caption:** Illustrative pricing, not a preset plan or earnings guarantee. The $184 difference is before your program fee, payment fees, refunds, taxes, support, and other expenses. Actual results depend on your offer and costs.
 
-**Supporting copy:** Your credit pool funds customer allocations. Keep it funded so purchases and renewals can receive their credits. Any supported free credit allowance is funded by you too.
-
 **Internal note:** This is a 200-credit customer allowance illustration, not permission to buy a 200-credit wholesale pool block. The current pool minimum and launch decision are covered in section 10. A revenue animation must keep the full $200 customer payment separate from the $184 difference; it must not label $184 as a payout or net profit.
 
 ### F. Program pricing
