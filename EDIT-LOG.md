@@ -4,6 +4,20 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-15 — Guided setup note centered
+
+- `.wl-setup-note` under Guided setup: `text-align: center`.
+- File: `public/css/page.css`.
+
+---
+
+## 2026-09-15 — Resale caption left-aligned
+
+- `.wl-econ__caption` under the Resale example table: `text-align: left` (was center).
+- File: `public/css/page.css`.
+
+---
+
 ## 2026-09-15 — Resale: drop pool tip under image
 
 - Removed the credit-pool “keep it funded” note under the storefront art (didn’t match the image; lead + FAQ already cover the idea).

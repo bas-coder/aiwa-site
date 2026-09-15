@@ -1078,6 +1078,7 @@
   color: var(--cream-500);
   line-height: 1.6;
   max-width: var(--measure);
+  text-align: center;
 }
 
 .wl-econ-layout {
@@ -1097,7 +1098,7 @@
   font-size: 0.84rem;
   color: var(--cream-500);
   line-height: 1.6;
-  text-align: center;
+  text-align: left;
 }
 .wl-econ__credits {
   display: inline-flex;
