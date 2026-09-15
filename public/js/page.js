@@ -3,9 +3,7 @@
  *
  * The home page's main.js builds a scrubbed hero, a pinned horizontal track and
  * a Flip-style handoff, and pays for them: SplitText, a 400vh pin, a rebuild
- * contract keyed to viewport width. A legal document needs none of that, and
- * loading it anyway is not free - normalizeScroll and a pin that has nothing to
- * pin are both cost with no picture attached.
+ * contract keyed to viewport width. Most secondary pages need none of that.
  *
  * So this is the same primitives, minus the hero. Every builder imported here
  * is one of the shared ones from motion/, NOT a copy: a fix to blurReveal has
@@ -14,14 +12,14 @@
  *
  * The rebuild contract is main.js's, for main.js's reason (§2.6): a width
  * resize kills and rebuilds, a height-only resize is the URL bar collapsing and
- * is ignored. Nothing on a page is pinned, so the stakes are lower here - but
- * the marquee durations ARE measured from element width, so a rebuild is still
- * how a resized page gets its speed right.
+ * is ignored. White-Label pins a Guided setup track (setupHorizontal); other
+ * pages stay unpinned. The marquee durations ARE measured from element width,
+ * so a rebuild is still how a resized page gets its speed right.
  */
 
 import { blurReveal, gradientText, marquees, springHovers } from './motion/primitives.js';
 import { blobs } from './motion/blob.js';
-import { accordion, footerReveal, navState, navMenu } from './motion/sections.js';
+import { accordion, footerReveal, navState, navMenu, setupHorizontal, setupRail } from './motion/sections.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
@@ -60,6 +58,10 @@ function build() {
   teardowns.push(whiteLabelPage());
   teardowns.push(navState());
   teardowns.push(navMenu());
+
+  // Guided setup on /white-label: horizontal pin at >=992px, snap rail below.
+  const wide = window.matchMedia('(min-width: 992px)').matches;
+  teardowns.push(wide ? setupHorizontal() : setupRail());
 
   ScrollTrigger.sort();
   ScrollTrigger.refresh();

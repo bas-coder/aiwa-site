@@ -99,12 +99,14 @@ export function whiteLabelPage() {
     const tabH = readPx('--wl-mastra-tab-h', 48);
     const gapY = readPx('--wl-mastra-gap', 14);
     const tabGap = readPx('--wl-mastra-tab-gap', 12);
-    const corner = readPx('--wl-mastra-path-radius', 1);
-    const notchMax = readPx('--wl-mastra-notch', 12);
+    const corner = readPx('--wl-mastra-path-radius', 16);
+    const tabCorner = readPx('--wl-mastra-radius', 14);
+    const notchMax = readPx('--wl-mastra-notch', 28);
     return {
       bodyTop: tabH + gapY,
       tabGap,
       corner,
+      tabCorner,
       notchMax,
       tabCount: tabs.length,
     };
@@ -118,6 +120,7 @@ export function whiteLabelPage() {
     width,
     bodyTop,
     corner,
+    tabCorner,
     notchMax,
   }) => {
     const w = Math.max(width, 80);
@@ -127,7 +130,7 @@ export function whiteLabelPage() {
     const activeLeft = clampedIndex * (tabWidth + tabGap);
     const activeRight = activeLeft + tabWidth;
     const outer = Math.min(corner, Math.max(8, (shellHeight - bodyTop) / 2));
-    const tabRadius = Math.min(corner, tabWidth / 2);
+    const tabRadius = Math.min(tabCorner || corner, tabWidth / 2);
     const notch = Math.min(notchMax, bodyTop - tabRadius, tabWidth / 2);
     const isFirst = activeLeft <= 0.5;
     const isLast = activeRight >= w - 0.5;

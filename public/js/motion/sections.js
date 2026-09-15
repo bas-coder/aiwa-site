@@ -361,6 +361,51 @@ export function engineRail() {
   };
 }
 
+/* White-label Guided setup — same pin/scrub math as engine, separate hooks. */
+export function setupHorizontal() {
+  const section = document.querySelector('#wl-setup');
+  const pin = section?.querySelector('.engine__pin');
+  const track = section?.querySelector('[data-wl-setup-track]');
+  const rail = section?.querySelector('[data-wl-setup-rail]');
+  if (!track || !pin || !section) return () => {};
+
+  const overflow = () => Math.max(0, track.scrollWidth - pin.clientWidth);
+
+  const st = ScrollTrigger.create({
+    trigger: section,
+    start: 'top top',
+    end: () => `+=${overflow() + window.innerHeight * 0.5}`,
+    pin,
+    scrub: true,
+    invalidateOnRefresh: true,
+    animation: gsap.to(track, { x: () => -overflow(), ease: EASE.scrub }),
+    onUpdate: (self) => { if (rail) rail.style.width = `${(self.progress * 100).toFixed(1)}%`; },
+  });
+
+  return () => {
+    st.kill();
+    gsap.set(track, { clearProps: 'all' });
+    if (rail) rail.style.width = '';
+  };
+}
+
+export function setupRail() {
+  const track = document.querySelector('#wl-setup [data-wl-setup-track]');
+  if (!track) return () => {};
+  track.classList.add('is-rail');
+  Object.assign(track.style, {
+    overflowX: 'auto',
+    scrollSnapType: 'x mandatory',
+    width: '100%',
+  });
+  [...track.children].forEach((el) => { el.style.scrollSnapAlign = 'center'; });
+  return () => {
+    track.classList.remove('is-rail');
+    track.style.overflowX = track.style.scrollSnapType = track.style.width = '';
+    [...track.children].forEach((el) => { el.style.scrollSnapAlign = ''; });
+  };
+}
+
 /* ===========================================================================
    §3.5 · Pricing switch.
    Only the pill animates. The numbers swap instantly - animated digits read as
