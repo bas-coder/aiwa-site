@@ -4,6 +4,50 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-15 — WL credit flat rate $0.70 → $0.08
+
+- Partner credit rate updated project-wide to **$0.08**/credit; example economics now **200 × $0.08 = $16**, difference before other expenses **$184**.
+- Regenerated Resale storefront art with wholesale crates tagged **$0.08**; cache-bust `?v=4`.
+- Files: `public/white-label/index.html`, `public/images/wl-resale-storefront.png`, `public/plan/white-label-lander-brief.md`. Homepage already used `$0.08`.
+
+---
+
+## 2026-09-15 — WL hero Continue pill radius
+
+- Sign-in tab Continue on `/white-label` hero: `border-radius: 999px` (was `--wl-inner-radius` 8px).
+- File: `public/css/page.css`.
+
+---
+
+## 2026-09-15 — WL Resale layout + FAQ community
+
+- Resale: centered table caption; credits icon before `200`; pool note moved under a shorter storefront image (right column).
+- FAQ “before buying” → WhatsApp community link (not email).
+- Files: `public/white-label/index.html`, `public/css/page.css`.
+
+---
+
+## 2026-09-15 — Homepage mobile polish (8 fixes)
+
+- Hide hero scroll-mouse ≤900px.
+- Idea scrub ≤991px → compact text→visual pairs (`is-idea-pairs`); no tall pin scrub.
+- Workspace tabs ordered above preview ≤900px.
+- Prompt arc: columns restored ≤760px with amplified drum; marquee rail off.
+- Engine uses pin+scrub horizontal on all widths (rail only for reduced motion).
+- WL pass reveal (scale parallax) skipped ≤900px; WL takeover replays on tap/click.
+- Footer newsletter input `min-width: 0` / flex so Apply no longer overflows.
+- Files: `public/css/site.css`, `public/js/main.js`, `public/js/motion/ideaScrub.js`, `sections.js`, `wlPassReveal.js`, `whiteLabel.js`.
+
+---
+
+## 2026-09-15 — Resale visual: fix who sells / who pays
+
+- Regenerated `#wl-economics` storefront art so a normie read matches the model: Northstar human takes the customer payment at **Studio plan $200**; AIWA bot is wholesale-only with crates tagged **$0.70** (not the customer-facing cashier or shelf price).
+- Swapped `public/images/wl-resale-storefront.png`, cache-bust `?v=2`, alt text updated.
+- Files: `public/images/wl-resale-storefront.png`, `public/white-label/index.html`.
+
+---
+
 ## 2026-09-14 — White Label: hide jump rail + align Northstar mocks
 
 - Hid sticky `.feat-jump` TOC on `/white-label` (same pattern as features).

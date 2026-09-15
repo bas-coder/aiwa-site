@@ -249,9 +249,13 @@ export function promptArc() {
      when the section is on screen. */
   let raf = 0;
   let live = false;
-  const MAX_SHIFT = 120;   // px the centre item bows outward
-  const MIN_SCALE = 0.72;
-  const MAX_SCALE = 1.25;
+  const narrow = window.matchMedia('(max-width: 760px)').matches;
+  /* On mobile, amplify bow so a little scroll moves the drum a lot. */
+  const MAX_SHIFT = narrow ? 220 : 120;
+  const MIN_SCALE = narrow ? 0.62 : 0.72;
+  const MAX_SCALE = narrow ? 1.35 : 1.25;
+  const ALPHA_EDGE = narrow ? 0.08 : 0.14;
+  const ALPHA_PEAK = narrow ? 0.72 : 0.62;
 
   const frame = () => {
     raf = requestAnimationFrame(frame);
@@ -271,7 +275,7 @@ export function promptArc() {
 
       const shift = bow * MAX_SHIFT * dir;
       const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * bow;
-      const alpha = 0.14 + 0.62 * bow;
+      const alpha = ALPHA_EDGE + ALPHA_PEAK * bow;
 
       el.style.transform = `translate3d(${shift.toFixed(2)}px,0,0) scale(${scale.toFixed(3)})`;
       el.style.opacity = alpha.toFixed(3);
@@ -322,13 +326,14 @@ export function engineHorizontal() {
   const rail = document.querySelector('[data-engine-rail]');
   if (!track || !pin || !section) return () => {};
 
-  const panels = track.children.length;
   const overflow = () => Math.max(0, track.scrollWidth - pin.clientWidth);
+  const narrow = window.matchMedia('(max-width: 991px)').matches;
+  const trail = () => window.innerHeight * (narrow ? 0.28 : 0.5);
 
   const st = ScrollTrigger.create({
     trigger: section,
     start: 'top top',
-    end: () => `+=${overflow() + window.innerHeight * 0.5}`,
+    end: () => `+=${overflow() + trail()}`,
     pin,
     scrub: true,
     invalidateOnRefresh: true,

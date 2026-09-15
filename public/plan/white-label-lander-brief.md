@@ -17,7 +17,7 @@ This brief supplies launch copy, product context, and asset direction for a navi
 | Monthly | $197/month | Recurring monthly program access |
 | Yearly promo | $497/year | Billed annually; renews at $497/year |
 | Lifetime | $997 once | One-time program fee; credits remain separate |
-| Partner credit rate | $0.70 per credit | Flat purchase rate for the partner's prepaid credit pool |
+| Partner credit rate | $0.08 per credit | Flat purchase rate for the partner's prepaid credit pool |
 
 All amounts are USD. The three program options are assumed to provide the same White-Label capabilities; the difference is how the program fee is paid. No included-credit bonus, promotional deadline, refund promise, or extra plan entitlement has been supplied. Do not invent one.
 
@@ -109,7 +109,7 @@ Insert the section after the existing QA section and before AIWA's core pricing 
 
 **CTA:** Explore White-Label
 
-**Optional commercial caption:** Monthly, yearly, or lifetime access. Credits purchased separately at $0.70 each.
+**Optional commercial caption:** Monthly, yearly, or lifetime access. Credits purchased separately at $0.08 each.
 
 **Visual:** A compact brand editor beside a product preview. Change a neutral sample identity to **Northstar Studio**, then reveal its sign-in, home screen, and customer pricing. Northstar Studio is a fictional demonstration brand, not a customer or endorsed business.
 
@@ -127,7 +127,7 @@ Insert the section after the existing QA section and before AIWA's core pricing 
 
 **Secondary CTA:** See how setup works → `#wl-setup`
 
-**Supporting line:** Choose monthly, yearly, or lifetime program access. Credits are purchased separately at $0.70 each.
+**Supporting line:** Choose monthly, yearly, or lifetime program access. Credits are purchased separately at $0.08 each.
 
 **Visual:** Brand transformation storyboard in section 8. The initial hero should make sense before the animation plays.
 
@@ -186,22 +186,22 @@ Section ID: `wl-setup`.
 
 **Heading:** You set the price. Your customers pay you.
 
-**Body:** Buy credits from AIWA at a flat $0.70 each. Package them into your customer offers and set your resale prices within the platform's supported pricing limits. Customer payments go through your connected Stripe account.
+**Body:** Buy credits from AIWA at a flat $0.08 each. Package them into your customer offers and set your resale prices within the platform's supported pricing limits. Customer payments go through your connected Stripe account.
 
 **Example card title:** A simple resale example
 
 | Item | Illustrative amount |
 |---|---:|
 | Credits included in your customer offer | 200 |
-| Your credit cost: 200 × $0.70 | $140 |
+| Your credit cost: 200 × $0.08 | $16 |
 | Price you charge the customer | $200 |
-| Difference before other expenses | $60 |
+| Difference before other expenses | $184 |
 
-**Caption:** Illustrative pricing, not a preset plan or earnings guarantee. The $60 difference is before your program fee, payment fees, refunds, taxes, support, and other expenses. Actual results depend on your offer and costs.
+**Caption:** Illustrative pricing, not a preset plan or earnings guarantee. The $184 difference is before your program fee, payment fees, refunds, taxes, support, and other expenses. Actual results depend on your offer and costs.
 
 **Supporting copy:** Your credit pool funds customer allocations. Keep it funded so purchases and renewals can receive their credits. Any supported free credit allowance is funded by you too.
 
-**Internal note:** This is a 200-credit customer allowance illustration, not permission to buy a 200-credit wholesale pool block. The current pool minimum and launch decision are covered in section 10. A revenue animation must keep the full $200 customer payment separate from the $60 difference; it must not label $60 as a payout or net profit.
+**Internal note:** This is a 200-credit customer allowance illustration, not permission to buy a 200-credit wholesale pool block. The current pool minimum and launch decision are covered in section 10. A revenue animation must keep the full $200 customer payment separate from the $184 difference; it must not label $184 as a payout or net profit.
 
 ### F. Program pricing
 
@@ -209,7 +209,7 @@ Section ID: `wl-pricing`.
 
 **Heading:** Choose how you start.
 
-**Intro:** The same White-Label platform, with three ways to pay for program access. Credits are separate at $0.70 each.
+**Intro:** The same White-Label platform, with three ways to pay for program access. Credits are separate at $0.08 each.
 
 | Card | Price and suffix | Supporting copy | CTA | Label |
 |---|---|---|---|---|
@@ -249,7 +249,7 @@ Your platform domain is where customers sign in and build. Your apps domain is w
 
 **How do credits and resale work?**
 
-Credits fund AI usage. You buy them at $0.70 each for your pool and set customer prices for supported plans and top-ups. Allocating customer credits draws from your pool. The amount left after credit cost must also cover your program fee and other business expenses.
+Credits fund AI usage. You buy them at $0.08 each for your pool and set customer prices for supported plans and top-ups. Allocating customer credits draws from your pool. The amount left after credit cost must also cover your program fee and other business expenses.
 
 **Are credits included in the program price?**
 
@@ -318,7 +318,7 @@ The references below are repository-relative for portability. See the linked sou
 | Published-apps domain | Customer products publish under the partner's domain | S5, S6 | Implemented as a distinct setup. Do not imply existing published apps are automatically migrated |
 | Customer Stripe billing | Customer charges go through the partner's connected account | S7 | Implemented; Stripe connection and charges enablement required. Do not promise every country, payment method, or fee-free processing |
 | Customer plan and top-up pricing | Partner controls commercial packaging within supported limits | S8, S9 | Implemented baseline pricing. Flexible offer names/allowances and free offers are conditional on `WL_FLEXIBLE_PRICING=1` and rollout readiness |
-| Credit pool and ledger | Prepay and track customer credit allocations | S10 | Implemented; insufficient funds can queue allocations. $0.70 is the launch target rate, not this checkout's current rate |
+| Credit pool and ledger | Prepay and track customer credit allocations | S10 | Implemented; insufficient funds can queue allocations. $0.08 is the launch target rate, not this checkout's current rate |
 | Customer administration | Manage customers and their access | S11 | Implemented: create/search users, inspect account/plan/credits/projects, supported plan and credit adjustments, password-reset initiation, and account deactivation. Stripe-managed plans have their own lifecycle constraints |
 | Project administration | See customer projects and intervene operationally | S12 | Implemented project listing, live links, and suspension/resumption controls. This does not establish general impersonation or arbitrary editing rights |
 | Partner console | Operate the service from one place | S10, S11, S12 | Implemented overview, users, projects, credits, pricing, branding, domain, and billing areas |
@@ -413,15 +413,15 @@ Create reusable scenes with editable text and a clean static poster for each. Ti
 
 **Suggested sequence, 8–10 seconds:**
 
-1. Introduce the partner pool with “Your credit rate: $0.70 each.”
-2. Mark an illustrative 200-credit customer allocation with “Your credit cost: $140.”
+1. Introduce the partner pool with “Your credit rate: $0.08 each.”
+2. Mark an illustrative 200-credit customer allocation with “Your credit cost: $16.”
 3. Show the customer choosing the example $200 offer; payment arrow ends at “Your Stripe.”
-4. Resolve a separate equation: `$200 − $140 = $60 before other expenses`.
+4. Resolve a separate equation: `$200 − $16 = $184 before other expenses`.
 5. Hold all labels and the illustrative-pricing caption on screen long enough to read.
 
-**Truth constraint:** Do not imply a 200-credit wholesale purchase is currently supported, make the $60 look like a payout, or call it net profit. Program payment, wholesale purchase, and customer payment are three different transactions.
+**Truth constraint:** Do not imply a 200-credit wholesale purchase is currently supported, make the $184 look like a payout, or call it net profit. Program payment, wholesale purchase, and customer payment are three different transactions.
 
-**Mobile:** Vertical flow and a persistent static equation. **Reduced motion:** The table in section 5E. **Alt text:** “Example: 200 credits cost the partner $140; a $200 customer price leaves $60 before other expenses.”
+**Mobile:** Vertical flow and a persistent static equation. **Reduced motion:** The table in section 5E. **Alt text:** “Example: 200 credits cost the partner $16; a $200 customer price leaves $184 before other expenses.”
 
 ### Shared motion and accessibility requirements
 
@@ -462,9 +462,9 @@ This section is for the product lead and engineers, not public page copy. No bil
 |---|---|---|
 | Program prices | `WL.monthlyUsd = 197`, `WL.lifetimeUsd = 297` | Keep monthly at $197; align lifetime to $997 across display, API, Stripe checkout, emails, and metadata |
 | Yearly program | Public offer type supports monthly/lifetime; `/subscribe` explicitly rejects `annual` | Reinstate annual end-to-end at $497 recurring yearly, including offer selection, login return, checkout, webhook entitlement, renewal, console labels, and tests. An existing annual Stripe variable is not proof its price matches |
-| Wholesale credits | `WL.wholesaleCentsPerCredit = 10` | Align credit purchases, calculations, display, ledger unit prices, and emails with 70 cents for the new launch rate |
+| Wholesale credits | `WL.wholesaleCentsPerCredit = 10` | Align credit purchases, calculations, display, ledger unit prices, and emails with 8 cents for the new launch rate |
 | Resale safeguards | Legacy plan floor 11c; top-up floor 20c; advisory 50c; ceiling 100c | Review validation and advice against 70c wholesale, including flexible offers. Do not silently keep below-cost defaults or invent a new approved floor in this brief |
-| Customer grid defaults | Based on AIWA's direct pricing and old credit costs | Supply coherent partner examples/defaults. Even 200 credits cost $140 at the launch rate, so a $29 customer plan with that allowance would not cover credits |
+| Customer grid defaults | Based on AIWA's direct pricing and old credit costs | Supply coherent partner examples/defaults. Even 200 credits cost $16 at the launch rate, so a $29 customer plan with that allowance would not cover credits |
 | Pool purchase minimum | 1,000 credits; chips 1,500 / 3,500 / 7,000 | Confirm launch minimum and presets. If retained, the minimum costs $700 and presets cost $1,050 / $2,450 / $4,900. These amounts are consequences, not newly approved purchase requirements |
 | Customer flexible/free offers | Controlled by `WL_FLEXIBLE_PRICING`; migration and rollout documented | Confirm production enablement before showing this as universally available. Use baseline supported pricing otherwise |
 | Branding AI | Provider capability flags | Confirm logo/palette services before including those actions in public demos |
@@ -479,9 +479,9 @@ Do not launch a page advertising these new offers while its buttons still charge
 ### Editorial and product
 
 - [ ] Navigation, homepage section, and dedicated page all use the same White-Label naming and proposition.
-- [ ] $197/month, $497/year renewing at $497, $997 once, and $0.70/credit are consistent across public copy and assets.
+- [ ] $197/month, $497/year renewing at $497, $997 once, and $0.08/credit are consistent across public copy and assets.
 - [ ] Program access and credit usage are clearly separate, including on lifetime.
-- [ ] The 200-credit example shows $140 cost, $200 illustrative resale, and $60 before other expenses.
+- [ ] The 200-credit example shows $16 cost, $200 illustrative resale, and $184 before other expenses.
 - [ ] Fictional UI, example prices, and proposed animations are labelled appropriately; no invented customer proof appears.
 - [ ] Required setup and customer-payment prerequisites match the actual product; platform and apps domains remain distinct.
 - [ ] Feature flags, email limitations, and customer entitlements are reflected in final claims.

@@ -93,7 +93,6 @@ function killAll() {
 function build() {
   killAll();
 
-  const wide = window.matchMedia('(min-width: 992px)').matches;
   const tiny = window.matchMedia('(max-width: 479px)').matches;
 
   // Always-on primitives.
@@ -128,8 +127,9 @@ function build() {
     teardowns.push(heroScroll());
   }
 
-  // §3.2 - horizontal scroll at >=992px, a snap rail below it.
-  teardowns.push(wide ? engineHorizontal() : engineRail());
+  // §3.2 — pin + scrub horizontal on all widths so mobile doesn't miss the track.
+  // Reduced motion keeps a native snap rail.
+  teardowns.push(prefersReducedMotion() ? engineRail() : engineHorizontal());
 
   ScrollTrigger.sort();
   ScrollTrigger.refresh();

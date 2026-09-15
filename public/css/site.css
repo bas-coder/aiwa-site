@@ -468,6 +468,9 @@
   border-radius: 50%;
   animation: scroll-trackball var(--mouse-anim) linear infinite;
 }
+@media (max-width: 900px) {
+  .hero__scroll-hint { display: none !important; }
+}
 
 @keyframes scroll-trackball {
   0% {
@@ -1092,8 +1095,16 @@ main, .footer { position: relative; z-index: 2; }
 /* Below 900px the aside stops being a column and becomes a row under the well,
    which keeps all three visible instead of squeezing them into a gutter. */
 @media (max-width: 900px) {
-  .workspace__case { grid-template-columns: 1fr; }
-  .ws-aside { grid-template-rows: none; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .workspace__case {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+  .ws-aside {
+    order: -1;
+    grid-template-rows: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .ws-aside__item { aspect-ratio: 16 / 9; border-radius: 0.85rem; }
   .ws-aside__item img { position: absolute; }
 }
@@ -1604,6 +1615,56 @@ main, .footer { position: relative; z-index: 2; }
   to { transform: rotate(180deg); }
 }
 
+/* White-label Guided setup glyphs */
+.stage-panel__glass:hover .glyph--program .icon {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--program .glyph__stripe {
+  animation: glyph-prompt-scan 0.7s var(--ease-brand);
+}
+.glyph--brand .glyph__well {
+  transition: transform 0.4s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--brand .glyph__well:nth-of-type(1) {
+  transform: translateY(-1.5px);
+  transition-delay: 0.06s;
+}
+.stage-panel__glass:hover .glyph--brand .glyph__well:nth-of-type(2) {
+  transform: translateY(-0.75px);
+  transition-delay: 0.03s;
+}
+.stage-panel__glass:hover .glyph--brand .glyph__well:nth-of-type(3) {
+  transform: translateY(0.5px);
+}
+.stage-panel__glass:hover .glyph--brand .glyph__brush {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--sell .icon {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--sell .glyph__tag {
+  animation: glyph-flask-tilt 0.7s var(--ease-brand) infinite alternate;
+}
+.stage-panel__glass:hover .glyph--domains .icon {
+  animation: glyph-refresh-spin 0.85s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--fund .icon {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--fund .glyph__wallet {
+  animation: glyph-prompt-scan 0.7s var(--ease-brand);
+}
+.glyph--finish .glyph__tick {
+  stroke-dasharray: 16;
+  stroke-dashoffset: 0;
+}
+.stage-panel__glass:hover .glyph--finish .glyph__tick {
+  animation: glyph-check-draw 0.45s var(--ease-brand);
+}
+.stage-panel__glass:hover .glyph--finish .icon {
+  animation: glyph-nudge 0.55s var(--ease-brand);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .stage-panel__glass:hover .glyph--plan .glyph__check,
   .stage-panel__glass:hover .glyph--plan .icon,
@@ -1613,13 +1674,25 @@ main, .footer { position: relative; z-index: 2; }
   .stage-panel__glass:hover .glyph--test .glyph__vessel,
   .stage-panel__glass:hover .glyph--deploy .icon,
   .stage-panel__glass:hover .glyph--deploy .glyph__flame,
-  .stage-panel__glass:hover .glyph--evolve .icon {
+  .stage-panel__glass:hover .glyph--evolve .icon,
+  .stage-panel__glass:hover .glyph--program .icon,
+  .stage-panel__glass:hover .glyph--program .glyph__stripe,
+  .stage-panel__glass:hover .glyph--brand .glyph__brush,
+  .stage-panel__glass:hover .glyph--sell .icon,
+  .stage-panel__glass:hover .glyph--sell .glyph__tag,
+  .stage-panel__glass:hover .glyph--domains .icon,
+  .stage-panel__glass:hover .glyph--fund .icon,
+  .stage-panel__glass:hover .glyph--fund .glyph__wallet,
+  .stage-panel__glass:hover .glyph--finish .glyph__tick,
+  .stage-panel__glass:hover .glyph--finish .icon {
     animation: none;
   }
-  .glyph--architect .glyph__layer { transition: none; }
+  .glyph--architect .glyph__layer,
+  .glyph--brand .glyph__well { transition: none; }
   .stage-panel__glass:hover .glyph--architect .glyph__layer--1,
   .stage-panel__glass:hover .glyph--architect .glyph__layer--2,
-  .stage-panel__glass:hover .glyph--architect .glyph__layer--3 {
+  .stage-panel__glass:hover .glyph--architect .glyph__layer--3,
+  .stage-panel__glass:hover .glyph--brand .glyph__well {
     transform: none;
   }
 }
@@ -1813,8 +1886,35 @@ html.is-idea-scrub .hero-media__scrim {
     translate: none;
     max-width: none;
   }
-  .scene--idea { width: min(96%, 34rem); }
-  .idea__stage { aspect-ratio: 1 / 1.02; }
+  /* Compact pairs: text → visual under each step; hide the pinned hero stack. */
+  html.is-idea-pairs .scene--idea {
+    display: none;
+  }
+  html.is-idea-pairs .idea__step {
+    gap: 0.75rem;
+    padding-block: 0.35rem 1.1rem;
+  }
+  html.is-idea-pairs .idea__step-label {
+    color: var(--idea-active);
+    font-size: clamp(1.02rem, 3.6vw, 1.15rem);
+  }
+  html.is-idea-pairs .idea__step .idea__panel {
+    position: relative;
+    width: 100%;
+    max-width: 34rem;
+    margin: 0;
+    aspect-ratio: var(--idea-stage-aspect);
+    border-radius: var(--idea-panel-radius);
+    overflow: hidden;
+  }
+  html.is-idea-pairs .idea__step .idea__panel img,
+  html.is-idea-pairs .idea__step .idea__panel video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 @media (max-width: 479px) {
@@ -2764,8 +2864,7 @@ html.is-idea-scrub .hero-media__scrim {
 .ns-mail {
   display: grid;
   gap: 0.45rem;
-  margin: 0 var(--ns-pad) var(--ns-pad);
-  /* Top inset matches horizontal — no extra empty strip above copy. */
+  margin: var(--ns-pad);
   padding: 1.05rem 1.05rem 1.15rem;
   border-radius: 0.45rem;
   border: 0;
@@ -4177,12 +4276,37 @@ html.is-idea-scrub .hero-media__scrim {
   padding-block: 2rem;
   border-top: 1px solid color-mix(in srgb, var(--cream-050) 8%, transparent);
 }
+@media (max-width: 900px) {
+  .footer__news { width: 100%; max-width: 100%; }
+  .footer__news-row {
+    width: 100%;
+    display: flex;
+    gap: 0.45rem;
+    align-items: stretch;
+    min-width: 0;
+  }
+  .footer__news input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+  }
+  .footer__news-submit {
+    flex: 0 0 auto;
+    min-width: 0;
+    padding-inline: 1rem;
+  }
+}
 @media (max-width: 700px) {
   .footer {
     --footer-inset: 0.65rem;
     --footer-radius: calc(var(--radius-card) * 0.72);
   }
   .footer__cols { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
+  .footer__top { flex-direction: column; align-items: flex-start; }
+  .footer__news { width: 100%; }
+  .footer__news-row { width: 100%; }
+  .footer__news input { flex: 1 1 auto; min-width: 0; }
 }
 .footer__cols div { display: grid; gap: 0.55rem; align-content: start; font-size: 0.85rem; color: var(--cream-300); }
 .footer__col-name { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-500); }
@@ -4402,30 +4526,24 @@ html.is-idea-scrub .hero-media__scrim {
   .stage__hud, .stage__rail { display: none; }
 }
 
-/* ---- arc: columns above 760px, a marquee rail below ---------------------- */
+/* ---- arc: dual columns always; amplified drum on narrow screens --------- */
 .arc__rail { display: none; }
 @media (max-width: 760px) {
-  .arc__col { display: none; }
-  /* stacked, so the interpunct separators would land at the start of a wrapped
-     line rather than between two items */
+  /* Keep the text drum (columns) — hide the marquee substitute. */
+  .arc__col { display: flex; }
+  .arc__rail { display: none; }
   .arc__claims { flex-direction: column; gap: 0.4rem; }
   .arc__claims li + li::before { content: none; }
-  .arc__rail {
-    display: block; position: absolute; left: 0; right: 0; bottom: 18vh; z-index: 1;
-    font-family: var(--font-mono); font-size: 0.75rem; color: var(--cream-500);
+  /* Shorter runway than desktop 150svh, but enough sticky scroll for the drum. */
+  .arc { min-height: 120svh; }
+  .arc__center { position: sticky; top: 50vh; translate: 0 -50%; }
+  .arc__col--left  { right: calc(50% + 1.1rem); }
+  .arc__col--right { left:  calc(50% + 1.1rem); }
+  .arc__col {
+    font-size: 0.58rem;
+    gap: 0.85rem;
+    max-width: 42vw;
   }
-  .arc__rail .marquee__group { gap: 2rem; padding-right: 2rem; }
-  .arc__rail span { white-space: nowrap; }
-
-  /* The 150svh box and the sticky, viewport-centred claim exist so the two
-     COLUMNS of typed sentences can arc past a claim that holds still. Those
-     columns are display:none three rules up, so down here the mechanic was
-     buying nothing and costing ~380px of empty screen above "What people
-     type". Back into normal flow: the claim sits under the section's own
-     padding and the rail follows it. */
-  .arc { min-height: 0; }
-  .arc__center { position: static; top: auto; translate: none; }
-  .arc__rail { position: static; margin-top: 2.5rem; }
 }
 
 /* ---- general narrow-screen tidy ------------------------------------------ */

@@ -24,6 +24,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="icon-north-star" viewBox="0 0 256 256"><path fill="currentColor" d="M240,128a15.79,15.79,0,0,1-10.5,15l-63.44,23.07L143,229.5a16,16,0,0,1-30,0L89.94,166.06,26.5,143a16,16,0,0,1,0-30L89.94,89.94,113,26.5a16,16,0,0,1,30,0l23.07,63.44L229.5,113A15.79,15.79,0,0,1,240,128Z"/></symbol>
+    <symbol id="icon-coins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6" /><path d="M18.09 10.37A6 6 0 1 1 10.34 18" /><path d="M7 6h1v4" /><path d="m16.71 13.88.7.71-2.82 2.82" /></g></symbol>
   </defs>
 </svg>
 
@@ -277,18 +278,46 @@
     </div>
     <div class="wl-caps" data-blur-parent data-stagger="70">
       <article data-blur-child>
+        <span class="wl-caps__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+            <path d="m9 14 2 2 4-4" />
+          </svg>
+        </span>
         <h3>Plan the product</h3>
         <p>Turn an idea into a clearer brief and a practical next step.</p>
       </article>
       <article data-blur-child>
+        <span class="wl-caps__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5" />
+            <line x1="12" x2="20" y1="19" y2="19" />
+          </svg>
+        </span>
         <h3>Build the experience</h3>
         <p>Create interfaces and the application systems behind them.</p>
       </article>
       <article data-blur-child>
+        <span class="wl-caps__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" />
+            <path d="M6.453 15h11.094" />
+            <path d="M8.5 2h7" />
+          </svg>
+        </span>
         <h3>Test and improve</h3>
         <p>Work through changes and keep refining the product.</p>
       </article>
       <article data-blur-child>
+        <span class="wl-caps__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+          </svg>
+        </span>
         <h3>Publish and continue</h3>
         <p>Put the product online and return to the workspace for its next version.</p>
       </article>
@@ -313,8 +342,13 @@
           <span class="stage-panel__idx t-mono">01</span>
           <h3 class="t-h3">Choose your program</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">01</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--program" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect class="glyph__card" width="20" height="14" x="2" y="5" rx="2" />
+              <line class="glyph__stripe" x1="2" x2="22" y1="10" y2="10" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Pick monthly, yearly, or lifetime access and complete checkout.</li>
@@ -326,8 +360,16 @@
           <span class="stage-panel__idx t-mono">02</span>
           <h3 class="t-h3">Make it yours</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">02</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--brand" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle class="glyph__well" cx="13.5" cy="6.5" r="2.5" />
+              <circle class="glyph__well" cx="17.5" cy="10.5" r="2.5" />
+              <circle class="glyph__well" cx="8.5" cy="7.5" r="2.5" />
+              <circle class="glyph__well" cx="6.5" cy="12.5" r="2.5" />
+              <path class="glyph__brush" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Add your name and logo, choose your colours, and preview the customer experience.</li>
@@ -339,8 +381,13 @@
           <span class="stage-panel__idx t-mono">03</span>
           <h3 class="t-h3">Set up how you sell</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">03</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--sell" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path class="glyph__tag" d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
+              <circle class="glyph__hole" cx="7.5" cy="7.5" r=".5" fill="currentColor" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Connect Stripe and choose the customer prices for your plans and credit top-ups.</li>
@@ -352,8 +399,14 @@
           <span class="stage-panel__idx t-mono">04</span>
           <h3 class="t-h3">Connect your domains</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">04</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--domains" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle class="glyph__orb" cx="12" cy="12" r="10" />
+              <path class="glyph__meridian" d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path class="glyph__equator" d="M2 12h20" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Set the address where customers build and the separate domain where their published apps live.</li>
@@ -365,8 +418,13 @@
           <span class="stage-panel__idx t-mono">05</span>
           <h3 class="t-h3">Fund the first builds</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">05</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--fund" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path class="glyph__wallet" d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+              <path class="glyph__fold" d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Purchase credits for your pool, then allocate them through customer plans, top-ups, or supported manual grants.</li>
@@ -378,8 +436,13 @@
           <span class="stage-panel__idx t-mono">06</span>
           <h3 class="t-h3">Complete the experience</h3>
         </header>
-        <div class="stage-panel__glass" aria-hidden="true">
-          <span class="wl-setup__num">06</span>
+        <div class="stage-panel__glass">
+          <span class="glyph glyph--finish" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle class="glyph__ring" cx="12" cy="12" r="10" />
+              <path class="glyph__tick" d="m9 12 2 2 4-4" />
+            </svg>
+          </span>
         </div>
         <ul class="stage-panel__list">
           <li>Connect your sender, link your docs, and use the console to manage the platform as customers join.</li>
@@ -395,26 +458,33 @@
     <div class="page-section__head" data-blur-parent>
       <p class="eyebrow" data-blur-child>Resale</p>
       <h2 class="t-h2" data-blur-child data-grad>You set the price<br />Your customers pay you</h2>
-      <p class="t-body section__lead" data-blur-child>Buy credits from AIWA at a flat $0.70 each. Package them into your customer offers and set your resale prices within the platform's supported pricing limits. Customer payments go through your connected Stripe account.</p>
+      <p class="t-body section__lead" data-blur-child>Buy credits from AIWA at a flat $0.08 each. Package them into your customer offers and set your resale prices within the platform's supported pricing limits. Customer payments go through your connected Stripe account.</p>
     </div>
-    <div class="wl-econ" data-blur-in>
-      <h3 class="wl-econ__title">A simple resale example</h3>
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr><th>Item</th><th>Illustrative amount</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Credits included in your customer offer</td><td>200</td></tr>
-            <tr><td>Your credit cost: 200 × $0.70</td><td>$140</td></tr>
-            <tr><td>Price you charge the customer</td><td>$200</td></tr>
-            <tr><td>Difference before other expenses</td><td>$60</td></tr>
-          </tbody>
-        </table>
+    <div class="wl-econ-layout" data-blur-in>
+      <div class="wl-econ">
+        <h3 class="wl-econ__title">A simple resale example</h3>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Item</th><th>Illustrative amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Credits included in your customer offer</td><td><span class="wl-econ__credits"><svg class="wl-econ__credits-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><use href="#icon-coins"></use></svg>200</span></td></tr>
+              <tr><td>Your credit cost: 200 × $0.08</td><td>$16</td></tr>
+              <tr><td>Price you charge the customer</td><td>$200</td></tr>
+              <tr><td>Difference before other expenses</td><td>$184</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="wl-econ__caption">Illustrative pricing, not a preset plan or earnings guarantee. The $184 difference is before your program fee, payment fees, refunds, taxes, support, and other expenses. Actual results depend on your offer and costs.</p>
       </div>
-      <p class="wl-econ__caption">Illustrative pricing, not a preset plan or earnings guarantee. The $60 difference is before your program fee, payment fees, refunds, taxes, support, and other expenses. Actual results depend on your offer and costs.</p>
+      <div class="wl-econ-side">
+        <figure class="wl-econ-visual">
+          <img src="/images/wl-resale-storefront.png?v=4" alt="Northstar storefront: customer pays Northstar for a $200 Studio plan; AIWA supplies wholesale credits at $0.08 in the back" width="1600" height="1200" loading="lazy" decoding="async" />
+        </figure>
+        <p class="wl-econ__note">Your credit pool funds customer allocations. Keep it funded so purchases and renewals can receive their credits. Any supported free credit allowance is funded by you too.</p>
+      </div>
     </div>
-    <p class="wl-econ__note" data-blur-in>Your credit pool funds customer allocations. Keep it funded so purchases and renewals can receive their credits. Any supported free credit allowance is funded by you too.</p>
   </div>
 </section>
 
@@ -423,7 +493,7 @@
     <div class="page-section__head page-section__head--center pricing__head" data-blur-parent>
       <p class="eyebrow" data-blur-child>Program access</p>
       <h2 class="t-h2" data-blur-child data-grad>Choose how you start</h2>
-      <p class="t-body section__lead" data-blur-child>The same White-Label platform, with three ways to pay for program access. Credits are separate at $0.70 each.</p>
+      <p class="t-body section__lead" data-blur-child>The same White-Label platform, with three ways to pay for program access. Credits are separate at $0.08 each.</p>
       <div class="switch" data-wl-billing-switch data-billing="annual">
         <span class="switch__pill" aria-hidden="true"></span>
         <button class="switch__opt" type="button" data-billing="monthly" aria-pressed="false">Monthly</button>
@@ -527,7 +597,7 @@
             <span>How do credits and resale work?</span>
             <span class="accordion__icon" aria-hidden="true"></span>
           </button>
-          <div class="accordion__body"><div><p class="t-body">Credits fund AI usage. You buy them at $0.70 each for your pool and set customer prices for supported plans and top-ups. Allocating customer credits draws from your pool. The amount left after credit cost must also cover your program fee and other business expenses.</p></div></div>
+          <div class="accordion__body"><div><p class="t-body">Credits fund AI usage. You buy them at $0.08 each for your pool and set customer prices for supported plans and top-ups. Allocating customer credits draws from your pool. The amount left after credit cost must also cover your program fee and other business expenses.</p></div></div>
         </div>
         <div class="accordion__item" data-accordion-status="not-active">
           <button class="accordion__head" type="button" aria-expanded="false">
@@ -590,7 +660,7 @@
             <span>Where can I ask a question before buying?</span>
             <span class="accordion__icon" aria-hidden="true"></span>
           </button>
-          <div class="accordion__body"><div><p class="t-body">Email <a href="mailto:hello@aiwa.codes">hello@aiwa.codes</a>.</p></div></div>
+          <div class="accordion__body"><div><p class="t-body">Ask in our <a href="https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e" target="_blank" rel="noopener noreferrer">community</a>.</p></div></div>
         </div>
     </div>
   </div>

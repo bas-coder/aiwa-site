@@ -17,7 +17,7 @@
  * so a rebuild is still how a resized page gets its speed right.
  */
 
-import { blurReveal, gradientText, marquees, springHovers } from './motion/primitives.js';
+import { blurReveal, gradientText, marquees, springHovers, glassHighlights } from './motion/primitives.js';
 import { blobs } from './motion/blob.js';
 import { accordion, footerReveal, navState, navMenu, setupHorizontal, setupRail } from './motion/sections.js';
 import { initRefreshQueue } from './motion/scroll.js';
@@ -51,6 +51,7 @@ function build() {
   teardowns.push(marquees());
   teardowns.push(blobs());
   teardowns.push(springHovers());
+  teardowns.push(glassHighlights());
   teardowns.push(accordion());
   teardowns.push(wlPricingSwitch());
   teardowns.push(footerReveal());

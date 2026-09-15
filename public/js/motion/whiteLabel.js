@@ -60,6 +60,13 @@ export function whiteLabelHome() {
     play();
   };
 
+  const onActivate = (event) => {
+    if (playing) return;
+    /* Ignore synthetic mouse click after touch if we already handled pointer. */
+    if (event.type === 'click' && event.detail === 0) return;
+    play();
+  };
+
   const io = new IntersectionObserver(([entry]) => {
     if (!entry?.isIntersecting) return;
     play();
@@ -68,11 +75,22 @@ export function whiteLabelHome() {
 
   io.observe(root);
   root.addEventListener('mouseenter', onEnter);
+  root.addEventListener('click', onActivate);
+  root.style.cursor = root.style.cursor || 'pointer';
+  root.setAttribute('tabindex', root.getAttribute('tabindex') || '0');
+  const onKey = (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    onActivate(event);
+  };
+  root.addEventListener('keydown', onKey);
 
   return () => {
     clearTimers();
     io.disconnect();
     root.removeEventListener('mouseenter', onEnter);
+    root.removeEventListener('click', onActivate);
+    root.removeEventListener('keydown', onKey);
   };
 }
 

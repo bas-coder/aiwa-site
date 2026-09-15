@@ -108,12 +108,52 @@ export function ideaScrub(root = document) {
   const stack = root.querySelector('[data-idea-stack]');
   const steps = [...root.querySelectorAll('[data-idea-step]')];
   const IDEA_SCRUB_CLASS = 'is-idea-scrub';
+  const IDEA_PAIRS_CLASS = 'is-idea-pairs';
+  const pairsMq = window.matchMedia('(max-width: 991px)');
 
   if (!panel || !stack || !steps.length) return () => {};
 
-  if (prefersReducedMotion()) {
+  const panels = () => [...stack.children].filter((el) => el.classList?.contains('idea__panel'));
+
+  const restorePanels = () => {
+    document.documentElement.classList.remove(IDEA_PAIRS_CLASS);
+    steps.forEach((step) => {
+      step.querySelectorAll('.idea__panel').forEach((fig) => {
+        stack.appendChild(fig);
+      });
+    });
+  };
+
+  const applyPairs = () => {
+    restorePanels();
+    const figs = panels();
+    steps.forEach((step, i) => {
+      const fig = figs[i];
+      if (!fig) return;
+      step.appendChild(fig);
+      step.classList.add(ACTIVE_CLASS);
+      step.classList.remove(DONE_CLASS);
+    });
+    document.documentElement.classList.add(IDEA_PAIRS_CLASS);
+    /* Autoplay the ships video when paired into the list. */
+    const video = panel.querySelector('video');
+    if (video && !prefersReducedMotion()) {
+      video.play().catch(() => {});
+    }
+  };
+
+  if (prefersReducedMotion() && !pairsMq.matches) {
     resetVisuals(steps, stack);
     return () => resetVisuals(steps, stack);
+  }
+
+  /* Mobile / tablet: compact text → visual pairs; no tall scrub. */
+  if (pairsMq.matches) {
+    applyPairs();
+    return () => {
+      restorePanels();
+      resetVisuals(steps, stack);
+    };
   }
 
   resetVisuals(steps, stack);
@@ -158,6 +198,7 @@ export function ideaScrub(root = document) {
     fillST.kill();
     st.kill();
     document.documentElement.classList.remove(IDEA_SCRUB_CLASS);
+    restorePanels();
     resetVisuals(steps, stack);
     gsap.set(stack, { clearProps: 'transform' });
   };

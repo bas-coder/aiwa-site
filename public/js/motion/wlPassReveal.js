@@ -28,7 +28,7 @@ export function wlPassReveal() {
   const frame = section?.querySelector(FRAME_SEL);
   if (!section || !frame) return () => {};
 
-  if (prefersReducedMotion()) {
+  if (prefersReducedMotion() || window.matchMedia('(max-width: 900px)').matches) {
     resetFrame(frame);
     return () => resetFrame(frame);
   }
