@@ -1,53 +1,20 @@
 /**
- * Footer wordmark FX — live remake of the baked stack:
- *   grain (~7%), horizontal warp (pixel-sort stand-in), posterize (F-S stand-in),
- *   plus-pattern overlay (CSS), cursor heat glow.
+ * Footer wordmark FX — cursor heat + plus/grain film overlays.
+ * No SVG filter on the <img>: filters turn transparent SVG pixels opaque
+ * and paint a filled plate behind the glyphs.
  * Shared by home (main.js) and subpages (page.js).
  */
 
 import { prefersReducedMotion } from './tokens.js';
 
-const FILTER_ID = 'fw-wordmark-fx';
-const DISPLACE_ID = 'fw-displace';
 const IDLE_AMP = 0.22;
 const HOVER_AMP = 1;
 const LEAVE_AMP = 0.12;
 const LERP = 0.14;
 const HEAT_LERP = 0.18;
-const DISPLACE_IDLE = 2.4;
-const DISPLACE_HOVER = 5.5;
 
 function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
-}
-
-function ensureFilterDefs() {
-  if (document.getElementById(FILTER_ID)) return;
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
-  svg.classList.add('fw-fx-defs');
-  svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
-  svg.innerHTML = `
-    <defs>
-      <filter id="${FILTER_ID}" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="noise"/>
-        <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
-        <feComponentTransfer in="mono" result="grain">
-          <feFuncA type="linear" slope="0.28" intercept="0"/>
-        </feComponentTransfer>
-        <feBlend in="SourceGraphic" in2="grain" mode="soft-light" result="grained"/>
-        <feTurbulence type="turbulence" baseFrequency="0.012 0.55" numOctaves="2" seed="7" result="warp"/>
-        <feDisplacementMap id="${DISPLACE_ID}" in="grained" in2="warp" scale="${DISPLACE_IDLE}" xChannelSelector="R" yChannelSelector="G" result="sorted"/>
-        <feComponentTransfer in="sorted">
-          <feFuncR type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
-          <feFuncG type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
-          <feFuncB type="discrete" tableValues="0 0.07 0.14 0.21 0.29 0.36 0.43 0.5 0.57 0.64 0.71 0.79 0.86 0.93 1"/>
-        </feComponentTransfer>
-      </filter>
-    </defs>
-  `;
-  document.body.prepend(svg);
 }
 
 export function footerWordmark() {
@@ -56,18 +23,13 @@ export function footerWordmark() {
   const mark = crop?.querySelector('.footer__wordmark');
   if (!footer || !crop || !mark) return () => {};
 
-  ensureFilterDefs();
-  mark.style.filter = `url(#${FILTER_ID})`;
   crop.classList.add('is-fx');
-
-  const displace = document.getElementById(DISPLACE_ID);
 
   if (prefersReducedMotion()) {
     footer.style.setProperty('--fw-amp', '0.28');
     footer.style.setProperty('--fw-px', '50%');
     footer.style.setProperty('--fw-py', '42%');
     return () => {
-      mark.style.filter = '';
       crop.classList.remove('is-fx');
     };
   }
@@ -86,10 +48,6 @@ export function footerWordmark() {
     footer.style.setProperty('--fw-amp', String(amp));
     footer.style.setProperty('--fw-px', `${px}%`);
     footer.style.setProperty('--fw-py', `${py}%`);
-    if (displace) {
-      const scale = DISPLACE_IDLE + (DISPLACE_HOVER - DISPLACE_IDLE) * amp;
-      displace.setAttribute('scale', String(scale.toFixed(2)));
-    }
   };
 
   const tick = () => {
@@ -169,7 +127,6 @@ export function footerWordmark() {
     plate.removeEventListener('pointermove', onMove);
     plate.removeEventListener('pointerenter', onEnter);
     plate.removeEventListener('pointerleave', onLeave);
-    mark.style.filter = '';
     crop.classList.remove('is-fx');
     footer.style.removeProperty('--fw-amp');
     footer.style.removeProperty('--fw-px');

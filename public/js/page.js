@@ -27,6 +27,7 @@ import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
 import { wlPricingSwitch } from './wl-pricing.js';
 import { footerWordmark } from './motion/footerWordmark.js';
+import { whiteLabelPage } from './motion/whiteLabel.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,7 @@ function build() {
   teardowns.push(wlPricingSwitch());
   teardowns.push(footerReveal());
   teardowns.push(footerWordmark());
+  teardowns.push(whiteLabelPage());
   teardowns.push(navState());
   teardowns.push(navMenu());
 

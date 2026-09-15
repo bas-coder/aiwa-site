@@ -27,6 +27,9 @@ import { prefersReducedMotion } from './motion/tokens.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
+import { whiteLabelHome } from './motion/whiteLabel.js';
+import { wlPass } from './motion/wlPass.js';
+import { wlPassReveal } from './motion/wlPassReveal.js';
 import { footerWordmark } from './motion/footerWordmark.js';
 
 /* Start the overlay before plugin setup. If registerPlugin throws, CSS still
@@ -111,6 +114,9 @@ function build() {
   teardowns.push(workspaceTabs());
   teardowns.push(workspaceFocus());
   teardowns.push(ideaScrub());
+  teardowns.push(whiteLabelHome());
+  teardowns.push(wlPass());
+  teardowns.push(wlPassReveal());
 
   /* §2.8 tiers 3 and 4 - under 480px, or reduced motion, the hero does not
      pin, so it also does not need four viewports. `.static-hero` collapses it

@@ -4,6 +4,29 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-14 — White Label: hide jump rail + align Northstar mocks
+
+- Hid sticky `.feat-jump` TOC on `/white-label` (same pattern as features).
+- Restyled `.ns-studio` experience mocks to homepage takeover: ink shell, cream plate, accent CTA/highlights; tighter radii (0.75 / 0.55).
+- Page hero panels: dropped grain deck frame; browser/shell matches home; sign-in cream plate; builder/pricing on ink tokens; `.wl-card` radius 0.9rem.
+- Files: `public/white-label/index.html`, `public/css/site.css`, `public/css/page.css`.
+
+---
+
+## 2026-09-14 — White Label: Mastra-style tabs + 2×2 experience cards
+
+- Hero tabs on `/white-label`: folder-tab chrome (uppercase + icons, inactive dark pills, active textured tab with concave corners merging into deck), grain surface on active tab/panel.
+- Fixed broken nested `.wl-cards {` block in `page.css` that prevented the 2-column grid from applying; Customer experience cards are 2×2 (1-col under 720px).
+- Files: `public/white-label/index.html`, `public/css/page.css`.
+
+---
+
+## 2026-09-14 — Restore lost WL work after hard reset
+
+- Recovered `e96b974` (JS modules + SVG + footer FX), then rebuilt missing HTML/CSS/wiring from chat extracts: `#white-label-pass` hang-tag, Brand Takeover home + `/white-label` page hero, `site.css` / `page.css`, `main.js` / `page.js` hooks.
+
+---
+
 ## 2026-09-14 — Footer wordmark live FX on SVG
 
 - Replaced baked `aiwa-logo-footer.webp` with `/icons/AIWA.svg` on every page footer + `build-pages.mjs`.

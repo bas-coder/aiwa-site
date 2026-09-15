@@ -84,7 +84,117 @@ export function whiteLabelPage() {
   const panels = [...root.querySelectorAll('[data-wl-panel]')];
   if (!tabs.length || !panels.length) return () => {};
 
+  const shell = root.querySelector('[data-wl-mastra]');
+  const clip = root.querySelector('[data-wl-shell-clip]');
+  const pathEl = root.querySelector('[data-wl-shell-path]');
+
+  const readShellMetrics = () => {
+    const styles = shell ? getComputedStyle(shell) : null;
+    const readPx = (name, fallback) => {
+      if (!styles) return fallback;
+      const raw = styles.getPropertyValue(name).trim();
+      const n = Number.parseFloat(raw);
+      return Number.isFinite(n) ? n : fallback;
+    };
+    const tabH = readPx('--wl-mastra-tab-h', 48);
+    const gapY = readPx('--wl-mastra-gap', 14);
+    const tabGap = readPx('--wl-mastra-tab-gap', 12);
+    const corner = readPx('--wl-mastra-path-radius', 1);
+    const notchMax = readPx('--wl-mastra-notch', 12);
+    return {
+      bodyTop: tabH + gapY,
+      tabGap,
+      corner,
+      notchMax,
+      tabCount: tabs.length,
+    };
+  };
+
+  const buildShellPath = ({
+    activeIndex,
+    shellHeight,
+    tabGap,
+    tabCount,
+    width,
+    bodyTop,
+    corner,
+    notchMax,
+  }) => {
+    const w = Math.max(width, 80);
+    const count = Math.max(tabCount, 1);
+    const tabWidth = (w - tabGap * Math.max(count - 1, 0)) / count;
+    const clampedIndex = Math.max(0, Math.min(activeIndex, count - 1));
+    const activeLeft = clampedIndex * (tabWidth + tabGap);
+    const activeRight = activeLeft + tabWidth;
+    const outer = Math.min(corner, Math.max(8, (shellHeight - bodyTop) / 2));
+    const tabRadius = Math.min(corner, tabWidth / 2);
+    const notch = Math.min(notchMax, bodyTop - tabRadius, tabWidth / 2);
+    const isFirst = activeLeft <= 0.5;
+    const isLast = activeRight >= w - 0.5;
+
+    const parts = isFirst
+      ? [`M ${tabRadius} 0`, `H ${activeRight - tabRadius}`, `A ${tabRadius} ${tabRadius} 0 0 1 ${activeRight} ${tabRadius}`]
+      : [
+          `M ${outer} ${bodyTop}`,
+          `H ${activeLeft - notch}`,
+          `A ${notch} ${notch} 0 0 0 ${activeLeft} ${bodyTop - notch}`,
+          `V ${tabRadius}`,
+          `A ${tabRadius} ${tabRadius} 0 0 1 ${activeLeft + tabRadius} 0`,
+          `H ${activeRight - tabRadius}`,
+          `A ${tabRadius} ${tabRadius} 0 0 1 ${activeRight} ${tabRadius}`,
+        ];
+
+    if (isLast) {
+      parts.push(`V ${shellHeight - outer}`, `A ${outer} ${outer} 0 0 1 ${w - outer} ${shellHeight}`);
+    } else {
+      parts.push(
+        `V ${bodyTop - notch}`,
+        `A ${notch} ${notch} 0 0 0 ${activeRight + notch} ${bodyTop}`,
+        `H ${w - outer}`,
+        `A ${outer} ${outer} 0 0 1 ${w} ${bodyTop + outer}`,
+        `V ${shellHeight - outer}`,
+        `A ${outer} ${outer} 0 0 1 ${w - outer} ${shellHeight}`
+      );
+    }
+
+    parts.push(`H ${outer}`, `A ${outer} ${outer} 0 0 1 0 ${shellHeight - outer}`);
+
+    if (isFirst) {
+      parts.push(`V ${tabRadius}`, `A ${tabRadius} ${tabRadius} 0 0 1 ${tabRadius} 0`);
+    } else {
+      parts.push(`V ${bodyTop + outer}`, `A ${outer} ${outer} 0 0 1 ${outer} ${bodyTop}`);
+    }
+
+    parts.push('Z');
+    return parts.join(' ');
+  };
+
+  let activeId = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true')?.getAttribute('data-wl-tab')
+    || tabs[0].getAttribute('data-wl-tab');
+
+  const activeIndex = () => {
+    const i = tabs.findIndex((tab) => tab.getAttribute('data-wl-tab') === activeId);
+    return i < 0 ? 0 : i;
+  };
+
+  const updateShell = () => {
+    if (!shell || !clip || !pathEl) return;
+    const width = shell.clientWidth;
+    const height = shell.clientHeight;
+    const metrics = readShellMetrics();
+    if (width < 80 || height < metrics.bodyTop + 64) return;
+    const d = buildShellPath({
+      activeIndex: activeIndex(),
+      shellHeight: height,
+      width,
+      ...metrics,
+    });
+    clip.style.clipPath = `path("${d}")`;
+    pathEl.setAttribute('d', d);
+  };
+
   const setActive = (id) => {
+    activeId = id;
     tabs.forEach((tab) => {
       const on = tab.getAttribute('data-wl-tab') === id;
       tab.classList.toggle('is-active', on);
@@ -95,7 +205,9 @@ export function whiteLabelPage() {
       const on = panel.getAttribute('data-wl-panel') === id;
       panel.classList.toggle('is-active', on);
       panel.setAttribute('aria-hidden', String(!on));
+      panel.toggleAttribute('hidden', !on);
     });
+    updateShell();
   };
 
   const onClick = (event) => {
@@ -125,10 +237,22 @@ export function whiteLabelPage() {
     tab.addEventListener('keydown', onKey);
   });
 
+  let ro = null;
+  if (shell && typeof ResizeObserver !== 'undefined') {
+    ro = new ResizeObserver(() => updateShell());
+    ro.observe(shell);
+  } else {
+    window.addEventListener('resize', updateShell);
+  }
+
+  setActive(activeId);
+
   return () => {
     tabs.forEach((tab) => {
       tab.removeEventListener('click', onClick);
       tab.removeEventListener('keydown', onKey);
     });
+    if (ro) ro.disconnect();
+    else window.removeEventListener('resize', updateShell);
   };
 }

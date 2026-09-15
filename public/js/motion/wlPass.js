@@ -1,7 +1,7 @@
 /**
  * White Label hang-tag
  * Idle pendulum, pointer tilt, amber heat chase,
- * grab → follow pointer → release with spring-back.
+ * grab → ease toward pointer → release with spring-back.
  * Root: [data-wl-swing="pass"]
  */
 
@@ -10,6 +10,7 @@ import { prefersReducedMotion } from './tokens.js';
 const GRAVITY = 18;
 const DAMPING = 0.992;
 const SPRING = 14;
+const GRAB_FOLLOW = 12;
 const DRAG_THRESHOLD_PX = 8;
 const IDLE_SEED = 0.35;
 const VELOCITY_MAX = 2.2;
@@ -38,6 +39,7 @@ function attachSwing(root) {
 
   let angle = (Math.random() * 2 - 1) * IDLE_SEED * 0.04;
   let velocity = 0;
+  let targetAngle = angle;
   let tiltX = 0;
   let tiltY = 0;
   let targetTiltX = 0;
@@ -60,6 +62,10 @@ function attachSwing(root) {
   const setWillChange = (on) => {
     root.style.willChange = on ? 'transform' : '';
     if (card) card.style.willChange = on ? 'transform' : '';
+  };
+
+  const setDraggingClass = (on) => {
+    root.classList.toggle('is-dragging', on);
   };
 
   const paint = () => {
@@ -98,7 +104,12 @@ function attachSwing(root) {
     const dt = Math.min(0.033, (now - lastT) / 1000 || 0.016);
     lastT = now;
 
-    if (!dragging) {
+    if (dragging) {
+      const prev = angle;
+      angle += (targetAngle - angle) * Math.min(1, dt * GRAB_FOLLOW);
+      const sample = (angle - prev) / dt;
+      velocity = velocity * (1 - VELOCITY_SMOOTH) + sample * VELOCITY_SMOOTH;
+    } else {
       const accel = -GRAVITY * Math.sin(angle) * cfg.length;
       velocity += accel * dt;
       velocity *= Math.pow(DAMPING, dt * 60);
@@ -171,6 +182,7 @@ function attachSwing(root) {
     if (!dragging) {
       if (Math.abs(dxFromStart) < DRAG_THRESHOLD_PX) return;
       dragging = true;
+      setDraggingClass(true);
       velocity = 0;
       /* Flat the card while grabbing so 3D tilt can't skew hit-testing. */
       targetTiltX = 0;
@@ -178,17 +190,14 @@ function attachSwing(root) {
       tiltX = 0;
       tiltY = 0;
       refreshPivotX();
+      /* Leave current angle; ease toward pointer target in step(). */
+      targetAngle = angleFromPointerX(event.clientX);
       startLoop();
+      return;
     }
 
-    const now = performance.now();
-    const dt = Math.max(0.012, (now - lastDragT) / 1000);
-    const prev = angle;
-    angle = angleFromPointerX(event.clientX);
-    const sample = (angle - prev) / dt;
-    velocity = velocity * (1 - VELOCITY_SMOOTH) + sample * VELOCITY_SMOOTH;
-    lastDragT = now;
-    paint();
+    targetAngle = angleFromPointerX(event.clientX);
+    lastDragT = performance.now();
   };
 
   const onPointerUp = (event) => {
@@ -196,6 +205,7 @@ function attachSwing(root) {
     const wasDragging = dragging;
     dragArmed = false;
     dragging = false;
+    setDraggingClass(false);
     pointerId = null;
     try { root.releasePointerCapture?.(event.pointerId); } catch { /* already released */ }
     if (wasDragging) {
@@ -236,6 +246,7 @@ function attachSwing(root) {
 
   return () => {
     stopLoop();
+    setDraggingClass(false);
     io.disconnect();
     window.removeEventListener('resize', onResize);
     document.removeEventListener('visibilitychange', onVisibility);
