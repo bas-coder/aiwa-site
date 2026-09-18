@@ -110,6 +110,30 @@ export function whiteLabelPage() {
   const viewportBtns = [...root.querySelectorAll('[data-wl-viewport]')];
   const frame = root.querySelector('[data-wl-preview-frame]');
   const expandBtn = root.querySelector('[data-wl-preview-expand]');
+  const tourBtn = root.querySelector('[data-wl-tour]');
+  const canvas = root.querySelector('[data-wl-product-canvas]');
+  const status = root.querySelector('[data-wl-preview-status]');
+  let viewport = 'desktop';
+  let tourTimer = null;
+  const fit = () => {
+    if (!canvas || !frame) return;
+    const width = viewport === 'mobile' ? 390 : 1280;
+    const scale = canvas.parentElement.clientWidth / width;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = '800px';
+    canvas.style.transform = `scale(${scale})`;
+    canvas.parentElement.style.height = `${800 * scale}px`;
+  };
+  const observer = new ResizeObserver(fit);
+  if (frame) observer.observe(frame);
+  const stopTour = () => {
+    clearInterval(tourTimer);
+    tourTimer = null;
+    tourBtn?.setAttribute('aria-pressed', 'false');
+    tourBtn?.setAttribute('aria-label', 'Play the screen tour');
+    const icon = tourBtn?.querySelector('.ph');
+    icon?.classList.replace('ph-pause', 'ph-play');
+  };
   if (!tabs.length || !panels.length) return teardownTakeover;
 
   let activeId = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true')?.getAttribute('data-wl-tab')
@@ -129,15 +153,19 @@ export function whiteLabelPage() {
       panel.classList.toggle('is-active', on);
       panel.toggleAttribute('hidden', !on);
     });
+    if (status) status.textContent = `Preview of Actionist: ${id === 'signin' ? 'Sign in' : id} on ${viewport}`;
   };
 
   const setViewport = (mode) => {
+    viewport = mode;
     frame?.classList.toggle('is-mobile', mode === 'mobile');
     viewportBtns.forEach((btn) => {
       const on = btn.getAttribute('data-wl-viewport') === mode;
       btn.classList.toggle('is-active', on);
       btn.setAttribute('aria-pressed', String(on));
     });
+    fit();
+    if (status) status.textContent = `Preview of Actionist: ${activeId === 'signin' ? 'Sign in' : activeId} on ${viewport}`;
   };
 
   const setExpanded = (next) => {
@@ -158,7 +186,7 @@ export function whiteLabelPage() {
         || root.webkitRequestFullscreen
         || root.msRequestFullscreen;
       if (typeof req === 'function') {
-        try { req.call(root); } catch (_) { /* ignore unsupported / denied */ }
+        try { req.call(root)?.catch?.(() => {}); } catch (_) { /* fixed overlay fallback */ }
       }
       return;
     }
@@ -184,6 +212,7 @@ export function whiteLabelPage() {
   };
 
   const onTabClick = (event) => {
+    stopTour();
     const id = event.currentTarget.getAttribute('data-wl-tab');
     if (!id) return;
     setActive(id);
@@ -192,6 +221,7 @@ export function whiteLabelPage() {
   const onTabKey = (event) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
     if (!keys.includes(event.key)) return;
+    stopTour();
     event.preventDefault();
     const i = tabs.indexOf(event.currentTarget);
     if (i < 0) return;
@@ -213,6 +243,17 @@ export function whiteLabelPage() {
   const onExpandClick = () => {
     setExpanded(!expanded);
   };
+  const onTourClick = () => {
+    if (tourTimer) { stopTour(); return; }
+    setActive('loading');
+    tourBtn.setAttribute('aria-pressed', 'true');
+    tourBtn.setAttribute('aria-label', 'Pause the screen tour');
+    tourBtn.querySelector('.ph')?.classList.replace('ph-play', 'ph-pause');
+    tourTimer = setInterval(() => {
+      const ids = tabs.map(tab => tab.dataset.wlTab);
+      setActive(ids[(ids.indexOf(activeId) + 1) % ids.length]);
+    }, 3000);
+  };
 
   const onDocKey = (event) => {
     if (event.key !== 'Escape' || !expanded) return;
@@ -225,6 +266,7 @@ export function whiteLabelPage() {
   });
   viewportBtns.forEach((btn) => btn.addEventListener('click', onViewportClick));
   expandBtn?.addEventListener('click', onExpandClick);
+  tourBtn?.addEventListener('click', onTourClick);
   document.addEventListener('keydown', onDocKey);
   document.addEventListener('fullscreenchange', onFullscreenChange);
   document.addEventListener('webkitfullscreenchange', onFullscreenChange);
@@ -234,6 +276,9 @@ export function whiteLabelPage() {
   setExpanded(false);
 
   return () => {
+    observer.disconnect();
+    stopTour();
+    tourBtn?.removeEventListener('click', onTourClick);
     teardownTakeover();
     tabs.forEach((tab) => {
       tab.removeEventListener('click', onTabClick);

@@ -354,6 +354,12 @@ ${NAV.map((l) => `      <a href="${esc(l.href)}"${current(l.href, here)}${isExte
 }
 
 function footerHtml(here) {
+  if (here === '/white-label') return `<footer class="footer footer--sales" data-footer>
+  <div class="footer__plate">
+    <div class="shell shell--wide"><div class="footer__meta"><p class="footer__legal t-small">© 2026 AIWA Codes. All rights reserved.</p></div></div>
+    <div class="footer__wordmark-crop"><img class="footer__wordmark" src="/icons/AIWA.svg?v=2" alt="" width="2271" height="1043" aria-hidden="true" decoding="async" /></div>
+  </div>
+</footer>`;
   const col = (c) => `      <div><span class="footer__col-name">${esc(c.name)}</span>${c.links
     .map((l) => `<a href="${esc(l.href)}"${current(l.href, here)}${isExternal(l.href) ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(l.label)}</a>`)
     .join('')}</div>`;
