@@ -8,6 +8,13 @@ if (root) {
   const count = root.querySelector('[data-output-count]');
   const prev = root.querySelector('[data-output-prev]');
   const next = root.querySelector('[data-output-next]');
+  const categoryTabs = tabs[0]?.parentElement;
+  const urls = ['crm','restaurant-ordering','ecommerce','client-portal','ai-saas','booking','membership','blog','admin-dashboard','business','internal-tools','mobile-apps','automations'];
+  slides.forEach((slide,i) => {
+    const address = slide.querySelector('.wl-output__chrome span');
+    if (address) address.textContent = `yourbrand.com/${urls[i]}`;
+    slide.querySelector('img')?.setAttribute('draggable', 'false');
+  });
   let active = 0;
   let raf = 0;
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -26,8 +33,56 @@ if (root) {
     render(index);
     track.scrollTo({left:slides[index].offsetLeft-(track.clientWidth-slides[index].clientWidth)/2,behavior:reduced()?'instant':'smooth'});
     const row = tabs[index].parentElement;
-    row.scrollTo({left:tabs[index].offsetLeft-row.offsetLeft-(row.clientWidth-tabs[index].clientWidth)/2,behavior:reduced()?'instant':'smooth'});
+    row.scrollTo({left:tabs[index].offsetLeft-(row.clientWidth-tabs[index].clientWidth)/2,behavior:reduced()?'instant':'smooth'});
   }
+  function enableDrag(element) {
+    if (!element) return;
+    let startX = 0;
+    let startScroll = 0;
+    let pointerId = null;
+    let dragged = false;
+    element.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'touch' || event.button !== 0) return;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startScroll = element.scrollLeft;
+      dragged = false;
+    });
+    element.addEventListener('pointermove', event => {
+      if (event.pointerId !== pointerId) return;
+      const distance = event.clientX - startX;
+      if (!dragged && Math.abs(distance) < 6) return;
+      if (!dragged) {
+        dragged = true;
+        element.setPointerCapture(pointerId);
+        element.classList.add('is-dragging');
+      }
+      event.preventDefault();
+      element.scrollLeft = startScroll - distance;
+    });
+    const release = event => {
+      if (event.pointerId !== pointerId) return;
+      const id = pointerId;
+      pointerId = null;
+      element.classList.remove('is-dragging');
+      if (element.hasPointerCapture(id)) element.releasePointerCapture(id);
+    };
+    element.addEventListener('pointerup', release);
+    element.addEventListener('pointercancel', release);
+    element.addEventListener('lostpointercapture', release);
+    element.addEventListener('pointerleave', event => {
+      if (!dragged) release(event);
+    });
+    element.addEventListener('click', event => {
+      if (!dragged) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      dragged = false;
+    }, true);
+    element.addEventListener('dragstart', event => event.preventDefault());
+  }
+  enableDrag(categoryTabs);
+  enableDrag(track);
   tabs.forEach((tab,i)=>tab.addEventListener('click',()=>go(i)));
   prev.addEventListener('click',()=>go(active-1));
   next.addEventListener('click',()=>go(active+1));

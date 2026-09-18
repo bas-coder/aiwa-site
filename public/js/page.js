@@ -66,55 +66,50 @@ function build() {
 
 function wlStickyCta() {
   const bar = document.querySelector('[data-wl-sticky]');
-  /* Show after the second section (.wl-trust): when Market Shift enters view. */
-  const gate = document.getElementById('wl-market')
-    || document.querySelector('.wl-trust')
-    || document.getElementById('wl-hero');
-  if (!bar || !gate) return () => {};
-
-  /* Clear legacy session dismiss so a prior X does not permanently hide the bar. */
-  try { sessionStorage.removeItem('wl-sticky-dismissed'); } catch { /* ignore */ }
-
-  let dismissed = false;
-  bar.hidden = false;
-
-  const setVisible = (on) => {
-    if (dismissed) return;
-    bar.hidden = false;
-    bar.classList.toggle('is-visible', Boolean(on));
+  if (!bar) return () => {};
+  const sections = [...document.querySelectorAll('main > section')];
+  let dismissedSection = null;
+  let activeSection = null;
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    const viewport = window.innerHeight;
+    activeSection = sections.find(section => {
+      const rect = section.getBoundingClientRect();
+      const eligible = section.id === 'wl-included'
+        || (rect.height >= viewport * 3 && !section.querySelector('a.btn, button.btn'));
+      return eligible && rect.top < viewport && rect.bottom > 0;
+    }) || null;
+    if (dismissedSection && dismissedSection !== activeSection) dismissedSection = null;
+    const visible = Boolean(activeSection && activeSection !== dismissedSection);
+    bar.hidden = !visible;
+    bar.inert = !visible;
+    bar.classList.toggle('is-visible', visible);
   };
-
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
   const dismiss = bar.querySelector('[data-wl-sticky-dismiss]');
-  const hide = () => {
-    dismissed = true;
-    bar.classList.remove('is-visible');
-    bar.hidden = true;
-  };
-
   const onDismiss = (event) => {
     event.preventDefault();
-    hide();
+    dismissedSection = activeSection;
+    update();
   };
   dismiss?.addEventListener('click', onDismiss);
-
-  const st = ScrollTrigger.create({
-    trigger: gate,
-    start: 'top 85%',
-    onToggle: (self) => setVisible(self.isActive),
-  });
-  /* Sync immediately — onToggle may not fire if we mount already past the gate. */
-  setVisible(st.isActive);
-
-  const onRefresh = () => {
-    if (!dismissed) setVisible(st.isActive);
-  };
-  ScrollTrigger.addEventListener('refresh', onRefresh);
-
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  const observer = new ResizeObserver(schedule);
+  sections.forEach(section => observer.observe(section));
+  ScrollTrigger.addEventListener('refresh', schedule);
+  update();
   return () => {
-    ScrollTrigger.removeEventListener('refresh', onRefresh);
-    st.kill();
+    cancelAnimationFrame(frame);
+    observer.disconnect();
+    window.removeEventListener('scroll', schedule);
+    window.removeEventListener('resize', schedule);
+    ScrollTrigger.removeEventListener('refresh', schedule);
     dismiss?.removeEventListener('click', onDismiss);
     bar.classList.remove('is-visible');
+    bar.hidden = true;
+    bar.inert = true;
   };
 }
 

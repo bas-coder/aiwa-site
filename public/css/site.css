@@ -3191,6 +3191,15 @@ html.is-idea-scrub .hero-media__scrim {
   height: auto;
   transform: translateX(-32%);
 }
+@media (min-width: 901px) {
+  /* Reserve half the card for copy; the image fades entirely inside its half. */
+  .use-card--hero { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .use-card--hero .use-card__body {
+    margin-inline-start: 0;
+    background: none;
+  }
+  .use-card--hero .use-card__body::before { display: none; }
+}
 @media (max-width: 900px) {
   .use-card--hero .use-card__body {
     margin-inline-start: 0;
