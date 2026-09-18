@@ -1,7 +1,7 @@
 /**
  * White Label Brand Takeover
  * Home: AIWA → Northstar morph on #white-label (scroll once + mouseenter replay)
- * Page: Sign-in / Builder / Pricing panel swaps on /white-label hero
+ * Page: same takeover on /white-label #wl-idea + Own The Experience preview controls
  */
 
 import { prefersReducedMotion } from './tokens.js';
@@ -9,10 +9,7 @@ import { prefersReducedMotion } from './tokens.js';
 const HOME_STEPS = ['is-step-brand', 'is-step-wash', 'is-step-done'];
 const HOME_STEP_MS = [0, 900, 1800, 2800];
 
-export function whiteLabelHome() {
-  const root = document.querySelector('[data-wl-takeover="home"]');
-  if (!root) return () => {};
-
+function bindTakeover(root) {
   const stage = root.querySelector('.wl-takeover');
   if (!stage) return () => {};
 
@@ -62,7 +59,6 @@ export function whiteLabelHome() {
 
   const onActivate = (event) => {
     if (playing) return;
-    /* Ignore synthetic mouse click after touch if we already handled pointer. */
     if (event.type === 'click' && event.detail === 0) return;
     play();
   };
@@ -94,125 +90,31 @@ export function whiteLabelHome() {
   };
 }
 
+export function whiteLabelHome() {
+  const roots = [...document.querySelectorAll('[data-wl-takeover]')];
+  if (!roots.length) return () => {};
+  const teardowns = roots.map(bindTakeover);
+  return () => {
+    teardowns.forEach((fn) => fn());
+  };
+}
+
 export function whiteLabelPage() {
-  const root = document.querySelector('[data-wl-takeover="page"]');
-  if (!root) return () => {};
+  const teardownTakeover = whiteLabelHome();
+
+  const root = document.querySelector('[data-wl-preview]');
+  if (!root) return teardownTakeover;
 
   const tabs = [...root.querySelectorAll('[data-wl-tab]')];
   const panels = [...root.querySelectorAll('[data-wl-panel]')];
-  if (!tabs.length || !panels.length) return () => {};
-
-  const shell = root.querySelector('[data-wl-mastra]');
-  const clip = root.querySelector('[data-wl-shell-clip]');
-  const pathEl = root.querySelector('[data-wl-shell-path]');
-
-  const readShellMetrics = () => {
-    const styles = shell ? getComputedStyle(shell) : null;
-    const readPx = (name, fallback) => {
-      if (!styles) return fallback;
-      const raw = styles.getPropertyValue(name).trim();
-      const n = Number.parseFloat(raw);
-      return Number.isFinite(n) ? n : fallback;
-    };
-    const tabH = readPx('--wl-mastra-tab-h', 48);
-    const gapY = readPx('--wl-mastra-gap', 14);
-    const tabGap = readPx('--wl-mastra-tab-gap', 12);
-    const corner = readPx('--wl-mastra-path-radius', 16);
-    const tabCorner = readPx('--wl-mastra-radius', 14);
-    const notchMax = readPx('--wl-mastra-notch', 28);
-    return {
-      bodyTop: tabH + gapY,
-      tabGap,
-      corner,
-      tabCorner,
-      notchMax,
-      tabCount: tabs.length,
-    };
-  };
-
-  const buildShellPath = ({
-    activeIndex,
-    shellHeight,
-    tabGap,
-    tabCount,
-    width,
-    bodyTop,
-    corner,
-    tabCorner,
-    notchMax,
-  }) => {
-    const w = Math.max(width, 80);
-    const count = Math.max(tabCount, 1);
-    const tabWidth = (w - tabGap * Math.max(count - 1, 0)) / count;
-    const clampedIndex = Math.max(0, Math.min(activeIndex, count - 1));
-    const activeLeft = clampedIndex * (tabWidth + tabGap);
-    const activeRight = activeLeft + tabWidth;
-    const outer = Math.min(corner, Math.max(8, (shellHeight - bodyTop) / 2));
-    const tabRadius = Math.min(tabCorner || corner, tabWidth / 2);
-    const notch = Math.min(notchMax, bodyTop - tabRadius, tabWidth / 2);
-    const isFirst = activeLeft <= 0.5;
-    const isLast = activeRight >= w - 0.5;
-
-    const parts = isFirst
-      ? [`M ${tabRadius} 0`, `H ${activeRight - tabRadius}`, `A ${tabRadius} ${tabRadius} 0 0 1 ${activeRight} ${tabRadius}`]
-      : [
-          `M ${outer} ${bodyTop}`,
-          `H ${activeLeft - notch}`,
-          `A ${notch} ${notch} 0 0 0 ${activeLeft} ${bodyTop - notch}`,
-          `V ${tabRadius}`,
-          `A ${tabRadius} ${tabRadius} 0 0 1 ${activeLeft + tabRadius} 0`,
-          `H ${activeRight - tabRadius}`,
-          `A ${tabRadius} ${tabRadius} 0 0 1 ${activeRight} ${tabRadius}`,
-        ];
-
-    if (isLast) {
-      parts.push(`V ${shellHeight - outer}`, `A ${outer} ${outer} 0 0 1 ${w - outer} ${shellHeight}`);
-    } else {
-      parts.push(
-        `V ${bodyTop - notch}`,
-        `A ${notch} ${notch} 0 0 0 ${activeRight + notch} ${bodyTop}`,
-        `H ${w - outer}`,
-        `A ${outer} ${outer} 0 0 1 ${w} ${bodyTop + outer}`,
-        `V ${shellHeight - outer}`,
-        `A ${outer} ${outer} 0 0 1 ${w - outer} ${shellHeight}`
-      );
-    }
-
-    parts.push(`H ${outer}`, `A ${outer} ${outer} 0 0 1 0 ${shellHeight - outer}`);
-
-    if (isFirst) {
-      parts.push(`V ${tabRadius}`, `A ${tabRadius} ${tabRadius} 0 0 1 ${tabRadius} 0`);
-    } else {
-      parts.push(`V ${bodyTop + outer}`, `A ${outer} ${outer} 0 0 1 ${outer} ${bodyTop}`);
-    }
-
-    parts.push('Z');
-    return parts.join(' ');
-  };
+  const viewportBtns = [...root.querySelectorAll('[data-wl-viewport]')];
+  const frame = root.querySelector('[data-wl-preview-frame]');
+  const expandBtn = root.querySelector('[data-wl-preview-expand]');
+  if (!tabs.length || !panels.length) return teardownTakeover;
 
   let activeId = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true')?.getAttribute('data-wl-tab')
     || tabs[0].getAttribute('data-wl-tab');
-
-  const activeIndex = () => {
-    const i = tabs.findIndex((tab) => tab.getAttribute('data-wl-tab') === activeId);
-    return i < 0 ? 0 : i;
-  };
-
-  const updateShell = () => {
-    if (!shell || !clip || !pathEl) return;
-    const width = shell.clientWidth;
-    const height = shell.clientHeight;
-    const metrics = readShellMetrics();
-    if (width < 80 || height < metrics.bodyTop + 64) return;
-    const d = buildShellPath({
-      activeIndex: activeIndex(),
-      shellHeight: height,
-      width,
-      ...metrics,
-    });
-    clip.style.clipPath = `path("${d}")`;
-    pathEl.setAttribute('d', d);
-  };
+  let expanded = false;
 
   const setActive = (id) => {
     activeId = id;
@@ -225,20 +127,39 @@ export function whiteLabelPage() {
     panels.forEach((panel) => {
       const on = panel.getAttribute('data-wl-panel') === id;
       panel.classList.toggle('is-active', on);
-      panel.setAttribute('aria-hidden', String(!on));
       panel.toggleAttribute('hidden', !on);
     });
-    updateShell();
   };
 
-  const onClick = (event) => {
-    const tab = event.currentTarget;
-    const id = tab.getAttribute('data-wl-tab');
+  const setViewport = (mode) => {
+    frame?.classList.toggle('is-mobile', mode === 'mobile');
+    viewportBtns.forEach((btn) => {
+      const on = btn.getAttribute('data-wl-viewport') === mode;
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-pressed', String(on));
+    });
+  };
+
+  const setExpanded = (next) => {
+    expanded = next;
+    root.classList.toggle('is-expanded', expanded);
+    expandBtn?.setAttribute('aria-expanded', String(expanded));
+    expandBtn?.setAttribute('aria-label', expanded ? 'Exit expanded preview' : 'Expand preview');
+    const icon = expandBtn?.querySelector('.ph');
+    if (icon) {
+      icon.classList.toggle('ph-arrows-out', !expanded);
+      icon.classList.toggle('ph-arrows-in', expanded);
+    }
+    document.documentElement.classList.toggle('wl-preview-lock', expanded);
+  };
+
+  const onTabClick = (event) => {
+    const id = event.currentTarget.getAttribute('data-wl-tab');
     if (!id) return;
     setActive(id);
   };
 
-  const onKey = (event) => {
+  const onTabKey = (event) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
     if (!keys.includes(event.key)) return;
     event.preventDefault();
@@ -253,27 +174,42 @@ export function whiteLabelPage() {
     setActive(tabs[next].getAttribute('data-wl-tab'));
   };
 
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', onClick);
-    tab.addEventListener('keydown', onKey);
-  });
+  const onViewportClick = (event) => {
+    const mode = event.currentTarget.getAttribute('data-wl-viewport');
+    if (!mode) return;
+    setViewport(mode);
+  };
 
-  let ro = null;
-  if (shell && typeof ResizeObserver !== 'undefined') {
-    ro = new ResizeObserver(() => updateShell());
-    ro.observe(shell);
-  } else {
-    window.addEventListener('resize', updateShell);
-  }
+  const onExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const onDocKey = (event) => {
+    if (event.key !== 'Escape' || !expanded) return;
+    setExpanded(false);
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', onTabClick);
+    tab.addEventListener('keydown', onTabKey);
+  });
+  viewportBtns.forEach((btn) => btn.addEventListener('click', onViewportClick));
+  expandBtn?.addEventListener('click', onExpandClick);
+  document.addEventListener('keydown', onDocKey);
 
   setActive(activeId);
+  setViewport('desktop');
+  setExpanded(false);
 
   return () => {
+    teardownTakeover();
     tabs.forEach((tab) => {
-      tab.removeEventListener('click', onClick);
-      tab.removeEventListener('keydown', onKey);
+      tab.removeEventListener('click', onTabClick);
+      tab.removeEventListener('keydown', onTabKey);
     });
-    if (ro) ro.disconnect();
-    else window.removeEventListener('resize', updateShell);
+    viewportBtns.forEach((btn) => btn.removeEventListener('click', onViewportClick));
+    expandBtn?.removeEventListener('click', onExpandClick);
+    document.removeEventListener('keydown', onDocKey);
+    document.documentElement.classList.remove('wl-preview-lock');
   };
 }

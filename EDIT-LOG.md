@@ -4,6 +4,109 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-17 — WL visual polish (skeleton takeover, pain copy, expand z, own shots, store art)
+
+- `#wl-idea` takeover: `.wl-takeover--skeleton` — grey skeleton bars for URL/titles/CTAs/partner mark; AIWA logo + admin panel stay vivid.
+- `#wl-pain`: eyebrow `Problem · Solution`; H2 reframed as wall → White Label way through.
+- Expanded preview `z-index: 200` (above nav 100).
+- Own-cards: flex column, shots `flex:1` + min-height; equal `1.25rem` padding on all sides.
+- Economics: `/images/wl-store.png?v=1`.
+- Files: `public/white-label/index.html`, `public/css/page.css`.
+
+---
+
+## 2026-09-17 — WL content hierarchy (type scale + cream roles)
+
+- Source of truth: `AIWA-Style-Guide-Design-System.md` §2 + `base.css` utilities.
+- Added `--cream-400` for in-card labels; documented size/color order in `page.css` (eyebrow → t-h2 → t-h4 → t-body → wl-card-label → t-small).
+- Unified card titles to `.t-h4` scale/cream-050; body/lists to cream-300; meta to cream-500.
+- Demoted competing display: callout lead ≤ t-h4 + accent, callout sub → body, punch/manifesto/kicker quieter; restored label colors that were falling back via missing cream-400.
+- HTML: 20 card `h3` → `t-h4`, 15 body `p` → `t-body`.
+- Files: `public/css/tokens.css`, `public/css/page.css`, `public/white-label/index.html`.
+
+---
+
+## 2026-09-17 — WL polish + site-wide consistency
+
+- Gallery: replaced bottom chips with a second `.wl-gallery` row (Internal Tools / AI Applications / Directories / Marketplaces) using updated `public/images/wl/gallery` assets + focal `object-position`; re-pointed primary gallery to renamed png/webp files. Did not modify image bytes under `images/wl/`.
+- `#wl-idea` mockup now uses the lander `.wl-takeover` brand-swap (shared `whiteLabelHome` binding via `data-wl-takeover="page"`).
+- Own The Experience: chrome dots first; expand control is a real button (`data-wl-preview-expand`) with `is-expanded` + Escape.
+- Market Shift: “Traditionally, that means:” uses `.t-body`. Hybrid badge at card top with `--accent` fill + dark text.
+- Cards: `--surface-fill` / `--surface-fill-soft` faint fills; non-headline weights capped at 500 where applicable.
+- Icons: Phosphor Regular CDN site-wide (Lucide sprite usages replaced; north-star + animated glyphs kept).
+- Economics: regenerated `public/images/wl-resale-storefront.png` (photoreal scene, 3D AIWA bot retained); `?v=7`.
+- Files: `public/white-label/index.html`, `public/js/motion/whiteLabel.js`, `public/css/{tokens,base,page,site}.css`, marketing HTML heads via Phosphor, `scripts/build-pages.mjs`, storefront PNG.
+
+---
+
+## 2026-09-17 — Shared hero `.page-badge` (transparent)
+
+- Lander hero proof + WL “AIWA White Label” both use `.page-badge` + `.pulse-dot--accent` + `.page-badge__text`.
+- Styles in `base.css`: outline pill, `background: transparent` (no fill). `site.css` `.hero__proof` keeps order/entrance only.
+- Files: `public/css/base.css`, `public/css/site.css`, `public/css/page.css`, `public/index.html`, `public/index-v2.html`, `public/white-label/index.html`.
+
+---
+
+## 2026-09-17 — WL sticky float + Own The Experience preview
+
+- Sticky CTA: Dribbble-style floating cream pill (icon + copy + outline CTA + dismiss); `sessionStorage` hide; hero IntersectionObserver unchanged.
+- `#wl-experience`: replaced Mastra shell with Actionist-style `.wl-preview` (Loading / Sign in / Home tabs, Desktop/Mobile, Northstar sign-in UI, caption). Simplified `whiteLabelPage()` in `motion/whiteLabel.js`.
+- Files: `public/white-label/index.html`, `public/css/page.css`, `public/js/page.js`, `public/js/motion/whiteLabel.js`.
+
+---
+
+## 2026-09-16 — WL Problem section (comparison inspo)
+
+- `#wl-pain` rebuilt to match uploaded comparison pattern: narrower dual cards, pill rows, circular X / check icons; solution card filled with accent + dark inner pills + centered badge title. Lander tokens only (no Fieldory yellow).
+- Files: `public/white-label/index.html`, `public/css/page.css`.
+
+---
+
+## 2026-09-16 — WL page polish (badge, bento, Vimeo shell, DS labels)
+
+- Em dashes removed; staccato headline periods → middots (`·`) where parallel claims stack.
+- Hero: `.page-badge` normal-case pill; VSL captions hidden; benefit strip uses check icons; `data-wl-vimeo-id` + `wlVslShell` Vimeo-ready.
+- Market Shift: two bento panels; demand numbers JetBrains-only; strike cards match body type.
+- Idea visual: canonical `.wl-takeover__chrome`; Problem cards narrower + centered titles; Monetize pills fully round + CTA under last bullet; economics H2 nowrap; console numbered; Difference left-aligned with icons + left manifesto.
+- Design system: `.eyebrow` section-heads only; `.wl-card-label` / `.page-badge` for in-card / identity pills.
+- Files: `public/white-label/index.html`, `public/css/page.css`, `public/js/page.js`.
+
+---
+
+## 2026-09-16 — WL sales page VSL spine + production brief
+
+- Elevated `/white-label` to offer-config spine with ProspectPilot **conversion mechanics only** (lander tokens/nav/footer/`.btn` locked): hero **VSL shell** (poster + play; `data-wl-vsl-src` ready), ICP pain→solution (`#wl-pain`), 3-step launch (`#wl-launch`), mid-funnel CTA band, sticky bottom CTA (`IntersectionObserver` on `#wl-hero`).
+- Product placeholders under `public/images/wl/`: `vsl-poster.png`, `mock-branding|domains|docs|email|stripe|pricing|console.png` (wired into experience/monetize/console). Gallery + checkout URLs (`partner?checkout=annual|lifetime`) preserved.
+- JS: `wlStickyCta` + `wlVslShell` in `public/js/page.js`. CSS: `.wl-vsl*`, `.wl-pain`, `.wl-launch-steps`, `.wl-mid-cta`, `.wl-sticky`, `.wl-shot` in `page.css`.
+- VSL editor pack: `public/plan/wl-vsl-production-brief.md` (full script, shot lists, SFX/music, legal, delivery, group message draft).
+
+---
+
+## 2026-09-16 — WL gallery real shots + econ storefront $0.10
+
+- `#wl-build` gallery: swapped placeholder SVGs for real assets in `public/images/wl/gallery/` (`business.png`, `saas.webp`, `crm.png`, `client-portal.webp`, `ecom.webp`, `booking.webp`, `book2.webp`, `membership.webp`); renamed `client portal.webp`.
+- `#wl-economics` rate-card art: regenerated 16:9 Northstar storefront with **Wholesale $0.10** / Studio **$200**; installed as `wl-resale-storefront.png?v=6`; locked `.wl-rate-card .wl-econ-visual` to `aspect-ratio: 16 / 9` for the short frame.
+- Files: `public/white-label/index.html`, `public/css/page.css`, `public/images/wl-resale-storefront.png`, `public/images/wl/gallery/*`.
+
+---
+
+## 2026-09-16 — White-Label sales page rebuild
+
+- Rebuilt `/white-label` as a long-form **sales offer page** from `aiwa-codes-white-label` `offer-config.ts` (not a SaaS feature tour). **No VSL.**
+- Commercial truth: **$497/year**, **$997** lifetime, partner credits **$0.10** vs standard **$0.20**, **1,000** one-time launch credits, full bonus + FAQ stack.
+- Removed **White-Label** from main nav (kept footer deep link + lander `#white-label-pass` / `#white-label` sections). Lander note updated to partner rate **$0.10**.
+- Added curated template gallery under `public/images/wl/gallery/` (website, SaaS, CRM, portal, ecommerce, booking, dashboard, membership).
+- CSS: sales-section styles in `public/css/page.css`. JS: dropped setup pin + billing switch from `public/js/page.js` (static Annual/Lifetime cards).
+
+---
+
+## 2026-09-16 — Homepage Open Graph cover
+
+- Wired `/images/cover.png` (2400×1260) as the lander OG/Twitter share image on `public/index.html`, plus canonical `https://aiwa.codes/`.
+- File: `public/index.html`.
+
+---
+
 ## 2026-09-15 — Guided setup note centered
 
 - `.wl-setup-note` under Guided setup: `text-align: center`.

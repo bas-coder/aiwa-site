@@ -12,18 +12,17 @@
  *
  * The rebuild contract is main.js's, for main.js's reason (§2.6): a width
  * resize kills and rebuilds, a height-only resize is the URL bar collapsing and
- * is ignored. White-Label pins a Guided setup track (setupHorizontal); other
- * pages stay unpinned. The marquee durations ARE measured from element width,
- * so a rebuild is still how a resized page gets its speed right.
+ * is ignored. Secondary pages stay unpinned. The marquee durations ARE measured
+ * from element width, so a rebuild is still how a resized page gets its speed
+ * right.
  */
 
 import { blurReveal, gradientText, marquees, springHovers, glassHighlights } from './motion/primitives.js';
 import { blobs } from './motion/blob.js';
-import { accordion, footerReveal, navState, navMenu, setupHorizontal, setupRail } from './motion/sections.js';
+import { accordion, footerReveal, navState, navMenu } from './motion/sections.js';
 import { initRefreshQueue } from './motion/scroll.js';
 import { initSmoothScroll } from './motion/smoothScroll.js';
 import { footerNewsletter } from './newsletter.js';
-import { wlPricingSwitch } from './wl-pricing.js';
 import { footerWordmark } from './motion/footerWordmark.js';
 import { whiteLabelPage } from './motion/whiteLabel.js';
 
@@ -53,19 +52,86 @@ function build() {
   teardowns.push(springHovers());
   teardowns.push(glassHighlights());
   teardowns.push(accordion());
-  teardowns.push(wlPricingSwitch());
   teardowns.push(footerReveal());
   teardowns.push(footerWordmark());
   teardowns.push(whiteLabelPage());
+  teardowns.push(wlStickyCta());
+  teardowns.push(wlVslShell());
   teardowns.push(navState());
   teardowns.push(navMenu());
 
-  // Guided setup on /white-label: horizontal pin at >=992px, snap rail below.
-  const wide = window.matchMedia('(min-width: 992px)').matches;
-  teardowns.push(wide ? setupHorizontal() : setupRail());
-
   ScrollTrigger.sort();
   ScrollTrigger.refresh();
+}
+
+function wlStickyCta() {
+  const bar = document.querySelector('[data-wl-sticky]');
+  const hero = document.getElementById('wl-hero');
+  if (!bar || !hero) return () => {};
+
+  const storageKey = 'wl-sticky-dismissed';
+  try {
+    if (sessionStorage.getItem(storageKey) === '1') return () => {};
+  } catch {
+    /* private mode */
+  }
+
+  bar.hidden = false;
+  const dismiss = bar.querySelector('[data-wl-sticky-dismiss]');
+  const hide = () => {
+    bar.classList.remove('is-visible');
+    bar.hidden = true;
+    try { sessionStorage.setItem(storageKey, '1'); } catch { /* ignore */ }
+  };
+
+  const onDismiss = (event) => {
+    event.preventDefault();
+    hide();
+  };
+  dismiss?.addEventListener('click', onDismiss);
+
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      if (bar.hidden) return;
+      bar.classList.toggle('is-visible', !entry.isIntersecting);
+    },
+    { threshold: 0 }
+  );
+  io.observe(hero);
+  return () => {
+    io.disconnect();
+    dismiss?.removeEventListener('click', onDismiss);
+    bar.classList.remove('is-visible');
+    bar.hidden = true;
+  };
+}
+
+/** Hero VSL shell: Vimeo ID or full src → iframe on play. */
+function wlVslShell() {
+  const root = document.querySelector('[data-wl-vsl]');
+  if (!root) return () => {};
+  const hit = root.querySelector('.wl-vsl__hit');
+  if (!hit) return () => {};
+
+  const vimeoId = (root.getAttribute('data-wl-vimeo-id') || '').trim();
+  const customSrc = (root.getAttribute('data-wl-vsl-src') || '').trim();
+  const src = customSrc
+    || (vimeoId ? `https://player.vimeo.com/video/${vimeoId}?autoplay=1` : '');
+  if (!src) return () => {};
+
+  const onPlay = () => {
+    if (root.querySelector('iframe')) return;
+    const frame = document.createElement('iframe');
+    frame.className = 'wl-vsl__frame';
+    frame.src = src;
+    frame.title = 'AIWA White Label demo video';
+    frame.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+    frame.allowFullscreen = true;
+    frame.setAttribute('frameborder', '0');
+    hit.replaceWith(frame);
+  };
+  hit.addEventListener('click', onPlay);
+  return () => hit.removeEventListener('click', onPlay);
 }
 
 let resizeTimer;

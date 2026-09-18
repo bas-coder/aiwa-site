@@ -1,5 +1,5 @@
-/* ============================================================================
-   AIWA · Section styles
+﻿/* ============================================================================
+   AIWA Â· Section styles
    ========================================================================= */
 
 /* ---------------------------------------------------------------------------
@@ -160,7 +160,7 @@
     box-shadow var(--dur-base) var(--ease-brand);
 }
 .nav__cta { height: 2.25rem; min-height: 0; padding: 0 1rem; }
-/* Rest: Login (ghost). Stuck: Start Building (primary) — crossfade + soft scale. */
+/* Rest: Login (ghost). Stuck: Start Building (primary) â€” crossfade + soft scale. */
 .nav__cta--build {
   opacity: 0;
   pointer-events: none;
@@ -239,12 +239,12 @@
 @media (max-width: 900px) { .nav__links { display: none; } }
 
 /* ---------------------------------------------------------------------------
-   HERO · §2.1 structural model
+   HERO Â· Â§2.1 structural model
    The hero is 400vh tall; #hero-media is pinned inside it for the whole run.
    ------------------------------------------------------------------------ */
 .hero { position: relative; }
 
-/* Animated Glow.svg — top-right blind spot. Must NOT live inside #hero-media
+/* Animated Glow.svg â€” top-right blind spot. Must NOT live inside #hero-media
    (overflow:hidden + contain). <object> always clips to its box, so glow.svg's
    viewBox is padded (~400u) to fit the feGaussianBlur halo; without that pad
    the bloom ends in a hard vertical slice. */
@@ -289,7 +289,7 @@
 }
 .hero__panel > * { pointer-events: auto; }
 /* 1px marker at the hero's end. Handoff start is the workspace well entering
-   the viewport (hero.js), not this node's centre — a 100svh empty panel was
+   the viewport (hero.js), not this node's centre â€” a 100svh empty panel was
    a full blank screen between the last idea plate and the Flip. */
 .hero__panel.is-spacer {
   pointer-events: none;
@@ -301,7 +301,7 @@
 
 /* One column for copy, one for the canvas, held for the whole hero.
    Consistency reads as design; a layout that reshuffles every panel reads as
-   fidgeting. The canvas stays in the right-hand column — a few points of
+   fidgeting. The canvas stays in the right-hand column â€” a few points of
    leftward drift through the idea plates, then a fade into the Flip. */
 /* NOTE: this is a child of .shell, never combined with it. Putting a second
    max-width on .shell itself would inherit its `margin-inline: auto` and
@@ -323,7 +323,7 @@
   width: 100%;
   min-height: 100%;
   box-sizing: border-box;
-  /* Lead with empty runway so panel 2 (“five agents”) leaves before the
+  /* Lead with empty runway so panel 2 (â€œfive agentsâ€) leaves before the
      idea list reaches center. Matches hero.js measureHeroBreaks(). */
   padding-top: 100svh;
   /* Short settle so the last plate can unstick into Workspace, not 85vh of air. */
@@ -339,7 +339,7 @@
 }
 
 .hero__h1 {
-  visibility: hidden;               /* §2.2 - flipped to visible by JS */
+  visibility: hidden;               /* Â§2.2 - flipped to visible by JS */
   font-size: clamp(2.6rem, 5.4vw, 5.2rem);
   text-wrap: balance;
 }
@@ -349,7 +349,7 @@
   opacity: 0;
   color: rgba(255, 255, 255, 0);
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0);
-  /* NOTE: no will-change here. §5.3 wants it set immediately before the
+  /* NOTE: no will-change here. Â§5.3 wants it set immediately before the
      animation and cleared on complete; a permanent hint on 20-odd characters
      is exactly the mobile memory pressure that rule is about. heroEntrance()
      adds and removes it. */
@@ -383,37 +383,28 @@
   flex: 0 0 auto;
   color: inherit;
 }
+.hero__micro-icon.ph {
+  width: auto;
+  height: auto;
+  font-size: 1rem;
+}
 
-/* Social-proof pill: top of the left column (grid order), last to enter. */
+/* Social-proof pill: shared .page-badge; order + entrance only here. */
 .hero__proof {
   order: -1;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  max-width: 100%;
-  padding: 0.42rem 0.95rem 0.42rem 0.72rem;
   overflow: visible;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--cream-050) 14%, transparent);
-  background: color-mix(in srgb, var(--cream-050) 5%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--cream-100);
-  font-size: 0.78rem;
-  line-height: 1.35;
 }
-.hero__proof-text { text-wrap: pretty; }
 
 .hero__trust {
   width: min(100%, 42rem);
   display: grid;
   gap: 0.9rem;
-  /* Quieter under the CTA — process loop, not a second headline. */
+  /* Quieter under the CTA â€” process loop, not a second headline. */
   opacity: 0.78;
 }
 .trust__item { display: inline-flex; align-items: center; gap: 0.4rem; padding-inline: 0.9rem; font-size: 0.8rem; color: var(--cream-300); white-space: nowrap; }
 .trust__item b { font-family: var(--font-display); font-size: 1rem; color: var(--cream-050); }
-/* plan → build → test → ship → evolve — lowercase with accent checks. */
+/* plan â†’ build â†’ test â†’ ship â†’ evolve â€” lowercase with accent checks. */
 .trust__item--step {
   font-family: var(--font-mono); font-size: 0.78rem;
   letter-spacing: 0.06em; text-transform: none; color: var(--cream-300);
@@ -423,6 +414,12 @@
   width: 0.85rem; height: 0.85rem; flex: 0 0 auto;
   color: var(--accent); stroke: currentColor;
   opacity: 0.9;
+}
+.trust__check.ph {
+  width: auto;
+  height: auto;
+  font-size: 0.85rem;
+  stroke: none;
 }
 .trust__dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-500); align-self: center; flex: 0 0 auto; }
 
@@ -590,7 +587,7 @@
   border-radius: 0;                /* JS interpolates this to --radius-card */
   contain: layout paint;
 }
-/* CSS fallback if WebGL fails — soft charcoal folds. */
+/* CSS fallback if WebGL fails â€” soft charcoal folds. */
 .hero-media.has-hero-gradient-fallback {
   background:
     radial-gradient(70% 55% at 72% 38%, rgba(74, 70, 65, 0.32), transparent 62%),
@@ -609,7 +606,7 @@
   overflow: hidden;
 }
 
-/* Balsa Gradient Studio ribbon (vanilla WebGL) — full-bleed behind the frame. */
+/* Balsa Gradient Studio ribbon (vanilla WebGL) â€” full-bleed behind the frame. */
 .hero-media__gradient {
   position: absolute;
   inset: 0;
@@ -621,7 +618,7 @@
   opacity: 0.25;
 }
 
-/* Ambient soft amber orbs — hidden (replaced by studio ribbon for now). */
+/* Ambient soft amber orbs â€” hidden (replaced by studio ribbon for now). */
 .hero-media__frame::before {
   content: ''; position: absolute; inset: -20%;
   background:
@@ -632,7 +629,7 @@
 }
 /* Legibility scrim under the left column, where the hero copy sits. Without
    it the headline fights the scene for the same pixels; with it the scene
-   reads as ground and the copy as figure, which is the relationship §2.5
+   reads as ground and the copy as figure, which is the relationship Â§2.5
    wants ("the restraint is what makes the media read as the subject").
    Two-column keeps the scrim: copy is still there through the idea plates.
    Narrow lifts it at stageCenter, driven by --copy-scrim. */
@@ -669,9 +666,9 @@
   width: min(86%, 32rem);
   opacity: 0;
   /* will-change is toggled by heroScroll() for as long as the hero is on
-     screen, not declared here - see §5.3. */
+     screen, not declared here - see Â§5.3. */
 }
-/* §2.2 - the canvas is never blank. The prompt is the poster frame: painted
+/* Â§2.2 - the canvas is never blank. The prompt is the poster frame: painted
    before any JS runs, and what a reduced-motion or JS-failed visitor sees. The
    scrub types into it rather than fading it in. */
 .scene--prompt {
@@ -681,7 +678,7 @@
   flex-direction: column;
   align-items: center;
 }
-/* Pattern.svg — perspective grid + amber bloom under the prompt.
+/* Pattern.svg â€” perspective grid + amber bloom under the prompt.
    Scaled a touch larger and biased left; left edge soft-masked so it
    dissolves into the hero ground and stays clear of the prompt copy. */
 .prompt__pattern {
@@ -766,7 +763,7 @@
    blanked every feature list down the page. Hero-scene classes stay namespaced
    for exactly that reason. */
 /* ---------------------------------------------------------------------------
-   THE WORKFLOW DIAGRAM · beat 2 of the hero canvas
+   THE WORKFLOW DIAGRAM Â· beat 2 of the hero canvas
 
    apps/marquee's "Our Agentic Workflow Engine" diagram, rebuilt: the robot in
    the middle, five stages ringed around it, five connector arrows between them.
@@ -784,7 +781,7 @@
   overflow: visible;
 }
 
-/* Robot — centred; sized to sit inside the enlarged arc ring. */
+/* Robot â€” centred; sized to sit inside the enlarged arc ring. */
 .wf__robot {
   position: absolute;
   z-index: 2;
@@ -804,7 +801,7 @@
   pointer-events: none;
 }
 
-/* Stage cards: explicit anchors on the circular ring (no CSS trig — GSAP `y`
+/* Stage cards: explicit anchors on the circular ring (no CSS trig â€” GSAP `y`
    was also fighting the old `translate` polar placement and stacking every
    card on the robot). */
 .wf__stage {
@@ -835,7 +832,7 @@
   -webkit-backdrop-filter: blur(8px);
 }
 .wf__text b {
-  font-family: var(--font-mono); font-weight: 600;
+  font-family: var(--font-mono); font-weight: 500;
   font-size: 0.68rem; letter-spacing: 0.1em; color: var(--cream-050);
   white-space: nowrap;
 }
@@ -938,7 +935,7 @@
 
 /* test */
 .test { display: grid; gap: 0.55rem; }
-/* Hero QA beat checklist — hidden for now; keep markup for a later restore. */
+/* Hero QA beat checklist â€” hidden for now; keep markup for a later restore. */
 .scene--test { display: none !important; }
 .test li {
   /* The tick is positioned against the ROW, so it has to add the row's own
@@ -978,7 +975,7 @@
 main, .footer { position: relative; z-index: 2; }
 
 /* ---------------------------------------------------------------------------
-   WORKSPACE · handoff destination
+   WORKSPACE Â· handoff destination
    ------------------------------------------------------------------------ */
 /* Clears the fixed nav: the eyebrow is the first thing the handoff delivers
    you to, and it must not arrive underneath the bar. */
@@ -988,7 +985,7 @@ main, .footer { position: relative; z-index: 2; }
 /* The well. aspect-ratio reserves the box so nothing shifts (CLS 0) whether
    the Flip runs, fails, or is skipped under reduced motion. */
 /* Case-study grid: the well keeps width:100%/aspect-ratio as column one, so
-   the handoff still measures the same kind of rect — only its column narrowed.
+   the handoff still measures the same kind of rect â€” only its column narrowed.
    Column two is Build / Test / Ship & evolve. */
 .workspace__case {
   display: grid;
@@ -1029,12 +1026,12 @@ main, .footer { position: relative; z-index: 2; }
   margin: 0;
   padding: 0;
   list-style: none;
-  /* Match the browser shell’s outer height so the first card top lines up
+  /* Match the browser shellâ€™s outer height so the first card top lines up
      with the chrome top and the last card bottom with the preview bottom. */
   min-height: 100%;
 }
 /* li is the grid item (not display:contents) so 1fr row height cannot
-   collapse to caption-only when the button’s img is absolutely filled. */
+   collapse to caption-only when the buttonâ€™s img is absolutely filled. */
 .ws-aside > li {
   min-height: 0;
   height: 100%;
@@ -1070,7 +1067,7 @@ main, .footer { position: relative; z-index: 2; }
   object-fit: cover; object-position: top center;
   pointer-events: none;
 }
-/* Build: chat + Festova preview — keep both panes readable in the narrow card. */
+/* Build: chat + Festova preview â€” keep both panes readable in the narrow card. */
 #ws-tab-build img {
   object-position: 72% 6%;
 }
@@ -1120,7 +1117,7 @@ main, .footer { position: relative; z-index: 2; }
   border: 0;
 }
 .workspace__zone.is-occupied { background: transparent; }
-/* Seated = handoff done; hero canvas is hidden — keep an opaque plate so no
+/* Seated = handoff done; hero canvas is hidden â€” keep an opaque plate so no
    ambient glow bleeds through while the tab shot paints. */
 .workspace__zone.is-seated { background: var(--ink-850); }
 /* Tab viewer: cover the landed hero frame once the handoff has seated
@@ -1137,11 +1134,11 @@ main, .footer { position: relative; z-index: 2; }
 @media (max-width: 700px) { .workspace__zone { aspect-ratio: 4 / 3; } }
 
 /* ---------------------------------------------------------------------------
-   AUTONOMOUS QA · the proof section
+   AUTONOMOUS QA Â· the proof section
 
    Two columns above 900px: the argument on the left, the agent-status card on
    the right. Card layout: outer plate + inner agent panel (status, tasks,
-   note) with an optional AIWA “PASS” stack — no CTA, no stock photos.
+   note) with an optional AIWA â€œPASSâ€ stack â€” no CTA, no stock photos.
    ------------------------------------------------------------------------ */
 .qa__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
 .qa__head { display: grid; gap: 1rem; align-content: start; }
@@ -1192,7 +1189,7 @@ main, .footer { position: relative; z-index: 2; }
 }
 .qa-card__powered b {
   color: var(--cream-100);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .qa-card__agent {
@@ -1222,7 +1219,7 @@ main, .footer { position: relative; z-index: 2; }
   overflow: visible;
   border-bottom: 1px solid var(--qa-line);
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--good);
 }
 
@@ -1246,8 +1243,13 @@ main, .footer { position: relative; z-index: 2; }
   color: var(--cream-500);
   flex: 0 0 auto;
 }
+.qa-card__tasks .icon.ph {
+  width: auto;
+  height: auto;
+  font-size: 1rem;
+}
 
-/* Overlapping PASS tickets — AIWA-native stand-in for the reference collage. */
+/* Overlapping PASS tickets â€” AIWA-native stand-in for the reference collage. */
 .qa-card__aside {
   position: relative;
   width: 6.75rem;
@@ -1325,7 +1327,7 @@ main, .footer { position: relative; z-index: 2; }
   position: relative; overflow: hidden;
   min-height: 150svh;
   display: grid; place-items: center;
-  /* End on --ink-850 so the next section continues the same ground — no knife edge. */
+  /* End on --ink-850 so the next section continues the same ground â€” no knife edge. */
   background: linear-gradient(180deg, var(--ink-900) 0%, #0d0a07 42%, var(--ink-850) 100%);
 }
 .arc__center {
@@ -1336,7 +1338,7 @@ main, .footer { position: relative; z-index: 2; }
 .arc__h2 { text-wrap: balance; }
 .arc__claims { display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center; font-size: 0.85rem; color: var(--cream-300); }
 .arc__claims li { position: relative; }
-.arc__claims li + li::before { content: '·'; position: absolute; left: -0.9rem; color: var(--ink-500); }
+.arc__claims li + li::before { content: 'Â·'; position: absolute; left: -0.9rem; color: var(--ink-500); }
 
 .arc__col {
   position: absolute; top: 0; bottom: 0; z-index: 1;
@@ -1388,7 +1390,7 @@ main, .footer { position: relative; z-index: 2; }
 
 .arc__fade { position: absolute; left: 0; right: 0; height: 26vh; z-index: 2; pointer-events: none; }
 .arc__fade--top    { top: 0;    background: linear-gradient(180deg, var(--ink-900), transparent); }
-/* Pure color dissolve into the engine ground — no backdrop-filter (that draws
+/* Pure color dissolve into the engine ground â€” no backdrop-filter (that draws
    a hard rectangle and made the seam worse). */
 .arc__fade--bottom {
   bottom: 0;
@@ -1397,13 +1399,13 @@ main, .footer { position: relative; z-index: 2; }
 }
 
 /* ---------------------------------------------------------------------------
-   ENGINE · horizontal scroll
+   ENGINE Â· horizontal scroll
    ------------------------------------------------------------------------ */
 .engine {
   position: relative;
-  /* Same ground the arc ends on — continuous plate, not a second band. */
+  /* Same ground the arc ends on â€” continuous plate, not a second band. */
   background: var(--ink-850);
-  /* Pull under the arc fade so the DOM section edge isn’t a visible seam. */
+  /* Pull under the arc fade so the DOM section edge isnâ€™t a visible seam. */
   margin-top: clamp(-3.5rem, -8vh, -2rem);
   padding-top: clamp(3.5rem, 8vh, 5.5rem);
 }
@@ -1424,8 +1426,8 @@ main, .footer { position: relative; z-index: 2; }
 
 /* A COLUMN GRID, not a flex row, and the reason is alignment.
    Each panel is header / glass tile / list. The headings wrap to different line
-   counts ("EVOLVE · learn, improve & scale continuously" takes three lines
-   where "TEST · ensure quality" takes two), so with flex every panel sized its
+   counts ("EVOLVE Â· learn, improve & scale continuously" takes three lines
+   where "TEST Â· ensure quality" takes two), so with flex every panel sized its
    own rows and the icon tiles sat at different heights.
 
    Three shared rows here plus `grid-template-rows: subgrid` on the panel means
@@ -1475,7 +1477,7 @@ main, .footer { position: relative; z-index: 2; }
 .stage-panel__list li { position: relative; padding-left: 1.1rem; }
 .stage-panel__list li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.36rem; height: 1px; background: var(--accent); }
 
-/* §4.5 - the cheap-and-good glass panel, not the WebGL renderer. */
+/* Â§4.5 - the cheap-and-good glass panel, not the WebGL renderer. */
 .stage-panel__glass {
   position: relative; height: 9rem; border-radius: 1.1rem; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.12);
@@ -1503,8 +1505,17 @@ main, .footer { position: relative; z-index: 2; }
 .stage-panel__glass:hover::after { opacity: 1; }
 
 /* Engine glyphs: Lucide geometry, CSS hover motion (lucide-animated ported
-   for vanilla — no React/Motion). Hover target is the glass tile. */
+   for vanilla â€” no React/Motion). Hover target is the glass tile.
+   Sitewide UI icons use Phosphor Regular (`.ph`); glyphs stay SVG for motion. */
 .icon { width: 1em; height: 1em; display: block; flex: 0 0 auto; }
+.icon.ph {
+  width: auto;
+  height: auto;
+  font-size: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 .glyph {
   width: 3.4rem; height: 3.4rem;
@@ -1517,7 +1528,7 @@ main, .footer { position: relative; z-index: 2; }
   transform-origin: center;
 }
 
-/* PLAN · clipboard-check: check draws in */
+/* PLAN Â· clipboard-check: check draws in */
 .glyph--plan .glyph__check {
   stroke-dasharray: 16;
   stroke-dashoffset: 0;
@@ -1529,7 +1540,7 @@ main, .footer { position: relative; z-index: 2; }
   animation: glyph-nudge 0.55s var(--ease-brand);
 }
 
-/* ARCHITECT · layers: stagger up */
+/* ARCHITECT Â· layers: stagger up */
 .glyph--architect .glyph__layer {
   transition: transform 0.4s var(--ease-brand);
 }
@@ -1545,7 +1556,7 @@ main, .footer { position: relative; z-index: 2; }
   transform: translateY(0.5px);
 }
 
-/* BUILD · terminal: cursor blink + prompt nudge */
+/* BUILD Â· terminal: cursor blink + prompt nudge */
 .glyph--build .glyph__cursor {
   stroke-dasharray: 8;
   transition: opacity 0.2s var(--ease-brand);
@@ -1557,7 +1568,7 @@ main, .footer { position: relative; z-index: 2; }
   animation: glyph-prompt-scan 0.7s var(--ease-brand);
 }
 
-/* TEST · flask: liquid sway */
+/* TEST Â· flask: liquid sway */
 .stage-panel__glass:hover .glyph--test .glyph__liquid {
   animation: glyph-liquid-sway 0.85s var(--ease-brand) infinite alternate;
 }
@@ -1565,7 +1576,7 @@ main, .footer { position: relative; z-index: 2; }
   animation: glyph-flask-tilt 0.85s var(--ease-brand) infinite alternate;
 }
 
-/* DEPLOY · rocket: lift + flame flicker */
+/* DEPLOY Â· rocket: lift + flame flicker */
 .stage-panel__glass:hover .glyph--deploy .icon {
   animation: glyph-rocket-lift 0.7s var(--ease-brand) infinite alternate;
 }
@@ -1573,7 +1584,7 @@ main, .footer { position: relative; z-index: 2; }
   animation: glyph-flame-flicker 0.35s ease-in-out infinite alternate;
 }
 
-/* EVOLVE · refresh-cw: partial rotate */
+/* EVOLVE Â· refresh-cw: partial rotate */
 .stage-panel__glass:hover .glyph--evolve .icon {
   animation: glyph-refresh-spin 0.85s var(--ease-brand);
 }
@@ -1698,7 +1709,7 @@ main, .footer { position: relative; z-index: 2; }
 }
 
 /* ---------------------------------------------------------------------------
-   IDEA · From Idea to Working Product (hero panel scrub)
+   IDEA Â· From Idea to Working Product (hero panel scrub)
    Left: center-sticky copy. Right: Lovable-style isolated UI cards that
    stack-scrub (one component per plate, soft glow, no filled stage).
    ------------------------------------------------------------------------ */
@@ -1777,7 +1788,7 @@ main, .footer { position: relative; z-index: 2; }
 
 /* Viewport for one card. overflow:hidden frames the active plate; gap between
    panels still scrolls through. (overflow:visible + contain:paint on the
-   canvas was letting mid-scrub gaps read as “missing” images.) */
+   canvas was letting mid-scrub gaps read as â€œmissingâ€ images.) */
 .idea__stage {
   position: relative;
   width: 100%;
@@ -1845,7 +1856,7 @@ main, .footer { position: relative; z-index: 2; }
   border-radius: inherit;
 }
 
-/* Idea scrub beat: same flat page fill as FAQ (`body` / #faq → --ink-900).
+/* Idea scrub beat: same flat page fill as FAQ (`body` / #faq â†’ --ink-900).
    Kill the hero canvas atmosphere so this reads as a section, not a scene. */
 html.is-idea-scrub .hero-media {
   background: var(--ink-900);
@@ -1886,7 +1897,7 @@ html.is-idea-scrub .hero-media__scrim {
     translate: none;
     max-width: none;
   }
-  /* Compact pairs: text → visual under each step; hide the pinned hero stack. */
+  /* Compact pairs: text â†’ visual under each step; hide the pinned hero stack. */
   html.is-idea-pairs .scene--idea {
     display: none;
   }
@@ -1924,7 +1935,7 @@ html.is-idea-scrub .hero-media__scrim {
 
 
 /* ---------------------------------------------------------------------------
-   WHY · Built for businesses — static 1 + 3 audience cards
+   WHY Â· Built for businesses â€” static 1 + 3 audience cards
    Visual melts into the text plate (mask + overlapping wash). No knife-edge.
    ------------------------------------------------------------------------ */
 .why__head { display: grid; gap: 1rem; margin-bottom: 3rem; max-width: 42rem; }
@@ -1942,7 +1953,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ---------------------------------------------------------------------------
-   WHITE-LABEL · Brand Takeover (home teaser + shared frames)
+   WHITE-LABEL Â· Brand Takeover (home teaser + shared frames)
    Partner palette scoped inside .wl-takeover so AIWA chrome stays amber.
    .ns-studio remains for /white-label experience cards below the hero.
    ------------------------------------------------------------------------ */
@@ -1975,6 +1986,11 @@ html.is-idea-scrub .hero-media__scrim {
   height: 1rem;
   flex: 0 0 auto;
   color: var(--cream-500);
+}
+.wl-home__note-icon.ph {
+  width: auto;
+  height: auto;
+  font-size: 1rem;
 }
 @media (max-width: 900px) {
   .wl-home__grid { grid-template-columns: 1fr; }
@@ -2041,7 +2057,7 @@ html.is-idea-scrub .hero-media__scrim {
   box-shadow: none;
 }
 
-/* Canonical browser chrome: dots · URL · external icon. */
+/* Canonical browser chrome: dots Â· URL Â· external icon. */
 .wl-takeover__chrome {
   display: flex;
   align-items: center;
@@ -2115,7 +2131,9 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .wl-takeover__ext {
   flex: 0 0 auto;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 0.95rem;
   height: 0.95rem;
   padding: 0;
@@ -2124,6 +2142,11 @@ html.is-idea-scrub .hero-media__scrim {
   color: var(--mock-dot);
   opacity: 1;
   transition: color 0.55s var(--ease-brand);
+}
+.wl-takeover__ext.ph {
+  width: auto;
+  height: auto;
+  font-size: 0.95rem;
 }
 .wl-takeover.is-step-done .wl-takeover__ext,
 .wl-takeover__browser--partner .wl-takeover__ext {
@@ -2182,7 +2205,7 @@ html.is-idea-scrub .hero-media__scrim {
 .wl-takeover__title {
   margin: 0;
   font-size: clamp(1.05rem, 2vw, 1.35rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 .wl-takeover__sub {
@@ -2196,7 +2219,7 @@ html.is-idea-scrub .hero-media__scrim {
   padding: 0.5rem 1.15rem;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   user-select: none;
 }
 .wl-takeover__cta--aiwa {
@@ -2274,7 +2297,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .wl-takeover__type {
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--cream-050);
   overflow: hidden;
   white-space: nowrap;
@@ -2336,7 +2359,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ---------------------------------------------------------------------------
-   WHITE LABEL PASS · paper hang-tag on a thin cord
+   WHITE LABEL PASS Â· paper hang-tag on a thin cord
    ------------------------------------------------------------------------ */
 .wl-pass {
   position: relative;
@@ -2523,7 +2546,7 @@ html.is-idea-scrub .hero-media__scrim {
   margin: 0.55rem 0 0;
   font-family: var(--font-display);
   font-size: clamp(2.1rem, 5vw, 2.85rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 0.95;
   letter-spacing: -0.035em;
   color: var(--ink-900);
@@ -2726,7 +2749,7 @@ html.is-idea-scrub .hero-media__scrim {
   text-transform: uppercase;
   color: var(--ns-muted);
 }
-.ns-studio__field strong { font-size: 0.88rem; font-weight: 600; }
+.ns-studio__field strong { font-size: 0.88rem; font-weight: 500; }
 .ns-studio__row {
   display: flex;
   align-items: center;
@@ -2821,7 +2844,7 @@ html.is-idea-scrub .hero-media__scrim {
   color: var(--cream-050);
 }
 .ns-signin p { margin: 0; }
-.ns-signin__brand { font-size: 1.05rem; font-weight: 600; }
+.ns-signin__brand { font-size: 1.05rem; font-weight: 500; }
 .ns-signin__hint { font-size: 0.78rem; color: var(--cream-500); }
 .ns-signin__btn {
   margin-top: 0.45rem;
@@ -2830,7 +2853,7 @@ html.is-idea-scrub .hero-media__scrim {
   background: var(--accent);
   color: var(--ink-950);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 .ns-mark { width: 1.15rem; height: 1.15rem; color: var(--ns-gold); }
 .ns-mark--lg { width: 2.4rem; height: 2.4rem; color: var(--accent); }
@@ -2873,8 +2896,8 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .ns-mail p { margin: 0; }
 .ns-mail__from { font-size: 0.72rem; color: var(--cream-500); }
-.ns-mail__from b { color: var(--cream-050); font-weight: 600; }
-.ns-mail__subject { font-size: 0.92rem; font-weight: 600; }
+.ns-mail__from b { color: var(--cream-050); font-weight: 500; }
+.ns-mail__subject { font-size: 0.92rem; font-weight: 500; }
 .ns-mail__tag {
   justify-self: start;
   margin-top: 0.2rem;
@@ -2892,7 +2915,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 .use-card {
-  --use-plate: var(--ink-850);
+  --use-plate: var(--surface-fill);
   --use-fade: clamp(5.25rem, 18vw, 7.5rem);
   --use-fade-inset: 0.52;
   --use-mask-angle: 180deg;
@@ -3059,7 +3082,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .use-frag__col b {
   font-size: 0.68rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--cream-050);
   line-height: 1.2;
 }
@@ -3077,7 +3100,7 @@ html.is-idea-scrub .hero-media__scrim {
   justify-content: space-between;
   font-size: 0.72rem;
   color: var(--cream-100);
-  font-weight: 600;
+  font-weight: 500;
 }
 .use-frag__count {
   font-family: var(--font-mono);
@@ -3117,7 +3140,7 @@ html.is-idea-scrub .hero-media__scrim {
   flex: 0 0 auto;
 }
 .use-frag__list div { display: grid; gap: 0.05rem; min-width: 0; }
-.use-frag__list b { font-size: 0.75rem; font-weight: 600; }
+.use-frag__list b { font-size: 0.75rem; font-weight: 500; }
 .use-frag__list em { font-style: normal; font-size: 0.62rem; color: var(--cream-500); }
 
 .use-card__body {
@@ -3187,7 +3210,7 @@ html.is-idea-scrub .hero-media__scrim {
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 1.6vw, 1.45rem);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--cream-050);
   line-height: 1.2;
@@ -3198,7 +3221,7 @@ html.is-idea-scrub .hero-media__scrim {
 .use-card__lead {
   margin: 0;
   font-size: 0.95rem;
-  font-weight: 550;
+  font-weight: 500;
   color: var(--cream-100);
 }
 .use-card__copy {
@@ -3213,11 +3236,12 @@ html.is-idea-scrub .hero-media__scrim {
   gap: 0.4rem;
   margin-top: 0.45rem;
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--accent);
   transition: color var(--dur-micro) var(--ease-brand), gap var(--dur-micro) var(--ease-brand);
 }
 .use-card__cta .icon { width: 0.95rem; height: 0.95rem; }
+.use-card__cta .icon.ph { width: auto; height: auto; font-size: 0.95rem; }
 .use-card__cta:hover {
   color: var(--cream-050);
   gap: 0.6rem;
@@ -3324,6 +3348,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .stage-ui__chrome img { width: 1rem; height: 1rem; border-radius: 0.22rem; }
 .stage-ui__chrome .icon { width: 0.7rem; height: 0.7rem; color: var(--cream-500); }
+.stage-ui__chrome .icon.ph { width: auto; height: auto; font-size: 0.7rem; }
 .stage-ui__spacer { flex: 1; }
 .stage-ui__count {
   min-width: 1.2rem; text-align: center;
@@ -3336,6 +3361,7 @@ html.is-idea-scrub .hero-media__scrim {
   border: 1px solid var(--line); color: var(--cream-100);
 }
 .stage-ui__preview .icon { width: 0.7rem; height: 0.7rem; }
+.stage-ui__preview .icon.ph { width: auto; height: auto; font-size: 0.7rem; }
 .stage-ui__preview.is-on {
   border-color: color-mix(in srgb, var(--accent) 50%, var(--ink-600));
   color: var(--accent);
@@ -3541,7 +3567,7 @@ html.is-idea-scrub .hero-media__scrim {
   display: grid; place-items: center;
   width: 1.3rem; height: 1.3rem; border-radius: 0.3rem;
   background: rgba(254, 160, 2, 0.16); color: var(--accent);
-  font-style: normal; font-weight: 600;
+  font-style: normal; font-weight: 500;
 }
 .stage-projects b { display: block; color: var(--cream-050); }
 .stage-projects em { color: var(--cream-500); font-style: normal; }
@@ -3569,14 +3595,14 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ---------------------------------------------------------------------------
-   INTEGRATIONS · generated arc diagram, quote centered in the bowl
+   INTEGRATIONS Â· generated arc diagram, quote centered in the bowl
    ------------------------------------------------------------------------ */
 
 /* ---------------------------------------------------------------------------
    GALLERY
    ------------------------------------------------------------------------ */
 /* ---------------------------------------------------------------------------
-   MADE WITH AIWA · the contact sheet
+   MADE WITH AIWA Â· the contact sheet
 
    Was two marquee rows travelling in opposite directions at 30 px/s. It is a
    static grid of real AIWA projects now: type badge on the frame, hover
@@ -3597,6 +3623,11 @@ html.is-idea-scrub .hero-media__scrim {
 .gallery__all .icon {
   width: 0.85rem; height: 0.85rem;
   transition: transform var(--dur-micro) var(--ease-brand);
+}
+.gallery__all .icon.ph {
+  width: auto;
+  height: auto;
+  font-size: 0.85rem;
 }
 .gallery__all:hover { color: var(--accent); }
 .gallery__all:hover .icon { transform: translateX(0.25rem); }
@@ -3666,7 +3697,7 @@ html.is-idea-scrub .hero-media__scrim {
   padding: 0.45rem 0.95rem;
   border-radius: 999px;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
   white-space: nowrap;
   border: 1px solid transparent;
@@ -3677,6 +3708,7 @@ html.is-idea-scrub .hero-media__scrim {
     color var(--dur-micro) var(--ease-brand);
 }
 .shot__action .icon { width: 0.9rem; height: 0.9rem; flex: 0 0 auto; }
+.shot__action .icon.ph { width: auto; height: auto; font-size: 0.9rem; }
 .shot__action--solid {
   background: var(--cream-050);
   color: var(--ink-950);
@@ -3748,7 +3780,7 @@ html.is-idea-scrub .hero-media__scrim {
   position: relative; display: inline-flex; margin-top: 0.8rem;
   padding: 0.28rem; border: 1px solid var(--ink-600); border-radius: 999px; background: var(--ink-850);
 }
-/* §3.5 - a positioned ::before that slides. Numbers swap instantly. */
+/* Â§3.5 - a positioned ::before that slides. Numbers swap instantly. */
 .switch__pill {
   position: absolute; top: 0.28rem; bottom: 0.28rem; left: 0.28rem; width: calc(50% - 0.28rem);
   border-radius: 999px; background: var(--accent);
@@ -3759,7 +3791,7 @@ html.is-idea-scrub .hero-media__scrim {
    label that is wider than "Monthly" would leave the pill short of its own
    text on one side. */
 .switch__opt { position: relative; z-index: 1; flex: 1 1 0; min-width: 9.5rem; text-align: center; padding: 0.5rem 1.1rem; border-radius: 999px; font-size: 0.85rem; color: var(--cream-300); transition: color var(--dur-base) var(--ease-brand); white-space: nowrap; }
-.switch__opt.is-active { color: var(--ink-900); font-weight: 600; }
+.switch__opt.is-active { color: var(--ink-900); font-weight: 500; }
 .switch__opt em { font-style: normal; font-size: 0.68rem; opacity: 0.75; }
 
 /* Bottom-aligned, like apps/marquee's row (align-items: flex-end): the cards
@@ -3777,12 +3809,12 @@ html.is-idea-scrub .hero-media__scrim {
   grid-auto-rows: min-content;
   padding: 1.6rem 1.4rem;
   border: 1px solid var(--ink-600); border-radius: 1.4rem;
-  background: rgba(18,18,17,0.5);
+  background: var(--surface-fill);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-.plan--featured { border-color: rgba(254,160,2,0.4); background: linear-gradient(180deg, rgba(254,160,2,0.07), rgba(18,18,17,0.5)); }
-.plan__flag { position: absolute; top: -0.65rem; left: 1.4rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--accent); color: var(--ink-900); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; }
+.plan--featured { border-color: rgba(254,160,2,0.4); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), var(--surface-fill)); }
+.plan__flag { position: absolute; top: -0.65rem; left: 1.4rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--accent); color: var(--ink-900); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em; }
 .plan__name { font-size: 1.1rem; }
 .plan__price { display: flex; align-items: baseline; gap: 0.3rem; flex-wrap: wrap; }
 .plan__price b { font-family: var(--font-display); font-size: 2.6rem; font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
@@ -3796,14 +3828,14 @@ html.is-idea-scrub .hero-media__scrim {
 .plan__list em { font-style: normal; margin-left: 0.35rem; padding: 0.05rem 0.35rem; border-radius: 0.3rem; background: rgba(254,160,2,0.15); color: var(--accent); font-size: 0.62rem; }
 .plan__cta { margin-top: 0.6rem; justify-content: center; }
 
-/* ---- credit slider · Solo and Agency ------------------------------------
+/* ---- credit slider Â· Solo and Agency ------------------------------------
    apps/web's CreditSlider (components/billing/PricingTable.tsx), ported. That
    component's own comment calls it "the lander's stepped credit slider, with
    finesse", so this is the round trip: the STOPS are the controls - real
    buttons in a radiogroup, with generous hit areas, hover growth and arrow
    keys - not a native range with a draggable thumb.
 
-   Beam + knob use one solid color per stop (gold → amber → green). Dots are
+   Beam + knob use one solid color per stop (gold â†’ amber â†’ green). Dots are
    always opaque so the beam never reads through them; passed stops fill with
    the active heat color.
    ------------------------------------------------------------------------ */
@@ -3841,7 +3873,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .credits__stop > span {
   width: 0.625rem; height: 0.625rem; border-radius: 50%;
-  /* Opaque card-plate bead — masks the track/beam underneath. */
+  /* Opaque card-plate bead â€” masks the track/beam underneath. */
   background: #1c1b19;
   box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--cream-050) 18%, transparent);
   transition: width var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out),
@@ -3882,7 +3914,7 @@ html.is-idea-scrub .hero-media__scrim {
   background: var(--good);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 35%, transparent);
 }
-/* The sweet spot is marked before you touch anything — rim only, still opaque. */
+/* The sweet spot is marked before you touch anything â€” rim only, still opaque. */
 .credits__stop[data-popular]:not([aria-checked='true']) > span {
   box-shadow:
     inset 0 0 0 1.5px color-mix(in srgb, var(--cream-050) 18%, transparent),
@@ -3902,9 +3934,15 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .credits__read b { font-weight: 500; font-variant-numeric: tabular-nums; }
 .credits__mark { width: 0.85rem; height: 0.85rem; flex: none; color: var(--app-sunset-1); fill: rgb(255 94 0 / 0.25); }
+.credits__mark.ph {
+  width: auto;
+  height: auto;
+  font-size: 0.85rem;
+  fill: none;
+}
 .credits__step { font-weight: 400; color: var(--cream-500); }
 .credits__best {
-  flex: none; font-style: normal; font-size: 0.62rem; font-weight: 600;
+  flex: none; font-style: normal; font-size: 0.62rem; font-weight: 500;
   padding: 0.05rem 0.35rem; border-radius: 999px;
   background: rgb(16 185 129 / 0.15); color: #10b981;
 }
@@ -3917,7 +3955,7 @@ html.is-idea-scrub .hero-media__scrim {
 .pricing__foot { text-align: center; margin-top: 2rem; }
 
 /* ---------------------------------------------------------------------------
-   FAQ · centered head + spaced accordion (no hairline rules between rows).
+   FAQ Â· centered head + spaced accordion (no hairline rules between rows).
    ------------------------------------------------------------------------ */
 .faq {
   padding-block: clamp(4.5rem, 12vh, 8.5rem);
@@ -4032,7 +4070,7 @@ html.is-idea-scrub .hero-media__scrim {
    FINAL CTA
    Atmosphere (blob + edge dissolves) lives in .cta__media so it can clip
    and mask without touching .cta__h2. Unclip rules on the heading are
-   independent of overflow/mask on this layer — they cannot cancel each other.
+   independent of overflow/mask on this layer â€” they cannot cancel each other.
    ------------------------------------------------------------------------ */
 .cta {
   --cta-edge-top: clamp(6rem, 22vh, 12rem);
@@ -4140,7 +4178,7 @@ html.is-idea-scrub .hero-media__scrim {
   text-align: center;
   text-wrap: pretty;
 }
-/* Tight display leading plus background-clip:text clips the “?”. Global
+/* Tight display leading plus background-clip:text clips the â€œ?â€. Global
    border-box + width:max-content also ate padding and made it worse.
    content-box so end/bottom padding sits outside the glyphs. */
 .cta__h2 {
@@ -4155,11 +4193,11 @@ html.is-idea-scrub .hero-media__scrim {
 }
 .cta__h2,
 .cta__h2 * { overflow: visible; }
-.cta__inner p b { color: var(--cream-050); font-weight: 600; }
+.cta__inner p b { color: var(--cream-050); font-weight: 500; }
 .cta__actions { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
 
 /* ---------------------------------------------------------------------------
-   FOOTER · soft padded plate + large bottom wordmark
+   FOOTER Â· soft padded plate + large bottom wordmark
    Outer gutter insets the plate from the page edge; the plate itself carries
    radius, fill, and padding. Link inventory stays in build-pages.mjs.
    ------------------------------------------------------------------------ */
@@ -4222,7 +4260,7 @@ html.is-idea-scrub .hero-media__scrim {
   font-size: 0.85rem; min-width: 15rem;
 }
 .footer__news input::placeholder { color: var(--cream-500); }
-/* Nav-style flip: Apply → Thank you on success. */
+/* Nav-style flip: Apply â†’ Thank you on success. */
 .footer__news-submit {
   min-width: 7.25rem;
 }
@@ -4335,7 +4373,7 @@ html.is-idea-scrub .hero-media__scrim {
   aspect-ratio: var(--fw-w) / calc(var(--fw-h) * var(--fw-crop));
   pointer-events: none;
 }
-/* Plus-pattern + light grain film — strength tracks heat amp.
+/* Plus-pattern + light grain film â€” strength tracks heat amp.
    Overlays only: never paint a fill behind the transparent SVG glyphs. */
 .footer__wordmark-crop.is-fx::before {
   content: '';
@@ -4387,7 +4425,7 @@ html.is-idea-scrub .hero-media__scrim {
   /* Luminosity keeps glyphs plate-matched without filling transparent SVG alpha. */
   mix-blend-mode: luminosity;
   background: none;
-  /* Soft dissolve into the plate — on the img, not the crop, so blend works. */
+  /* Soft dissolve into the plate â€” on the img, not the crop, so blend works. */
   -webkit-mask-image: linear-gradient(
     180deg,
     #000 0%,
@@ -4413,7 +4451,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ===========================================================================
-   RESPONSIVE - the tiers §2.8 asks for, plus the places where a desktop
+   RESPONSIVE - the tiers Â§2.8 asks for, plus the places where a desktop
    composition simply has no narrow-screen equivalent and needs a real one.
    ======================================================================== */
 
@@ -4469,13 +4507,13 @@ html.is-idea-scrub .hero-media__scrim {
   border-radius: inherit;
 }
 
-/* ---- §2.8 tier 3 · under 480px ------------------------------------------
+/* ---- Â§2.8 tier 3 Â· under 480px ------------------------------------------
    No pin, no scrub, no handoff. The canvas stops being a travelling object
    and becomes what it always was underneath: the hero's background. Scoping
    it to the hero with position:absolute is what stops the fixed frame from
    showing through every transparent section below.                        */
 /* ---------------------------------------------------------------------------
-   THE STATIC TIERS · §2.8 tier 3 (<480px) and tier 4 (reduced motion)
+   THE STATIC TIERS Â· Â§2.8 tier 3 (<480px) and tier 4 (reduced motion)
    ---------------------------------------------------------------------------
    Both tiers remove the scrub, so both must also remove the thing the scrub
    pays for: four viewports of scrolling. Without a scrubbed canvas behind
@@ -4493,7 +4531,7 @@ html.is-idea-scrub .hero-media__scrim {
    never move.
    ------------------------------------------------------------------------ */
 /* Three things are normally handed their final state by the entrance timeline
-   (§2.3). With no script there is no timeline, so CSS has to hand it over
+   (Â§2.3). With no script there is no timeline, so CSS has to hand it over
    instead - otherwise the nav never fades in and the canvas stays under the
    15px atmosphere blur that beat 5 was supposed to lift. */
 .no-js .loader { display: none; }
@@ -4529,7 +4567,7 @@ html.is-idea-scrub .hero-media__scrim {
 /* ---- arc: dual columns always; amplified drum on narrow screens --------- */
 .arc__rail { display: none; }
 @media (max-width: 760px) {
-  /* Keep the text drum (columns) — hide the marquee substitute. */
+  /* Keep the text drum (columns) â€” hide the marquee substitute. */
   .arc__col { display: flex; }
   .arc__rail { display: none; }
   .arc__claims { flex-direction: column; gap: 0.4rem; }
@@ -4562,7 +4600,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ---------------------------------------------------------------------------
-   STAGE PROMPT · the mini AIWA composer inside the Why cards
+   STAGE PROMPT Â· the mini AIWA composer inside the Why cards
 
    This is the Marquee Next prompt component, renamed wholesale from .prompt to
    .stage-prompt on the way in. It is NOT reusing the hero's .prompt: that one
@@ -4666,7 +4704,7 @@ html.is-idea-scrub .hero-media__scrim {
 }
 
 /* ===========================================================================
-   PHONES · the mobile pass
+   PHONES Â· the mobile pass
 
    The fluid root in tokens.css targets a 16px root at EACH tier's design
    width, so a 390px phone renders rem values at very nearly their desktop

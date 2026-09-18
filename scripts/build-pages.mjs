@@ -113,12 +113,11 @@ if (orphans.length) fail(`bodies with no LEGAL_DOCS entry: ${orphans.join(', ')}
    including the home page's. Add a page here and it appears in fourteen
    footers; do not add it to a page by hand.
    ======================================================================== */
-/* Five items: Features | White-Label | Pricing | Docs | Community.
-   Workflow, Why AIWA, Made with and FAQ came out of the nav and are all still
-   reachable from the footer, which is why dropping them here costs nothing. */
+/* Four items: Features | Pricing | Docs | Community.
+   White-Label stays reachable from the footer and the lander WL CTA; it is
+   intentionally unlisted in the main nav. */
 const NAV = [
   { label: 'Features', href: '/features' },
-  { label: 'White-Label', href: '/white-label' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Docs', href: 'https://docs.aiwa.codes' },
   { label: 'Community', href: 'https://chat.whatsapp.com/KL6AucmDI7v8gjuKjhW58e' },
@@ -309,9 +308,7 @@ function renderMarkdown(md, where) {
    and load the same vendored GSAP - so a primitive fixed once is fixed
    everywhere, and there is no second design system to keep in step.
    ======================================================================== */
-const ARROW =
-  '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" ' +
-  'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ARROW = '<i class="ph ph-arrow-right" aria-hidden="true"></i>';
 
 const btn = (label, href, { primary = false, arrow = true } = {}) =>
   `<a class="btn ${primary ? 'btn--primary' : 'btn--ghost'}" href="${esc(href)}">
@@ -421,6 +418,7 @@ function shell({ here, title, description, body, canonical, wide = true, flush =
 
 <link rel="stylesheet" href="/css/tokens.css" />
 <link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" />
 <link rel="stylesheet" href="/css/site.css" />
 <link rel="stylesheet" href="/css/page.css" />
 

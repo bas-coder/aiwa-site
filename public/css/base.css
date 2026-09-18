@@ -51,6 +51,14 @@ button, input { font: inherit; color: inherit; background: none; border: 0; }
 button { cursor: pointer; }
 ul, ol { list-style: none; }
 
+/* Phosphor Regular (CDN web font) — sitewide UI icons */
+.ph {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  speak: never;
+}
+
 /* §5.5 - a pointer cursor on touch is a lie about affordance */
 @media only screen and (max-width: 999px) { a { cursor: default; } }
 
@@ -223,7 +231,16 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height
   display: flex; width: 200%; height: 100%;
   transition: transform var(--app-dur-colors) var(--ease-out);
 }
-.btn__arrow svg { width: 50%; height: 100%; flex: 0 0 50%; }
+.btn__arrow svg,
+.btn__arrow .ph {
+  width: 50%;
+  height: 100%;
+  flex: 0 0 50%;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (hover: hover) and (pointer: fine) {
   .btn--primary:has(.btn__arrow) {
@@ -296,6 +313,26 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 500; line-height
     opacity: 0;
   }
 }
+
+/* Shared outline pill badge (hero proof, page heroes). No fill. */
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 100%;
+  padding: 0.42rem 0.95rem 0.42rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cream-050) 14%, transparent);
+  background: transparent;
+  color: var(--cream-100);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  text-transform: none;
+}
+.page-badge__text { text-wrap: pretty; }
 
 /* ---------------------------------------------------------------------------
    §4.1 Blur-reveal - initial hidden state lives in CSS so nothing flashes

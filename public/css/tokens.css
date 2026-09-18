@@ -43,10 +43,15 @@
   --ink-600: #2a251e;  /* hairline / border  */
   --ink-500: #444443;
 
-  --cream-050: #fbf9f6; /* primary ink on dark */
-  --cream-100: #efeae1;
-  --cream-300: #ada598;
-  --cream-500: #8a8175;  /* muted copy        */
+  /* Faint raised fill for cards that already use a background (not outline-only). */
+  --surface-fill: color-mix(in srgb, var(--cream-050) 4.5%, transparent);
+  --surface-fill-soft: color-mix(in srgb, var(--cream-050) 3%, transparent);
+
+  --cream-050: #fbf9f6; /* primary ink / headlines on dark */
+  --cream-100: #efeae1; /* bright secondary (rare emphasis) */
+  --cream-300: #ada598; /* body copy */
+  --cream-400: #9c9488; /* in-card labels, quiet UI text */
+  --cream-500: #8a8175; /* muted meta / eyebrows */
 
   --accent: #fea002;     /* amber - headline stroke, active states           */
   --accent-hot: #f2813e; /* mid stop                                        */
