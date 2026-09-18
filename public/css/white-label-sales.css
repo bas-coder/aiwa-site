@@ -6,8 +6,9 @@
 .wl-project-shot, .wl-console-overview { margin: 0; }
 .wl-project-shot img, .wl-console-overview img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--ink-600); }
 .wl-console-overview { margin-block: 24px; }
-.wl-pain__ico--bad, .wl-pain__ico--bad .icon { color: #f87171; }
-.wl-pain__ico--good, .wl-pain__ico--good .icon, .wl-cap-grid .ph { color: var(--good); }
+.wl-pain__symbol { flex: 0 0 auto; font-size: 22px; line-height: 1; border: 0; background: none; padding: 0; }
+.wl-pain__symbol--bad { color: #f87171; }
+.wl-pain__symbol--good, .wl-cap-grid .ph { color: var(--good); }
 .wl-model { display: flex; flex-direction: column; }
 .wl-model ul { width: 100%; margin-top: auto; padding: 20px; background: var(--surface-fill-soft); border: 1px solid var(--ink-600); border-radius: 12px; display: grid; gap: 16px; text-align: center; }
 .wl-model:first-child ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
