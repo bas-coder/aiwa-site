@@ -4,6 +4,15 @@ Running record of design/implementation changes made while owning the lander dir
 
 ---
 
+## 2026-09-18 — Restore WL floating sticky CTA
+
+- Sticky stayed hidden after dismiss (`sessionStorage` early-return). Cleared that flag; dismiss is in-memory for the page view only (refresh restores).
+- Show trigger: ScrollTrigger on `#wl-market` at `top 85%` (after second section `.wl-trust`), Lenis-safe.
+- Raised z-index to 120; brighter ink-700 bar so it reads on page ground.
+- Files: `public/js/page.js`, `public/css/page.css`.
+
+---
+
 ## 2026-09-17 — WL visual polish (skeleton takeover, pain copy, expand z, own shots, store art)
 
 - `#wl-idea` takeover: `.wl-takeover--skeleton` — grey skeleton bars for URL/titles/CTAs/partner mark; AIWA logo + admin panel stay vivid.

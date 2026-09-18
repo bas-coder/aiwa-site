@@ -81,7 +81,7 @@ function wlStickyCta() {
   const setVisible = (on) => {
     if (dismissed) return;
     bar.hidden = false;
-    bar.classList.toggle('is-visible', on);
+    bar.classList.toggle('is-visible', Boolean(on));
   };
 
   const dismiss = bar.querySelector('[data-wl-sticky-dismiss]');
@@ -100,16 +100,21 @@ function wlStickyCta() {
   const st = ScrollTrigger.create({
     trigger: gate,
     start: 'top 85%',
-    onEnter: () => setVisible(true),
-    onEnterBack: () => setVisible(true),
-    onLeaveBack: () => setVisible(false),
+    onToggle: (self) => setVisible(self.isActive),
   });
+  /* Sync immediately — onToggle may not fire if we mount already past the gate. */
+  setVisible(st.isActive);
+
+  const onRefresh = () => {
+    if (!dismissed) setVisible(st.isActive);
+  };
+  ScrollTrigger.addEventListener('refresh', onRefresh);
 
   return () => {
+    ScrollTrigger.removeEventListener('refresh', onRefresh);
     st.kill();
     dismiss?.removeEventListener('click', onDismiss);
     bar.classList.remove('is-visible');
-    bar.hidden = true;
   };
 }
 
