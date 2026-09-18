@@ -139,7 +139,6 @@ const FOOTER_COLS = [
     name: 'Pages',
     links: [
       { label: 'Features', href: '/features' },
-      { label: 'White-Label', href: '/white-label' },
       { label: 'Workflow', href: '/#engine' },
       { label: 'Made with AIWA', href: '/#gallery' },
       { label: 'Pricing', href: '/#pricing' },

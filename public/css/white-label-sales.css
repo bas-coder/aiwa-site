@@ -31,7 +31,7 @@
 .wl-included-row .wl-image-placeholder { aspect-ratio: auto; min-height: 0; height: clamp(150px, 30svh, 260px); padding: 16px; }
 .wl-included-row .t-h3 { font-size: clamp(22px,2vw,30px); }
 .wl-included-row .t-body { font-size: 16px; line-height: 1.55; }
-.wl-included-image { display: block; width: 100%; height: auto; max-height: 30svh; object-fit: contain; border: 0; outline: 0; box-shadow: none; border-radius: 0; background: transparent; }
+.wl-included-image { display: block; width: auto; max-width: 100%; height: auto; max-height: 30svh; margin-inline: auto; object-fit: contain; border: 0; outline: 0; box-shadow: none; border-radius: 12px; overflow: hidden; clip-path: inset(0 round 12px); background: transparent; }
 .wl-included-row:nth-child(even) .wl-included-row__copy { order: 2; }
 .wl-included-row__copy { display: grid; gap: 16px; }
 .wl-image-placeholder { min-width: 0; aspect-ratio: 16/10; border-radius: 12px; border: 1px dashed var(--ink-500); background: var(--surface-fill-soft); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; padding: 24px; color: var(--cream-300); }

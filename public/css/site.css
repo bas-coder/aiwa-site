@@ -1965,6 +1965,7 @@ html.is-idea-scrub .hero-media__scrim {
   align-items: center;
 }
 .wl-home__visual { margin: 0; min-width: 0; }
+.wl-home__image { display: block; width: 100%; height: auto; }
 .wl-home__copy { display: grid; gap: 1rem; justify-items: start; max-width: 38rem; }
 .wl-home__copy .t-h2 { line-height: 1.12; }
 .wl-home__cta {
