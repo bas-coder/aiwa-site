@@ -2618,7 +2618,7 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
   overflow: visible;
 }
-.wl-model__badge {
+.wl-model p.wl-model__badge {
   position: absolute;
   top: 0;
   right: 0.9rem;
@@ -2631,8 +2631,8 @@
   background: var(--accent);
   color: var(--ink-950);
   font-family: var(--font-body);
-  font-size: 0.58rem;
-  font-weight: 650;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.01em;
   text-transform: none;
   line-height: 1.2;
@@ -2813,18 +2813,18 @@ html.wl-preview-lock .nav {
   border-color: color-mix(in srgb, var(--accent) 50%, var(--ink-600));
   transform: translateY(-0.25rem);
 }
-.wl-levels__badge {
+.wl-levels article p.wl-levels__badge {
   position: absolute;
   top: -0.7rem;
-  left: 1.1rem;
+  right: 1.1rem;
   transform: none;
   margin: 0;
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
   background: var(--accent);
-  color: #161412;
+  color: var(--ink-950);
   font-family: var(--font-body);
-  font-size: 0.68rem;
+  font-size: 12px;
   letter-spacing: 0.02em;
   text-transform: none;
   font-weight: 500;
