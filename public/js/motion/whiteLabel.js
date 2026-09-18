@@ -151,6 +151,36 @@ export function whiteLabelPage() {
       icon.classList.toggle('ph-arrows-in', expanded);
     }
     document.documentElement.classList.toggle('wl-preview-lock', expanded);
+
+    const doc = document;
+    if (expanded) {
+      const req = root.requestFullscreen
+        || root.webkitRequestFullscreen
+        || root.msRequestFullscreen;
+      if (typeof req === 'function') {
+        try { req.call(root); } catch (_) { /* ignore unsupported / denied */ }
+      }
+      return;
+    }
+
+    const activeFs = doc.fullscreenElement
+      || doc.webkitFullscreenElement
+      || doc.msFullscreenElement;
+    if (activeFs) {
+      const exit = doc.exitFullscreen
+        || doc.webkitExitFullscreen
+        || doc.msExitFullscreen;
+      if (typeof exit === 'function') {
+        try { exit.call(doc); } catch (_) { /* ignore */ }
+      }
+    }
+  };
+
+  const onFullscreenChange = () => {
+    const activeFs = document.fullscreenElement
+      || document.webkitFullscreenElement
+      || document.msFullscreenElement;
+    if (!activeFs && expanded) setExpanded(false);
   };
 
   const onTabClick = (event) => {
@@ -196,6 +226,8 @@ export function whiteLabelPage() {
   viewportBtns.forEach((btn) => btn.addEventListener('click', onViewportClick));
   expandBtn?.addEventListener('click', onExpandClick);
   document.addEventListener('keydown', onDocKey);
+  document.addEventListener('fullscreenchange', onFullscreenChange);
+  document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
   setActive(activeId);
   setViewport('desktop');
@@ -210,6 +242,16 @@ export function whiteLabelPage() {
     viewportBtns.forEach((btn) => btn.removeEventListener('click', onViewportClick));
     expandBtn?.removeEventListener('click', onExpandClick);
     document.removeEventListener('keydown', onDocKey);
+    document.removeEventListener('fullscreenchange', onFullscreenChange);
+    document.removeEventListener('webkitfullscreenchange', onFullscreenChange);
     document.documentElement.classList.remove('wl-preview-lock');
+    if (expanded) {
+      const exit = document.exitFullscreen
+        || document.webkitExitFullscreen
+        || document.msExitFullscreen;
+      if (typeof exit === 'function') {
+        try { exit.call(document); } catch (_) { /* ignore */ }
+      }
+    }
   };
 }

@@ -66,22 +66,29 @@ function build() {
 
 function wlStickyCta() {
   const bar = document.querySelector('[data-wl-sticky]');
-  const hero = document.getElementById('wl-hero');
-  if (!bar || !hero) return () => {};
+  /* Show after the second section (.wl-trust): when Market Shift enters view. */
+  const gate = document.getElementById('wl-market')
+    || document.querySelector('.wl-trust')
+    || document.getElementById('wl-hero');
+  if (!bar || !gate) return () => {};
 
-  const storageKey = 'wl-sticky-dismissed';
-  try {
-    if (sessionStorage.getItem(storageKey) === '1') return () => {};
-  } catch {
-    /* private mode */
-  }
+  /* Clear legacy session dismiss so a prior X does not permanently hide the bar. */
+  try { sessionStorage.removeItem('wl-sticky-dismissed'); } catch { /* ignore */ }
 
+  let dismissed = false;
   bar.hidden = false;
+
+  const setVisible = (on) => {
+    if (dismissed) return;
+    bar.hidden = false;
+    bar.classList.toggle('is-visible', on);
+  };
+
   const dismiss = bar.querySelector('[data-wl-sticky-dismiss]');
   const hide = () => {
+    dismissed = true;
     bar.classList.remove('is-visible');
     bar.hidden = true;
-    try { sessionStorage.setItem(storageKey, '1'); } catch { /* ignore */ }
   };
 
   const onDismiss = (event) => {
@@ -90,16 +97,16 @@ function wlStickyCta() {
   };
   dismiss?.addEventListener('click', onDismiss);
 
-  const io = new IntersectionObserver(
-    ([entry]) => {
-      if (bar.hidden) return;
-      bar.classList.toggle('is-visible', !entry.isIntersecting);
-    },
-    { threshold: 0 }
-  );
-  io.observe(hero);
+  const st = ScrollTrigger.create({
+    trigger: gate,
+    start: 'top 85%',
+    onEnter: () => setVisible(true),
+    onEnterBack: () => setVisible(true),
+    onLeaveBack: () => setVisible(false),
+  });
+
   return () => {
-    io.disconnect();
+    st.kill();
     dismiss?.removeEventListener('click', onDismiss);
     bar.classList.remove('is-visible');
     bar.hidden = true;
