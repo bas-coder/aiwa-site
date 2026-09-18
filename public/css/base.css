@@ -62,35 +62,9 @@ ul, ol { list-style: none; }
 /* §5.5 - a pointer cursor on touch is a lie about affordance */
 @media only screen and (max-width: 999px) { a { cursor: default; } }
 
-/* Custom cursors — fine pointers only. CSS url() stays paint-cheap vs a JS
-   cursor layer; system fallbacks keep usability if SVG cursors are ignored. */
-@media (hover: hover) and (pointer: fine) {
-  html {
-    cursor: url('/icons/cursors/default.svg') 6 2, auto;
-  }
-
-  /* I-beam on selectable copy and form fields (before interactive overrides). */
-  p, h1, h2, h3, h4, h5, h6, li, dt, dd, blockquote, figcaption,
-  td, th, .t-body, .t-h1, .t-h2, .t-h3, .section__lead, .eyebrow,
-  input, textarea, select, [contenteditable='true'] {
-    cursor: url('/Pointer/Text%20highlight%20Dark.svg') 16 16, text;
-  }
-
-  /* Open hand on clickable controls. */
-  a, button, [role='button'], summary, label[for],
-  .shot__action, .nav__links a, .btn, .switch__opt {
-    cursor: url('/icons/cursors/hover.svg') 10 4, pointer;
-  }
-
-  /* Open / closed hand when drag is available or in progress. */
-  [draggable='true'], .is-draggable, [data-grab] {
-    cursor: url('/icons/cursors/grab.svg') 12 8, grab;
-  }
-  [draggable='true']:active, .is-draggable:active,
-  .is-dragging, [data-grab]:active {
-    cursor: url('/icons/cursors/grabbing.svg') 12 10, grabbing;
-  }
-}
+/* Native cursor affordances; artwork is retained under archive/cursors. */
+[draggable='true'], .is-draggable, [data-grab] { cursor: grab; }
+[draggable='true']:active, .is-draggable:active, .is-dragging, [data-grab]:active { cursor: grabbing; }
 
 /* Hide scrollbars without losing scrollability */
 * { scrollbar-width: none; -ms-overflow-style: none; }

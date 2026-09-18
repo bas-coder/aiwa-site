@@ -70,6 +70,16 @@
    hands ScrollTrigger the wrong scroller. `clip` clips without becoming a
    scroll container, which is the entire reason it exists. */
 .page { overflow-x: clip; }
+/* Sales header is in normal flow and always presents the primary CTA. */
+.page--white-label .nav--sales { position: relative; inset: auto; opacity: 1; }
+.page--white-label .nav--sales .nav__inner { justify-content: flex-end; background: transparent; box-shadow: none; transition: none; }
+.page.page--white-label main { padding-top: 0; overflow-x: clip; }
+.page--white-label .wl-offer-hero { padding-top: clamp(24px, 3vw, 48px); overflow: clip; }
+.page--white-label .btn:focus-visible,
+.page--white-label .wl-vsl__hit:focus-visible {
+  outline: 2px solid var(--cream-050);
+  outline-offset: 4px;
+}
 .page .nav { opacity: 1; }
 .page .footer { opacity: 1; filter: none; }          /* IO adds .is-in; a page
    that is shorter than the viewport never scrolls, so the observer that owns
@@ -648,6 +658,7 @@
 .wl-hero__copy .page-hero__lead { max-width: 40rem; font-size: clamp(1.05rem, 1.4vw, 1.3rem); }
 .wl-hero__visual { margin: 0; min-width: 0; }
 .wl-takeover--page {
+  overflow: clip;
   --wl-page-inset: 0.75rem;
   --wl-inner-radius: 8px;
   --wl-mastra-tab-h: 48px;
@@ -1243,18 +1254,24 @@
   display: grid;
   gap: 1.1rem;
   justify-items: center;
-  max-width: 46rem;
+  max-width: 64rem;
 }
 .wl-offer-hero__copy--cta { margin-top: 0.25rem; }
+.wl-offer-hero__copy--cta .btn { min-height: 60px; padding-inline: 32px; font-size: 18px; font-weight: 500; max-width: 100%; }
+@media (max-width: 640px) {
+  .wl-offer-hero__copy .page-hero__h1 br { display: none; }
+  .wl-offer-hero__copy--cta, .wl-offer-hero__copy--cta .page-hero__actions { width: 100%; }
+  .wl-offer-hero__copy--cta .page-hero__actions { justify-content: center; }
+}
 .wl-offer-hero__copy .page-hero__h1 {
-  font-size: clamp(2.1rem, 4.2vw, 3.75rem);
-  line-height: 0.98;
+  font-size: clamp(2.5rem, 5.2vw, 4.5rem);
+  line-height: 1.02;
   text-wrap: balance;
 }
 .wl-offer-hero__kicker {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
   font-weight: 500;
   letter-spacing: 0.01em;
   text-transform: none;
@@ -1263,7 +1280,9 @@
   line-height: 1.5;
 }
 .wl-offer-hero__copy .page-hero__lead {
-  max-width: 42rem;
+  max-width: 48rem;
+  font-size: 14px;
+  line-height: 1.6;
   text-wrap: pretty;
 }
 .wl-offer-hero__price { display: grid; gap: 0.25rem; }
@@ -1293,14 +1312,14 @@
   align-items: center;
   gap: 0.4rem;
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  color: var(--cream-300);
+  font-size: 16px;
+  color: var(--cream-050);
 }
 .wl-benefit-strip__check {
   width: 0.95rem;
   height: 0.95rem;
   flex: 0 0 auto;
-  color: var(--accent);
+  color: var(--good);
 }
 .wl-benefit-strip__check.ph {
   width: auto;
@@ -1309,7 +1328,7 @@
 }
 
 .wl-vsl {
-  width: min(100%, 56rem);
+  width: min(100%, 62rem);
   margin: 0;
 }
 .wl-vsl__hit {
@@ -1354,7 +1373,7 @@
   height: 4.5rem;
   margin: -2.25rem 0 0 -2.25rem;
   border-radius: 999px;
-  border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border: 0;
   background: color-mix(in srgb, var(--ink-900) 55%, transparent);
   backdrop-filter: blur(6px);
   transition: transform 0.2s ease, border-color 0.2s ease;
@@ -1372,7 +1391,6 @@
 .wl-vsl__hit:hover .wl-vsl__play,
 .wl-vsl__hit:focus-visible .wl-vsl__play {
   transform: scale(1.06);
-  border-color: var(--accent);
 }
 .wl-vsl__caption {
   position: absolute;
@@ -1417,6 +1435,7 @@
   gap: 1rem;
 }
 .wl-preview__toolbar {
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1538,6 +1557,7 @@
   margin-inline: auto;
 }
 .wl-preview__stage {
+  min-width: 0;
   display: flex;
   justify-content: center;
 }
@@ -2010,14 +2030,14 @@
   padding: 0.65rem 0.75rem 0.65rem 1.15rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--cream-050) 14%, var(--ink-600));
-  background: color-mix(in srgb, var(--ink-700) 88%, var(--ink-950));
+  background: color-mix(in srgb, var(--ink-950) 45%, transparent);
   box-shadow:
     0 14px 40px color-mix(in srgb, var(--ink-950) 65%, transparent),
     0 2px 12px color-mix(in srgb, var(--ink-950) 40%, transparent),
     inset 0 1px 0 color-mix(in srgb, var(--cream-050) 10%, transparent);
   color: var(--cream-050);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
 }
 .wl-sticky__copy {
   flex: 1 1 auto;
@@ -2157,6 +2177,9 @@
   letter-spacing: 0.08em;
   flex: 0 0 auto;
 }
+.wl-market .wl-demand-list li,
+.wl-market .wl-strike-list li { font-size: clamp(1.125rem, 1.3vw, 1.25rem); }
+.wl-market .wl-demand-list li { color: var(--cream-050); }
 .wl-strike-list {
   display: grid;
   gap: 0.7rem;
@@ -2232,7 +2255,7 @@
   height: 1rem;
   flex: 0 0 auto;
   margin-top: 0.2em;
-  color: var(--accent);
+  color: var(--good);
   font-size: 1rem;
   line-height: 1;
 }

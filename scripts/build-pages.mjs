@@ -323,6 +323,9 @@ const btn = (label, href, { primary = false, arrow = true } = {}) =>
 const current = (href, here) => (here && href === here ? ' aria-current="page"' : '');
 
 function navHtml(here) {
+  if (here === '/white-label') return `<header class="nav nav--sales" id="nav">
+  <div class="nav__inner">${btn('Launch My AI Platform', '#wl-pricing', { primary: true })}</div>
+</header>`;
   return `<nav class="nav" id="nav">
   <div class="nav__inner">
     <a class="nav__logo" href="/#top" aria-label="AIWA home">
@@ -409,6 +412,23 @@ function shell({ here, title, description, body, canonical, wide = true, flush =
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
 <link rel="canonical" href="${esc(ORIGIN)}${esc(canonical)}" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="AIWA" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="${esc(ORIGIN)}${esc(canonical)}" />
+<meta property="og:title" content="${esc(title)}" />
+<meta property="og:description" content="${esc(description)}" />
+<meta property="og:image" content="${esc(ORIGIN)}/images/cover.png" />
+<meta property="og:image:secure_url" content="${esc(ORIGIN)}/images/cover.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="2400" />
+<meta property="og:image:height" content="1260" />
+<meta property="og:image:alt" content="AIWA, your AI product team" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${esc(title)}" />
+<meta name="twitter:description" content="${esc(description)}" />
+<meta name="twitter:image" content="${esc(ORIGIN)}/images/cover.png" />
+<meta name="twitter:image:alt" content="AIWA, your AI product team" />
 <link rel="icon" href="/aiwa-favicon.svg" type="image/svg+xml" />
 
 <!-- Same two faces the home page preloads, for the same reason (§2.9): the
@@ -448,7 +468,6 @@ ${footerHtml(here)}
 const crumb = (label, href) => `<a class="crumb" href="${esc(href)}">${esc(label)}</a>`;
 
 const head = (eyebrow, heading, lead, { center = false, grad = true } = {}) => `  <div class="page-section__head${center ? ' page-section__head--center' : ''}" data-blur-parent>
-    <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h2 class="t-h2" data-blur-child${grad ? ' data-grad' : ''}>${heading}</h2>${lead ? `
     <p class="t-body section__lead" data-blur-child>${esc(lead)}</p>` : ''}
   </div>`;
@@ -529,7 +548,6 @@ const ctaBlock = ({ eyebrow, h2, body, label = 'Start Building', href = 'https:/
     <div class="cta__fade cta__fade--bottom"></div>
   </div>
   <div class="cta__inner" data-blur-parent>
-    <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h2 class="t-display cta__h2" data-blur-child data-grad>${h2}</h2>
     <p class="t-body" data-blur-child>${esc(body)}</p>
     <div class="cta__actions" data-blur-child>
@@ -547,7 +565,6 @@ ${items.map((m) => `    <div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}${m.note
 const pageHero = ({ eyebrow, h1, lead, actions, note, doc = false, blob = true, contained = false }) => `<section class="page-hero${doc ? ' page-hero--doc' : ''}">${blob ? `
   <svg class="page-hero__blob" data-blob viewBox="0 0 400 400" aria-hidden="true"></svg>` : ''}
   <div class="${contained ? 'shell shell--wide ' : ''}page-hero__inner" data-blur-parent>
-    <p class="eyebrow" data-blur-child>${esc(eyebrow)}</p>
     <h1 class="t-h2 page-hero__h1" data-blur-child data-grad>${h1}</h1>
     <p class="t-body page-hero__lead" data-blur-child>${esc(lead)}</p>${actions ? `
     <div class="page-hero__actions" data-blur-child>
@@ -730,7 +747,6 @@ ${items.map((i) => `      <li><a href="${esc(i.href)}">${esc(i.label)}</a></li>`
   <div class="shell shell--wide">
     <div class="feat-spot__grid">
       <div class="feat-spot__copy" data-blur-parent>
-        <p class="eyebrow" data-blur-child>${esc(s.n)} · ${esc(s.eyebrow)}</p>
         <h2 class="t-h2" data-blur-child data-grad>${esc(s.title)}</h2>
         <p class="t-body section__lead" data-blur-child>${esc(s.body)}</p>
         <ul class="feat-spot__points" data-blur-child>

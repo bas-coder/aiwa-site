@@ -652,7 +652,7 @@ export function navMenu() {
  *  Also crossfades the CTA: Login (ghost) at rest → Start Building (primary) when stuck. */
 export function navState() {
   const nav = document.getElementById('nav');
-  if (!nav) return () => {};
+  if (!nav || nav.classList.contains('nav--sales')) return () => {};
 
   const login = nav.querySelector('.nav__cta--login');
   const build = nav.querySelector('.nav__cta--build');

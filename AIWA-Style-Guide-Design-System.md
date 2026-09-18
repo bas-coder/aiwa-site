@@ -1297,3 +1297,10 @@ The **prompt box itself is already in your codebase**. Wrap it; do not rebuild i
 | Checks | No card needed · Real React + backend code · Live preview in the browser |
 
 If product swaps labels later, keep the **styles** in this doc; only change strings.
+# September 2026 site conventions
+
+Introductory uppercase eyebrow labels above headlines are no longer used on public pages. Lead sections with their headline; retain functional labels, card labels, step numbers, badges, and footer headings.
+
+Use native browser cursors, including pointer on controls and grab/grabbing for draggable elements. Archived SVG cursor artwork is stored in archive/cursors and must not be referenced by public styles.
+
+The White Label sales header uses a single right-aligned primary CTA in normal document flow. It does not participate in the shared scrolling header transitions.
