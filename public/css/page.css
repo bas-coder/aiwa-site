@@ -1807,6 +1807,7 @@
 }
 .wl-shot--wide { margin-bottom: 1.5rem; }
 .wl-shot--wide img { aspect-ratio: 16 / 9; }
+#wl-console .wl-shot--wide img { object-position: center top; }
 
 .wl-pain {
   display: grid;
