@@ -1,0 +1,147 @@
+Hero
+Shimmer Grid Background
+Texture
+Blur
+Variant 1
+Hero Mark Wrapper
+Hero Mark Left Accent
+Hero Mark Center Accent
+Hero Mark Right Accent
+Animated Code Background
+Hero Content Stack
+Frame 14
+Frame 11
+Frame 9
+Describe an app, Get a real one
+Built with Auth_
+Frame 22
+Frame 23
+Primary CTA Button
+md/primary
+_Button base
+Text
+Try it free, No credit card required
+Hero Scroll Cue
+Desktop
+Container
+Icon Main
+Frame 2
+Button - Attach files
+Button menu
+Claude Sonnet 4.6
+Background+Border+Shadow
+Instant Postgres
+Frame 1
+Build
+Button - Dictate your prompt
+sm/icon
+neon-logomark-light-color 1
+Trust
+Trusted By Logo Row
+Default
+Frame 49
+Avatar group
+Avatars
+Avatar
+Trusted by 14,000+ founders, agencies and developers building the next generation of software
+Demo Video
+Demo Video Heading
+Interactive Product Demo
+Diagram
+Sticky
+plan
+Frame 55
+Frame 57
+PLAN
+Define goals & requirements
+architect
+ARCHITECT
+Test
+Evolve
+Union
+Start
+Scroll Icon 1
+Bottom Glow
+Quote
+Quote Content Card
+Quote Decorative Mark
+Frame 7
+Vector
+Frame 4
+Frame 8
+lock
+Frame 5
+Phone
+Quote Content Stack
+Quote Copy Group
+Quote Eyebrow Badge
+stuff
+top
+bottom
+left
+right
+top left
+top right
+bottom right
+Quote Text Wrapper
+Quote Statement
+Why
+Why Section Header
+Why Eyebrow Group
+Why Eyebrow
+Why Header Ornament
+Large
+Why Header Action
+sm/primary
+Why Benefit Cards
+Why Memory Card
+Memory Card Visual
+Memory Card Copy
+texture
+Why QA Card
+QA Card Visual
+QA Card Copy
+Why Delivery Card
+Delivery Card Visual
+Delivery Card Copy
+Why Ownership Card
+Ownership Card Visual
+Ownership Card Copy
+Why Section CTA
+Made With
+Made With Section Header
+Made With Copy Group
+Made With Eyebrow Group
+Made With Eyebrow
+Made With Header Ornament
+Pricing
+FAQs
+FAQ Content Layout
+FAQ Introduction
+FAQ Heading
+FAQ Supporting Copy
+FAQ Accordion List
++
+Final CTA Section
+Final CTA Content Card
+Final CTA Content Stack
+Final CTA Copy Group
+Final CTA Heading
+Final CTA Supporting Copy
+Final CTA Button
+Final CTA Shimmer Background
+Primary
+Frame 17
+Frame 6
+Features
+Frame 18
+Them
+sm/secondary
+Footer
+Tablet
+Light
+Backdrop
+Content
+Logo
+Bottom
+Border

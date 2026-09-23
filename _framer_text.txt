@@ -1,0 +1,741 @@
+[Animated Code Background] Iimport React, { useState, useEffect } from “react”;
+[Animated Code Background] const AiwaHero = () => {
+[Animated Code Background] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Animated Code Background] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Animated Code Background] useEffect(() => {
+[Animated Code Background] const interval = setInterval(() => {
+[Animated Code Background] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Animated Code Background] setAffirmation(aiwaTranslations[randomIndex]);
+[Animated Code Background] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Animated Code Background] setAffirmation(aiwaTranslations[randomIndex]);
+[Animated Code Background] }, 2500);
+[Animated Code Background] return () => clearInterval(interval);
+[Animated Code Background] }, []);
+[Animated Code Background] return
+[Animated Code Background] 17:
+[Animated Code Background] 18: Build with {affirmation} 19:
+[Animated Code Background] 20:
+[Animated Code Background] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Animated Code Background] 23:
+[Animated Code Background] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Animated Code Background] 31:
+[Animated Code Background] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Animated Code Background] Iimport React, { useState, useEffect } from “react”;
+[Animated Code Background] const AiwaHero = () => {
+[Animated Code Background] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Animated Code Background] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Animated Code Background] useEffect(() => {
+[Animated Code Background] const interval = setInterval(() => {
+[Animated Code Background] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Animated Code Background] setAffirmation(aiwaTranslations[randomIndex]);
+[Animated Code Background] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Animated Code Background] setAffirmation(aiwaTranslations[randomIndex]);
+[Animated Code Background] }, 2500);
+[Animated Code Background] return () => clearInterval(interval);
+[Animated Code Background] }, []);
+[Animated Code Background] return
+[Animated Code Background] 17:
+[Animated Code Background] 18: Build with {affirmation} 19:
+[Animated Code Background] 20:
+[Animated Code Background] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Animated Code Background] 23:
+[Animated Code Background] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Animated Code Background] 31:
+[Animated Code Background] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Describe an app, Get a real one] M
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] y
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] A
+[Describe an app, Get a real one] I
+[Describe an app, Get a real one] P
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] d
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] c
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] T
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] a
+[Describe an app, Get a real one] m
+[Describe an app, Get a real one] M
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] y
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] A
+[Describe an app, Get a real one] I
+[Describe an app, Get a real one] P
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] d
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] c
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] T
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] a
+[Describe an app, Get a real one] m
+[Describe an app, Get a real one] M
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] y
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] A
+[Describe an app, Get a real one] I
+[Describe an app, Get a real one] P
+[Describe an app, Get a real one] r
+[Describe an app, Get a real one] o
+[Describe an app, Get a real one] d
+[Describe an app, Get a real one] u
+[Describe an app, Get a real one] c
+[Describe an app, Get a real one] t
+[Describe an app, Get a real one] T
+[Describe an app, Get a real one] e
+[Describe an app, Get a real one] a
+[Describe an app, Get a real one] m
+[Built with Auth_] B
+[Built with Auth_] u
+[Built with Auth_] i
+[Built with Auth_] l
+[Built with Auth_] d
+[Built with Auth_] p
+[Built with Auth_] r
+[Built with Auth_] o
+[Built with Auth_] d
+[Built with Auth_] u
+[Built with Auth_] c
+[Built with Auth_] t
+[Built with Auth_] i
+[Built with Auth_] o
+[Built with Auth_] n
+[Built with Auth_] -
+[Built with Auth_] r
+[Built with Auth_] e
+[Built with Auth_] a
+[Built with Auth_] d
+[Built with Auth_] y
+[Built with Auth_] s
+[Built with Auth_] o
+[Built with Auth_] f
+[Built with Auth_] t
+[Built with Auth_] w
+[Built with Auth_] a
+[Built with Auth_] r
+[Built with Auth_] e
+[Built with Auth_] w
+[Built with Auth_] i
+[Built with Auth_] t
+[Built with Auth_] h
+[Built with Auth_] A
+[Built with Auth_] I
+[Built with Auth_] a
+[Built with Auth_] g
+[Built with Auth_] e
+[Built with Auth_] n
+[Built with Auth_] t
+[Built with Auth_] s
+[Built with Auth_] t
+[Built with Auth_] h
+[Built with Auth_] a
+[Built with Auth_] t
+[Built with Auth_] p
+[Built with Auth_] l
+[Built with Auth_] a
+[Built with Auth_] n
+[Built with Auth_] ,
+[Built with Auth_] a
+[Built with Auth_] r
+[Built with Auth_] c
+[Built with Auth_] h
+[Built with Auth_] i
+[Built with Auth_] t
+[Built with Auth_] e
+[Built with Auth_] c
+[Built with Auth_] t
+[Built with Auth_] ,
+[Built with Auth_] b
+[Built with Auth_] u
+[Built with Auth_] i
+[Built with Auth_] l
+[Built with Auth_] d
+[Built with Auth_] ,
+[Built with Auth_] t
+[Built with Auth_] e
+[Built with Auth_] s
+[Built with Auth_] t
+[Built with Auth_] ,
+[Built with Auth_] a
+[Built with Auth_] n
+[Built with Auth_] d
+[Built with Auth_] e
+[Built with Auth_] v
+[Built with Auth_] o
+[Built with Auth_] l
+[Built with Auth_] v
+[Built with Auth_] e
+[Built with Auth_] y
+[Built with Auth_] o
+[Built with Auth_] u
+[Built with Auth_] r
+[Built with Auth_] a
+[Built with Auth_] p
+[Built with Auth_] p
+[Built with Auth_] l
+[Built with Auth_] i
+[Built with Auth_] c
+[Built with Auth_] a
+[Built with Auth_] t
+[Built with Auth_] i
+[Built with Auth_] o
+[Built with Auth_] n
+[Built with Auth_] B
+[Built with Auth_] u
+[Built with Auth_] i
+[Built with Auth_] l
+[Built with Auth_] d
+[Built with Auth_] p
+[Built with Auth_] r
+[Built with Auth_] o
+[Built with Auth_] d
+[Built with Auth_] u
+[Built with Auth_] c
+[Built with Auth_] t
+[Built with Auth_] i
+[Built with Auth_] o
+[Built with Auth_] n
+[Built with Auth_] -
+[Built with Auth_] r
+[Built with Auth_] e
+[Built with Auth_] a
+[Built with Auth_] d
+[Built with Auth_] y
+[Built with Auth_] s
+[Built with Auth_] o
+[Built with Auth_] f
+[Built with Auth_] t
+[Built with Auth_] w
+[Built with Auth_] a
+[Built with Auth_] r
+[Built with Auth_] e
+[Built with Auth_] w
+[Built with Auth_] i
+[Built with Auth_] t
+[Built with Auth_] h
+[Built with Auth_] A
+[Built with Auth_] I
+[Built with Auth_] a
+[Built with Auth_] g
+[Built with Auth_] e
+[Built with Auth_] n
+[Built with Auth_] t
+[Built with Auth_] s
+[Built with Auth_] t
+[Built with Auth_] h
+[Built with Auth_] a
+[Built with Auth_] t
+[Built with Auth_] p
+[Built with Auth_] l
+[Built with Auth_] a
+[Built with Auth_] n
+[Built with Auth_] ,
+[Built with Auth_] a
+[Built with Auth_] r
+[Built with Auth_] c
+[Built with Auth_] h
+[Built with Auth_] i
+[Built with Auth_] t
+[Built with Auth_] e
+[Built with Auth_] c
+[Built with Auth_] t
+[Built with Auth_] ,
+[Built with Auth_] b
+[Built with Auth_] u
+[Built with Auth_] i
+[Built with Auth_] l
+[Built with Auth_] d
+[Built with Auth_] ,
+[Built with Auth_] t
+[Built with Auth_] e
+[Built with Auth_] s
+[Built with Auth_] t
+[Built with Auth_] ,
+[Built with Auth_] a
+[Built with Auth_] n
+[Built with Auth_] d
+[Built with Auth_] e
+[Built with Auth_] v
+[Built with Auth_] o
+[Built with Auth_] l
+[Built with Auth_] v
+[Built with Auth_] e
+[Built with Auth_] y
+[Built with Auth_] o
+[Built with Auth_] u
+[Built with Auth_] r
+[Built with Auth_] a
+[Built with Auth_] p
+[Built with Auth_] p
+[Built with Auth_] l
+[Built with Auth_] i
+[Built with Auth_] c
+[Built with Auth_] a
+[Built with Auth_] t
+[Built with Auth_] i
+[Built with Auth_] o
+[Built with Auth_] n
+[Text] Start Building
+[Try it free, No credit card required] Try it free, No credit card required
+[Container] |
+[Button menu] [IMG  /images/jL5hLYm915suLXDyS4jejsQU_343667.jpg]
+[Claude Sonnet 4.6] Mini
+[Instant Postgres] Instant Postgres
+[Build] Build
+[Container] |
+[Button menu] [IMG  /images/jL5hLYm915suLXDyS4jejsQU_343667.jpg]
+[Build] Build
+[Avatar] [IMG  /images/MNSkYup7bhQo8t1dZGylIuWiM_81dcf3.jpg]
+[Avatar] [IMG  /images/2d3OIEeSFjznRTlhNb3F8yCwEtc_81dcf3.jpg]
+[Avatar] [IMG  /images/Bb4EG1i14f43vkprtadPdtfA8G0_81dcf3.jpg]
+[Avatar] [IMG  /images/JkrlDFl674mgxOzqm1foVA9sXQ_81dcf3.jpg]
+[Avatar] [IMG  /images/1i9y2cgFKUC7eYPnyu1cBP4BHc_81dcf3.jpg]
+[Text] 14K
+[Trusted by 14,000+ founders, agencies and developers building the next generation of software] Trusted by 14,000+ founders, agencies and developers building the next generation of software
+[Trusted by 14,000+ founders, agencies and developers building the next generation of software] Trusted by 14,000+ founders, agencies and developers building the next generation of software
+[Demo Video Heading] The full stack app builder, zero setup
+[Demo Video Heading] The full stack app builder, zero setup
+[Interactive Product Demo] Home
+[Interactive Product Demo] Projects
+[Interactive Product Demo] Connectors
+[Interactive Product Demo] Search
+[Interactive Product Demo] Workspace
+[Interactive Product Demo] [IMG Home /images/oASzTBkQnEYoP1EbjaCgUQnH0Vw_c4dc88.png]
+[Interactive Product Demo] [IMG Projects /images/anJYVlwqcNJZADfT76VLM7ueg_014a4f.png]
+[Interactive Product Demo] [IMG Connectors /images/wqHWpq5sFiInSW15KWBcQjF9C08_014a4f.png]
+[Interactive Product Demo] [IMG Search /images/45SPWvWFYm1Rf6yzzCfOql7Ed6M_014a4f.png]
+[Interactive Product Demo] [IMG Workspace /images/4QJwf0IpAezr82J9AosKZkRuVM_f0b524.png]
+[Sticky] Our Agentic Workflow Engine
+[Sticky] Our Agentic Workflow Engine
+[Sticky] Our Agentic Workflow Engine
+[PLAN] PLAN
+[Define goals & requirements] Define goals & requirements
+[ARCHITECT] ARCHITECT
+[Define goals & requirements] Design the right solution
+[ARCHITECT] BUILD
+[Define goals & requirements] Code, Integrate and bring to life
+[ARCHITECT] TEST
+[Define goals & requirements] Ensure Quality of Performance
+[ARCHITECT] EVOLVE
+[Define goals & requirements] Learn, improve & scale continuosly
+[Default] [IMG  /images/5vXVfiaaTAeEtBIYInZAq2Do7Y_47ae62.png]
+[PLAN] PLAN
+[Define goals & requirements] Define goals & requirements
+[ARCHITECT] ARCHITECT
+[Define goals & requirements] Design the right solution
+[ARCHITECT] BUILD
+[Define goals & requirements] Code, Integrate and bring to life
+[ARCHITECT] TEST
+[Define goals & requirements] Ensure Quality of Performance
+[ARCHITECT] EVOLVE
+[Define goals & requirements] Learn, improve & scale continuosly
+[Diagram] [IMG  /images/UiTbCh3t4XzkArSzvdCgOE3deU_d97ccc.png]
+[Sticky] Iimport React, { useState, useEffect } from “react”;
+[Sticky] const AiwaHero = () => {
+[Sticky] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Sticky] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Sticky] useEffect(() => {
+[Sticky] const interval = setInterval(() => {
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] }, 2500);
+[Sticky] return () => clearInterval(interval);
+[Sticky] }, []);
+[Sticky] return
+[Sticky] 17:
+[Sticky] 18: Build with {affirmation} 19:
+[Sticky] 20:
+[Sticky] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Sticky] 23:
+[Sticky] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Sticky] 31:
+[Sticky] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Sticky] Iimport React, { useState, useEffect } from “react”;
+[Sticky] const AiwaHero = () => {
+[Sticky] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Sticky] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Sticky] useEffect(() => {
+[Sticky] const interval = setInterval(() => {
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] }, 2500);
+[Sticky] return () => clearInterval(interval);
+[Sticky] }, []);
+[Sticky] return
+[Sticky] 17:
+[Sticky] 18: Build with {affirmation} 19:
+[Sticky] 20:
+[Sticky] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Sticky] 23:
+[Sticky] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Sticky] 31:
+[Sticky] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Sticky] Iimport React, { useState, useEffect } from “react”;
+[Sticky] const AiwaHero = () => {
+[Sticky] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Sticky] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Sticky] useEffect(() => {
+[Sticky] const interval = setInterval(() => {
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] }, 2500);
+[Sticky] return () => clearInterval(interval);
+[Sticky] }, []);
+[Sticky] return
+[Sticky] 17:
+[Sticky] 18: Build with {affirmation} 19:
+[Sticky] 20:
+[Sticky] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Sticky] 23:
+[Sticky] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Sticky] 31:
+[Sticky] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Sticky] Iimport React, { useState, useEffect } from “react”;
+[Sticky] const AiwaHero = () => {
+[Sticky] const [affirmation, setAffirmation] = useState(“AIWA”);
+[Sticky] const aiwaTranslations = [“AIWA”, “YES”, “OUI”, “JA”, “SI”, “نعم”]; 6:
+[Sticky] useEffect(() => {
+[Sticky] const interval = setInterval(() => {
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] const randomIndex = Math.floor(Math.random() * aiwaTranslations.length);
+[Sticky] setAffirmation(aiwaTranslations[randomIndex]);
+[Sticky] }, 2500);
+[Sticky] return () => clearInterval(interval);
+[Sticky] }, []);
+[Sticky] return
+[Sticky] 17:
+[Sticky] 18: Build with {affirmation} 19:
+[Sticky] 20:
+[Sticky] 21: AIWA empowers you to design, build, and deploy stunning websites effortlessly. Your ultimate visual builder. 22:
+[Sticky] 23:
+[Sticky] 24: 25: Start Building 26: 27: 28: Learn More 29: 30:
+[Sticky] 31:
+[Sticky] 32: ); 33: }; 34: 35: export default AiwaHero;
+[Define goals & requirements] Scroll on to disover more
+[Frame 4] https://anything.bjcrum.net
+[Frame 4] https://anything.bjcrum.net
+[Frame 4] https://anything.bjcrum.net
+[Quote Statement] B
+[Quote Statement] J
+[Quote Statement] C
+[Quote Statement] R
+[Quote Statement] U
+[Quote Statement] M
+[Quote Statement] d
+[Quote Statement] o
+[Quote Statement] e
+[Quote Statement] s
+[Quote Statement] n
+[Quote Statement] ’
+[Quote Statement] t
+[Quote Statement] j
+[Quote Statement] u
+[Quote Statement] s
+[Quote Statement] t
+[Quote Statement] g
+[Quote Statement] e
+[Quote Statement] n
+[Quote Statement] e
+[Quote Statement] r
+[Quote Statement] a
+[Quote Statement] t
+[Quote Statement] e
+[Quote Statement] c
+[Quote Statement] o
+[Quote Statement] d
+[Quote Statement] e
+[Quote Statement] .
+[Quote Statement] I
+[Quote Statement] t
+[Quote Statement] m
+[Quote Statement] a
+[Quote Statement] n
+[Quote Statement] a
+[Quote Statement] g
+[Quote Statement] e
+[Quote Statement] s
+[Quote Statement] y
+[Quote Statement] o
+[Quote Statement] u
+[Quote Statement] r
+[Quote Statement] e
+[Quote Statement] n
+[Quote Statement] t
+[Quote Statement] i
+[Quote Statement] r
+[Quote Statement] e
+[Quote Statement] p
+[Quote Statement] r
+[Quote Statement] o
+[Quote Statement] d
+[Quote Statement] u
+[Quote Statement] c
+[Quote Statement] t
+[Quote Statement] l
+[Quote Statement] i
+[Quote Statement] f
+[Quote Statement] e
+[Quote Statement] c
+[Quote Statement] y
+[Quote Statement] c
+[Quote Statement] l
+[Quote Statement] e
+[Quote Statement] B
+[Quote Statement] J
+[Quote Statement] C
+[Quote Statement] R
+[Quote Statement] U
+[Quote Statement] M
+[Quote Statement] d
+[Quote Statement] o
+[Quote Statement] e
+[Quote Statement] s
+[Quote Statement] n
+[Quote Statement] ’
+[Quote Statement] t
+[Quote Statement] j
+[Quote Statement] u
+[Quote Statement] s
+[Quote Statement] t
+[Quote Statement] g
+[Quote Statement] e
+[Quote Statement] n
+[Quote Statement] e
+[Quote Statement] r
+[Quote Statement] a
+[Quote Statement] t
+[Quote Statement] e
+[Quote Statement] c
+[Quote Statement] o
+[Quote Statement] d
+[Quote Statement] e
+[Quote Statement] .
+[Quote Statement] I
+[Quote Statement] t
+[Quote Statement] m
+[Quote Statement] a
+[Quote Statement] n
+[Quote Statement] a
+[Quote Statement] g
+[Quote Statement] e
+[Quote Statement] s
+[Quote Statement] y
+[Quote Statement] o
+[Quote Statement] u
+[Quote Statement] r
+[Quote Statement] e
+[Quote Statement] n
+[Quote Statement] t
+[Quote Statement] i
+[Quote Statement] r
+[Quote Statement] e
+[Quote Statement] p
+[Quote Statement] r
+[Quote Statement] o
+[Quote Statement] d
+[Quote Statement] u
+[Quote Statement] c
+[Quote Statement] t
+[Quote Statement] l
+[Quote Statement] i
+[Quote Statement] f
+[Quote Statement] e
+[Quote Statement] c
+[Quote Statement] y
+[Quote Statement] c
+[Quote Statement] l
+[Quote Statement] e
+[Why Eyebrow] Why
+[Why Eyebrow] Why
+[Large] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Large] BJCRUM
+[Large] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Large] BJCRUM
+[Text] Get Started
+[Define goals & requirements] Project Brain™
+[Define goals & requirements] Your AI remembers every decision, requirement, and feature across your project.
+[texture] [IMG  /images/1FFjurpWrkbmIgpMnHWWJaO505k_e419d3.png]
+[Define goals & requirements] AI Architecture
+[Define goals & requirements] Every feature fits your existing codebase before it's generated
+[texture] [IMG  /images/1FFjurpWrkbmIgpMnHWWJaO505k_e419d3.png]
+[Define goals & requirements] Autonomous QA
+[Define goals & requirements] AI tests your application in a real browser before deployment.
+[texture] [IMG  /images/1FFjurpWrkbmIgpMnHWWJaO505k_e419d3.png]
+[Define goals & requirements] Continuous Evolution
+[Define goals & requirements] Your application keeps improving after launch.
+[texture] [IMG  /images/1FFjurpWrkbmIgpMnHWWJaO505k_e419d3.png]
+[Text] Get Started
+[Text] Get Started
+[Made With Eyebrow] Made with
+[Made With Eyebrow] Made with
+[Large] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Large] BJCRUM
+[Large] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Large] BJCRUM
+[Define goals & requirements] Explore production-ready applications generated by AIWA. Duplicate, remix, and launch your own version in seconds
+[Variant 1] [IMG  /images/eBQU4mGjv64pxjCOyI9D24dweM_37800b.png]
+[Variant 1] Website
+[Variant 1] NLS Routeworks
+[Variant 1] Transportation
+[Variant 1] [IMG  /images/sKE7LTTp2EHq2Y2aLvO0GMlZY0_37800b.png]
+[Variant 1] Website
+[Variant 1] SaaSforge
+[Variant 1] profile · workspace
+[Variant 1] [IMG  /images/zHEPED1Ple5F5h6FhbH1po6MWzQ_37800b.png]
+[Variant 1] Website
+[Variant 1] Offset
+[Variant 1] agency · portfolio · case studies
+[Variant 1] [IMG  /images/uA4X1BQ3H7HzVkkqFBRqpmNu2E_37800b.png]
+[Variant 1] Website
+[Variant 1] BJCRUM Launch
+[Variant 1] Transportation
+[Variant 1] [IMG  /images/gcJ9o7S1Ow5wHWpbicvvnZxN6W8_37800b.png]
+[Variant 1] Website
+[Variant 1] SoundVault
+[Variant 1] catalogs · reviews · video
+[Variant 1] [IMG  /images/rULrgRqgbN6lLoU3sOyv8QfCRQk_37800b.png]
+[Variant 1] Website
+[Variant 1] EstateFlow
+[Variant 1] Real Estate
+[Pricing] Simple, transparent pricing
+[Pricing] Simple, credit-backed plans charged on your Stripe. Wholesale is $0.10 a credit. Everything above is your margin.
+[Pricing] Solo
+[Pricing] One builder, their own workspace.
+[Pricing] Popular
+[Pricing] $59
+[Pricing] /mo
+[Pricing] Billed monthly · Cancel anytime
+[Pricing] 515 Credits / mo
+[Pricing] Free
+[Pricing] Solo 200
+[Pricing] Solo 515
+[Pricing] Solo 1030
+[Pricing] The full AI builder with live preview
+[Pricing] Publish to a live URL, or your own custom domain
+[Pricing] Max, the deep agent, on every build
+[Pricing] Code export and GitHub sync
+[Pricing] 10 AI + 20 stock images per project
+[Pricing] Version history and restore
+[Pricing] Upgrade
+[Pricing] Agency
+[Pricing] Teams that invite clients and ship with sign-off.
+[Pricing] Best Value
+[Pricing] $299
+[Pricing] /mo
+[Pricing] Billed monthly · Cancel anytime
+[Pricing] 2,535 Credits / mo
+[Pricing] Agency 1100
+[Pricing] Agency 2535
+[Pricing] Agency 4455
+[Pricing] Everything in Solo
+[Pricing] Invite clients to review and comment
+[Pricing] New
+[Pricing] Admin role + team seats (up to 15 seats)
+[Pricing] Visibility controls: public, unlisted or private
+[Pricing] Android APK, Play Store and App Store kits
+[Pricing] New
+[Pricing] Largest image budget: 25 AI + 50 stock per project
+[Pricing] Upgrade
+[Pricing] Cancel anytime · Upgrades prorated automatically by Stripe · Secure checkout
+[FAQ Heading] Got Questions?
+[FAQ Heading] Got Questions?
+[FAQ Supporting Copy] See how AIWA builds real, working apps for you from start to finish.
+[FAQ Supporting Copy] AIWA is designed to fit into building environments while keeping operational visibility, governance, and delivery workflows connected.
+[FAQ Introduction] [IMG  /images/mMaeJzBlRJjcDRfMTJHk0UBDiFU_a7d2d8.png]
+[Default] Does AIWA replace the systems teams already use?
+[Default] Will the bot mess up my app if I edit it later?
+[Default] How do I pay for what I build?
+[Default] Do I need to find the bugs myself?
+[Default] Can I use my own custom web link?
+[Default] Who owns the final code?
+[Final CTA Heading] Ready
+[Final CTA Heading] to
+[Final CTA Heading] launch?
+[Final CTA Heading] Ready
+[Final CTA Heading] to
+[Final CTA Heading] launch?
+[Final CTA Supporting Copy] Claim your
+[Final CTA Supporting Copy] 45
+[Final CTA Supporting Copy] free welcome credits today and start building the future of software
+[Container] |
+[Button menu] [IMG  /images/jL5hLYm915suLXDyS4jejsQU_343667.jpg]
+[Claude Sonnet 4.6] Mini
+[Instant Postgres] Instant Postgres
+[Build] Build
+[Container] |
+[Button menu] [IMG  /images/jL5hLYm915suLXDyS4jejsQU_343667.jpg]
+[Build] Build
+[Default] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Default] BJCRUM
+[Features] Features
+[Features] Pricing
+[Features] Docs
+[Text] Join the Community
+[Default] [IMG  /images/566csQkwAzFmNqUmvFdjzVkalo_f4cf2c.jpg]
+[Default] BJCRUM
+[Features] Features
+[Features] Pricing
+[Features] Docs
+[Text] Join the Community
+[Footer] Join our newsletter
+[Default] Subscribe
+[Footer] Pages
+[Features] Features
+[Features] Pricing
+[Features] Resources
+[Features] Docs
+[Features] Privacy Policy
+[Features] Terms
+[Footer] fax@bjcrum.com
+[Footer] All System Operational
+[Footer] © 2026 BJCRUM. All rights reserved.
+[Footer] Join our newsletter
+[Default] Subscribe
+[Features] Features
+[Features] Pricing
+[Features] Resources
+[Features] Docs
+[Features] Privacy Policy
+[Features] Terms
+[Footer] fax@bjcrum.com
+[Footer] All System Operational
+[Footer] © 2026 BJCRUM. All rights reserved.
+[Footer] Join our newsletter
+[Default] Subscribe
+[Features] Features
+[Features] Pricing
+[Features] Resources
+[Features] Docs
+[Features] Privacy Policy
+[Features] Terms
+[Footer] fax@bjcrum.com
+[Footer] All System Operational
+[Footer] © 2026 BJCRUM. All rights reserved.
+[Content] Create a free website with Framer, the website builder loved by startups, designers and agencies.
