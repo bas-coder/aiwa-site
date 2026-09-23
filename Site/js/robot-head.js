@@ -1,4 +1,4 @@
-// Interactive 3D Robot Head Controller for BJCRUMBS Workflow Diagram
+// Interactive 3D Robot Head Controller for BJCRUM Workflow Diagram
 (function () {
   'use strict';
 

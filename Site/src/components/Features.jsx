@@ -57,7 +57,7 @@ export default function Features() {
             Already configured.
           </h2>
           <p className="mt-4 text-text-secondary text-base leading-relaxed">
-            Stop stitching together five different developer tools. BJCRUMBS handles state, storage, auth, and deployment automatically.
+            Stop stitching together five different developer tools. BJCRUM handles state, storage, auth, and deployment automatically.
           </p>
         </div>
 

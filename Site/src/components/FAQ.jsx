@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const faqs = [
   {
-    q: 'Does BJCRUMBS replace the systems teams already use?',
-    a: 'No. BJCRUMBS integrates directly with your existing infrastructure. You can connect third-party APIs, Stripe webhooks, external PostgreSQL databases, or custom REST/GraphQL endpoints with zero friction.',
+    q: 'Does BJCRUM replace the systems teams already use?',
+    a: 'No. BJCRUM integrates directly with your existing infrastructure. You can connect third-party APIs, Stripe webhooks, external PostgreSQL databases, or custom REST/GraphQL endpoints with zero friction.',
   },
   {
     q: 'Will the bot mess up my app if I edit it later?',
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'Do I need to find the bugs myself?',
-    a: 'BJCRUMBS runs automated TypeScript type-checking, schema validation, and integration tests before presenting each iteration, catching edge cases automatically.',
+    a: 'BJCRUM runs automated TypeScript type-checking, schema validation, and integration tests before presenting each iteration, catching edge cases automatically.',
   },
   {
     q: 'Can I use my own custom web link?',
@@ -45,7 +45,7 @@ export default function FAQ() {
             Got Questions?
           </h2>
           <p className="mt-4 text-text-secondary text-base">
-            See how BJCRUMBS builds real, working apps for you from start to finish.
+            See how BJCRUM builds real, working apps for you from start to finish.
           </p>
         </div>
 

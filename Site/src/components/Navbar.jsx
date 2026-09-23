@@ -12,7 +12,7 @@ export default function Navbar() {
             <span className="font-mono text-lg font-black text-white">B</span>
           </div>
           <span className="text-xl font-extrabold tracking-tight text-sky-300 group-hover:text-sky-200 transition-colors">
-            BJCRUMBS
+            BJCRUM
           </span>
         </a>
 

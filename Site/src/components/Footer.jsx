@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-hero shadow-glow-primary">
                 <span className="font-mono text-base font-black text-white">B</span>
               </div>
-              <span className="text-lg font-extrabold text-sky-300 tracking-tight">BJCRUMBS</span>
+              <span className="text-lg font-extrabold text-sky-300 tracking-tight">BJCRUM</span>
             </div>
             <p className="max-w-sm text-xs text-text-secondary leading-relaxed">
               Build full-stack web &amp; mobile applications for clients in minutes. Instant databases, authentication, and deployment without managing backends.
@@ -41,13 +41,13 @@ export default function Footer() {
               <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
               <li><a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a></li>
               <li><a href="/terms" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="mailto:support@bjcrumbs.com" className="hover:text-white transition-colors">Contact Support</a></li>
+              <li><a href="mailto:support@bjcrum.com" className="hover:text-white transition-colors">Contact Support</a></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-text-muted gap-4">
-          <p>© {new Date().getFullYear()} BJCRUMBS Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} BJCRUM Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span className="hover:text-white transition-colors cursor-pointer">Security</span>
             <span className="hover:text-white transition-colors cursor-pointer">Status</span>

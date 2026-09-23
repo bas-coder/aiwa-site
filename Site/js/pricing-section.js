@@ -1,4 +1,4 @@
-// BJCRUMBS White-Label Pricing Section Controller
+// BJCRUM White-Label Pricing Section Controller
 (function () {
   'use strict';
 
