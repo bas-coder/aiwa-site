@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Theme Color Tokens */
+  --color-surface-canvas: #f7f7f6;
+  --color-surface-surface: #ffffff;
+  --color-surface-cards: #f0f0ee;
+  --color-surface-elevated: #ffffff;
+  --color-surface-foreground: #171716;
+  --color-surface-fg-muted: #525250;
+  --color-surface-fg-subtle: #8e8e8c;
+  --color-surface-fg-inverse: #f8f8f7;
+
+  --color-action-foreground: #ffffff;
+  --color-action-primary: #0284c7;
+  --color-action-primary-hover: #0369a1;
+  --color-action-secondary: rgba(240, 240, 238, 0.85);
+  --color-action-secondary-hover: #e2e2e0;
+  --color-action-subtle: rgba(2, 132, 199, 0.06);
+  --color-action-ring: #0284c7;
+
+  --color-text-heading: #0f0f0e;
+  --color-text-hero: rgba(15, 15, 14, 0.85);
+  --color-text-body: #171716;
+  --color-text-muted: #5a5a58;
+  --color-text-disabled: #91918e;
+  --color-text-brand: #0284c7;
+  --color-text-inverse: #fcfcfc;
+
+  --color-line-default: rgba(23, 23, 22, 0.12);
+  --color-line-subtle: rgba(23, 23, 22, 0.06);
+  --color-line-strong: rgba(23, 23, 22, 0.2);
+  --color-line-inverse: #171716;
+
+  --color-state-layout: rgba(23, 23, 22, 0.04);
+  --color-state-glow: rgba(2, 132, 199, 0.15);
+  --color-state-overlay: rgba(15, 15, 14, 0.45);
+  --color-state-dots: #e2e2e0;
+  --color-state-success: #16a34a;
+  --color-state-warning: #d97706;
+  --color-state-danger: #dc2626;
+
+  --color-shadow-sm: rgba(0, 0, 0, 0.08);
+  --color-shadow-md: rgba(0, 0, 0, 0.15);
+  --color-shadow-lg: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"],
+.dark {
+  /* Dark Theme Color Tokens */
+  --color-surface-canvas: #171716;
+  --color-surface-surface: #1f1f1e;
+  --color-surface-cards: #2c2c2b;
+  --color-surface-elevated: #3a3a39;
+  --color-surface-foreground: #f8f8f7;
+  --color-surface-fg-muted: #a8a8a5;
+  --color-surface-fg-subtle: #737370;
+  --color-surface-fg-inverse: #171716;
+
+  --color-action-foreground: #171716;
+  --color-action-primary: #49a6d7;
+  --color-action-primary-hover: #38bdf8;
+  --color-action-secondary: rgba(255, 255, 255, 0.08);
+  --color-action-secondary-hover: rgba(255, 255, 255, 0.14);
+  --color-action-subtle: rgba(73, 166, 215, 0.1);
+  --color-action-ring: #49a6d7;
+
+  --color-text-heading: #fcfcfc;
+  --color-text-hero: rgba(252, 252, 252, 0.85);
+  --color-text-body: #e2e2e0;
+  --color-text-muted: #a1a19e;
+  --color-text-disabled: #737370;
+  --color-text-brand: #49a6d7;
+  --color-text-inverse: #171716;
+
+  --color-line-default: rgba(255, 255, 255, 0.1);
+  --color-line-subtle: rgba(255, 255, 255, 0.05);
+  --color-line-strong: rgba(255, 255, 255, 0.18);
+  --color-line-inverse: #ebebea;
+
+  --color-state-layout: rgba(255, 255, 255, 0.04);
+  --color-state-glow: rgba(73, 166, 215, 0.15);
+  --color-state-overlay: rgba(10, 10, 9, 0.72);
+  --color-state-dots: #262625;
+  --color-state-success: #4ade80;
+  --color-state-warning: #fbbf24;
+  --color-state-danger: #f87171;
+
+  --color-shadow-sm: rgba(255, 255, 255, 0.08);
+  --color-shadow-md: rgba(255, 255, 255, 0.15);
+  --color-shadow-lg: rgba(255, 255, 255, 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface-canvas);
+  color: var(--color-text-body);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Background Grids & Ornaments */
+.shimmer-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--color-line-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line-subtle) 1px, transparent 1px);
+}
+
+.glow-ambient {
+  background: radial-gradient(circle 600px at 50% 10%, rgba(2, 132, 199, 0.12), transparent 70%);
+}
+
+[data-theme="dark"] .glow-ambient {
+  background: radial-gradient(circle 600px at 50% 10%, rgba(73, 166, 215, 0.08), transparent 70%);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-action-primary);
+}
