@@ -1,0 +1,13 @@
+{
+  "tool": "FramerClone",
+  "version": "1.0.0",
+  "clonedAt": "2026-09-21T22:06:09.638Z",
+  "sourceUrl": "https://aiwa-codes.framer.website/",
+  "stats": {
+    "pages": 1,
+    "assets": 161,
+    "totalSize": 21340460,
+    "duration": 6876
+  },
+  "migrate": false
+}

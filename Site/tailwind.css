@@ -1,0 +1,776 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------------------
+   Warm Obsidian Design System — Dark Mode (Default)
+   ---------------------------------------------------- */
+:root,
+html.dark, body.dark,
+html[toggle-theme="dark"], body[toggle-theme="dark"],
+[toggle-theme="dark"] body {
+  /* Core Brand Tokens */
+  --brand-primary: #0284C7;
+  --brand-primary-hover: #0EA5E9;
+  --brand-primary-active: #0369A1;
+  --brand-accent: #49A6D7;
+  --brand-accent-hover: #3293C8;
+  --brand-logo-light: #7DD3FC;
+  
+  /* Surfaces & Elevation (Warm Obsidian System) */
+  --bg-canvas: #121211;
+  --bg-sidebar: #171716;
+  --bg-input: #171716;
+  --bg-surface: #1F1F1E;
+  --bg-card: #2C2C2B;
+  --bg-card-hover: #353534;
+  --bg-popover: #383837;
+  --bg-modal: #383837;
+  
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: #4A4A47;
+  --border-focus: #0284C7;
+  --border-accent: rgba(73, 166, 215, 0.35);
+
+  /* Typography */
+  --text-primary: #FDFCFA;
+  --text-secondary: #D1D1CD;
+  --text-muted: #9E9E9A;
+  --text-subtle: #6B6B67;
+  --text-on-primary: #FFFFFF;
+
+  /* Semantics */
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --warning-border: rgba(251, 191, 36, 0.30);
+  --warning-text: #FDE68A;
+
+  --success: #4ADE80;
+  --success-bg: rgba(74, 222, 128, 0.12);
+  --success-border: rgba(74, 222, 128, 0.30);
+  --success-text: #86EFAC;
+
+  --error: #F43F5E;
+  --error-bg: rgba(244, 63, 94, 0.12);
+  --error-border: rgba(244, 63, 94, 0.30);
+  --error-text: #FDA4AF;
+
+  --info: #38BDF8;
+  --info-bg: rgba(56, 189, 248, 0.12);
+  --info-border: rgba(56, 189, 248, 0.30);
+  --info-text: #BAE6FD;
+
+  /* Gradients & Glows */
+  --gradient-hero: linear-gradient(135deg, #49A6D7 0%, #0284C7 35%, #0369A1 65%, #0C4A6E 85%, #04273E 100%);
+  --gradient-subtle: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+  --glow-primary: 0 0 24px -2px rgba(2, 132, 199, 0.45);
+  --glow-accent: 0 0 20px -2px rgba(73, 166, 215, 0.50);
+
+  /* Framer Token Overrides: Dark Mode */
+  --token-3b3bb164-f10a-40ee-aecd-456c42b0c67a: #1F1F1E !important; /* Canvas / Surface */
+  --token-b1d6b2c9-c4ae-438d-9c95-80c71f900488: #2C2C2B !important; /* Container / Card */
+  --token-b960ea04-8e18-497c-a052-b9c1b9245a89: #383837 !important; /* Elevated Card */
+  --token-1a732567-40e9-4b73-8c86-17cc5eaeeacc: #171716 !important; /* Input / Sidebar */
+  --token-064ccf64-5cbd-4761-9860-7b4337769459: #171716 !important;
+  --token-57ad04a0-fd30-44e9-9a7e-cb4aa8b7eadf: #0284C7 !important; /* Primary Brand */
+  --token-5c0714fc-5b9e-4bf8-b1c3-4c2545f10d37: #0369A1 !important; /* Primary 2 / Deep Sky */
+  --token-35444dae-5328-4ae6-9b45-8aaee8900150: #0284C7 !important; /* Ring */
+  --token-4ef251f9-3209-4714-8df2-794ef6576a47: #0284C7 !important; /* Ring */
+  --token-649fcc59-fad2-465d-9c48-426eac906400: #0284C7 !important; /* Brand */
+  --token-5112011a-e0ce-4a23-984b-bdd5d2dcc03b: #49A6D7 !important; /* Accent */
+  --token-ced3d941-b371-43ab-950e-08b5cdbad35d: rgba(2, 132, 199, 0.15) !important;
+  --token-5e543dde-bb24-4d34-955f-aa29b8fb60bd: rgba(2, 132, 199, 0.10) !important;
+  --token-ebc1f26f-2aab-4a2d-a8fd-50e2c0bdba42: #FDFCFA !important; /* Text Primary */
+  --token-3b8f89bb-3e70-496d-ba4e-f2721995f0ed: #D1D1CD !important; /* Text Secondary */
+  --token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c: #9E9E9A !important; /* Text Muted */
+  --token-7ffb80f1-ed14-488a-8dbf-8f158f7c4da5: #D1D1CD !important;
+  --token-745cd8af-4b10-4650-bf20-5a3c7412a4e7: #D1D1CD !important;
+  --token-1a307891-96c5-4f94-815f-e9504b7b8282: #FFFFFF !important;
+  --token-81ade45c-cdb5-4f0b-95ba-b1d6252c827a: #4ADE80 !important; /* Success */
+  --token-1fcf5775-7512-4f52-87fc-bc28fc2be292: #FBBF24 !important; /* Warning */
+  --token-8f7954f7-bb38-4ad4-a084-59a1f39237d3: #F43F5E !important; /* Error */
+  --token-f5ea0495-6dc6-43be-af9c-d67e4b47a474: rgba(255, 255, 255, 0.08) !important; /* Border subtle */
+  --token-437c26fb-8ca4-445c-89be-bd35f916079e: rgba(255, 255, 255, 0.12) !important; /* Border medium */
+  --token-a79202e4-f28c-4d44-83d0-e120e06c7c45: rgba(255, 255, 255, 0.18) !important; /* Border strong */
+  --token-21df2d5a-27b9-417c-be45-f06c7aad9955: rgba(31, 31, 30, 0) !important;
+  --token-38133d93-373c-419d-bf20-b309343e3614: #2C2C2B !important; /* Solid Secondary Button */
+  --token-401b6902-9363-4b4c-94bb-2b9453b8c46a: rgba(252, 252, 252, 0.15) !important; /* Secondary Hover */
+  --token-b248ee33-0c6e-4e42-b5d5-022aa26e12e5: rgba(255, 255, 255, 0.15) !important; /* Quote Lines & Dots */
+}
+
+/* ----------------------------------------------------
+   Warm Architectural Linen — Light Mode Counterpart
+   ---------------------------------------------------- */
+html.light, body.light,
+html[toggle-theme="light"], body[toggle-theme="light"],
+[toggle-theme="light"] body {
+  /* Core Brand Tokens */
+  --brand-primary: #0284C7;
+  --brand-primary-hover: #0369A1;
+  --brand-primary-active: #075985;
+  --brand-accent: #0284C7;
+  --brand-accent-hover: #0369A1;
+  --brand-logo-light: #0284C7;
+  
+  /* Surfaces & Elevation (Warm Linen System) */
+  --bg-canvas: #F8F7F5;
+  --bg-sidebar: #EFEFED;
+  --bg-input: #FFFFFF;
+  --bg-surface: #F8F7F5;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F3F2EE;
+  --bg-popover: #FFFFFF;
+  --bg-modal: #FFFFFF;
+  
+  /* Borders */
+  --border-subtle: rgba(23, 23, 22, 0.08);
+  --border-medium: rgba(23, 23, 22, 0.14);
+  --border-strong: rgba(23, 23, 22, 0.22);
+  --border-focus: #0284C7;
+  --border-accent: rgba(2, 132, 199, 0.35);
+
+  /* Typography (High Contrast Charcoal) */
+  --text-primary: #121211;
+  --text-secondary: #4A4A47;
+  --text-muted: #737370;
+  --text-subtle: #9E9E9A;
+  --text-on-primary: #FFFFFF;
+
+  /* Semantics */
+  --warning: #D97706;
+  --warning-bg: rgba(217, 119, 6, 0.12);
+  --warning-border: rgba(217, 119, 6, 0.30);
+  --warning-text: #92400E;
+
+  --success: #16A34A;
+  --success-bg: rgba(22, 163, 74, 0.12);
+  --success-border: rgba(22, 163, 74, 0.30);
+  --success-text: #15803D;
+
+  --error: #DC2626;
+  --error-bg: rgba(220, 38, 38, 0.12);
+  --error-border: rgba(220, 38, 38, 0.30);
+  --error-text: #991B1B;
+
+  --info: #0284C7;
+  --info-bg: rgba(2, 132, 199, 0.12);
+  --info-border: rgba(2, 132, 199, 0.30);
+  --info-text: #0369A1;
+
+  /* Gradients & Glows */
+  --gradient-hero: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #0C4A6E 100%);
+  --gradient-subtle: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0) 100%);
+  --glow-primary: 0 0 24px -2px rgba(2, 132, 199, 0.20);
+  --glow-accent: 0 0 20px -2px rgba(2, 132, 199, 0.25);
+
+  /* Framer Token Overrides: Light Mode */
+  --token-3b3bb164-f10a-40ee-aecd-456c42b0c67a: #F8F7F5 !important; /* Canvas / Surface */
+  --token-b1d6b2c9-c4ae-438d-9c95-80c71f900488: #FFFFFF !important; /* Container / Card */
+  --token-b960ea04-8e18-497c-a052-b9c1b9245a89: #FFFFFF !important; /* Elevated Card */
+  --token-1a732567-40e9-4b73-8c86-17cc5eaeeacc: #EFEFED !important; /* Input / Sidebar */
+  --token-064ccf64-5cbd-4761-9860-7b4337769459: #171716 !important;
+  --token-57ad04a0-fd30-44e9-9a7e-cb4aa8b7eadf: #0284C7 !important; /* Primary Brand */
+  --token-5c0714fc-5b9e-4bf8-b1c3-4c2545f10d37: #0369A1 !important; /* Primary 2 / Deep Sky */
+  --token-35444dae-5328-4ae6-9b45-8aaee8900150: #0284C7 !important; /* Ring */
+  --token-4ef251f9-3209-4714-8df2-794ef6576a47: #0284C7 !important; /* Ring */
+  --token-649fcc59-fad2-465d-9c48-426eac906400: #0284C7 !important; /* Brand */
+  --token-5112011a-e0ce-4a23-984b-bdd5d2dcc03b: #0284C7 !important; /* Accent */
+  --token-ced3d941-b371-43ab-950e-08b5cdbad35d: rgba(2, 132, 199, 0.12) !important;
+  --token-5e543dde-bb24-4d34-955f-aa29b8fb60bd: rgba(2, 132, 199, 0.08) !important;
+  --token-ebc1f26f-2aab-4a2d-a8fd-50e2c0bdba42: #121211 !important; /* Text Primary */
+  --token-3b8f89bb-3e70-496d-ba4e-f2721995f0ed: #4A4A47 !important; /* Text Secondary */
+  --token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c: #737370 !important; /* Text Muted */
+  --token-7ffb80f1-ed14-488a-8dbf-8f158f7c4da5: #4A4A47 !important;
+  --token-745cd8af-4b10-4650-bf20-5a3c7412a4e7: #4A4A47 !important;
+  --token-1a307891-96c5-4f94-815f-e9504b7b8282: #FFFFFF !important;
+  --token-81ade45c-cdb5-4f0b-95ba-b1d6252c827a: #16A34A !important; /* Success */
+  --token-1fcf5775-7512-4f52-87fc-bc28fc2be292: #D97706 !important; /* Warning */
+  --token-8f7954f7-bb38-4ad4-a084-59a1f39237d3: #DC2626 !important; /* Error */
+  --token-f5ea0495-6dc6-43be-af9c-d67e4b47a474: rgba(23, 23, 22, 0.08) !important; /* Border subtle */
+  --token-437c26fb-8ca4-445c-89be-bd35f916079e: rgba(23, 23, 22, 0.14) !important; /* Border medium */
+  --token-a79202e4-f28c-4d44-83d0-e120e06c7c45: rgba(23, 23, 22, 0.22) !important; /* Border strong */
+  --token-21df2d5a-27b9-417c-be45-f06c7aad9955: rgba(248, 247, 245, 0) !important;
+  --token-38133d93-373c-419d-bf20-b309343e3614: #EAEAE7 !important; /* Solid Secondary Button */
+  --token-401b6902-9363-4b4c-94bb-2b9453b8c46a: rgba(0, 0, 0, 0.06) !important; /* Secondary Hover */
+  --token-b248ee33-0c6e-4e42-b5d5-022aa26e12e5: rgba(23, 23, 22, 0.10) !important; /* Quote Lines & Dots */
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* 1. Logo Text: Lighter Blue Color */
+.framer-1nzbf75 span[data-text-fill="true"],
+.framer-1au78mt span[data-text-fill="true"],
+.framer-1mwamyz span[data-text-fill="true"],
+.framer-g3ubon span[data-text-fill="true"],
+.framer-text span[data-text-fill="true"] {
+  background-image: linear-gradient(135deg, #BAE6FD 0%, #7DD3FC 50%, #38BDF8 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: #7DD3FC !important;
+}
+
+/* 2. Secondary Button: Solid Fill Color & Secondary Hover */
+[data-framer-name="md/secondary"],
+[data-framer-name="sm/secondary"],
+.framer-v-wzm1be,
+.framer-v-18pl9i9,
+.btn-secondary {
+  background-color: #2C2C2B !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #FDFCFA !important;
+  box-shadow: none !important;
+}
+
+[data-framer-name="md/secondary"] [data-framer-name="_Button base"],
+[data-framer-name="sm/secondary"] [data-framer-name="_Button base"],
+.framer-v-wzm1be [data-framer-name="_Button base"],
+.framer-v-18pl9i9 [data-framer-name="_Button base"] {
+  background: #2C2C2B !important;
+  background-color: #2C2C2B !important;
+}
+
+[data-framer-name="md/secondary"]:hover,
+[data-framer-name="sm/secondary"]:hover,
+.framer-v-wzm1be:hover,
+.framer-v-18pl9i9:hover,
+.btn-secondary:hover {
+  background-color: rgba(252, 252, 252, 0.15) !important;
+  background: rgba(252, 252, 252, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+[data-framer-name="md/secondary"]:hover [data-framer-name="_Button base"],
+[data-framer-name="sm/secondary"]:hover [data-framer-name="_Button base"],
+.framer-v-wzm1be:hover [data-framer-name="_Button base"],
+.framer-v-18pl9i9:hover [data-framer-name="_Button base"] {
+  background: rgba(252, 252, 252, 0.15) !important;
+  background-color: rgba(252, 252, 252, 0.15) !important;
+}
+
+[data-framer-name="md/secondary"]:hover *,
+[data-framer-name="sm/secondary"]:hover *,
+.framer-v-wzm1be:hover *,
+.framer-v-18pl9i9:hover * {
+  --token-401b6902-9363-4b4c-94bb-2b9453b8c46a: rgba(252, 252, 252, 0.15) !important;
+}
+
+/* Theme Switcher Navigation Button */
+.framer-dg0yrl-container,
+[data-framer-name="Them"],
+.framer-wNkKq,
+.framer-14engjg,
+.framer-v-14engjg,
+.framer-17htg4p[data-framer-name="Them"] {
+  display: flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: auto !important;
+  height: auto !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+}
+
+[data-framer-name="Them"]:hover {
+  transform: scale(1.08) !important;
+}
+
+/* Quote Container Technical Grid Lines & Corner Dots (Reduced Opacity) */
+[data-framer-name="stuff"] [data-framer-name="top"],
+[data-framer-name="stuff"] [data-framer-name="bottom"],
+[data-framer-name="stuff"] [data-framer-name="left"],
+[data-framer-name="stuff"] [data-framer-name="right"],
+[data-framer-name="stuff"] [data-framer-name="top left"],
+[data-framer-name="stuff"] [data-framer-name="top right"],
+[data-framer-name="stuff"] [data-framer-name="bottom right"],
+[data-framer-name="stuff"] .framer-19kog07,
+.framer-dqguz8,
+.framer-12ubsk,
+.framer-12aw3m,
+.framer-g0rxcu,
+.framer-pihv1l,
+.framer-1b6756e,
+.framer-11dot7n,
+.framer-19kog07 {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 3. Complete Removal of Custom Cursors */
+*, *::before, *::after {
+  cursor: auto !important;
+}
+a, a *, button, button *, [role="button"], [role="button"] *, input[type="submit"], input[type="button"], select, select *, .cursor-pointer {
+  cursor: pointer !important;
+}
+input[type="text"], input[type="email"], textarea {
+  cursor: text !important;
+}
+.framer-cursor-none, .framer-cursor-none * {
+  cursor: auto !important;
+}
+#framer-lib-cursors-host, [data-framer-cursor] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 4. Shimmer Grid in Hero and Final CTA: #ffffff 10% */
+[data-framer-name="Shimmer Grid Background"] > div,
+[data-framer-name="Final CTA Shimmer Background"] > div,
+.framer-19kr9k3-container > div,
+.framer-1izumxy-container > div {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1.1px, transparent 1.9px) !important;
+}
+
+/* Shimmer Grid in Hero Section: 30% Opacity */
+[data-framer-name="Hero"] [data-framer-name="Shimmer Grid Background"],
+[data-framer-name="Hero"] .framer-19kr9k3-container,
+.framer-iuisk8 [data-framer-name="Shimmer Grid Background"],
+.framer-iuisk8 .framer-19kr9k3-container,
+.framer-19kr9k3-container {
+  opacity: 0.3 !important;
+}
+
+/* Primary Button Utilities */
+.btn-primary {
+  background: var(--gradient-hero) !important;
+  color: #ffffff !important;
+  box-shadow: var(--glow-primary);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 30px -2px rgba(2, 132, 199, 0.65);
+}
+
+.card-container {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 16px;
+}
+
+.card-container:hover {
+  background-color: var(--bg-card-hover) !important;
+  border-color: var(--border-accent) !important;
+}
+
+.input-recessed {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.input-recessed:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.3) !important;
+}
+
+
+
+
+
+/* Hero headline target words (AI & Team) — Dark Mode */
+html.dark span[style*="token-508e5cbc"],
+html.dark span[style*="token-508e5cbc"] span,
+html[toggle-theme="dark"] span[style*="token-508e5cbc"],
+html[toggle-theme="dark"] span[style*="token-508e5cbc"] span,
+body.dark [data-framer-name="Frame 9"] span[style*="token-508e5cbc"],
+body[toggle-theme="dark"] [data-framer-name="Frame 9"] span[style*="token-508e5cbc"] {
+  --framer-text-color: rgba(255, 255, 255, 0.80) !important;
+  color: rgba(255, 255, 255, 0.80) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.80) !important;
+}
+
+/* Hero headline in Light Mode */
+html.light [data-framer-name="Frame 9"] h1,
+html.light [data-framer-name="Frame 9"] p,
+html.light [data-framer-name="Frame 9"] span,
+body[toggle-theme="light"] [data-framer-name="Frame 9"] h1,
+body[toggle-theme="light"] [data-framer-name="Frame 9"] p,
+body[toggle-theme="light"] [data-framer-name="Frame 9"] span {
+  --framer-text-color: #121211 !important;
+  color: #121211 !important;
+  -webkit-text-fill-color: #121211 !important;
+}
+
+html.light [data-framer-name="Frame 9"] span[style*="token-508e5cbc"],
+html.light [data-framer-name="Frame 9"] span[style*="token-508e5cbc"] span,
+body[toggle-theme="light"] [data-framer-name="Frame 9"] span[style*="token-508e5cbc"],
+body[toggle-theme="light"] [data-framer-name="Frame 9"] span[style*="token-508e5cbc"] span {
+  --framer-text-color: rgba(18, 18, 17, 0.65) !important;
+  color: rgba(18, 18, 17, 0.65) !important;
+  -webkit-text-fill-color: rgba(18, 18, 17, 0.65) !important;
+}
+
+html.light [data-framer-name="Hero"] p:not([data-framer-name*="primary"] p):not(.framer-btn-primary):not([data-framer-name="_Button base"] p):not(.framer-1qio9pz p),
+body[toggle-theme="light"] [data-framer-name="Hero"] p:not([data-framer-name*="primary"] p):not(.framer-btn-primary):not([data-framer-name="_Button base"] p):not(.framer-1qio9pz p) {
+  --framer-text-color: #525250 !important;
+  color: #525250 !important;
+}
+
+/* Ensure All Primary Button Text is Pure White in Light Mode */
+html.light [data-framer-name="md/primary"] p,
+html.light [data-framer-name="sm/primary"] p,
+html.light [data-framer-name*="primary"] p,
+html.light [data-framer-name*="primary"] span,
+html.light .framer-v-73v823 p,
+html.light .btn-primary,
+html.light .framer-btn-primary,
+body[toggle-theme="light"] [data-framer-name="md/primary"] p,
+body[toggle-theme="light"] [data-framer-name="sm/primary"] p,
+body[toggle-theme="light"] [data-framer-name*="primary"] p,
+body[toggle-theme="light"] .btn-primary,
+body[toggle-theme="light"] .framer-btn-primary {
+  --framer-text-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Diagram Circles: Center Align Icons */
+[data-framer-name="Diagram"] [data-framer-name="Frame 55"],
+[data-framer-name="Frame 55"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-framer-name="Frame 55"] [data-framer-name="Icon Main"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+}
+
+[data-framer-name="Frame 55"] [data-framer-name="Icon Main"] > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+[data-framer-name="Frame 55"] svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: auto !important;
+  vertical-align: unset !important;
+}
+
+/* Prompt Box Caret Alignment & Icons */
+.framer-8c5atv-container,
+.framer-jlxu7i-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 12px !important;
+  height: 12px !important;
+  position: relative !important;
+}
+
+.framer-8c5atv-container {
+  transform: translateY(-0.5px) !important;
+}
+
+.framer-jlxu7i-container {
+  transform: translateY(-3px) !important;
+}
+
+.custom-caret-icon {
+  width: 9.5px !important;
+  height: 9.5px !important;
+  display: block !important;
+  stroke: var(--token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c, #9E9E9A) !important;
+  color: var(--token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c, #9E9E9A) !important;
+  flex-shrink: 0 !important;
+  pointer-events: none !important;
+}
+
+
+
+/* Quote Container 4 Boundary Lines & 4 Corner Dots */
+html.dark [data-framer-name="stuff"] [data-framer-name="top"],
+html.dark [data-framer-name="stuff"] [data-framer-name="bottom"],
+html.dark [data-framer-name="stuff"] [data-framer-name="left"],
+html.dark [data-framer-name="stuff"] [data-framer-name="right"],
+html.dark [data-framer-name="stuff"] [data-framer-name="top left"],
+html.dark [data-framer-name="stuff"] [data-framer-name="top right"],
+html.dark [data-framer-name="stuff"] [data-framer-name="bottom right"],
+html.dark [data-framer-name="stuff"] .framer-19kog07,
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="top"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="bottom"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="left"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="right"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="top left"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="top right"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] [data-framer-name="bottom right"],
+html[toggle-theme="dark"] [data-framer-name="stuff"] .framer-19kog07 {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.light [data-framer-name="stuff"] [data-framer-name="top"],
+html.light [data-framer-name="stuff"] [data-framer-name="bottom"],
+html.light [data-framer-name="stuff"] [data-framer-name="left"],
+html.light [data-framer-name="stuff"] [data-framer-name="right"],
+html.light [data-framer-name="stuff"] [data-framer-name="top left"],
+html.light [data-framer-name="stuff"] [data-framer-name="top right"],
+html.light [data-framer-name="stuff"] [data-framer-name="bottom right"],
+html.light [data-framer-name="stuff"] .framer-19kog07,
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="top"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="bottom"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="left"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="right"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="top left"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="top right"],
+html[toggle-theme="light"] [data-framer-name="stuff"] [data-framer-name="bottom right"],
+html[toggle-theme="light"] [data-framer-name="stuff"] .framer-19kog07 {
+  background-color: rgba(23, 23, 22, 0.10) !important;
+  background: rgba(23, 23, 22, 0.10) !important;
+}
+
+/* Footer Status Badge */
+.footer-bottom-right-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 809.98px) {
+  .footer-bottom-right-col {
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+.footer-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background-color: #242423;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 13px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  cursor: default;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-status-badge:hover {
+  background-color: #2b2b29;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.footer-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2.5px;
+  background-color: #34D399;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.footer-status-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #D1D5DB;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+/* Prompt-Box: Plus Icon Centering */
+.framer-9lgivv,
+[data-framer-name="Button - Attach files"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.framer-9lgivv .framer-1xzpr5s-container,
+[data-framer-name="Button - Attach files"] .framer-1xzpr5s-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+}
+
+.framer-9lgivv svg,
+.framer-9lgivv svg *,
+[data-framer-name="Button - Attach files"] svg,
+[data-framer-name="Button - Attach files"] svg * {
+  display: block !important;
+  margin: auto !important;
+  fill: #D1D1CD !important;
+  color: #D1D1CD !important;
+}
+
+/* Prompt-Box: Arrow Icon Button Primary Fill */
+.framer-160wmde-container a,
+.framer-160wmde-container button,
+.framer-160wmde-container .framer-1qio9pz,
+[data-framer-name="Prompt box"] .framer-160wmde-container .framer-1qio9pz {
+  background: linear-gradient(180deg, #49ade2 0%, #2299d8 100%) !important;
+  background-color: #2299d8 !important;
+  background-image: linear-gradient(180deg, #49ade2 0%, #2299d8 100%) !important;
+  border-radius: 9999px !important;
+}
+
+.framer-160wmde-container a:hover .framer-1qio9pz,
+.framer-160wmde-container button:hover .framer-1qio9pz {
+  background: linear-gradient(180deg, #5ec3f5 0%, #30aae9 100%) !important;
+  background-image: linear-gradient(180deg, #5ec3f5 0%, #30aae9 100%) !important;
+}
+
+/* Prompt-Box: Arrow Icon Color in Dark Mode (Dark/Black) and Light Mode */
+.framer-160wmde-container svg,
+.framer-160wmde-container svg g,
+.framer-160wmde-container svg path,
+:root:not([toggle-theme="light"]):not(.light) .framer-160wmde-container svg,
+:root:not([toggle-theme="light"]):not(.light) .framer-160wmde-container svg g,
+:root:not([toggle-theme="light"]):not(.light) .framer-160wmde-container svg path,
+html.dark .framer-160wmde-container svg,
+html.dark .framer-160wmde-container svg g,
+html.dark .framer-160wmde-container svg path,
+body.dark .framer-160wmde-container svg,
+body.dark .framer-160wmde-container svg g,
+body.dark .framer-160wmde-container svg path,
+html[toggle-theme="dark"] .framer-160wmde-container svg,
+html[toggle-theme="dark"] .framer-160wmde-container svg g,
+html[toggle-theme="dark"] .framer-160wmde-container svg path,
+body[toggle-theme="dark"] .framer-160wmde-container svg,
+body[toggle-theme="dark"] .framer-160wmde-container svg g,
+body[toggle-theme="dark"] .framer-160wmde-container svg path,
+[data-framer-name="Prompt box"] .framer-160wmde-container svg,
+[data-framer-name="Prompt box"] .framer-160wmde-container svg g,
+[data-framer-name="Prompt box"] .framer-160wmde-container svg path {
+  fill: #000000 !important;
+  color: #000000 !important;
+}
+
+html.light .framer-160wmde-container svg,
+html.light .framer-160wmde-container svg g,
+html.light .framer-160wmde-container svg path,
+body.light .framer-160wmde-container svg,
+body.light .framer-160wmde-container svg g,
+body.light .framer-160wmde-container svg path,
+html[toggle-theme="light"] .framer-160wmde-container svg,
+html[toggle-theme="light"] .framer-160wmde-container svg g,
+html[toggle-theme="light"] .framer-160wmde-container svg path,
+body[toggle-theme="light"] .framer-160wmde-container svg,
+body[toggle-theme="light"] .framer-160wmde-container svg g,
+body[toggle-theme="light"] .framer-160wmde-container svg path {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Footer Subscribe Button - Dark Mode */
+html.dark .framer-g3e2fp-container button,
+html.dark button.framer-pevtva,
+html.dark button.framer-v-pevtva,
+body[toggle-theme="dark"] .framer-g3e2fp-container button,
+body[toggle-theme="dark"] button.framer-pevtva,
+body[toggle-theme="dark"] button.framer-v-pevtva {
+  background-color: #2C2C2B !important;
+  background: #2C2C2B !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+html.dark .framer-g3e2fp-container button:hover,
+html.dark button.framer-pevtva:hover,
+html.dark button.framer-v-pevtva:hover,
+body[toggle-theme="dark"] .framer-g3e2fp-container button:hover,
+body[toggle-theme="dark"] button.framer-pevtva:hover,
+body[toggle-theme="dark"] button.framer-v-pevtva:hover {
+  background-color: rgba(252, 252, 252, 0.15) !important;
+  background: rgba(252, 252, 252, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+html.dark .framer-g3e2fp-container button p,
+html.dark button.framer-pevtva p,
+html.dark button.framer-v-pevtva p,
+body[toggle-theme="dark"] .framer-g3e2fp-container button p,
+body[toggle-theme="dark"] button.framer-pevtva p,
+body[toggle-theme="dark"] button.framer-v-pevtva p {
+  color: #FDFCFA !important;
+  font-weight: 600 !important;
+}
+
+/* Footer Subscribe Button - Light Mode */
+html.light .framer-g3e2fp-container button,
+html.light button.framer-pevtva,
+html.light button.framer-v-pevtva,
+body[toggle-theme="light"] .framer-g3e2fp-container button,
+body[toggle-theme="light"] button.framer-pevtva,
+body[toggle-theme="light"] button.framer-v-pevtva {
+  background-color: #EAEAE7 !important;
+  background: #EAEAE7 !important;
+  border: 1px solid rgba(23, 23, 22, 0.12) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+html.light .framer-g3e2fp-container button:hover,
+html.light button.framer-pevtva:hover,
+html.light button.framer-v-pevtva:hover,
+body[toggle-theme="light"] .framer-g3e2fp-container button:hover,
+body[toggle-theme="light"] button.framer-pevtva:hover,
+body[toggle-theme="light"] button.framer-v-pevtva:hover {
+  background-color: #DFDFDC !important;
+  background: #DFDFDC !important;
+  border-color: rgba(23, 23, 22, 0.20) !important;
+}
+
+html.light .framer-g3e2fp-container button p,
+html.light button.framer-pevtva p,
+html.light button.framer-v-pevtva p,
+body[toggle-theme="light"] .framer-g3e2fp-container button p,
+body[toggle-theme="light"] button.framer-pevtva p,
+body[toggle-theme="light"] button.framer-v-pevtva p {
+  color: #121211 !important;
+  --framer-text-color: #121211 !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure 3D Robot Head and its container hierarchy never get sliced or clipped */
+.framer-16ap2ei,
+.framer-4RoKT,
+.framer-nmb3ok-container,
+[class*="framer-16ap2ei"],
+[class*="framer-4RoKT"],
+[class*="nmb3ok"] {
+  overflow: visible !important;
+}
+
+#robot-head-canvas {
+  overflow: visible !important;
+}
+
+
