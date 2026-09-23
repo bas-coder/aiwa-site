@@ -356,8 +356,17 @@ html.light [data-framer-name="sm/secondary"]:hover [data-framer-name="_Button ba
 }
 
 /* Brand Logo in Light Mode */
+/* Default Variant (Header Navigation) */
 html.light .framer-1kvuw5w,
-body[toggle-theme="light"] .framer-1kvuw5w {
+html.light .framer-v-6x5437 .framer-1kvuw5w,
+html.light [data-framer-name="Default"] .framer-1kvuw5w,
+html.light [data-framer-name="Frame 17"] .framer-1kvuw5w,
+html.light .framer-1gc919f-container .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-v-6x5437 .framer-1kvuw5w,
+body[toggle-theme="light"] [data-framer-name="Default"] .framer-1kvuw5w,
+body[toggle-theme="light"] [data-framer-name="Frame 17"] .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-1gc919f-container .framer-1kvuw5w {
   content: url('/images/Light@3x.png') !important;
   aspect-ratio: 543 / 150 !important;
   width: auto !important;
@@ -366,9 +375,45 @@ body[toggle-theme="light"] .framer-1kvuw5w {
   display: block !important;
 }
 
+/* Large Variant (Section Header Ornaments: Why & Made With) */
+html.light .framer-v-si03es .framer-1kvuw5w,
+html.light [data-framer-name="Large"] .framer-1kvuw5w,
 html.light [data-framer-name="Why Header Ornament"] .framer-1kvuw5w,
-body[toggle-theme="light"] [data-framer-name="Why Header Ornament"] .framer-1kvuw5w {
-  height: 34px !important;
+html.light [data-framer-name="Made With Header Ornament"] .framer-1kvuw5w,
+html.light .framer-1y6ubsp-container .framer-1kvuw5w,
+html.light .framer-1qcftax-container .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-v-si03es .framer-1kvuw5w,
+body[toggle-theme="light"] [data-framer-name="Large"] .framer-1kvuw5w,
+body[toggle-theme="light"] [data-framer-name="Why Header Ornament"] .framer-1kvuw5w,
+body[toggle-theme="light"] [data-framer-name="Made With Header Ornament"] .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-1y6ubsp-container .framer-1kvuw5w,
+body[toggle-theme="light"] .framer-1qcftax-container .framer-1kvuw5w {
+  height: 38px !important;
+}
+
+/* Mobile responsive sizing for Section Header Ornaments */
+@media (max-width: 809px) {
+  html.light .framer-v-si03es .framer-1kvuw5w,
+  html.light [data-framer-name="Large"] .framer-1kvuw5w,
+  html.light [data-framer-name="Why Header Ornament"] .framer-1kvuw5w,
+  html.light [data-framer-name="Made With Header Ornament"] .framer-1kvuw5w,
+  html.light .framer-1y6ubsp-container .framer-1kvuw5w,
+  html.light .framer-1qcftax-container .framer-1kvuw5w,
+  body[toggle-theme="light"] .framer-v-si03es .framer-1kvuw5w,
+  body[toggle-theme="light"] [data-framer-name="Large"] .framer-1kvuw5w,
+  body[toggle-theme="light"] [data-framer-name="Why Header Ornament"] .framer-1kvuw5w,
+  body[toggle-theme="light"] [data-framer-name="Made With Header Ornament"] .framer-1kvuw5w,
+  body[toggle-theme="light"] .framer-1y6ubsp-container .framer-1kvuw5w,
+  body[toggle-theme="light"] .framer-1qcftax-container .framer-1kvuw5w {
+    height: 32px !important;
+  }
+}
+
+html.light .framer-1kvuw5w img,
+body[toggle-theme="light"] .framer-1kvuw5w img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
 html.light .framer-1296na6,
