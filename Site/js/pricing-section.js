@@ -230,10 +230,10 @@
       
       <!-- Section Header Styled with font-weight medium, no Pricing badge -->
       <div style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 48px;">
-        <h2 class="framer-text" dir="auto" style="text-align: center; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; color: ${c.headingColor};">
+        <h2 class="framer-text bjcrumbs-pricing-headline" dir="auto" style="text-align: center; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; color: ${c.headingColor};">
           Simple, transparent pricing
         </h2>
-        <p class="framer-text" dir="auto" style="text-align: center; margin: 14px auto 0 auto; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; line-height: 22px; color: ${c.subheadingColor}; max-width: 540px;">
+        <p class="framer-text bjcrumbs-pricing-sub" dir="auto" style="text-align: center; margin: 14px auto 0 auto; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; line-height: 22px; color: ${c.subheadingColor}; max-width: 540px;">
           Simple, credit-backed plans charged on your Stripe. Wholesale is $0.10 a credit. Everything above is your margin.
         </p>
       </div>
@@ -255,7 +255,7 @@
     const isFree = s.id === 'free';
 
     return `
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; max-width: 960px; margin: 0 auto; align-items: stretch;">
+    <div class="bjcrumbs-pricing-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; max-width: 960px; margin: 0 auto; align-items: stretch;">
       
       <!-- CARD 1: SOLO -->
       <div class="bjcrumbs-pricing-card solo-card" style="background: ${c.soloCardBg}; border: ${c.soloCardBorder}; border-radius: 28px; padding: 36px 32px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: ${c.soloCardShadow}; transition: all 0.2s ease;">
@@ -293,7 +293,7 @@
 
           <!-- Solo Tier Selector Tabs (NO BORDER) -->
           <div style="margin-top: 16px;">
-            <div style="display: flex; gap: 4px; background: ${c.tabContainerBg}; border: none; border-radius: 12px; padding: 4px;">
+            <div class="bjcrumbs-tier-tabs" style="display: flex; gap: 4px; background: ${c.tabContainerBg}; border: none; border-radius: 12px; padding: 4px;">
               ${soloTiers.map((t, idx) => {
                 const isActive = selectedSoloIdx === idx;
                 const tabStyle = isActive
@@ -392,7 +392,7 @@
 
           <!-- Agency Tier Selector Tabs (NO BORDER) -->
           <div style="margin-top: 16px;">
-            <div style="display: flex; gap: 4px; background: ${c.tabContainerBg}; border: none; border-radius: 12px; padding: 4px;">
+            <div class="bjcrumbs-tier-tabs" style="display: flex; gap: 4px; background: ${c.tabContainerBg}; border: none; border-radius: 12px; padding: 4px;">
               ${agencyTiers.map((t, idx) => {
                 const isActive = selectedAgencyIdx === idx;
                 const tabStyle = isActive
